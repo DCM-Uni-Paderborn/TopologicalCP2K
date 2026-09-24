@@ -1,0 +1,7 @@
+ Analytic atomic bands, antiunitary cosets and invalid-input checks passed.
+ Atomic-band origin, cell and coset gauge checks passed.
+Atomic-band database: 14 Hall settings, 1008 site/k cases passed.
+Induced local-representation decompositions: 2058 passed.
+Induced-band directed compatibility checks: 2058 passed.
+Independent Cartesian s/p/d orbital-spin character comparisons: 3024 passed.
+ Site-induced atomic band tests passed.
