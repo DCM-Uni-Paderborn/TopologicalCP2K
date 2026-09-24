@@ -169,8 +169,20 @@ generated reference matrices, reordered operations and irreps and
 integer coset shifts preserve the recovered signature after checking
 the independently regenerated factors. Corrupted factors and unmatched
 operations are rejected. The focused serial and two-rank MPI drivers
-each pass 73 assertions, combining four native unit programs with the
+each pass 74 assertions, combining five native unit programs with the
 69 Gaussian assertions.
+
+The reciprocal-geometry backend independently checks all 530 Hall
+settings and their grey extensions. It generates 18,700 fixed-family
+closures, 57,357 specialization incidences and 18,730 primitive torus
+cycles. Stabilizers agree with the full spinful little-group kernel;
+333,900 rational-grid points have an unambiguous matching family.
+Coordinate changes preserve the families and incidence graph. The
+induced scalar/spinful atomic columns satisfy 2,481,572 directed
+incidence/cycle comparisons, including antiunitary restrictions when
+present. Serial, two-rank MPI and instrumented-kernel runs agree.
+These are geometric and representation tests, not additional DFT
+materials or a proof of complete global band connectivity.
 
 \subsection{Convergence and material validation}
 Before submission, the material set should include matched crystalline

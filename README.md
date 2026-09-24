@@ -86,6 +86,11 @@ The `ATOMIC_SIGNATURES` keyword connects the reference and integer layers to
 physically validated Gaussian-band characters. Unit tests exercise coset-phase,
 operation and irrep-order changes; small GPW/GAPW/SOC calculations exercise
 the physical integration, including nonmembership and an unresolved search.
+The reciprocal sampling backend now generates fixed-torus closures, incidence
+embeddings and primitive integer cycles. All Hall settings and grey extensions
+pass geometry, coordinate-change and scalar/spinful induced-band checks. It is
+not yet connected to automatic Gaussian sampling and does not replace a full
+equivariant open-cell/connectivity construction.
 The separate supplied-magnetic-group sweep tests algebra, not magnetic SCF.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and

@@ -281,6 +281,47 @@ but does not replace the representation-level elementarity tests needed
 for an EBR catalogue. The construction retains the supplied cell and
 origin conventions and does not assign standard Wyckoff letters.
 
+\subsection{Reciprocal fixed families and primitive cycles}
+The same affine-torus machinery also constructs reciprocal-space
+symmetry families, consistent with the relation between wave-vector
+types and reciprocal-space Wyckoff geometry~\cite{BilbaoReciprocal}.
+For an original operation with antiunitary flag $a_g$, the effective
+fractional reciprocal action is
+\begin{equation}
+ K_g=(-1)^{a_g}W_g^{-T},\qquad
+ (K_g-I)\bk=0\pmod{\mathbb Z^3}.
+\end{equation}
+Identical $K_g$ are identified only for geometric enumeration. The
+full original stabilizer is restored at each generic seed: centering
+cosets, nonsymmorphic translations and a possible antiunitary $PT$
+stabilizer still enter the representation factors. Translation-free
+reciprocal geometry does not justify discarding those operations.
+
+Each connected closure has saturated normals $N$ and equation
+$N\bk=c\pmod{\mathbb Z^r}$. A Smith certificate $UNV=D$ gives a
+primitive basis $V_{:,r+1:3}$ of its integer tangent lattice. These
+integer vectors generate torus cycles; an arbitrary floating-point
+nullspace need not generate the full lattice. For each specialization,
+an original operation $g$ and integer shift $G$ place its seed in the
+parent's lifted closure,
+\begin{equation}
+ N_{\rm parent}(K_g\bk_{\rm child}+G-\bk_{\rm parent})=0.
+\end{equation}
+The code checks closure containment for every child tangent direction
+and solves the lift as an exact integer equation. It returns explicit
+points and directed segments, including self-edges with nonzero
+reciprocal shifts for primitive cycles. Symmetry-related child images
+are evaluated as additional points rather than matched through
+assumed irrep labels.
+
+This backend is validated with the atomic-reference and segment
+restriction kernels. It does not yet replace the explicit property
+points in the Gaussian analysis. Removing higher-symmetry subsets
+can disconnect a fixed torus, so connected closures are not a complete
+decomposition into open cells. Their incidence graph and primitive
+cycles do not by themselves establish complete equivariant band
+connectivity, primitive-cell equivalence or EBR elementarity.
+
 \subsection{Atomic signature matrices on explicit reciprocal sets}
 Combining the generated sites with the induction kernel gives a native
 integer signature matrix for a supplied reciprocal set $\mathcal K$,

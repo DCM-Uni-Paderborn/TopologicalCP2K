@@ -586,7 +586,7 @@ on both its four- and twelve-point sets. An orthorhombic He TRIM
 fixture sets \texttt{ATOMIC\_SIGNATURE\_MAX\_NODES} to zero: signed
 membership is established, while nonnegative membership remains
 explicitly unresolved. This separates absence of a witness from
-proof of absence. The final focused driver passes 73 assertions
+proof of absence. The Gaussian-integration driver passed 73 assertions
 serially and with two MPI ranks, consisting of four native unit
 programs and 69 Gaussian-directory assertions. Existing physical
 reference values are unchanged; the new fixture uses the same UZH
@@ -598,6 +598,39 @@ $Ax=b$ exactly, with consistent row/column band ranks. This verifies
 the stored certificates rather than independently classifying the
 negative cases. The reader and compressed output records accompany
 \texttt{validation/development/gaussian-signature-validation.md}.
+
+The subsequent reciprocal-geometry test enumerates fixed families of
+$(-1)^aW^{-T}$ for all 530 Hall settings and their grey extensions.
+Across these 1,060 geometric groups it retains 18,700 connected
+fixed-torus closures, 57,357 specialization incidences and 18,730
+primitive integer tangent cycles. Full original cosets are restored
+when checking spinful stabilizers. At each setting, independent
+direct-transpose tests on reciprocal meshes with denominators 2, 3, 4
+and 6 assign every point to exactly one matching family; this gives
+333,900 point checks. Joint direct-cell shears, origin shifts, integer
+coset changes and operation permutations preserve the family and
+incidence correspondences. Analytic cases separately cover time
+reversal, $PT$, magnetic half translations, screw-invariant lines,
+centering and orthorhombic intersections.
+
+For each ordinary/grey group, scalar and spinful atomic reference
+matrices are constructed at the automatically generated seeds and
+incidence images. Every atomic column obeys each directed restriction
+and primitive-cycle relation, giving 2,481,572 column/edge comparisons.
+This explicitly retains reciprocal shifts, nonsymmorphic phases and
+antiunitary restrictions. The complete sweep passes in serial and
+on both MPI ranks; the MPI run repeats the algebra, rather than
+distributing it. The new reciprocal module and its test also pass
+with bounds checks, floating-point traps and undefined-behavior
+instrumentation; their dependencies use the existing library. A
+database-free analytic test build passes against that library, not
+against a full no-SPGLIB rebuild. The updated focused driver passes
+74/74 serial and 74/74 MPI assertions: five native programs and the
+unchanged 69 Gaussian assertions. Logs and reproduction details are
+in \texttt{validation/development/reciprocal-strata-validation.md}.
+The new sampling backend is not yet the Gaussian input path; fixed
+closures and their incidence/cycle graph are not a complete
+equivariant open-cell complex or a global connectivity classifier.
 
 These algebra sweeps do not implement magnetic-space-group detection,
 a magnetic noncollinear ground state, canonical irrep labels, a complete
