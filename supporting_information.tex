@@ -779,7 +779,7 @@ retain the ranks and finite factors of the baseline.
 Reproduction scripts, reference-comparison records and the new
 certificates are archived separately in
 \texttt{validation/development/star-transport-validation.md}.
-The current official drivers pass 170/170 assertions in each of
+The star-transport stage passed 170/170 assertions in each of
 SSMP and two-rank MPI: 134 native/little-group checks and 36
 existing export/k-point checks. Five new Gaussian assertions count
 star links, including the zero-link monodromy control and the six
@@ -796,6 +796,55 @@ Explicit-segment compatibility is necessary, not sufficient, for a
 gapped band subspace. The retained summaries and test logs are in
 \texttt{validation/development/}; no production material classification
 is inferred solely from a successful database sweep.
+
+\subsection{Real-space induction and composite witnesses}
+The subsequent site-specialization extension evaluates finite
+site-group induction at lifted endpoints of the generated Wyckoff
+families. All 22,592 relations in the ordinary/grey scalar/spinful
+530-setting sweep pass their independently generated band-character
+identities at eight reciprocal points, giving 180,736 checks.
+Transitive singleton equivalences and direct-sum witnesses also
+preserve every tested character and physical band dimension.
+The optimized SSMP, both MPI ranks and bounds/undefined-behavior
+instrumented executable produce identical 4,774-line result records.
+Intermediate-position tests cover inversion and mirror families,
+cell shear, shifted origin and integer coset changes. A separate
+analytic build omits the database interface; this uses the existing
+CP2K library rather than constituting a complete no-SPGLIB build.
+
+The detected exceptional-space-group coverage matches Tables II--IV
+of \href{https://arxiv.org/abs/1709.01935}{Cano et al. (2018)} in all
+2,120 variants. A second comparison uses the independently archived
+Bilbao EBR data in Crystalline.jl. Every per-setting generator count
+agrees; counting each space group once gives 3,383 scalar and 2,258
+spinful generators without time reversal, and 3,141 scalar and 1,616
+spinful generators with time reversal. The archived dataset's 2,258
+differs from the aggregate 2,263 printed in the 2018 article.
+The comparison retains the dataset's values and does not adjust a
+native count to obtain agreement. Neither these totals nor agreement
+of exceptional-space-group coverage establishes a canonical
+irrep-by-irrep identification.
+
+For each of 15 Gaussian detail files per build, an independent
+arbitrary-precision reader verifies $AE=A$, the conserved band
+dimensions, the lifted endpoint geometry, every source stabilizer's
+action on the entire displacement, singleton equivalence classes and
+recursive decomposition provenance. The physical fixtures include
+GPW, all-electron GAPW, post-SCF GTH SOC, sheared cells, screw sectors,
+TRIM and refined Wilson sampling. The official serial and two-rank
+MPI drivers each pass 171/171 assertions: six native unit programs,
+129 Gaussian little-group assertions and 36 existing export/k-point
+assertions. The bounded new unit includes the spinless time-reversal
+exception at an $S_4$ site in space group 84.
+
+The reproducible comparison scripts, versioned reference hashes,
+native logs and Gaussian certificates are retained in
+\texttt{validation/development/site-induction-validation.md}.
+The reference tables are test oracles, not runtime dependencies or
+imported CP2K classification tables. These tests prove the returned
+decompositions and their integration, not a globally gapped material
+classification, canonical EBR labels or completeness of arbitrary
+reciprocal sampling.
 
 \section{Bloch Kubo and Property-Symmetry Validation}
 \label{sec:si-kubo}

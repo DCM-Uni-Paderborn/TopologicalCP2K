@@ -281,6 +281,61 @@ but does not replace the representation-level elementarity tests needed
 for an EBR catalogue. The construction retains the supplied cell and
 origin conventions and does not assign standard Wyckoff letters.
 
+\subsection{Real-space specialization and composite witnesses}
+Matching little-group labels at sampled momenta is weaker than
+equivalence of band representations. A stronger constructive test
+uses a symmetry-preserving displacement of Wannier centers and
+transitivity of induction~\cite{Cano2018}. Let $q$ lie in a generic
+site family with stabilizer $H$, and let $q'$ be a higher-symmetry
+endpoint with stabilizer $H'$. If the lifted path from $q$ to $q'$
+is fixed by $H$, then induction of an onsite representation $\sigma$
+gives
+\begin{equation}
+ \sigma\uparrow H'=\bigoplus_\beta B_{\beta\sigma}\rho_\beta,
+ \qquad
+ \operatorname{BR}_{q,\sigma}\simeq
+ \bigoplus_\beta B_{\beta\sigma}\operatorname{BR}_{q',\beta}.
+ \label{eq:site-specialization-induction}
+\end{equation}
+Unlike a fit of reciprocal signatures, this supplies a real-space
+equivalence witness. A maximal-site representation can still be
+composite if it is equivalent through such paths to a direct sum at
+another site; maximal site symmetry alone is insufficient.
+
+The native implementation solves for an original operation $g$ and
+integer lift $L$ such that $y=W_gq'+\tau_g+L$ lies in the source's
+lifted affine closure. Every source stabilizer is checked against
+\begin{equation}
+ (W_h-I)(q-y)=0,\qquad h\in H,
+ \label{eq:site-path-stabilizer}
+\end{equation}
+without reduction modulo lattice vectors. The destination stabilizer
+is represented as a finite group fixing $y$ exactly, using translations
+$y-W_hy$. Its orbit of $q$ gives the finite induced representation.
+Physical spin factors and antiunitary operations are retained.
+Transport to a different destination orbit image preserves the
+original seed's representation-column labels.
+
+Decomposition uses complete onsite irreps or corepresentations.
+For the latter, unitary restrictions are orthogonal but need not
+have unit character norm. The implementation therefore divides each
+character inner product by the reference norm and checks the full
+reconstructed character, integer multiplicities and band dimension.
+Singleton inductions define equivalence classes; multi-summand
+inductions provide explicit composite witnesses. Recursive expansion
+terminates because every summand has strictly smaller positive
+whole-band dimension. For the resulting nonnegative matrix $E$,
+independently generated reciprocal signatures and ranks obey
+\begin{equation}
+ AE=A,\qquad N^TE=N^T.
+ \label{eq:site-expansion-check}
+\end{equation}
+The output retains lifted endpoints, branching matrices, equivalent
+representatives and decomposition provenance. It does not identify
+columns solely from equality in $A$. An unreduced generator is not,
+by itself, a certificate of canonical EBR identity or a verdict on
+the topology of the actual electronic bands.
+
 \subsection{Reciprocal fixed families and primitive cycles}
 The same affine-torus machinery also constructs reciprocal-space
 symmetry families, consistent with the relation between wave-vector

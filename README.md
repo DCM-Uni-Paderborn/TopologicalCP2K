@@ -74,7 +74,13 @@ antiunitary corepresentations and explicit-segment compatibility.
 Native generation also covers 3,467 Wyckoff families and 5,648 specialization
 relations across all 530 Hall settings, with an independent tabulated-coordinate
 comparison. The generated sites are connected to the spinful site-induction
-tests; this does not yet establish representation elementarity.
+tests. Real-space specialization now also produces onsite-induction
+matrices, singleton equivalences and certified composite expansions.
+All 22,592 relations pass 180,736 reciprocal character checks; independent
+reference comparisons match exceptional-space-group coverage and archived
+Bilbao EBR generator counts in all 2,120 variants. These are not yet
+canonical-irrep-by-irrep identifications. Reproduction details are in
+`validation/development/site-induction-validation.md`.
 The combined atomic-signature layer has 2,120 checked matrices over ordinary/grey
 and scalar/spinful variants on six explicit reciprocal points. Its 31,079
 atomic columns satisfy the tested rank and compatibility conditions. A separate
