@@ -672,6 +672,70 @@ The full 1,060-group geometry sweep is repeated with path subdivision.
 Records and the replay procedure are retained in
 \texttt{validation/development/automatic-sampling-validation.md}.
 
+\subsection{Joint compatibility lattice and independent certificates}
+The next extension assembles all endpoint-to-line restrictions into
+one integer matrix $C$, expressed in the same irrep/corepresentation
+coordinates as the atomic matrix $A$. In particular, a reciprocal-image
+self-edge subtracts two restrictions in the same point block and
+retains nonsymmorphic monodromy. An exact Smith kernel $K$ and integer
+atomic coordinates $Y$ satisfy $CK=0$ and $KY=A$.
+The Smith form of $Y$ supplies the free and finite factors of
+$\ker_{\mathbb Z}C/\operatorname{im}_{\mathbb Z}A$.
+
+The 530-setting ordinary/grey and scalar/spinful sweep verifies every
+generated atomic column in the joint kernel with zero quotient class.
+Small-group variants reverse all directed edges and reciprocal shifts,
+reject a deliberately incompatible atomic column and enforce a tiny
+memory budget without returning partial data. Separate integer tests
+include a nonsaturated constraint row, a free-plus-torsion quotient,
+zero-dimensional kernels and incompatible targets. The four/eight-TRIM
+inversion matrices with equal-rank constraints yield $\mathbb Z_2$
+and $\mathbb Z_2^3\times\mathbb Z_4$, respectively. For all 81 and
+6,561 two-pair parity patterns, zero class is equivalent to the
+independently tested signed atomic membership.
+
+The full sweep passes in optimized serial, on both MPI ranks and
+with the new integer/compatibility and reciprocal kernels compiled
+with bounds, floating-point traps and undefined-behavior checks.
+All printed graph ranks/factors agree. The instrumented database-free
+analytic subset also passes against the existing library, not a full
+no-SPGLIB build. MPI repeats the algebra independently on each rank.
+
+An independent SymPy 1.14.0 reader validates eleven exported Gaussian
+quotient records from each of the serial and two-rank MPI runs. It
+checks $CK=0$, $KY=A$ and $CA=0$, computes the rational rank of $C$
+and an independent integer Smith form of $K$ to certify saturation,
+and factors $Y$ independently. It also checks unimodularity of the
+exported quotient row map. Dividing its nonzero transformed rows by
+their divisors must give a primitive full-row-rank lattice; free rows
+must vanish. Finally it solves for each compatible target in $K$ and
+recomputes the exported residue vector using arbitrary-size integers.
+Incompatible targets must not have a quotient-class record.
+
+For the automatic He/GPW, He/GAPW and sheared-He fixtures, $C$ has
+109 retained equations and 91 coordinates. Its kernel has rank six,
+no free quotient factor and one $\mathbb Z_2$ factor. The Ne/SOC
+fixture has 81 equations, 67 coordinates, kernel rank five and quotient
+$\mathbb Z_2^2\times\mathbb Z_4$. All four physical targets have
+zero class. These are deliberately small atomic examples, not
+nontrivial topological-material discoveries. The explicit four-point
+complete screw fixtures have trivial quotients. The selected single
+screw branch violates compatibility and is assigned no class.
+By contrast, the sparse explicit He and refined Wilson graphs have
+free ranks four and 23. Those ranks expose missing constraints or
+identifications in the supplied graph and are not labelled physical
+topological invariants. Even a zero free rank does not establish
+completeness of omitted congruence constraints or BZ-wide isolation.
+
+The official focused and exporter drivers together pass 165/165
+assertions in each of SSMP and two-rank MPI. This comprises 129 native
+and little-group assertions and 36 existing export/k-point assertions;
+23 new checks inspect compatibility, kernel rank, free/cyclic factors
+and actual target classes without changing existing physical reference
+values. Reproduction commands, the independent reader and compressed
+certificates accompany
+\texttt{validation/development/compatibility-lattice-validation.md}.
+
 These algebra sweeps do not implement magnetic-space-group detection,
 a magnetic noncollinear ground state, canonical irrep labels, a complete
 Brillouin-zone connectivity graph or a full elementary-band catalogue.

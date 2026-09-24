@@ -169,8 +169,10 @@ generated reference matrices, reordered operations and irreps and
 integer coset shifts preserve the recovered signature after checking
 the independently regenerated factors. Corrupted factors and unmatched
 operations are rejected. The focused serial and two-rank MPI drivers
-each pass 106 assertions, combining five native unit programs with
-101 Gaussian assertions, including automatic reciprocal sampling.
+each pass 129 assertions, combining five native unit programs with
+124 Gaussian assertions, including automatic reciprocal sampling
+and the joint compatibility quotient. Another 36 export/k-point
+assertions pass in each configuration.
 
 The reciprocal-geometry backend independently checks all 530 Hall
 settings and their grey extensions. It generates 18,700 fixed-family
@@ -194,6 +196,20 @@ integer witnesses agree exactly. Refining to 138 points and 164
 segments retains compatibility. A deliberately selected single screw
 branch instead fails the band-isolation guard at a generated crossing.
 Invalid sample budgets and Wilson-mode combinations are also rejected.
+
+The joint integer construction additionally certifies the compatibility
+kernel and atomic quotient for every ordinary/grey and scalar/spinful
+Hall-setting graph. Exact tests recover the four/eight-point inversion
+quotients $\mathbb Z_2$ and $\mathbb Z_2^3\times\mathbb Z_4$ and
+compare quotient classes with direct signed membership for all
+6,642 two-pair signatures. Independent arbitrary-precision Smith
+calculations validate the exported Gaussian certificates. The automatic
+scalar GPW/GAPW and sheared fixtures have compatible rank six and a
+single $\mathbb Z_2$ factor; the SOC fixture has rank five and factors
+$\mathbb Z_2^2\times\mathbb Z_4$. Their occupied signatures have
+zero class. The single screw branch is incompatible and receives no
+class. Partial explicit graphs retain free factors, illustrating why
+a sampled quotient is not automatically a full space-group indicator.
 
 \subsection{Convergence and material validation}
 Before submission, the material set should include matched crystalline

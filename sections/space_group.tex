@@ -414,6 +414,71 @@ membership likewise does not prove triviality of a Bloch bundle.
 The integer routines do not add an automatic general-classification
 input mode or replace spectral isolation and compatibility checks.
 
+\subsection{Joint compatibility lattice and atomic quotient}
+The separate edge tests can be assembled into one integer system.
+Let $n\in\mathbb Z^N$ contain the point-specific irrep or full
+corepresentation multiplicities, and let $P_a$ select the block at
+point $a$. For an edge $e:a\to b+G_e$, the unitary line restrictions
+give a block row
+\begin{equation}
+ C_e=B_aR_aP_a-B_bR_bP_b,\qquad Cn=0,
+ \label{eq:joint-compatibility}
+\end{equation}
+where $R_a$ is the endpoint corepresentation restriction, or the
+identity at a purely unitary point. The line corepresentation
+restriction is injective: its disjoint unitary supports and prescribed
+pairing or doubling uniquely determine valid line counts. Thus these
+unitary equations also enforce equality of the full line
+corepresentations. When $a=b$, both terms act on the same block,
+but their rephasing still uses $G_e$. A screw-loop relation must not
+be discarded as an edge connecting a point to itself.
+
+For the supplied graph $\mathcal G$, define
+\begin{equation}
+ \mathcal B_{\mathcal G}=\ker_{\mathbb Z} C,\qquad
+ \mathcal X_{\mathcal G}
+ =\mathcal B_{\mathcal G}/\operatorname{im}_{\mathbb Z}A.
+ \label{eq:graph-quotient}
+\end{equation}
+This follows the compatible-representation/atomic-lattice construction
+of symmetry indicators~\cite{Po2017}, but explicitly retains the scope
+of the supplied graph. A Smith factorization $U_CCV_C=D_C$ of rank
+$s$ supplies the saturated integer kernel
+$K=(V_C)_{:,s+1:N}$. Saturation matters: rescaling rational nullspace
+vectors separately need not produce the entire integer kernel.
+Every atomic column must admit an exact solution $A=KY$; failure
+invalidates the reference/compatibility construction.
+
+Writing $q=N-s$, the Smith form $U_YYV_Y=D_Y$ of rank $r$ gives
+\begin{equation}
+ \mathcal X_{\mathcal G}\simeq
+ \mathbb Z^{q-r}\oplus\bigoplus_{i=1}^{r}\mathbb Z_{d_i}.
+ \label{eq:graph-quotient-factors}
+\end{equation}
+Factors with $d_i=1$ are trivial. For a compatible Gaussian signature
+$b=Kz$, its class is $U_Yz$ modulo the nonzero divisors, with the
+remaining integer coordinates retained. The class vanishes precisely
+when a signed atomic decomposition exists. Nonnegative decomposition
+is a stronger, separate question. An incompatible signature has no
+quotient class; it is not assigned a nonzero topological index.
+
+The native implementation checks $CK=0$ and $KY=A$ and exports
+the matrices, Smith row map, factors and target residues for
+independent verification. It removes duplicate homogeneous equations
+without replacing the integer kernel by a floating-point nullspace.
+Resource or coefficient-growth limits remain unresolved outcomes.
+These calculations are replicated on MPI ranks, not distributed
+sparse integer factorizations.
+
+Missing star-arm identifications or global compatibility relations
+can leave free factors in Eq.~\eqref{eq:graph-quotient-factors}.
+They are diagnostics of the supplied lattices, not additional physical
+topological invariants. Conversely, vanishing free rank only means
+that the atomic columns span the compatible space rationally at this
+sample. It does not certify omitted congruence constraints, complete
+reciprocal coverage, EBR completeness or spectral isolation throughout
+the Brillouin zone.
+
 \subsection{Connecting atomic references to Gaussian bands}
 The optional \texttt{ATOMIC\_SIGNATURES} analysis connects the native
 atomic reference and integer kernels to the validated Gaussian-band
@@ -453,7 +518,9 @@ The nonnegative search budget is controlled by
 unresolved. Invalid data or failed witness verification abort instead
 of producing a physical classification. Segment compatibility can be
 requested separately for NNKP/Wilson connections and is automatic for
-SYMMETRY paths. The comparison
+SYMMETRY paths. With atomic signatures enabled, these connections
+also define the joint lattice of Eq.~\eqref{eq:graph-quotient}.
+The comparison
 does not automatically identify complete reciprocal strata, standard
 EBR labels or the topology of an isolated Bloch bundle.
 

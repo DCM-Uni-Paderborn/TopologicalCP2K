@@ -88,9 +88,14 @@ operation and irrep-order changes; small GPW/GAPW/SOC calculations exercise
 the physical integration, including nonmembership and an unresolved search.
 The reciprocal sampling backend now generates fixed-torus closures, incidence
 embeddings and primitive integer cycles. All Hall settings and grey extensions
-pass geometry, coordinate-change and scalar/spinful induced-band checks. It is
-not yet connected to automatic Gaussian sampling and does not replace a full
-equivariant open-cell/connectivity construction.
+pass geometry, coordinate-change and scalar/spinful induced-band checks.
+`KPOINTS_SOURCE SYMMETRY` now connects this graph to Gaussian sampling with
+subdivision, spectral-isolation and sewing checks. With atomic signatures,
+the directed restrictions also define a certified integer compatibility
+kernel and quotient by the atomic columns. Exported certificates agree with
+independent arbitrary-precision Smith calculations. Free factors and incomplete
+sampled graphs are not advertised as physical symmetry indicators. These
+paths do not replace a full equivariant open-cell/connectivity construction.
 The separate supplied-magnetic-group sweep tests algebra, not magnetic SCF.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
