@@ -169,8 +169,8 @@ generated reference matrices, reordered operations and irreps and
 integer coset shifts preserve the recovered signature after checking
 the independently regenerated factors. Corrupted factors and unmatched
 operations are rejected. The focused serial and two-rank MPI drivers
-each pass 129 assertions, combining five native unit programs with
-124 Gaussian assertions, including automatic reciprocal sampling
+each pass 134 assertions, combining five native unit programs with
+129 Gaussian assertions, including automatic reciprocal sampling
 and the joint compatibility quotient. Another 36 export/k-point
 assertions pass in each configuration.
 
@@ -208,8 +208,14 @@ scalar GPW/GAPW and sheared fixtures have compatible rank six and a
 single $\mathbb Z_2$ factor; the SOC fixture has rank five and factors
 $\mathbb Z_2^2\times\mathbb Z_4$. Their occupied signatures have
 zero class. The single screw branch is incompatible and receives no
-class. Partial explicit graphs retain free factors, illustrating why
-a sampled quotient is not automatically a full space-group indicator.
+class. Star identifications additionally include nonsymmorphic phases
+and antiunitary conjugation. In all 2,120 Hall-setting/symmetry
+combinations, both the compatible rank and finite quotient factors
+agree with the published 230-space-group tables~\cite{Po2017}.
+This is an independent algebraic benchmark, not a proof of complete
+EBR labels or material topology. Partial explicit graphs can still
+retain free factors: the refined He Wilson example changes from 23
+to four after star identification and remains incomplete.
 
 \subsection{Convergence and material validation}
 Before submission, the material set should include matched crystalline

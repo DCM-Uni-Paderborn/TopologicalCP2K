@@ -673,6 +673,8 @@ Records and the replay procedure are retained in
 \texttt{validation/development/automatic-sampling-validation.md}.
 
 \subsection{Joint compatibility lattice and independent certificates}
+The following baseline precedes the star-identification extension
+described in the next subsection; its archived certificates are retained.
 The next extension assembles all endpoint-to-line restrictions into
 one integer matrix $C$, expressed in the same irrep/corepresentation
 coordinates as the atomic matrix $A$. In particular, a reciprocal-image
@@ -735,6 +737,57 @@ and actual target classes without changing existing physical reference
 values. Reproduction commands, the independent reader and compressed
 certificates accompany
 \texttt{validation/development/compatibility-lattice-validation.md}.
+
+\subsection{Star transport and published quotient comparison}
+The subsequent extension includes star-arm identifications in the
+same integer matrix, using the star-character transport formula
+derived in the main text. A threefold screw example checks genuinely complex
+characters, antiunitary conjugation, reciprocal shifts and independent
+integer changes of destination representatives. A star-only graph
+reduces nine local coordinates to three independent ones without
+requiring any line edges; a deliberately mismatched target is rejected.
+Corrupted factors, nonfinite characters and unsafe phases must not
+return a permutation. Every retained star link in the complete
+Hall-setting sweep agrees with independently induced atomic columns;
+inverse maps and all alternative connecting operations give the same
+full-corepresentation identification.
+
+An independent development reader compares the resulting ranks and
+ordered nontrivial Smith factors with Tables I--IV and IX--XII of
+\href{https://arxiv.org/abs/1703.00911v2}{Po, Vishwanath and Watanabe (2017)}.
+It validates all 230 entries in each rank table
+and uses the SPGLIB Hall-to-space-group metadata solely to associate
+settings with the reference rows. All 2,120 ordinary/grey and
+scalar/spinful Hall-setting combinations agree, with no free factors
+on these automatically generated graphs. These are representation
+group comparisons, not 2,120 DFT calculations. They do not independently
+prove completeness of a user-supplied graph or the elementary nature
+of every generated atomic representation.
+
+The Gaussian certificate reader also checks each exported star's
+reciprocal geometry. The explicit He/GPW and He/GAPW screw examples
+now contain ten equations for nine coordinates, still with compatible
+rank three and trivial quotient. The Ne/SOC screw has five equations,
+five coordinates and rank two. The refined He Wilson graph contains
+76 equations and 75 coordinates: its kernel rank falls from 42 to 23
+and its free quotient rank from 23 to four. The partial two-point He
+graph still has four free factors; the single-branch screw obstruction
+remains incompatible. No energy, character or physical reference value
+is adjusted to obtain these results. The automatic Gaussian fixtures
+retain the ranks and finite factors of the baseline.
+
+Reproduction scripts, reference-comparison records and the new
+certificates are archived separately in
+\texttt{validation/development/star-transport-validation.md}.
+The current official drivers pass 170/170 assertions in each of
+SSMP and two-rank MPI: 134 native/little-group checks and 36
+existing export/k-point checks. Five new Gaussian assertions count
+star links, including the zero-link monodromy control and the six
+links of the refined Wilson graph.
+The full star-aware sweep output is identical between optimized SSMP,
+each MPI rank and the instrumented build. The database-free analytic
+variant passes as well, using the existing library rather than a full
+no-SPGLIB build.
 
 These algebra sweeps do not implement magnetic-space-group detection,
 a magnetic noncollinear ground state, canonical irrep labels, a complete

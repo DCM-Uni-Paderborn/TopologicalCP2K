@@ -433,6 +433,33 @@ corepresentations. When $a=b$, both terms act on the same block,
 but their rephasing still uses $G_e$. A screw-loop relation must not
 be discarded as an edge connecting a point to itself.
 
+Symmetry-equivalent points must not carry independent labels. Let
+$s$ map $k_a$ to $k_b+G$, and for a destination little-group operation
+$h$ set $h_a=s^{-1}hs$. The actual coset representatives obey
+$hs=\{I|L\}sh_a$, with
+\begin{equation}
+ L=\tau_h+W_h\tau_s-\tau_s-W_s\tau_{h_a}\in\mathbb Z^3.
+\end{equation}
+Writing $z$ for the spin factor at Gamma, including physical
+time-reversal squaring, the transported unitary character is
+\begin{equation}
+ \chi_b(h)=\frac{z(h,s)}{z(s,h_a)}e^{-2\pi i k_b\cdot L}
+ \begin{cases}
+ \chi_a(h_a),&s\text{ unitary},\\
+ \chi_a(h_a)^*,&s\text{ antiunitary}.
+ \end{cases}
+ \label{eq:star-character-transport}
+\end{equation}
+Independent integer changes of endpoint representatives therefore
+retain the necessary Bloch phase. We check conjugation of the
+complete product table and the twisted factor law, including
+antiunitary little-group operations. Character decomposition must
+give a bijective unitary-irrep map. Restriction to the unitary
+subgroup then determines the full corepresentation map $M_s$,
+which must preserve dimensions. A spanning set of star relations
+adds $M_sP_a-P_b$ to $C$. Edge winding and star identification
+remain distinct constraints.
+
 For the supplied graph $\mathcal G$, define
 \begin{equation}
  \mathcal B_{\mathcal G}=\ker_{\mathbb Z} C,\qquad
@@ -470,7 +497,8 @@ Resource or coefficient-growth limits remain unresolved outcomes.
 These calculations are replicated on MPI ranks, not distributed
 sparse integer factorizations.
 
-Missing star-arm identifications or global compatibility relations
+Star relations between supplied points are now included. Missing
+points or global compatibility relations
 can leave free factors in Eq.~\eqref{eq:graph-quotient-factors}.
 They are diagnostics of the supplied lattices, not additional physical
 topological invariants. Conversely, vanishing free rank only means

@@ -94,7 +94,10 @@ subdivision, spectral-isolation and sewing checks. With atomic signatures,
 the directed restrictions also define a certified integer compatibility
 kernel and quotient by the atomic columns. Exported certificates agree with
 independent arbitrary-precision Smith calculations. Free factors and incomplete
-sampled graphs are not advertised as physical symmetry indicators. These
+sampled graphs are not advertised as physical symmetry indicators. Star-arm
+identifications now include spin factors, antiunitary conjugation and Bloch
+phases. All 2,120 Hall-setting/symmetry combinations reproduce the published
+compatible ranks and finite quotient factors for the 230 space groups. These
 paths do not replace a full equivariant open-cell/connectivity construction.
 The separate supplied-magnetic-group sweep tests algebra, not magnetic SCF.
 The source tree still has no full general EBR catalogue. Hall response,
