@@ -81,6 +81,13 @@ reference comparisons match exceptional-space-group coverage and archived
 Bilbao EBR generator counts in all 2,120 variants. These are not yet
 canonical-irrep-by-irrep identifications. Reproduction details are in
 `validation/development/site-induction-validation.md`.
+A subsequent affine-reference comparison matches all 1,731 named Wyckoff
+families from independent generators/coordinates, including changed cell,
+origin and operation conventions. Across four symmetry variants, all 6,924
+site-resolved EBR dimension multisets agree (10,398 unreduced maximal-site
+columns). This is not yet a canonical character match between individual
+equal-dimensional onsite irreps. See
+`validation/development/affine-reference-validation.md`.
 The combined atomic-signature layer has 2,120 checked matrices over ordinary/grey
 and scalar/spinful variants on six explicit reciprocal points. Its 31,079
 atomic columns satisfy the tested rank and compatibility conditions. A separate

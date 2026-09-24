@@ -846,6 +846,34 @@ decompositions and their integration, not a globally gapped material
 classification, canonical EBR labels or completeness of arbitrary
 reciprocal sampling.
 
+\subsection{Affine-reference and site-resolved EBR checks}
+The next reference layer uses the separately archived space-group
+generators and parametrized Wyckoff coordinates of Crystalline.jl.
+The test fixture closes the generators with exact rational arithmetic;
+the native reference path does not obtain operations from SPGLIB.
+All 1,731 named affine families match the generated closures, including
+their whole tangent spaces, dimensions and conventional-cell
+multiplicities. A second pass simultaneously changes the basis,
+origin, integer coset representatives and operation order and preserves
+every named specialization edge. The four ordinary/grey scalar/spinful
+variants give 6,924 affine correspondences.
+
+After the conventional-cell centering factor is removed, the band
+dimensions of the 10,398 unreduced maximal-site columns agree with
+the independent EBR multisets separately at each Wyckoff position.
+No reference column is selected or discarded using the legacy
+\texttt{Decomposable} field. This test detects incorrect distributions
+among sites or band dimensions that total counts would miss, but
+does not assign canonical labels to equal-dimensional irreps.
+Optimized serial and two-rank MPI output is compared with a separately
+instrumented reference executable compiled without its SPGLIB database
+interface. The latter still links the existing CP2K library, and is
+not a complete no-SPGLIB CP2K build. Numerical guards additionally
+reject wrong tangents, repeated reference entries, incorrect
+multiplicities and nonfinite or unbounded coordinates. Reproduction
+scripts, source hashes and logs are retained in
+\texttt{validation/development/affine-reference-validation.md}.
+
 \section{Bloch Kubo and Property-Symmetry Validation}
 \label{sec:si-kubo}
 The retained development report is

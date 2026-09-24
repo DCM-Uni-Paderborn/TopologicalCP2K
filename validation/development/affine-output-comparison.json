@@ -1,0 +1,21 @@
+{
+  "identical": true,
+  "outputs": {
+    "serial": {
+      "records": 24111,
+      "sha256": "44c09430972ab854506ded33a3af0c95fad7e88734e484cd0d95d2180f427d36"
+    },
+    "debug": {
+      "records": 24111,
+      "sha256": "44c09430972ab854506ded33a3af0c95fad7e88734e484cd0d95d2180f427d36"
+    },
+    "mpi0": {
+      "records": 24111,
+      "sha256": "44c09430972ab854506ded33a3af0c95fad7e88734e484cd0d95d2180f427d36"
+    },
+    "mpi1": {
+      "records": 24111,
+      "sha256": "44c09430972ab854506ded33a3af0c95fad7e88734e484cd0d95d2180f427d36"
+    }
+  }
+}

@@ -281,6 +281,24 @@ but does not replace the representation-level elementarity tests needed
 for an EBR catalogue. The construction retains the supplied cell and
 origin conventions and does not assign standard Wyckoff letters.
 
+A separate native matching layer can attach an independently supplied
+affine reference catalogue to these families. For a reference
+$q=q_0+D\alpha$ in the same cell and origin convention, a group
+operation must satisfy
+\begin{equation}
+ BW_gD=0,\qquad B(W_gq_0+\tau_g)-c\in\mathbb Z^r,
+ \qquad \operatorname{rank}D=3-r.
+ \label{eq:affine-reference-match}
+\end{equation}
+The tangent identity uses bounded integer arithmetic. Orbit
+multiplicities must also agree, and the complete correspondence must
+be bijective. Checking the whole affine family avoids treating a
+nongeneric reference origin as a generic site. Independent generators
+and Wyckoff coordinates provide a convention-aware validation of this
+layer; standard letters remain supplied metadata rather than labels
+inferred by the Gaussian analysis. This geometric correspondence does
+not identify onsite irreps with equal dimension.
+
 \subsection{Real-space specialization and composite witnesses}
 Matching little-group labels at sampled momenta is weaker than
 equivalence of band representations. A stronger constructive test
