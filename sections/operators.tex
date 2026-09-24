@@ -1,0 +1,108 @@
+\section{Hamiltonians and operators in a nonorthogonal basis}
+\label{sec:operators}
+\subsection{Covariant matrices and the physical metric}
+Let $\Phi$ denote the row of basis functions $|\phi_\mu\rangle$, and
+$|\psi\rangle=\Phi c$. Define
+\begin{equation}
+ S=\Phi^\dagger\Phi,\qquad
+ H=\Phi^\dagger\widehat H\Phi,\qquad
+ X_a=\Phi^\dagger\widehat r_a\Phi .
+ \label{eq:ao-data}
+\end{equation}
+The overlap must be positive definite on the retained basis, and the
+normalization is $c^\dagger Sc=1$. The generalized eigenproblem is
+\begin{equation}
+ HC=SC\varepsilon,\qquad C^\dagger SC=I .
+ \label{eq:generalized}
+\end{equation}
+A covariant matrix $A$ acts on coefficient vectors through $S^{-1}A$.
+Consequently, composition of two \emph{projected} operators is represented
+by $AS^{-1}B$, and the projected commutator by
+$AS^{-1}B-BS^{-1}A$. An ordinary product $AB$ is generally incorrect.
+
+For a nonsingular change of basis $\Phi'=\Phi T$,
+\begin{equation}
+ S'=T^\dagger ST,\quad A'=T^\dagger AT,\quad c'=T^{-1}c .
+ \label{eq:basis-change}
+\end{equation}
+The expectation $c^\dagger Ac$ and the generalized spectrum are unchanged.
+The orthonormal representation
+$\widetilde A=S^{-1/2}AS^{-1/2}$ is useful for proofs and dense reference
+calculations. It need not be formed in a sparse implementation: products
+can be evaluated by solving linear systems with $S$.
+
+A finite-basis projection is not an algebra homomorphism for arbitrary
+continuum operators. With $\Pi=\Phi S^{-1}\Phi^\dagger$,
+$\Phi^\dagger\widehat A\Pi\widehat B\Phi$ differs in general from
+$\Phi^\dagger\widehat A\widehat B\Phi$.
+Thus a commutator or a variance of projected positions is an observable
+of the projected model, not automatically its complete-basis continuum
+counterpart. This distinction is monitored through basis convergence
+rather than hidden in a numerical tolerance.
+
+\subsection{Finite positions and AO export}
+For an isolated system, analytic Gaussian first moments provide
+$X_a$ in the same basis ordering as $H$ and $S$. Translation of the
+coordinate origin by $x_a$ gives $X_a-x_aS$, not $X_a-x_aI$.
+Likewise an energy query uses $H-ES$. These two simple identities are
+essential for origin and energy-shift invariance.
+
+The \texttt{AO\_MATRICES} print section can export overlap, scalar KS
+Hamiltonian, and the three position matrices. They permit an independent
+finite-Hamiltonian calculation. Activating SOC in a property section
+does not silently turn the separate scalar KS export into a spinor
+Hamiltonian export. Model Hamiltonians can use the low-level matrix
+kernels when the metric, positions, and symmetry structure are supplied
+consistently; this does not imply automatic adapters for every
+electronic-structure method.
+
+\subsection{Bloch operators and directed overlaps}
+In the cell Fourier convention,
+\begin{equation}
+ H_{\mu\nu}(\bk)=\sum_{\bR}e^{\ii\bk\cdot\bR}H_{\mu\nu}(\bR),
+ \qquad
+ S_{\mu\nu}(\bk)=\sum_{\bR}e^{\ii\bk\cdot\bR}S_{\mu\nu}(\bR).
+ \label{eq:bloch-matrices}
+\end{equation}
+Here $\bk$ is Cartesian and includes inverse-length units; fractional
+reciprocal coordinates instead require $2\pi$ in the phase.
+Image-cell labels cannot be discarded before forming derivatives or
+inter-k-point connections.
+
+For cell-periodic states and a directed step $\bb$, the occupied-state
+overlap is
+\begin{equation}
+ M(\bk,\bb)=C^\dagger(\bk)O(\bk+\bb;\bb)C(\bk+\bb),\qquad
+ O_{\mu\nu}=\sum_{\bR}e^{\ii(\bk+\bb)\cdot\bR}
+ \langle\phi_{\mu0}|e^{-\ii\bb\cdot\br}|\phi_{\nu\bR}\rangle .
+ \label{eq:wannier90-mmn-definition}
+\end{equation}
+The zero-step limit is $S(\bk)$, but a finite link is not obtained by
+replacing $O$ with $S$, or by simply contracting coefficient vectors.
+Neighbor lists, reciprocal-boundary phases, and the selected band rank
+are part of the observable. Wannier90's file and library interfaces can
+consume such data \cite{Pizzi2020}; native Wilson calculations need no
+Wannier localization or interpolation.
+
+\subsection{Spin--orbit coupling and symmetry}
+The implementations considered here start from a converged scalar
+restricted SCF potential and add GTH spin--orbit matrix elements.
+The localizer and Bloch-Kubo paths use the complete AO spinor space,
+whereas a second-variational band-topology calculation uses a selected
+scalar-state space whose size must be converged separately.
+Neither construction is self-consistent noncollinear SOC DFT.
+
+In spin-major ordering, the overlap is
+$\mathbb S=\operatorname{diag}(S,S)$ and physical time reversal is
+$\Theta=JK$, where
+\begin{equation}
+ J=\begin{pmatrix}0&I\\-I&0\end{pmatrix},\qquad
+ \Theta^2=-I .
+\end{equation}
+Time-reversal relations must be checked for the Hamiltonian, metric,
+and relevant operators; the presence of an SOC pseudopotential alone
+does not establish them.
+A Cartesian spatial rotation $R$ acts on spin through an SU(2) lift of
+$\det(R)R$, with inversion acting trivially on spin and separately on
+orbital parity. The sign ambiguity of this lift is retained in the
+double-group multiplication law.

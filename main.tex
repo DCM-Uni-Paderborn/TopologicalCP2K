@@ -1,0 +1,187 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,bm,graphicx,booktabs,array,longtable,xcolor,hyperref}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\emergencystretch=2em
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black,
+pdfauthor={Thomas D. Kuehne; Alexander Cerjan; Vladislav Efremkin; Hermann Schulz-Baldes; Emil Prodan}}
+\newcommand{\CPtwoK}{\textsc{CP2K}}
+\newcommand{\Quickstep}{\textsc{Quickstep}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\bk}{\bm{k}}
+\newcommand{\br}{\bm{r}}
+\newcommand{\bR}{\bm{R}}
+\newcommand{\bG}{\bm{G}}
+\newcommand{\bb}{\bm{b}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Pf}{\operatorname{Pf}}
+\newcommand{\Sig}{\operatorname{Sig}}
+\newcommand{\BZ}{\mathrm{BZ}}
+\numberwithin{equation}{section}
+\title{Topological Systems with CP2K}
+\author{Thomas D. K\"uhne$^{a,b,c,*}$, Alexander Cerjan$^{d}$,\\
+Vladislav Efremkin$^{a,b}$, Hermann Schulz-Baldes$^{e}$, and Emil Prodan$^{f}$\\[0.6em]
+\small $^{a}$Center for Advanced Systems Understanding (CASUS),\\
+\small Untermarkt 20, D-02826 G\"orlitz, Germany\\
+\small $^{b}$Helmholtz-Zentrum Dresden-Rossendorf (HZDR),\\
+\small Bautzner Landstrasse 400, D-01328 Dresden, Germany\\
+\small $^{c}$Chair of Computational Systems Science, Institute of Artificial Intelligence,\\
+\small Technische Universit\"at Dresden, D-01069 Dresden, Germany\\
+\small $^{d}$Center for Integrated Nanotechnologies, Sandia National Laboratories,\\
+\small Albuquerque, New Mexico 87185, USA\\
+\small $^{e}$Department Mathematik, Friedrich-Alexander-Universit\"at Erlangen-N\"urnberg,\\
+\small Cauerstrasse 11, D-91058 Erlangen, Germany\\
+\small $^{f}$Department of Physics, Yeshiva University, New York, USA\\[0.4em]
+\small $^{*}$Corresponding author: \href{mailto:tkuehne@cp2k.org}{tkuehne@cp2k.org}}
+\date{}
+% Target journal: Computer Physics Communications.
+% Affiliations, contribution statements and final submission scope require author approval.
+\begin{document}
+\maketitle
+\begin{abstract}
+Electronic transport and topology probe information that cannot be
+inferred from band energies alone. Current operators, inter-state
+overlaps, symmetry representations, and the spatial structure of a
+Hamiltonian must be treated consistently. We formulate these quantities
+in the nonorthogonal Gaussian atomic-orbital representation of \CPtwoK,
+connecting finite-temperature Kubo transport, Wilson-loop and Chern
+analysis, crystalline symmetry representations, spectral localizers, and
+the quadratic pseudospectrum. The overlap metric is retained in operator
+products, symmetry transformations, and spectral-gap estimates.
+Real-space and reciprocal-space constructions share Hamiltonian,
+position, and spin--orbit matrix elements without requiring a fitted
+Wannier Hamiltonian. Dense reference calculations are complemented by
+distributed sparse assembly, symmetric-indefinite inertia calculations,
+and an optional sparse Pfaffian backend. We explain how the finite
+matrix formulations relate to noncommutative geometry and distinguish
+local topological protection from an electronic band gap or a mobility
+gap. Wilson and inversion calculations, native projective little-group
+and antiunitary corepresentation tests, and serial/MPI operator
+comparisons provide complementary validation.
+The implementation scope is stated explicitly: the current Kubo path
+evaluates symmetric dissipative DC response. Crystalline analysis
+includes nonsymmorphic endpoint-to-line compatibility, but a complete
+space-group EBR classifier and universal symmetry reduction of
+topological properties remain development targets.
+\end{abstract}
+\noindent\textbf{Keywords:} CP2K, Kubo transport, noncommutative geometry,
+spectral localizer, topological quantum chemistry, spin--orbit coupling
+\par\medskip
+\noindent\textit{Working manuscript for Computer Physics Communications.
+Implementation and validation status: 24 September 2026.}
+\clearpage
+\section{Introduction}
+Electronic-structure theory supplies a Hamiltonian and a Hilbert-space
+representation; extracting transport or topological information requires
+additional structure. Two calculations can agree in their eigenvalues
+while disagreeing in matrix elements of position, current, or a symmetry
+operator. This distinction is especially important in a localized
+nonorthogonal basis, where ordinary matrix multiplication is not the
+representation of operator composition.
+
+The \Quickstep{} module of \CPtwoK{} combines localized Gaussian orbitals
+with plane-wave and multigrid representations of densities and
+electrostatics \cite{Kuehne2020CP2K,Lippert1997,Lippert1999,VandeVondele2005a}.
+This representation provides access to spatially resolved operators
+without first fitting a tight-binding Hamiltonian. It also creates
+specific obligations: the AO metric, periodic image indices, Bloch
+convention, nonlocal pseudopotentials, and spinor ordering must remain
+consistent across every analysis.
+
+The first-principles transport programme of K\"uhne, Heske and Prodan
+\cite{KuehneTransport2020} supplies an important starting point:
+thermally disordered structures are treated as configurations of a
+covariant family of Hamiltonians, and dissipation is included in the
+finite-temperature response. Bellissard's operator-algebraic framework
+connects this viewpoint to topology without assuming exact translation
+symmetry of each configuration \cite{Bellissard1994,ProdanSchulzBaldes2016}.
+The present manuscript combines this motivation with reciprocal-space
+invariants and spatially resolved finite-matrix diagnostics.
+
+The scope is deliberately broader than a band-topology interface.
+Wilson loops resolve the geometry of an isolated band subspace;
+crystalline representations resolve symmetry constraints; a localizer
+tests an energy-position query; a quadratic pseudospectrum produces
+approximately localized states; and Kubo response determines a
+transport coefficient at specified temperature and dissipation.
+None of these outputs can simply be substituted for another.
+
+The companion study on symmetry-reduced k-point sampling and Wannier
+analysis develops the underlying Bloch reconstruction and full-mesh
+export. We repeat the operator conventions needed to make the present
+article self-contained, but keep the detailed topology, transport, and
+localizer analysis here. In particular, Wannier90 is an optional route
+to a reduced representation, not a prerequisite for native AO analysis.
+Sections below distinguish implemented algorithms from the more general
+theory and from extensions still requiring validation.
+The materials-discovery applications discussed later are distinguished
+from our small test and demonstration calculations: the former motivate
+the scientific use of these methods, while the latter establish specific
+numerical identities and illustrate their operation.
+\input{sections/operators}
+\input{sections/noncommutative}
+\input{sections/kubo}
+\input{sections/band_topology}
+\input{sections/space_group}
+\input{sections/localizers}
+\input{sections/quadratic}
+\input{sections/applications}
+\input{sections/implementation_validation}
+\section{Conclusions}
+A common nonorthogonal operator representation connects several
+otherwise distinct ways of analysing electronic states in \CPtwoK.
+Metric-aware current operators support finite-temperature transport;
+directed Gaussian overlaps support Wilson and parameter-space
+invariants; and Hamiltonian-position tuples support local indices and
+joint approximate states. Sparse assembly and factorization address
+their numerical cost without replacing the physical assumptions of
+each construction.
+
+The present evidence establishes operator and solver consistency for
+the tested models and small GPW/GAPW/SOC calculations, alongside the
+retained neon and stanene band-topology demonstrations and the Si/Al
+k-point tests of the companion study. The TopoHSE-DB and
+generative--predictive discovery studies illustrate the materials-science
+applications motivating this infrastructure; their published or submitted
+results are not new CP2K validation data. The present tests do not establish
+all-space-group TQC, a general Hall-response implementation, or
+size-converged first-principles localizer classifications.
+Those boundaries are part of the method specification.
+
+The crystalline framework now resolves projective unitary irreps,
+antiunitary pairing and doubling, and their restrictions along explicit
+reciprocal-space segments. Its algebraic coverage across conventional
+cell settings and supplied magnetic groups is distinct from a magnetic
+electronic-structure implementation or a complete EBR catalogue.
+The next material studies must converge the electronic structure,
+geometry or torus size, analysis sampling, and numerical scales
+independently, rather than interpreting a stable integer from a single
+small matrix as a bulk-material result.
+
+\section*{Code and Data Availability}
+The manuscript sources, Supporting Information, and retained validation
+records are maintained in the development repository
+\url{https://github.com/DCM-Uni-Paderborn/TopologicalCP2K}.
+The repository currently has restricted access during manuscript
+preparation; public archival availability will be established before
+publication.
+\CPtwoK{} is distributed under the GNU General Public License, version
+2 or later, at \url{https://github.com/cp2k/cp2k}. The working implementation
+and retained calculation records are described in the Supporting
+Information. Not all developments described here are present in an
+upstream release. A final reproducible source snapshot, external-library
+versions, and public data archive must accompany submission.
+The present draft does not assign an archival DOI or imply that the
+development branch has already been released.
+
+\section*{Authorship and Declarations}
+The author list and corresponding author follow the agreed manuscript
+scope. Affiliations, CRediT roles, funding, competing-interest declarations,
+and any required disclosure concerning writing tools are to be confirmed
+by all authors before submission.
+% Do not replace this working statement with an unapproved declaration.
+\input{references}
+\end{document}

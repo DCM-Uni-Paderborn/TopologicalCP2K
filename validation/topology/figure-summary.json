@@ -1,0 +1,23 @@
+{
+  "neon": {
+    "loops": 5,
+    "points_per_loop": 8,
+    "z2": 0,
+    "minimum_link_singular_value": 0.9982577799087161
+  },
+  "stanene": {
+    "loops": 193,
+    "points_per_loop": 192,
+    "z2": 1,
+    "minimum_link_singular_value": 0.9524814244559875
+  },
+  "inputs_sha256": {
+    "neon/input.inp": "4c4dd2d3566753939bd8f06cc7866288df3360c3dadb60aa1149473e33092722",
+    "neon/neon.wilson": "f661fb332418b107967aead72ab819618fb357f2c5415c644677fff505221003",
+    "neon/run.log": "9f40d15b37430f29b094219a8da6e112a065263e6d7e5b106d064f560c0ffa34",
+    "stanene/comparison.json": "98b7db47ed39562eb90760d25838d0f3bacc323fafcc9ceca582c780f4b400ff",
+    "stanene/input.inp": "95931f1fbb816719e33f379fa95fbda5c0659bb4a979db3ec6d327529259629f",
+    "stanene/run.log": "0c499f8acd05762df8c6daf9df9d44dcbbac48b49b208a96308b9ae174c6e5cc",
+    "stanene/stanene.wilson": "7e9d97b6b5270651a3e4bddab4e9688dcb1e856650ee962c064d398379c540a1"
+  }
+}

@@ -1,0 +1,3 @@
+ce575e0578cb2806cf60e5b6ed5c3524169dc9c2a3ebc8347b9e6b26f865d7fc  bin/cp2k.psmp
+3bf816db2d43255a9a4196f55e62fdd6cbdb1d4fed09de1639d6502537a6c53d  src/libcp2k.2026.2.dylib
+374f3a7cdc14a8380448e2c23ee283fd7ee3c4dd0426f2a282ed0abe4c7b8fdd  bin/topology_symmetry_unittest.psmp

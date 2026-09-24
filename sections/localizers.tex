@@ -1,0 +1,206 @@
+\section{Spectral localizers in finite and periodic systems}
+\label{sec:localizer}
+\subsection{Energy-position tuples and Clifford structure}
+A spectral localizer combines operators associated with several
+observables into one self-adjoint matrix. For two positions and a
+Hamiltonian, Pauli matrices provide a Clifford representation.
+In an orthonormal space define
+\begin{equation}
+ \widetilde L=
+ (\widetilde H-EI)\otimes\sigma_z+
+ \kappa(\widetilde X-xI)\otimes\sigma_x+
+ \kappa(\widetilde Y-yI)\otimes\sigma_y ,
+ \label{eq:clifford-localizer}
+\end{equation}
+up to the explicitly fixed tensor ordering.
+The parameter $\kappa>0$ has units of energy/length.
+It balances energy and position resolution rather than correcting
+the Hamiltonian. The connection between a localizer signature and
+an even index pairing holds under appropriate locality, gap, and
+finite-volume bounds \cite{LoringSchulzBaldes2020}.
+Those hypotheses remain relevant when interpreting a finite Gaussian model.
+
+In auxiliary-index-first ordering the covariant AO matrix is
+\begin{equation}
+ L=
+ \begin{pmatrix}
+ H-ES & \kappa[(X-xS)-\ii(Y-yS)]\\
+ \kappa[(X-xS)+\ii(Y-yS)] & -(H-ES)
+ \end{pmatrix},\qquad
+ B=\begin{pmatrix}S&0\\0&S\end{pmatrix}.
+ \label{eq:covariant-localizer}
+\end{equation}
+For SOC, $H$ and $S$ here denote the physical spinor matrices.
+Auxiliary doubling is separate from spin, so the localizer dimension
+is four times the scalar AO count. All AO directions are retained:
+there is no hidden occupied-space projection or automatic removal
+of nearly dependent basis functions.
+
+\subsection{Index, metric gap, and stability}
+For class A define
+\begin{equation}
+ \nu_A=\frac12\Sig(L)=\frac12(n_+-n_-),\qquad
+ \mu=\min_j|\lambda_j|,\quad Lv_j=\lambda_j Bv_j .
+ \label{eq:index-gap}
+\end{equation}
+Signature is invariant under nonsingular congruence, whereas ordinary
+eigenvalues of a covariant AO matrix are not.
+Inertia can therefore be evaluated directly from $L$, but the
+protection gap must retain $B$. Equivalently, $\mu$ is the smallest
+absolute eigenvalue of $B^{-1/2}LB^{-1/2}$; this identity does not
+require forming that dense matrix.
+
+At fixed metric, the index cannot change under a perturbation satisfying
+\begin{equation}
+ \|B^{-1/2}\delta L B^{-1/2}\|<\mu .
+ \label{eq:localizer-stability}
+\end{equation}
+This finite-matrix statement gives local protection an operational
+meaning. If the metric changes, the corresponding orthonormalized
+problems must be compared, including the effect of $\delta B$.
+An unresolved near-zero gap yields an \emph{unresolved} index,
+not evidence for trivial topology.
+
+Moving the query and coordinate operators together, shifting the
+Hamiltonian and query energy together, or changing AO basis must
+leave the generalized gap unchanged. Reversing the oriented plane
+reverses the class A sign. Model comparisons establish the sign
+convention before applying it to a material.
+
+\subsection{Inertia and gap require different calculations}
+A pivoted Hermitian factorization has the form
+\begin{equation}
+ P^\dagger LP=\mathcal L D\mathcal L^\dagger .
+ \label{eq:ldl}
+\end{equation}
+Here $\mathcal L$ is unit lower triangular and $D$ contains
+$1\times1$ and $2\times2$ blocks.
+Sylvester's law transfers the inertia from $L$ to $D$.
+For a Hermitian block,
+\[
+ D_b=\begin{pmatrix}a&b\\\overline b&d\end{pmatrix},\qquad
+ \lambda_\pm=\frac{a+d}{2}
+ \pm\sqrt{\left(\frac{a-d}{2}\right)^2+|b|^2}.
+\]
+Stable evaluation must retain scaling and both signs.
+A zero-diagonal block with $b\ne0$ has one positive and one negative
+direction; counting its diagonal entries is wrong.
+The dense reference uses LAPACK \texttt{ZHETRF}, with \texttt{DSYTRF}
+for exactly real matrices \cite{LapackLDL}. A small imaginary part is
+not discarded to select real arithmetic.
+
+Pivot magnitudes are not generalized gaps. For $\sigma>0$,
+shifted inertia counts satisfy, away from singular endpoints,
+\begin{equation}
+ \begin{split}
+ n_-(L-\sigma B)-n_-(L)&=\#\{j:0<\lambda_j<\sigma\},\\
+ n_-(L)-n_-(L+\sigma B)&=\#\{j:-\sigma<\lambda_j<0\}.
+ \end{split}
+ \label{eq:gap-inertia}
+\end{equation}
+These counts bracket the nearest positive or negative generalized
+eigenvalue. Factorization failure or an ambiguous endpoint must not
+be treated as a successful certificate. The reported bounds are
+finite-precision numerical brackets, not interval-arithmetic guarantees.
+
+\subsection{Pfaffian orientation and physical time reversal}
+For a real skew-symmetric matrix $A$ of even order,
+$\det A=\Pf(A)^2$: the determinant loses the Pfaffian sign.
+Moreover, $\Pf(P^TAP)=\det(P)\Pf(A)$.
+An odd simultaneous row/column permutation reverses that sign
+without changing the determinant.
+Ordinary inertia cannot replace a skew factorization with explicit
+permutation bookkeeping.
+
+For spinful time reversal with $\Theta^2=-1$, the localizer has
+a real skew representation \cite{DollSchulzBaldes2021,Wong2026}.
+In auxiliary/spin/AO ordering, let $C=J_{\mathrm{aux}}\otimes J$
+and $Q=(I-\ii C)/\sqrt2$. The symmetry relations imply that
+\begin{equation}
+ A=\ii Q^\dagger LQ
+ \label{eq:aii-skew}
+\end{equation}
+is real and skew-symmetric. Both properties are checked numerically,
+with residuals small relative to the independently resolved metric
+gap. An arbitrary complex AO basis change also transforms time
+reversal; keeping $J$ fixed would generally be inconsistent.
+
+Let $A_0$ be the corresponding transform of
+$L_0=\operatorname{diag}(S,-S)$. The reference-calibrated index is
+\begin{equation}
+ (-1)^{\nu_{\mathrm{AII}}}
+ =\operatorname{sgn}\Pf(A)\,
+  \operatorname{sgn}\Pf(A_0).
+ \label{eq:pfaffian-index}
+\end{equation}
+Both factors use the same ordering and orientation.
+The dense algorithm accumulates signs rather than an overflowing
+Pfaffian product. This is a time-reversal local index,
+not an inversion-parity test.
+
+The optional sparse skew-LDL backend implements a separate numerical
+task from MUMPS inertia \cite{Wong2026}.
+Its present single-rank factorization must not be described as an
+MPI-distributed Pfaffian solver.
+The motivating photonic and aperiodic examples
+\cite{Dixon2023,Wong2026} provide methodological context, not
+first-principles material validation for the CP2K path.
+
+\subsection{Periodic positions and the torus construction}
+A Cartesian coordinate truncated to a primitive cell is discontinuous
+at the periodic seam. Using it in the open-boundary localizer is not
+a periodic formulation.
+Instead, analytic periodic functions are used \cite{Doll2025}.
+For analysis-torus reciprocal vectors $\bG_j$ and
+$\phi_j=\bG_j\cdot\br_0$, define
+\begin{equation}
+ \begin{split}
+ C_j&=\langle\phi_\mu|\cos(\bG_j\cdot\br-\phi_j)|\phi_\nu\rangle,\\
+ T_j&=\langle\phi_\mu|\sin(\bG_j\cdot\br-\phi_j)|\phi_\nu\rangle .
+ \end{split}
+\end{equation}
+In the implemented orientation,
+\begin{equation}
+ L_{\mathrm{per}}=
+ \begin{pmatrix}
+ H-ES-\eta(2S-C_1-C_2)&\eta(T_1-\ii T_2)\\
+ \eta(T_1+\ii T_2)&-H+ES+\eta(2S-C_1-C_2)
+ \end{pmatrix}.
+ \label{eq:periodic-localizer}
+\end{equation}
+The energy scale $\eta$ is distinct from $\kappa$, and the metric
+remains $\operatorname{diag}(S,S)$.
+An overall sign and auxiliary-space conjugation relative to the
+cited periodic construction make its orientation consistent with
+the finite localizer used here.
+
+The trigonometric operators are integrated directly, not evaluated
+as matrix functions of finite projected Cartesian positions.
+Projection need not preserve either exact unitarity of exponentials
+or their commutativity. The theorem for a gapped finite-range lattice
+Hamiltonian therefore does not automatically become a theorem for
+an arbitrary Gaussian projection.
+The output is an AO-torus diagnostic requiring independent
+basis-, torus-, and scale-converged material checks.
+
+Explicit analysis k-points describe the enlarged torus through its
+complete mesh. Periodic exponentials shift between mesh sectors,
+so their cross-k links must be retained.
+A symmetry-reduced SCF can supply the potential, but scalar SCF
+weights cannot replace the full torus operator.
+The present periodic localizer covers two-dimensional periodic planes;
+a general three-dimensional AII implementation is not claimed.
+
+\subsection{Connection to the quadratic pseudospectrum}
+For Hermitian operators $A_j$ and anticommuting Hermitian Clifford
+matrices $\gamma_j$, squaring $L=\sum_jA_j\otimes\gamma_j$ gives
+\begin{equation}
+ L^2=\left(\sum_j A_j^2\right)\otimes I+
+ \sum_{j<l}[A_j,A_l]\otimes\gamma_j\gamma_l .
+ \label{eq:clifford-square}
+\end{equation}
+The first term measures simultaneous approximate localization;
+the second retains noncommutativity.
+The quadratic gap and localizer gap are related, but not
+interchangeable. In an AO basis each projected product must
+include the metric, or be evaluated after orthonormalization.

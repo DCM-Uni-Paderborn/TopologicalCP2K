@@ -1,0 +1,849 @@
+ DBCSR| CPU Multiplication driver                                           BLAS (U)
+ DBCSR| Multrec recursion limit                                              512 (U)
+ DBCSR| Multiplication stack size                                           1000 (D)
+ DBCSR| Maximum elements for images                                    UNLIMITED (U)
+ DBCSR| Multiplicative factor virtual images                                   1 (U)
+ DBCSR| Use multiplication densification                                       T (D)
+ DBCSR| Multiplication size stacks                                             3 (U)
+ DBCSR| Use memory pool for CPU allocation                                     F (U)
+ DBCSR| Number of 3D layers                                               SINGLE (U)
+ DBCSR| Use MPI memory allocation                                              F (U)
+ DBCSR| Use RMA algorithm                                                      F (U)
+ DBCSR| Use Communication thread                                               T (U)
+ DBCSR| Communication thread load                                             83 (D)
+ DBCSR| MPI: My process id                                                     0
+ DBCSR| MPI: Number of processes                                               1
+ DBCSR| OMP: Current number of threads                                         2
+ DBCSR| OMP: Max number of threads                                             2
+ DBCSR| Split modifier for TAS multiplication algorithm                  1.0E+00 (U)
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2026-09-17 08:47:09.249
+ ***** ** ***  *** **   PROGRAM STARTED ON        MacBook-Pro-von-Thomas-3.local
+ **    ****   ******    PROGRAM STARTED BY                               tkuehne
+ ***** **    ** ** **   PROGRAM PROCESS ID                                 25423
+  **** **  *******  **  PROGRAM STARTED IN /Users/tkuehne/work/cp2k-z2pack-valid
+                                           ation/stanene-converged
+
+ CP2K| version string:                 CP2K version 2026.2 (Development Version)
+ CP2K| source code revision number:                                      3919fb7
+ CP2K| cp2kflags: omp fftw3 libxc parallel scalapack mpi_f08 no_statm_access ope
+ CP2K|            nblas
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                                   2026-09-17 08:43:44
+ CP2K| Program compiled on                                                      
+ CP2K| Program compiled for                                                arm64
+ CP2K| Data directory path                  /Users/tkuehne/work/cp2k-z2pack/data
+ CP2K| Input file name                                                 input.inp
+
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                    BASIS_MOLOPT_UZH
+ GLOBAL| Potential file name                                  GTH_SOC_POTENTIALS
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                      __STD_INPUT__
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                                    stanene
+ GLOBAL| Run type                                                         ENERGY
+ GLOBAL| FFT library                                                       FFTW3
+ GLOBAL| Diagonalization library                                       ScaLAPACK
+ GLOBAL| Cholesky decomposition library                                ScaLAPACK
+ GLOBAL| DGEMM library                                                      BLAS
+ GLOBAL| Direct generalized diagonalization requested                          F
+ GLOBAL| Orthonormality check for eigenvectors                          DISABLED
+ GLOBAL| Matrix multiplication library                                 ScaLAPACK
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| Grid backend                                                       AUTO
+ GLOBAL| Global print level                                                  LOW
+ GLOBAL| MPI I/O enabled                                                       T
+ GLOBAL| Total number of message passing processes                             1
+ GLOBAL| Number of distributed systems (nodes)                                 1
+ GLOBAL| Number of threads for this process                                    2
+ GLOBAL| This output is from process                                           0
+ GLOBAL| OpenMP stack size per thread (OMP_STACKSIZE)                    default
+ GLOBAL| CPU model name                                                  UNKNOWN
+ GLOBAL| CPUID                                                              2000
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal                    0             0             0             0
+ MEMORY| MemFree                     0             0             0             0
+ MEMORY| Buffers                     0             0             0             0
+ MEMORY| Cached                      0             0             0             0
+ MEMORY| Slab                        0             0             0             0
+ MEMORY| SReclaimable                0             0             0             0
+ MEMORY| MemLikelyFree               0             0             0             0
+
+
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2026)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   1
+                             - Atoms:                                          2
+                             - Shell sets:                                     2
+                             - Shells:                                        10
+                             - Primitive Cartesian functions:                  8
+                             - Cartesian basis functions:                     28
+                             - Spherical basis functions:                     26
+
+  Maximum angular momentum of- Orbital basis functions:                        2
+                             - Local part of the GTH pseudopotential:          0
+                             - Non-local part of the GTH pseudopotential:      4
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                             150
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-08
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        SCF update method:                                MIXING
+                        added MOs                                        22    0
+                        --------------------------------------------------------
+                        Mixing method:                            BROYDEN_MIXING
+                                                charge density mixing in g-space
+                        --------------------------------------------------------
+                        No outer SCF
+
+ Extrapolation method: initial_guess
+
+ Number of electrons:                                                          8
+ Number of occupied orbitals:                                                  4
+ Number of molecular orbitals:                                                26
+
+ Number of orbital functions:                                                 26
+ Number of independent orbital functions:                                     26
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 NoMix/Diag. 0.15E+00    0.1     1.47040048        -6.9359187687 -6.94E+00
+     2 Broy./Diag. 0.15E+00    0.2     0.00361774        -6.9570191560 -2.11E-02
+     3 Broy./Diag. 0.15E+00    0.2     0.01974174        -6.9277499200  2.93E-02
+     4 Broy./Diag. 0.15E+00    0.2     0.00034465        -6.9461328204 -1.84E-02
+     5 Broy./Diag. 0.15E+00    0.2     0.00174991        -6.9467123108 -5.79E-04
+     6 Broy./Diag. 0.15E+00    0.2     0.00027834        -6.9479818433 -1.27E-03
+     7 Broy./Diag. 0.15E+00    0.2     0.00165622        -6.9498421693 -1.86E-03
+     8 Broy./Diag. 0.15E+00    0.2     0.00020119        -6.9514535723 -1.61E-03
+     9 Broy./Diag. 0.15E+00    0.2     0.00032508        -6.9520132063 -5.60E-04
+    10 Broy./Diag. 0.15E+00    0.2     0.00003869        -6.9522235785 -2.10E-04
+    11 Broy./Diag. 0.15E+00    0.2     0.00004271        -6.9519844439  2.39E-04
+    12 Broy./Diag. 0.15E+00    0.2     0.00002066        -6.9519707810  1.37E-05
+    13 Broy./Diag. 0.15E+00    0.2     0.00008080        -6.9520907639 -1.20E-04
+    14 Broy./Diag. 0.15E+00    0.2     0.00011694        -6.9522874482 -1.97E-04
+    15 Broy./Diag. 0.15E+00    0.2     0.00001940        -6.9523882392 -1.01E-04
+    16 Broy./Diag. 0.15E+00    0.2     0.00001537        -6.9523797924  8.45E-06
+    17 Broy./Diag. 0.15E+00    0.2     0.00002148        -6.9523942602 -1.45E-05
+    18 Broy./Diag. 0.15E+00    0.2     0.00000751        -6.9524131999 -1.89E-05
+    19 Broy./Diag. 0.15E+00    0.2     0.00000331        -6.9524011023  1.21E-05
+    20 Broy./Diag. 0.15E+00    0.2     0.00001628        -6.9523761892  2.49E-05
+    21 Broy./Diag. 0.15E+00    0.2     0.00000795        -6.9523525986  2.36E-05
+    22 Broy./Diag. 0.15E+00    0.2     0.00000758        -6.9523540634 -1.46E-06
+    23 Broy./Diag. 0.15E+00    0.2     0.00000406        -6.9523656938 -1.16E-05
+    24 Broy./Diag. 0.15E+00    0.2     0.00000335        -6.9523743976 -8.70E-06
+    25 Broy./Diag. 0.15E+00    0.2     0.00000745        -6.9523901558 -1.58E-05
+    26 Broy./Diag. 0.15E+00    0.2     0.00001527        -6.9524141981 -2.40E-05
+    27 Broy./Diag. 0.15E+00    0.2     0.00000959        -6.9524328811 -1.87E-05
+    28 Broy./Diag. 0.15E+00    0.2     0.00000654        -6.9524244275  8.45E-06
+    29 Broy./Diag. 0.15E+00    0.2     0.00000215        -6.9524137950  1.06E-05
+    30 Broy./Diag. 0.15E+00    0.2     0.00000141        -6.9524063595  7.44E-06
+    31 Broy./Diag. 0.15E+00    0.2     0.00000032        -6.9524053299  1.03E-06
+    32 Broy./Diag. 0.15E+00    0.2     0.00000206        -6.9524022407  3.09E-06
+    33 Broy./Diag. 0.15E+00    0.2     0.00000055        -6.9524004385  1.80E-06
+    34 Broy./Diag. 0.15E+00    0.2     0.00000108        -6.9524026693 -2.23E-06
+    35 Broy./Diag. 0.15E+00    0.2     0.00000110        -6.9524054907 -2.82E-06
+    36 Broy./Diag. 0.15E+00    0.2     0.00000174        -6.9524088538 -3.36E-06
+    37 Broy./Diag. 0.15E+00    0.2     0.00000036        -6.9524104340 -1.58E-06
+    38 Broy./Diag. 0.15E+00    0.2     0.00000128        -6.9524108707 -4.37E-07
+    39 Broy./Diag. 0.15E+00    0.2     0.00000036        -6.9524116782 -8.08E-07
+    40 Broy./Diag. 0.15E+00    0.2     0.00000056        -6.9524099578  1.72E-06
+    41 Broy./Diag. 0.15E+00    0.2     0.00000052        -6.9524086597  1.30E-06
+    42 Broy./Diag. 0.15E+00    0.2     0.00000042        -6.9524080144  6.45E-07
+    43 Broy./Diag. 0.15E+00    0.2     0.00000009        -6.9524079931  2.13E-08
+    44 Broy./Diag. 0.15E+00    0.2     0.00000026        -6.9524091860 -1.19E-06
+    45 Broy./Diag. 0.15E+00    0.2     0.00000004        -6.9524095979 -4.12E-07
+    46 Broy./Diag. 0.15E+00    0.2     0.00000027        -6.9524100175 -4.20E-07
+    47 Broy./Diag. 0.15E+00    0.2     0.00000010        -6.9524103301 -3.13E-07
+    48 Broy./Diag. 0.15E+00    0.2     0.00000017        -6.9524103603 -3.01E-08
+    49 Broy./Diag. 0.15E+00    0.2     0.00000003        -6.9524103538  6.41E-09
+    50 Broy./Diag. 0.15E+00    0.2     0.00000008        -6.9524099569  3.97E-07
+    51 Broy./Diag. 0.15E+00    0.2     0.00000001        -6.9524098140  1.43E-07
+    52 Broy./Diag. 0.15E+00    0.2     0.00000004        -6.9524098494 -3.54E-08
+    53 Broy./Diag. 0.15E+00    0.2     8.6061E-09        -6.9524098746 -2.52E-08
+
+  *** SCF run converged in    53 steps ***
+
+
+  Electronic density on regular grids:         -8.0000000000        0.0000000000
+  Core density on regular grids:                8.0000000000       -0.0000000000
+  Total charge density on r-space grids:       -0.0000000000
+  Total charge density g-space grids:          -0.0000000000
+
+  Overlap energy of the core charge distribution:               0.00000000368067
+  Self energy of the core charge distribution:                -14.92071625911422
+  Core Hamiltonian energy:                                      3.11577544422263
+  Hartree energy:                                               6.84834188226506
+  Exchange-correlation energy:                                 -1.99581094564871
+
+  Total energy:                                                -6.95240987459455
+
+ !-----------------------------------------------------------------------------!
+                               Interface to Wannier90
+ !-----------------------------------------------------------------------------!
+ WANNIER90| Explicit points: 156, neighbours per point: 1
+
+ Start K-Point Calculation ...
+                                                                    ... Finished
+ TOPOLOGY| Scalar bands in SOC second variation: 26
+ TOPOLOGY| Minimum sampled subspace gap [eV]:   7.3691345912E-02
+ TOPOLOGY| Loop 1 Berry phase [rad]:     0.000000000000 min singular value:   7.8667E-01
+ TOPOLOGY| Loop 2 Berry phase [rad]:     0.000000000000 min singular value:   6.7939E-01
+ TOPOLOGY| Loop 3 Berry phase [rad]:     0.000000000000 min singular value:   7.9758E-01
+ TOPOLOGY| Loop 4 Berry phase [rad]:     0.000000000000 min singular value:   8.7831E-01
+ TOPOLOGY| Loop 5 Berry phase [rad]:     0.000000000000 min singular value:   9.1401E-01
+ TOPOLOGY| Loop 6 Berry phase [rad]:     0.000000000000 min singular value:   8.7055E-01
+ TOPOLOGY| Loop 7 Berry phase [rad]:     0.000000000000 min singular value:   7.8980E-01
+ TOPOLOGY| Loop 8 Berry phase [rad]:     0.000000000001 min singular value:   6.7950E-01
+ TOPOLOGY| Loop 9 Berry phase [rad]:     0.000000000000 min singular value:   7.2804E-01
+ TOPOLOGY| Loop 10 Berry phase [rad]:    -0.000000000001 min singular value:   7.3019E-01
+ TOPOLOGY| Loop 11 Berry phase [rad]:    -0.000000000001 min singular value:   9.1208E-01
+ TOPOLOGY| Loop 12 Berry phase [rad]:    -0.000000000000 min singular value:   9.4124E-01
+ TOPOLOGY| Loop 13 Berry phase [rad]:    -0.000000000000 min singular value:   9.4653E-01
+ TOPOLOGY| Z2 candidate (before sampling convergence): 0
+ WANNIER90| Explicit points: 600, neighbours per point: 1
+
+ Start K-Point Calculation ...
+                                                                    ... Finished
+ TOPOLOGY| Scalar bands in SOC second variation: 26
+ TOPOLOGY| Minimum sampled subspace gap [eV]:   7.3691345912E-02
+ TOPOLOGY| Loop 1 Berry phase [rad]:     0.000000000000 min singular value:   8.4775E-01
+ TOPOLOGY| Loop 2 Berry phase [rad]:     0.000000000000 min singular value:   7.9717E-01
+ TOPOLOGY| Loop 3 Berry phase [rad]:     0.000000000000 min singular value:   8.6337E-01
+ TOPOLOGY| Loop 4 Berry phase [rad]:     0.000000000000 min singular value:   9.1703E-01
+ TOPOLOGY| Loop 5 Berry phase [rad]:     0.000000000000 min singular value:   9.4541E-01
+ TOPOLOGY| Loop 6 Berry phase [rad]:     0.000000000000 min singular value:   9.5703E-01
+ TOPOLOGY| Loop 7 Berry phase [rad]:     0.000000000000 min singular value:   9.6708E-01
+ TOPOLOGY| Loop 8 Berry phase [rad]:     0.000000000000 min singular value:   9.7260E-01
+ TOPOLOGY| Loop 9 Berry phase [rad]:     0.000000000000 min singular value:   9.7172E-01
+ TOPOLOGY| Loop 10 Berry phase [rad]:     0.000000000000 min singular value:   9.6466E-01
+ TOPOLOGY| Loop 11 Berry phase [rad]:     0.000000000000 min singular value:   9.5681E-01
+ TOPOLOGY| Loop 12 Berry phase [rad]:     0.000000000000 min singular value:   9.4956E-01
+ TOPOLOGY| Loop 13 Berry phase [rad]:     0.000000000000 min singular value:   9.4584E-01
+ TOPOLOGY| Loop 14 Berry phase [rad]:     0.000000000001 min singular value:   9.0910E-01
+ TOPOLOGY| Loop 15 Berry phase [rad]:     0.000000000001 min singular value:   8.3658E-01
+ TOPOLOGY| Loop 16 Berry phase [rad]:     0.000000000002 min singular value:   7.1815E-01
+ TOPOLOGY| Loop 17 Berry phase [rad]:    -0.000000000000 min singular value:   7.6200E-01
+ TOPOLOGY| Loop 18 Berry phase [rad]:    -0.000000000002 min singular value:   7.4130E-01
+ TOPOLOGY| Loop 19 Berry phase [rad]:    -0.000000000001 min singular value:   8.9605E-01
+ TOPOLOGY| Loop 20 Berry phase [rad]:    -0.000000000001 min singular value:   9.5616E-01
+ TOPOLOGY| Loop 21 Berry phase [rad]:    -0.000000000001 min singular value:   9.7757E-01
+ TOPOLOGY| Loop 22 Berry phase [rad]:    -0.000000000000 min singular value:   9.8338E-01
+ TOPOLOGY| Loop 23 Berry phase [rad]:    -0.000000000000 min singular value:   9.8403E-01
+ TOPOLOGY| Loop 24 Berry phase [rad]:    -0.000000000000 min singular value:   9.8480E-01
+ TOPOLOGY| Loop 25 Berry phase [rad]:    -0.000000000000 min singular value:   9.8554E-01
+ TOPOLOGY| Z2 candidate (before sampling convergence): 0
+ TOPOLOGY| Refinement 1: WCC change   4.8630E-03, transverse step   1.2959E-01
+ WANNIER90| Explicit points: 2352, neighbours per point: 1
+
+ Start K-Point Calculation ...
+                                                                    ... Finished
+ TOPOLOGY| Scalar bands in SOC second variation: 26
+ TOPOLOGY| Minimum sampled subspace gap [eV]:   7.3691345912E-02
+ TOPOLOGY| Loop 1 Berry phase [rad]:     0.000000000000 min singular value:   9.1731E-01
+ TOPOLOGY| Loop 2 Berry phase [rad]:     0.000000000000 min singular value:   9.0334E-01
+ TOPOLOGY| Loop 3 Berry phase [rad]:     0.000000000000 min singular value:   9.2390E-01
+ TOPOLOGY| Loop 4 Berry phase [rad]:     0.000000000000 min singular value:   9.4836E-01
+ TOPOLOGY| Loop 5 Berry phase [rad]:     0.000000000000 min singular value:   9.6464E-01
+ TOPOLOGY| Loop 6 Berry phase [rad]:     0.000000000000 min singular value:   9.7086E-01
+ TOPOLOGY| Loop 7 Berry phase [rad]:     0.000000000000 min singular value:   9.7672E-01
+ TOPOLOGY| Loop 8 Berry phase [rad]:     0.000000000000 min singular value:   9.8135E-01
+ TOPOLOGY| Loop 9 Berry phase [rad]:     0.000000000000 min singular value:   9.8482E-01
+ TOPOLOGY| Loop 10 Berry phase [rad]:     0.000000000000 min singular value:   9.8698E-01
+ TOPOLOGY| Loop 11 Berry phase [rad]:     0.000000000000 min singular value:   9.8885E-01
+ TOPOLOGY| Loop 12 Berry phase [rad]:     0.000000000000 min singular value:   9.9040E-01
+ TOPOLOGY| Loop 13 Berry phase [rad]:     0.000000000000 min singular value:   9.9164E-01
+ TOPOLOGY| Loop 14 Berry phase [rad]:     0.000000000000 min singular value:   9.9259E-01
+ TOPOLOGY| Loop 15 Berry phase [rad]:     0.000000000000 min singular value:   9.9273E-01
+ TOPOLOGY| Loop 16 Berry phase [rad]:     0.000000000000 min singular value:   9.9233E-01
+ TOPOLOGY| Loop 17 Berry phase [rad]:     0.000000000000 min singular value:   9.9201E-01
+ TOPOLOGY| Loop 18 Berry phase [rad]:     0.000000000000 min singular value:   9.9123E-01
+ TOPOLOGY| Loop 19 Berry phase [rad]:     0.000000000000 min singular value:   9.9045E-01
+ TOPOLOGY| Loop 20 Berry phase [rad]:     0.000000000000 min singular value:   9.8974E-01
+ TOPOLOGY| Loop 21 Berry phase [rad]:     0.000000000000 min singular value:   9.8913E-01
+ TOPOLOGY| Loop 22 Berry phase [rad]:     0.000000000000 min singular value:   9.8756E-01
+ TOPOLOGY| Loop 23 Berry phase [rad]:     0.000000000000 min singular value:   9.8585E-01
+ TOPOLOGY| Loop 24 Berry phase [rad]:     0.000000000000 min singular value:   9.8412E-01
+ TOPOLOGY| Loop 25 Berry phase [rad]:     0.000000000001 min singular value:   9.8253E-01
+ TOPOLOGY| Loop 26 Berry phase [rad]:     0.000000000001 min singular value:   9.7793E-01
+ TOPOLOGY| Loop 27 Berry phase [rad]:     0.000000000001 min singular value:   9.7201E-01
+ TOPOLOGY| Loop 28 Berry phase [rad]:     0.000000000001 min singular value:   9.6496E-01
+ TOPOLOGY| Loop 29 Berry phase [rad]:     0.000000000001 min singular value:   9.5812E-01
+ TOPOLOGY| Loop 30 Berry phase [rad]:     0.000000000001 min singular value:   9.2842E-01
+ TOPOLOGY| Loop 31 Berry phase [rad]:     0.000000000002 min singular value:   8.6831E-01
+ TOPOLOGY| Loop 32 Berry phase [rad]:     0.000000000002 min singular value:   7.7917E-01
+ TOPOLOGY| Loop 33 Berry phase [rad]:    -0.000000000000 min singular value:   8.1565E-01
+ TOPOLOGY| Loop 34 Berry phase [rad]:    -0.000000000003 min singular value:   7.8920E-01
+ TOPOLOGY| Loop 35 Berry phase [rad]:    -0.000000000002 min singular value:   8.9557E-01
+ TOPOLOGY| Loop 36 Berry phase [rad]:    -0.000000000001 min singular value:   9.5084E-01
+ TOPOLOGY| Loop 37 Berry phase [rad]:    -0.000000000001 min singular value:   9.7354E-01
+ TOPOLOGY| Loop 38 Berry phase [rad]:    -0.000000000001 min singular value:   9.8255E-01
+ TOPOLOGY| Loop 39 Berry phase [rad]:    -0.000000000001 min singular value:   9.8835E-01
+ TOPOLOGY| Loop 40 Berry phase [rad]:    -0.000000000001 min singular value:   9.9194E-01
+ TOPOLOGY| Loop 41 Berry phase [rad]:    -0.000000000001 min singular value:   9.9418E-01
+ TOPOLOGY| Loop 42 Berry phase [rad]:    -0.000000000001 min singular value:   9.9561E-01
+ TOPOLOGY| Loop 43 Berry phase [rad]:    -0.000000000000 min singular value:   9.9578E-01
+ TOPOLOGY| Loop 44 Berry phase [rad]:    -0.000000000000 min singular value:   9.9586E-01
+ TOPOLOGY| Loop 45 Berry phase [rad]:    -0.000000000000 min singular value:   9.9598E-01
+ TOPOLOGY| Loop 46 Berry phase [rad]:    -0.000000000000 min singular value:   9.9605E-01
+ TOPOLOGY| Loop 47 Berry phase [rad]:    -0.000000000000 min singular value:   9.9617E-01
+ TOPOLOGY| Loop 48 Berry phase [rad]:    -0.000000000000 min singular value:   9.9625E-01
+ TOPOLOGY| Loop 49 Berry phase [rad]:    -0.000000000000 min singular value:   9.9631E-01
+ TOPOLOGY| Z2 candidate (before sampling convergence): 1
+ TOPOLOGY| Refinement 2: WCC change   2.3397E-03, transverse step   9.8789E-02
+ WANNIER90| Explicit points: 9312, neighbours per point: 1
+
+ Start K-Point Calculation ...
+                                                                    ... Finished
+ TOPOLOGY| Scalar bands in SOC second variation: 26
+ TOPOLOGY| Minimum sampled subspace gap [eV]:   7.3691345912E-02
+ TOPOLOGY| Loop 1 Berry phase [rad]:     0.000000000000 min singular value:   9.6899E-01
+ TOPOLOGY| Loop 2 Berry phase [rad]:     0.000000000000 min singular value:   9.6712E-01
+ TOPOLOGY| Loop 3 Berry phase [rad]:     0.000000000000 min singular value:   9.7005E-01
+ TOPOLOGY| Loop 4 Berry phase [rad]:     0.000000000000 min singular value:   9.7543E-01
+ TOPOLOGY| Loop 5 Berry phase [rad]:     0.000000000000 min singular value:   9.8071E-01
+ TOPOLOGY| Loop 6 Berry phase [rad]:     0.000000000000 min singular value:   9.8317E-01
+ TOPOLOGY| Loop 7 Berry phase [rad]:     0.000000000000 min singular value:   9.8581E-01
+ TOPOLOGY| Loop 8 Berry phase [rad]:     0.000000000000 min singular value:   9.8818E-01
+ TOPOLOGY| Loop 9 Berry phase [rad]:     0.000000000000 min singular value:   9.9013E-01
+ TOPOLOGY| Loop 10 Berry phase [rad]:     0.000000000000 min singular value:   9.9131E-01
+ TOPOLOGY| Loop 11 Berry phase [rad]:     0.000000000000 min singular value:   9.9239E-01
+ TOPOLOGY| Loop 12 Berry phase [rad]:     0.000000000000 min singular value:   9.9333E-01
+ TOPOLOGY| Loop 13 Berry phase [rad]:     0.000000000000 min singular value:   9.9414E-01
+ TOPOLOGY| Loop 14 Berry phase [rad]:     0.000000000000 min singular value:   9.9471E-01
+ TOPOLOGY| Loop 15 Berry phase [rad]:     0.000000000000 min singular value:   9.9523E-01
+ TOPOLOGY| Loop 16 Berry phase [rad]:     0.000000000000 min singular value:   9.9569E-01
+ TOPOLOGY| Loop 17 Berry phase [rad]:     0.000000000000 min singular value:   9.9609E-01
+ TOPOLOGY| Loop 18 Berry phase [rad]:     0.000000000000 min singular value:   9.9641E-01
+ TOPOLOGY| Loop 19 Berry phase [rad]:     0.000000000000 min singular value:   9.9670E-01
+ TOPOLOGY| Loop 20 Berry phase [rad]:     0.000000000000 min singular value:   9.9697E-01
+ TOPOLOGY| Loop 21 Berry phase [rad]:     0.000000000000 min singular value:   9.9720E-01
+ TOPOLOGY| Loop 22 Berry phase [rad]:     0.000000000000 min singular value:   9.9740E-01
+ TOPOLOGY| Loop 23 Berry phase [rad]:     0.000000000000 min singular value:   9.9758E-01
+ TOPOLOGY| Loop 24 Berry phase [rad]:     0.000000000000 min singular value:   9.9775E-01
+ TOPOLOGY| Loop 25 Berry phase [rad]:     0.000000000000 min singular value:   9.9790E-01
+ TOPOLOGY| Loop 26 Berry phase [rad]:     0.000000000000 min singular value:   9.9803E-01
+ TOPOLOGY| Loop 27 Berry phase [rad]:     0.000000000000 min singular value:   9.9814E-01
+ TOPOLOGY| Loop 28 Berry phase [rad]:     0.000000000000 min singular value:   9.9822E-01
+ TOPOLOGY| Loop 29 Berry phase [rad]:     0.000000000000 min singular value:   9.9818E-01
+ TOPOLOGY| Loop 30 Berry phase [rad]:     0.000000000000 min singular value:   9.9811E-01
+ TOPOLOGY| Loop 31 Berry phase [rad]:     0.000000000000 min singular value:   9.9805E-01
+ TOPOLOGY| Loop 32 Berry phase [rad]:     0.000000000000 min singular value:   9.9799E-01
+ TOPOLOGY| Loop 33 Berry phase [rad]:     0.000000000000 min singular value:   9.9793E-01
+ TOPOLOGY| Loop 34 Berry phase [rad]:     0.000000000000 min singular value:   9.9785E-01
+ TOPOLOGY| Loop 35 Berry phase [rad]:     0.000000000000 min singular value:   9.9776E-01
+ TOPOLOGY| Loop 36 Berry phase [rad]:     0.000000000000 min singular value:   9.9769E-01
+ TOPOLOGY| Loop 37 Berry phase [rad]:     0.000000000000 min singular value:   9.9761E-01
+ TOPOLOGY| Loop 38 Berry phase [rad]:     0.000000000000 min singular value:   9.9749E-01
+ TOPOLOGY| Loop 39 Berry phase [rad]:     0.000000000000 min singular value:   9.9737E-01
+ TOPOLOGY| Loop 40 Berry phase [rad]:     0.000000000000 min singular value:   9.9726E-01
+ TOPOLOGY| Loop 41 Berry phase [rad]:     0.000000000000 min singular value:   9.9715E-01
+ TOPOLOGY| Loop 42 Berry phase [rad]:     0.000000000000 min singular value:   9.9698E-01
+ TOPOLOGY| Loop 43 Berry phase [rad]:     0.000000000000 min singular value:   9.9680E-01
+ TOPOLOGY| Loop 44 Berry phase [rad]:     0.000000000000 min singular value:   9.9663E-01
+ TOPOLOGY| Loop 45 Berry phase [rad]:     0.000000000000 min singular value:   9.9645E-01
+ TOPOLOGY| Loop 46 Berry phase [rad]:     0.000000000000 min singular value:   9.9617E-01
+ TOPOLOGY| Loop 47 Berry phase [rad]:     0.000000000000 min singular value:   9.9588E-01
+ TOPOLOGY| Loop 48 Berry phase [rad]:     0.000000000000 min singular value:   9.9558E-01
+ TOPOLOGY| Loop 49 Berry phase [rad]:     0.000000000001 min singular value:   9.9528E-01
+ TOPOLOGY| Loop 50 Berry phase [rad]:     0.000000000001 min singular value:   9.9476E-01
+ TOPOLOGY| Loop 51 Berry phase [rad]:     0.000000000001 min singular value:   9.9420E-01
+ TOPOLOGY| Loop 52 Berry phase [rad]:     0.000000000001 min singular value:   9.9360E-01
+ TOPOLOGY| Loop 53 Berry phase [rad]:     0.000000000001 min singular value:   9.9297E-01
+ TOPOLOGY| Loop 54 Berry phase [rad]:     0.000000000001 min singular value:   9.9183E-01
+ TOPOLOGY| Loop 55 Berry phase [rad]:     0.000000000001 min singular value:   9.9049E-01
+ TOPOLOGY| Loop 56 Berry phase [rad]:     0.000000000001 min singular value:   9.8897E-01
+ TOPOLOGY| Loop 57 Berry phase [rad]:     0.000000000001 min singular value:   9.8729E-01
+ TOPOLOGY| Loop 58 Berry phase [rad]:     0.000000000001 min singular value:   9.8374E-01
+ TOPOLOGY| Loop 59 Berry phase [rad]:     0.000000000001 min singular value:   9.7899E-01
+ TOPOLOGY| Loop 60 Berry phase [rad]:     0.000000000001 min singular value:   9.7299E-01
+ TOPOLOGY| Loop 61 Berry phase [rad]:     0.000000000002 min singular value:   9.6632E-01
+ TOPOLOGY| Loop 62 Berry phase [rad]:     0.000000000002 min singular value:   9.4528E-01
+ TOPOLOGY| Loop 63 Berry phase [rad]:     0.000000000002 min singular value:   9.0977E-01
+ TOPOLOGY| Loop 64 Berry phase [rad]:     0.000000000002 min singular value:   8.7439E-01
+ TOPOLOGY| Loop 65 Berry phase [rad]:    -0.000000000000 min singular value:   8.8982E-01
+ TOPOLOGY| Loop 66 Berry phase [rad]:    -0.000000000002 min singular value:   8.7765E-01
+ TOPOLOGY| Loop 67 Berry phase [rad]:    -0.000000000003 min singular value:   9.2028E-01
+ TOPOLOGY| Loop 68 Berry phase [rad]:    -0.000000000002 min singular value:   9.5514E-01
+ TOPOLOGY| Loop 69 Berry phase [rad]:    -0.000000000002 min singular value:   9.7339E-01
+ TOPOLOGY| Loop 70 Berry phase [rad]:    -0.000000000002 min singular value:   9.8095E-01
+ TOPOLOGY| Loop 71 Berry phase [rad]:    -0.000000000001 min singular value:   9.8652E-01
+ TOPOLOGY| Loop 72 Berry phase [rad]:    -0.000000000001 min singular value:   9.9029E-01
+ TOPOLOGY| Loop 73 Berry phase [rad]:    -0.000000000001 min singular value:   9.9280E-01
+ TOPOLOGY| Loop 74 Berry phase [rad]:    -0.000000000001 min singular value:   9.9434E-01
+ TOPOLOGY| Loop 75 Berry phase [rad]:    -0.000000000001 min singular value:   9.9552E-01
+ TOPOLOGY| Loop 76 Berry phase [rad]:    -0.000000000001 min singular value:   9.9641E-01
+ TOPOLOGY| Loop 77 Berry phase [rad]:    -0.000000000001 min singular value:   9.9708E-01
+ TOPOLOGY| Loop 78 Berry phase [rad]:    -0.000000000001 min singular value:   9.9757E-01
+ TOPOLOGY| Loop 79 Berry phase [rad]:    -0.000000000001 min singular value:   9.9796E-01
+ TOPOLOGY| Loop 80 Berry phase [rad]:    -0.000000000001 min singular value:   9.9828E-01
+ TOPOLOGY| Loop 81 Berry phase [rad]:    -0.000000000001 min singular value:   9.9853E-01
+ TOPOLOGY| Loop 82 Berry phase [rad]:    -0.000000000001 min singular value:   9.9873E-01
+ TOPOLOGY| Loop 83 Berry phase [rad]:    -0.000000000001 min singular value:   9.9890E-01
+ TOPOLOGY| Loop 84 Berry phase [rad]:    -0.000000000001 min singular value:   9.9893E-01
+ TOPOLOGY| Loop 85 Berry phase [rad]:    -0.000000000001 min singular value:   9.9894E-01
+ TOPOLOGY| Loop 86 Berry phase [rad]:    -0.000000000000 min singular value:   9.9895E-01
+ TOPOLOGY| Loop 87 Berry phase [rad]:    -0.000000000000 min singular value:   9.9896E-01
+ TOPOLOGY| Loop 88 Berry phase [rad]:    -0.000000000000 min singular value:   9.9897E-01
+ TOPOLOGY| Loop 89 Berry phase [rad]:    -0.000000000000 min singular value:   9.9898E-01
+ TOPOLOGY| Loop 90 Berry phase [rad]:    -0.000000000000 min singular value:   9.9900E-01
+ TOPOLOGY| Loop 91 Berry phase [rad]:    -0.000000000000 min singular value:   9.9901E-01
+ TOPOLOGY| Loop 92 Berry phase [rad]:    -0.000000000000 min singular value:   9.9902E-01
+ TOPOLOGY| Loop 93 Berry phase [rad]:    -0.000000000000 min singular value:   9.9904E-01
+ TOPOLOGY| Loop 94 Berry phase [rad]:    -0.000000000000 min singular value:   9.9905E-01
+ TOPOLOGY| Loop 95 Berry phase [rad]:    -0.000000000000 min singular value:   9.9906E-01
+ TOPOLOGY| Loop 96 Berry phase [rad]:    -0.000000000000 min singular value:   9.9907E-01
+ TOPOLOGY| Loop 97 Berry phase [rad]:    -0.000000000000 min singular value:   9.9907E-01
+ TOPOLOGY| Z2 candidate (before sampling convergence): 1
+ TOPOLOGY| Refinement 3: WCC change   9.0710E-04, transverse step   6.2110E-02
+ WANNIER90| Explicit points: 37056, neighbours per point: 1
+
+ Start K-Point Calculation ...
+                                                                    ... Finished
+ TOPOLOGY| Scalar bands in SOC second variation: 26
+ TOPOLOGY| Minimum sampled subspace gap [eV]:   7.3691345912E-02
+ TOPOLOGY| Loop 1 Berry phase [rad]:     0.000000000000 min singular value:   9.9104E-01
+ TOPOLOGY| Loop 2 Berry phase [rad]:     0.000000000000 min singular value:   9.9089E-01
+ TOPOLOGY| Loop 3 Berry phase [rad]:     0.000000000000 min singular value:   9.9114E-01
+ TOPOLOGY| Loop 4 Berry phase [rad]:     0.000000000000 min singular value:   9.9171E-01
+ TOPOLOGY| Loop 5 Berry phase [rad]:     0.000000000000 min singular value:   9.9248E-01
+ TOPOLOGY| Loop 6 Berry phase [rad]:     0.000000000000 min singular value:   9.9294E-01
+ TOPOLOGY| Loop 7 Berry phase [rad]:     0.000000000000 min singular value:   9.9353E-01
+ TOPOLOGY| Loop 8 Berry phase [rad]:     0.000000000000 min singular value:   9.9417E-01
+ TOPOLOGY| Loop 9 Berry phase [rad]:     0.000000000000 min singular value:   9.9480E-01
+ TOPOLOGY| Loop 10 Berry phase [rad]:     0.000000000000 min singular value:   9.9522E-01
+ TOPOLOGY| Loop 11 Berry phase [rad]:     0.000000000000 min singular value:   9.9565E-01
+ TOPOLOGY| Loop 12 Berry phase [rad]:     0.000000000000 min singular value:   9.9606E-01
+ TOPOLOGY| Loop 13 Berry phase [rad]:     0.000000000000 min singular value:   9.9644E-01
+ TOPOLOGY| Loop 14 Berry phase [rad]:     0.000000000000 min singular value:   9.9672E-01
+ TOPOLOGY| Loop 15 Berry phase [rad]:     0.000000000000 min singular value:   9.9698E-01
+ TOPOLOGY| Loop 16 Berry phase [rad]:     0.000000000000 min singular value:   9.9723E-01
+ TOPOLOGY| Loop 17 Berry phase [rad]:     0.000000000000 min singular value:   9.9746E-01
+ TOPOLOGY| Loop 18 Berry phase [rad]:     0.000000000000 min singular value:   9.9763E-01
+ TOPOLOGY| Loop 19 Berry phase [rad]:     0.000000000000 min singular value:   9.9780E-01
+ TOPOLOGY| Loop 20 Berry phase [rad]:     0.000000000000 min singular value:   9.9795E-01
+ TOPOLOGY| Loop 21 Berry phase [rad]:     0.000000000000 min singular value:   9.9809E-01
+ TOPOLOGY| Loop 22 Berry phase [rad]:     0.000000000000 min singular value:   9.9821E-01
+ TOPOLOGY| Loop 23 Berry phase [rad]:     0.000000000000 min singular value:   9.9832E-01
+ TOPOLOGY| Loop 24 Berry phase [rad]:     0.000000000000 min singular value:   9.9842E-01
+ TOPOLOGY| Loop 25 Berry phase [rad]:     0.000000000000 min singular value:   9.9851E-01
+ TOPOLOGY| Loop 26 Berry phase [rad]:     0.000000000000 min singular value:   9.9859E-01
+ TOPOLOGY| Loop 27 Berry phase [rad]:     0.000000000000 min singular value:   9.9867E-01
+ TOPOLOGY| Loop 28 Berry phase [rad]:     0.000000000000 min singular value:   9.9874E-01
+ TOPOLOGY| Loop 29 Berry phase [rad]:     0.000000000000 min singular value:   9.9881E-01
+ TOPOLOGY| Loop 30 Berry phase [rad]:     0.000000000000 min singular value:   9.9886E-01
+ TOPOLOGY| Loop 31 Berry phase [rad]:     0.000000000000 min singular value:   9.9892E-01
+ TOPOLOGY| Loop 32 Berry phase [rad]:     0.000000000000 min singular value:   9.9897E-01
+ TOPOLOGY| Loop 33 Berry phase [rad]:     0.000000000000 min singular value:   9.9902E-01
+ TOPOLOGY| Loop 34 Berry phase [rad]:     0.000000000000 min singular value:   9.9906E-01
+ TOPOLOGY| Loop 35 Berry phase [rad]:     0.000000000000 min singular value:   9.9910E-01
+ TOPOLOGY| Loop 36 Berry phase [rad]:     0.000000000000 min singular value:   9.9914E-01
+ TOPOLOGY| Loop 37 Berry phase [rad]:     0.000000000000 min singular value:   9.9917E-01
+ TOPOLOGY| Loop 38 Berry phase [rad]:     0.000000000000 min singular value:   9.9921E-01
+ TOPOLOGY| Loop 39 Berry phase [rad]:     0.000000000000 min singular value:   9.9924E-01
+ TOPOLOGY| Loop 40 Berry phase [rad]:     0.000000000000 min singular value:   9.9927E-01
+ TOPOLOGY| Loop 41 Berry phase [rad]:     0.000000000000 min singular value:   9.9930E-01
+ TOPOLOGY| Loop 42 Berry phase [rad]:     0.000000000000 min singular value:   9.9932E-01
+ TOPOLOGY| Loop 43 Berry phase [rad]:     0.000000000000 min singular value:   9.9935E-01
+ TOPOLOGY| Loop 44 Berry phase [rad]:     0.000000000000 min singular value:   9.9937E-01
+ TOPOLOGY| Loop 45 Berry phase [rad]:     0.000000000000 min singular value:   9.9940E-01
+ TOPOLOGY| Loop 46 Berry phase [rad]:     0.000000000000 min singular value:   9.9942E-01
+ TOPOLOGY| Loop 47 Berry phase [rad]:     0.000000000000 min singular value:   9.9944E-01
+ TOPOLOGY| Loop 48 Berry phase [rad]:     0.000000000000 min singular value:   9.9946E-01
+ TOPOLOGY| Loop 49 Berry phase [rad]:     0.000000000000 min singular value:   9.9947E-01
+ TOPOLOGY| Loop 50 Berry phase [rad]:     0.000000000000 min singular value:   9.9949E-01
+ TOPOLOGY| Loop 51 Berry phase [rad]:     0.000000000000 min singular value:   9.9951E-01
+ TOPOLOGY| Loop 52 Berry phase [rad]:     0.000000000000 min singular value:   9.9952E-01
+ TOPOLOGY| Loop 53 Berry phase [rad]:     0.000000000000 min singular value:   9.9953E-01
+ TOPOLOGY| Loop 54 Berry phase [rad]:     0.000000000000 min singular value:   9.9954E-01
+ TOPOLOGY| Loop 55 Berry phase [rad]:     0.000000000000 min singular value:   9.9955E-01
+ TOPOLOGY| Loop 56 Berry phase [rad]:     0.000000000000 min singular value:   9.9955E-01
+ TOPOLOGY| Loop 57 Berry phase [rad]:     0.000000000000 min singular value:   9.9954E-01
+ TOPOLOGY| Loop 58 Berry phase [rad]:     0.000000000000 min singular value:   9.9953E-01
+ TOPOLOGY| Loop 59 Berry phase [rad]:     0.000000000000 min singular value:   9.9953E-01
+ TOPOLOGY| Loop 60 Berry phase [rad]:     0.000000000000 min singular value:   9.9952E-01
+ TOPOLOGY| Loop 61 Berry phase [rad]:     0.000000000000 min singular value:   9.9951E-01
+ TOPOLOGY| Loop 62 Berry phase [rad]:     0.000000000000 min singular value:   9.9950E-01
+ TOPOLOGY| Loop 63 Berry phase [rad]:     0.000000000000 min singular value:   9.9950E-01
+ TOPOLOGY| Loop 64 Berry phase [rad]:     0.000000000000 min singular value:   9.9949E-01
+ TOPOLOGY| Loop 65 Berry phase [rad]:     0.000000000000 min singular value:   9.9948E-01
+ TOPOLOGY| Loop 66 Berry phase [rad]:     0.000000000000 min singular value:   9.9947E-01
+ TOPOLOGY| Loop 67 Berry phase [rad]:     0.000000000000 min singular value:   9.9946E-01
+ TOPOLOGY| Loop 68 Berry phase [rad]:     0.000000000000 min singular value:   9.9945E-01
+ TOPOLOGY| Loop 69 Berry phase [rad]:     0.000000000000 min singular value:   9.9944E-01
+ TOPOLOGY| Loop 70 Berry phase [rad]:     0.000000000000 min singular value:   9.9943E-01
+ TOPOLOGY| Loop 71 Berry phase [rad]:     0.000000000000 min singular value:   9.9942E-01
+ TOPOLOGY| Loop 72 Berry phase [rad]:     0.000000000000 min singular value:   9.9941E-01
+ TOPOLOGY| Loop 73 Berry phase [rad]:     0.000000000000 min singular value:   9.9940E-01
+ TOPOLOGY| Loop 74 Berry phase [rad]:     0.000000000000 min singular value:   9.9938E-01
+ TOPOLOGY| Loop 75 Berry phase [rad]:     0.000000000000 min singular value:   9.9937E-01
+ TOPOLOGY| Loop 76 Berry phase [rad]:     0.000000000000 min singular value:   9.9936E-01
+ TOPOLOGY| Loop 77 Berry phase [rad]:     0.000000000000 min singular value:   9.9934E-01
+ TOPOLOGY| Loop 78 Berry phase [rad]:     0.000000000000 min singular value:   9.9933E-01
+ TOPOLOGY| Loop 79 Berry phase [rad]:     0.000000000000 min singular value:   9.9931E-01
+ TOPOLOGY| Loop 80 Berry phase [rad]:     0.000000000000 min singular value:   9.9930E-01
+ TOPOLOGY| Loop 81 Berry phase [rad]:     0.000000000000 min singular value:   9.9928E-01
+ TOPOLOGY| Loop 82 Berry phase [rad]:     0.000000000000 min singular value:   9.9926E-01
+ TOPOLOGY| Loop 83 Berry phase [rad]:     0.000000000000 min singular value:   9.9924E-01
+ TOPOLOGY| Loop 84 Berry phase [rad]:     0.000000000000 min singular value:   9.9922E-01
+ TOPOLOGY| Loop 85 Berry phase [rad]:     0.000000000000 min singular value:   9.9920E-01
+ TOPOLOGY| Loop 86 Berry phase [rad]:     0.000000000000 min singular value:   9.9918E-01
+ TOPOLOGY| Loop 87 Berry phase [rad]:     0.000000000000 min singular value:   9.9915E-01
+ TOPOLOGY| Loop 88 Berry phase [rad]:     0.000000000000 min singular value:   9.9913E-01
+ TOPOLOGY| Loop 89 Berry phase [rad]:     0.000000000000 min singular value:   9.9910E-01
+ TOPOLOGY| Loop 90 Berry phase [rad]:     0.000000000000 min singular value:   9.9907E-01
+ TOPOLOGY| Loop 91 Berry phase [rad]:     0.000000000000 min singular value:   9.9904E-01
+ TOPOLOGY| Loop 92 Berry phase [rad]:     0.000000000000 min singular value:   9.9900E-01
+ TOPOLOGY| Loop 93 Berry phase [rad]:     0.000000000000 min singular value:   9.9897E-01
+ TOPOLOGY| Loop 94 Berry phase [rad]:     0.000000000000 min singular value:   9.9893E-01
+ TOPOLOGY| Loop 95 Berry phase [rad]:     0.000000000000 min singular value:   9.9888E-01
+ TOPOLOGY| Loop 96 Berry phase [rad]:     0.000000000000 min singular value:   9.9884E-01
+ TOPOLOGY| Loop 97 Berry phase [rad]:     0.000000000001 min singular value:   9.9879E-01
+ TOPOLOGY| Loop 98 Berry phase [rad]:     0.000000000001 min singular value:   9.9874E-01
+ TOPOLOGY| Loop 99 Berry phase [rad]:     0.000000000001 min singular value:   9.9868E-01
+ TOPOLOGY| Loop 100 Berry phase [rad]:     0.000000000001 min singular value:   9.9861E-01
+ TOPOLOGY| Loop 101 Berry phase [rad]:     0.000000000001 min singular value:   9.9855E-01
+ TOPOLOGY| Loop 102 Berry phase [rad]:     0.000000000001 min singular value:   9.9846E-01
+ TOPOLOGY| Loop 103 Berry phase [rad]:     0.000000000001 min singular value:   9.9838E-01
+ TOPOLOGY| Loop 104 Berry phase [rad]:     0.000000000001 min singular value:   9.9828E-01
+ TOPOLOGY| Loop 105 Berry phase [rad]:     0.000000000001 min singular value:   9.9819E-01
+ TOPOLOGY| Loop 106 Berry phase [rad]:     0.000000000001 min singular value:   9.9806E-01
+ TOPOLOGY| Loop 107 Berry phase [rad]:     0.000000000001 min singular value:   9.9792E-01
+ TOPOLOGY| Loop 108 Berry phase [rad]:     0.000000000001 min singular value:   9.9777E-01
+ TOPOLOGY| Loop 109 Berry phase [rad]:     0.000000000001 min singular value:   9.9762E-01
+ TOPOLOGY| Loop 110 Berry phase [rad]:     0.000000000001 min singular value:   9.9740E-01
+ TOPOLOGY| Loop 111 Berry phase [rad]:     0.000000000001 min singular value:   9.9717E-01
+ TOPOLOGY| Loop 112 Berry phase [rad]:     0.000000000001 min singular value:   9.9692E-01
+ TOPOLOGY| Loop 113 Berry phase [rad]:     0.000000000001 min singular value:   9.9664E-01
+ TOPOLOGY| Loop 114 Berry phase [rad]:     0.000000000001 min singular value:   9.9624E-01
+ TOPOLOGY| Loop 115 Berry phase [rad]:     0.000000000001 min singular value:   9.9579E-01
+ TOPOLOGY| Loop 116 Berry phase [rad]:     0.000000000001 min singular value:   9.9529E-01
+ TOPOLOGY| Loop 117 Berry phase [rad]:     0.000000000001 min singular value:   9.9472E-01
+ TOPOLOGY| Loop 118 Berry phase [rad]:     0.000000000001 min singular value:   9.9385E-01
+ TOPOLOGY| Loop 119 Berry phase [rad]:     0.000000000001 min singular value:   9.9281E-01
+ TOPOLOGY| Loop 120 Berry phase [rad]:     0.000000000001 min singular value:   9.9161E-01
+ TOPOLOGY| Loop 121 Berry phase [rad]:     0.000000000002 min singular value:   9.9023E-01
+ TOPOLOGY| Loop 122 Berry phase [rad]:     0.000000000002 min singular value:   9.8775E-01
+ TOPOLOGY| Loop 123 Berry phase [rad]:     0.000000000002 min singular value:   9.8462E-01
+ TOPOLOGY| Loop 124 Berry phase [rad]:     0.000000000002 min singular value:   9.8095E-01
+ TOPOLOGY| Loop 125 Berry phase [rad]:     0.000000000002 min singular value:   9.7699E-01
+ TOPOLOGY| Loop 126 Berry phase [rad]:     0.000000000002 min singular value:   9.6816E-01
+ TOPOLOGY| Loop 127 Berry phase [rad]:     0.000000000002 min singular value:   9.5825E-01
+ TOPOLOGY| Loop 128 Berry phase [rad]:     0.000000000001 min singular value:   9.5248E-01
+ TOPOLOGY| Loop 129 Berry phase [rad]:    -0.000000000000 min singular value:   9.5497E-01
+ TOPOLOGY| Loop 130 Berry phase [rad]:    -0.000000000001 min singular value:   9.5315E-01
+ TOPOLOGY| Loop 131 Berry phase [rad]:    -0.000000000002 min singular value:   9.6098E-01
+ TOPOLOGY| Loop 132 Berry phase [rad]:    -0.000000000002 min singular value:   9.7152E-01
+ TOPOLOGY| Loop 133 Berry phase [rad]:    -0.000000000003 min singular value:   9.7970E-01
+ TOPOLOGY| Loop 134 Berry phase [rad]:    -0.000000000002 min singular value:   9.8395E-01
+ TOPOLOGY| Loop 135 Berry phase [rad]:    -0.000000000002 min singular value:   9.8768E-01
+ TOPOLOGY| Loop 136 Berry phase [rad]:    -0.000000000002 min singular value:   9.9056E-01
+ TOPOLOGY| Loop 137 Berry phase [rad]:    -0.000000000002 min singular value:   9.9265E-01
+ TOPOLOGY| Loop 138 Berry phase [rad]:    -0.000000000002 min singular value:   9.9398E-01
+ TOPOLOGY| Loop 139 Berry phase [rad]:    -0.000000000002 min singular value:   9.9507E-01
+ TOPOLOGY| Loop 140 Berry phase [rad]:    -0.000000000001 min singular value:   9.9594E-01
+ TOPOLOGY| Loop 141 Berry phase [rad]:    -0.000000000001 min singular value:   9.9662E-01
+ TOPOLOGY| Loop 142 Berry phase [rad]:    -0.000000000001 min singular value:   9.9711E-01
+ TOPOLOGY| Loop 143 Berry phase [rad]:    -0.000000000001 min singular value:   9.9753E-01
+ TOPOLOGY| Loop 144 Berry phase [rad]:    -0.000000000001 min singular value:   9.9787E-01
+ TOPOLOGY| Loop 145 Berry phase [rad]:    -0.000000000001 min singular value:   9.9816E-01
+ TOPOLOGY| Loop 146 Berry phase [rad]:    -0.000000000001 min singular value:   9.9838E-01
+ TOPOLOGY| Loop 147 Berry phase [rad]:    -0.000000000001 min singular value:   9.9857E-01
+ TOPOLOGY| Loop 148 Berry phase [rad]:    -0.000000000001 min singular value:   9.9874E-01
+ TOPOLOGY| Loop 149 Berry phase [rad]:    -0.000000000001 min singular value:   9.9888E-01
+ TOPOLOGY| Loop 150 Berry phase [rad]:    -0.000000000001 min singular value:   9.9900E-01
+ TOPOLOGY| Loop 151 Berry phase [rad]:    -0.000000000001 min singular value:   9.9910E-01
+ TOPOLOGY| Loop 152 Berry phase [rad]:    -0.000000000001 min singular value:   9.9919E-01
+ TOPOLOGY| Loop 153 Berry phase [rad]:    -0.000000000001 min singular value:   9.9927E-01
+ TOPOLOGY| Loop 154 Berry phase [rad]:    -0.000000000001 min singular value:   9.9933E-01
+ TOPOLOGY| Loop 155 Berry phase [rad]:    -0.000000000001 min singular value:   9.9939E-01
+ TOPOLOGY| Loop 156 Berry phase [rad]:    -0.000000000001 min singular value:   9.9944E-01
+ TOPOLOGY| Loop 157 Berry phase [rad]:    -0.000000000001 min singular value:   9.9949E-01
+ TOPOLOGY| Loop 158 Berry phase [rad]:    -0.000000000001 min singular value:   9.9953E-01
+ TOPOLOGY| Loop 159 Berry phase [rad]:    -0.000000000001 min singular value:   9.9957E-01
+ TOPOLOGY| Loop 160 Berry phase [rad]:    -0.000000000001 min singular value:   9.9960E-01
+ TOPOLOGY| Loop 161 Berry phase [rad]:    -0.000000000001 min singular value:   9.9963E-01
+ TOPOLOGY| Loop 162 Berry phase [rad]:    -0.000000000001 min singular value:   9.9966E-01
+ TOPOLOGY| Loop 163 Berry phase [rad]:    -0.000000000001 min singular value:   9.9968E-01
+ TOPOLOGY| Loop 164 Berry phase [rad]:    -0.000000000001 min singular value:   9.9970E-01
+ TOPOLOGY| Loop 165 Berry phase [rad]:    -0.000000000001 min singular value:   9.9972E-01
+ TOPOLOGY| Loop 166 Berry phase [rad]:    -0.000000000001 min singular value:   9.9973E-01
+ TOPOLOGY| Loop 167 Berry phase [rad]:    -0.000000000001 min singular value:   9.9973E-01
+ TOPOLOGY| Loop 168 Berry phase [rad]:    -0.000000000001 min singular value:   9.9973E-01
+ TOPOLOGY| Loop 169 Berry phase [rad]:    -0.000000000000 min singular value:   9.9973E-01
+ TOPOLOGY| Loop 170 Berry phase [rad]:    -0.000000000000 min singular value:   9.9974E-01
+ TOPOLOGY| Loop 171 Berry phase [rad]:    -0.000000000001 min singular value:   9.9974E-01
+ TOPOLOGY| Loop 172 Berry phase [rad]:    -0.000000000000 min singular value:   9.9974E-01
+ TOPOLOGY| Loop 173 Berry phase [rad]:    -0.000000000000 min singular value:   9.9974E-01
+ TOPOLOGY| Loop 174 Berry phase [rad]:    -0.000000000000 min singular value:   9.9974E-01
+ TOPOLOGY| Loop 175 Berry phase [rad]:    -0.000000000000 min singular value:   9.9974E-01
+ TOPOLOGY| Loop 176 Berry phase [rad]:    -0.000000000000 min singular value:   9.9974E-01
+ TOPOLOGY| Loop 177 Berry phase [rad]:    -0.000000000000 min singular value:   9.9975E-01
+ TOPOLOGY| Loop 178 Berry phase [rad]:    -0.000000000000 min singular value:   9.9975E-01
+ TOPOLOGY| Loop 179 Berry phase [rad]:    -0.000000000000 min singular value:   9.9975E-01
+ TOPOLOGY| Loop 180 Berry phase [rad]:    -0.000000000000 min singular value:   9.9975E-01
+ TOPOLOGY| Loop 181 Berry phase [rad]:    -0.000000000000 min singular value:   9.9975E-01
+ TOPOLOGY| Loop 182 Berry phase [rad]:    -0.000000000000 min singular value:   9.9975E-01
+ TOPOLOGY| Loop 183 Berry phase [rad]:    -0.000000000000 min singular value:   9.9976E-01
+ TOPOLOGY| Loop 184 Berry phase [rad]:    -0.000000000000 min singular value:   9.9976E-01
+ TOPOLOGY| Loop 185 Berry phase [rad]:    -0.000000000000 min singular value:   9.9976E-01
+ TOPOLOGY| Loop 186 Berry phase [rad]:    -0.000000000000 min singular value:   9.9976E-01
+ TOPOLOGY| Loop 187 Berry phase [rad]:    -0.000000000000 min singular value:   9.9976E-01
+ TOPOLOGY| Loop 188 Berry phase [rad]:    -0.000000000000 min singular value:   9.9976E-01
+ TOPOLOGY| Loop 189 Berry phase [rad]:    -0.000000000000 min singular value:   9.9976E-01
+ TOPOLOGY| Loop 190 Berry phase [rad]:    -0.000000000000 min singular value:   9.9977E-01
+ TOPOLOGY| Loop 191 Berry phase [rad]:    -0.000000000000 min singular value:   9.9977E-01
+ TOPOLOGY| Loop 192 Berry phase [rad]:    -0.000000000000 min singular value:   9.9977E-01
+ TOPOLOGY| Loop 193 Berry phase [rad]:    -0.000000000000 min singular value:   9.9977E-01
+ TOPOLOGY| Z2 candidate (before sampling convergence): 1
+ TOPOLOGY| Refinement 4: WCC change   2.7301E-04, transverse step   3.3687E-02
+ TOPOLOGY| Wilson surface sampling converged.
+ TOPOLOGY| Converged Z2 invariant: 1
+
+ !--------------------------------End of Wannier90-----------------------------!
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy [hartree]             -6.952409874594554
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBCSR STATISTICS                             -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ COUNTER                                    TOTAL       BLAS       SMM       ACC
+ flops inhomo. stacks                           0       0.0%      0.0%      0.0%
+ flops total                         0.000000E+00       0.0%      0.0%      0.0%
+ flops max/rank                      0.000000E+00       0.0%      0.0%      0.0%
+ matmuls inhomo. stacks                         0       0.0%      0.0%      0.0%
+ matmuls total                                  0       0.0%      0.0%      0.0%
+ number of processed stacks                     0       0.0%      0.0%      0.0%
+ average stack size                                     0.0       0.0       0.0
+ marketing flops                     0.000000E+00
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                      DBCSR MESSAGE PASSING PERFORMANCE                      -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Bcast                1                     12.
+ MP_Allreduce           19                     21.
+ MP_Alltoall       6248104                   3819.
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                GRID STATISTICS                              -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ LP    KERNEL             BACKEND                              COUNT     PERCENT
+ 4     collocate general  CPU                                  63504      50.47%
+ 4     integrate general  CPU                                  62328      49.53%
+ 0     collocate general  CPU                                      2       0.00%
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                          OFFLOAD MEMPOOL STATISTICS                         -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ Memory consumption                Number of allocations  Used [MiB]  Size [MiB]
+ Host                                                  6           4        4189
+ -------------------------------------------------------------------------------
+
+ MEMORY| Estimated peak process memory [MiB]                                   0
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                         MESSAGE PASSING PERFORMANCE                         -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Group                4
+ MP_Bcast          1781957                      7.
+ MP_Allreduce       251134                   8528.
+ MP_Sync                 4
+ MP_Wait           1484920
+ MP_ISend          2078888                    778.
+ MP_IRecv          2078888                    778.
+ -------------------------------------------------------------------------------
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                           R E F E R E N C E S                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ 
+ CP2K version 2026.2 (Development Version), the CP2K developers group (2026).
+ CP2K is freely available from https://www.cp2k.org/ .
+ 
+ M. Iannuzzi, J. Wilhelm, F. Stein, A. Bussy, H. Elgabarty, D. Golze, A. Hehn, 
+ M. Graml, S. Marek, B. Sertcan Gökmen, C. Schran, H. Forbert, R. Z. 
+ Khaliullin, A. Kozhevnikov, M. Taillefumier, R. Meli, V. V. Rybkin, M. Brehm, 
+ R. Schade, O. Schütt, J. V. Pototschnig, H. Mirhosseini, A. Knüpfer, D. Marx, 
+ M. Krack, J. Hutter, T. D. Kühne.
+ J. Phys. Chem. B 130, 1237-1310 (2026).
+ The CP2K Program Package Made Simple.
+ https://doi.org/10.1021/acs.jpcb.5c05851
+
+ T. D. Kühne, M. Iannuzzi, M. Del Ben, V. V. Rybkin, P. Seewald, F. Stein, T. 
+ Laino, R. Z. Khaliullin, O. Schütt, F. Schiffmann, D. Golze, J. Wilhelm, S. 
+ Chulkov, M. H. Bani-Hashemian, V. Weber, U. Borstnik, M. Taillefumier, A. S. 
+ Jakobovits, A. Lazzaro, H. Pabst, T. Müller, R. Schade, M. Guidon, S. 
+ Andermatt, N. Holmberg, G. K. Schenter, A. Hehn, A. Bussy, F. Belleflamme, G. 
+ Tabacchi, A. Glöß, M. Lass, I. Bethune, C. J. Mundy, C. Plessl, M. Watkins, 
+ J. VandeVondele, M. Krack, J. Hutter.
+ J. Chem. Phys. 152, 194103 (2020).
+ CP2K: An electronic structure and molecular dynamics software package - 
+ Quickstep: Efficient and accurate electronic structure calculations.
+ https://doi.org/10.1063/5.0007045
+
+ O. Schuett, P. Messmer, J. Hutter, J. VandeVondele.
+ Electronic Structure Calculations on Graphics Processing Units, 173-190 (2016).
+ GPU-Accelerated Sparse Matrix-Matrix Multiplication for Linear Scaling Density 
+ Functional Theory.
+ https://doi.org/10.1002/9781118670712.ch8
+
+ U. Borstnik, J. VandeVondele, V. Weber, J. Hutter.
+ Parallel Comput. 40, 47-58 (2014).
+ Sparse matrix multiplication: The distributed block-compressed sparse row 
+ library.
+ https://doi.org/10.1016/j.parco.2014.03.012
+
+ J. VandeVondele, J. Hutter.
+ J. Chem. Phys. 127, 114105 (2007).
+ Gaussian basis sets for accurate calculations on molecular systems in gas and 
+ condensed phases.
+ https://doi.org/10.1063/1.2770708
+
+ J. VandeVondele, M. Krack, F. Mohamed, M. Parrinello, T. Chassaing, J. Hutter.
+ Comput. Phys. Commun. 167, 103-128 (2005).
+ QUICKSTEP: Fast and accurate density functional calculations using a mixed 
+ Gaussian and plane waves approach.
+ https://doi.org/10.1016/j.cpc.2004.12.014
+
+ M. Krack.
+ Theor. Chem. Acc. 114, 145-152 (2005).
+ Pseudopotentials for H to Kr optimized for gradient-corrected 
+ exchange-correlation functionals.
+ https://doi.org/10.1007/s00214-005-0655-y
+
+ M. Frigo, S. G. Johnson.
+ Proc. IEEE 93, 216-231 (2005).
+ The design and implementation of FFTW3.
+ https://doi.org/10.1109/JPROC.2004.840301
+
+ C. Hartwigsen, S. Goedecker, J. Hutter.
+ Phys. Rev. B 58, 3641-3662 (1998).
+ Relativistic separable dual-space Gaussian pseudopotentials from H to Rn.
+ https://doi.org/10.1103/PhysRevB.58.3641
+
+ G. Lippert, J. Hutter, M. Parrinello.
+ Mol. Phys. 92, 477-487 (1997).
+ A hybrid Gaussian and plane wave density functional scheme.
+ https://doi.org/10.1080/002689797170220
+
+ S. Goedecker, M. Teter, J. Hutter.
+ Phys. Rev. B 54, 1703-1710 (1996).
+ Separable dual-space Gaussian pseudopotentials.
+ https://doi.org/10.1103/PhysRevB.54.1703
+
+ J. P. Perdew, K. Burke, M. Ernzerhof.
+ Phys. Rev. Lett. 77, 3865-3868 (1996).
+ Generalized gradient approximation made simple.
+ https://doi.org/10.1103/PhysRevLett.77.3865
+
+ C.-L. Fu, K.-M. Ho.
+ Phys. Rev. B 28, 5480-5486 (1983).
+ First-principles calculation of the equilibrium ground-state properties of 
+ transition metals: Applications to Nb and Mo.
+ https://doi.org/10.1103/PhysRevB.28.5480
+
+ C. G. Broyden.
+ Math. Comput. 19, 577-593 (1965).
+ A class of methods for solving nonlinear simultaneous equations.
+ https://doi.org/10.1090/S0025-5718-1965-0198670-6
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                T I M I N G                                  -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ SUBROUTINE                       CALLS  ASD         SELF TIME        TOTAL TIME
+                                MAXIMUM       AVERAGE  MAXIMUM  AVERAGE  MAXIMUM
+ CP2K                                 1  1.0    0.007    0.007  219.040  219.040
+ qs_energies                          1  2.0    0.001    0.001  218.982  218.982
+ scf_post_calculation_gpw             1  3.0    0.000    0.000  209.627  209.627
+ wannier90_interface                  1  4.0    6.982    6.982  209.627  209.627
+ rskp_transform                  247444  5.0   79.033   79.033   79.033   79.033
+ copy_dbcsr_to_fm                396932  5.0    1.686    1.686   64.035   64.035
+ dbcsr_finalize                 1232268  6.8    9.491    9.491   47.027   47.027
+ dbcsr_complete_redistribute     396932  6.0    4.503    4.503   42.311   42.311
+ dbcsr_merge_all                 500864  8.0   29.937   29.937   33.832   33.832
+ dbcsr_add_d                     103932  5.0    0.060    0.060   18.394   18.394
+ dbcsr_add_anytype               103932  6.0    1.410    1.410   18.333   18.333
+ dbcsr_desymmetrize_deep         693916  5.6    4.176    4.176   13.440   13.440
+ diag_complex                     49476  5.0   11.606   11.606   11.606   11.606
+ do_general_diag_kp                  58  5.9    0.000    0.000    9.686    9.686
+ do_general_diag_kp_omp              58  6.9    7.677    7.677    9.686    9.686
+ scf_env_do_scf                       1  3.0    0.000    0.000    9.184    9.184
+ scf_env_do_scf_inner_loop           53  4.0    0.011    0.011    9.184    9.184
+ dbcsr_iterator_start           2896207  6.8    6.743    6.743    7.224    7.224
+ dbcsr_create_new               1551346  6.3    5.976    5.976    6.797    6.797
+ dbcsr_scale_anytype             252361  6.4    1.304    1.304    6.434    6.434
+ dbcsr_scale_d                   148429  5.0    0.072    0.072    6.279    6.279
+ cp_fm_copy_general              296856  5.0    0.294    0.294    5.492    5.492
+ qs_ks_update_qs_env                 53  5.0    0.000    0.000    5.028    5.028
+ rebuild_ks_matrix                   53  6.0    0.000    0.000    4.906    4.906
+ qs_ks_build_kohn_sham_matrix        53  7.0    0.014    0.014    4.906    4.906
+ -------------------------------------------------------------------------------
+
+ The number of warnings for this run is : 0
+ 
+ -------------------------------------------------------------------------------
+  **** **** ******  **  PROGRAM ENDED AT                 2026-09-17 08:50:48.430
+ ***** ** ***  *** **   PROGRAM RAN ON            MacBook-Pro-von-Thomas-3.local
+ **    ****   ******    PROGRAM RAN BY                                   tkuehne
+ ***** **    ** ** **   PROGRAM PROCESS ID                                 25423
+  **** **  *******  **  PROGRAM STOPPED IN /Users/tkuehne/work/cp2k-z2pack-valid
+                                           ation/stanene-converged

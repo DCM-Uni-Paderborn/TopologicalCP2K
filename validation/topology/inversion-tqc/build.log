@@ -1,0 +1,122 @@
+[1/10] Updating CP2K build timestamp and git revision
+[2/10] Building Fortran preprocessed src/CMakeFiles/cp2k.dir/cp2k_info.F-pp.f
+[3/10] Generating Fortran dyndep file src/CMakeFiles/cp2k.dir/Fortran.dd
+[4/606] Building Fortran object src/CMakeFiles/cp2k.dir/cp2k_info.F.o
+[5/606] Building Fortran object src/CMakeFiles/cp2k.dir/header.F.o
+[6/606] Building Fortran object src/CMakeFiles/cp2k.dir/topology_pdb.F.o
+[7/606] Building Fortran object src/CMakeFiles/cp2k.dir/particle_methods.F.o
+[8/257] Building Fortran object src/CMakeFiles/cp2k.dir/basis_set_output.F.o
+[9/256] Building Fortran object src/CMakeFiles/cp2k.dir/trexio_utils.F.o
+[10/255] Building Fortran object src/CMakeFiles/cp2k.dir/motion_utils.F.o
+[11/229] Building Fortran object src/CMakeFiles/cp2k.dir/qcschema.F.o
+[12/229] Building Fortran object src/CMakeFiles/cp2k.dir/environment.F.o
+[13/229] Building Fortran object src/CMakeFiles/cp2k.dir/hfx_energy_potential.F.o
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:452:12:
+
+  452 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:612:12:
+
+  612 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:769:12:
+
+  769 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:880:12:
+
+  880 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:886:12:
+
+  886 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:904:12:
+
+  904 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:924:12:
+
+  924 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1062:12:
+
+ 1062 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1114:12:
+
+ 1114 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1124:12:
+
+ 1124 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1205:12:
+
+ 1205 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1828:12:
+
+ 1828 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1909:12:
+
+ 1909 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1918:12:
+
+ 1918 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1926:12:
+
+ 1926 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1933:12:
+
+ 1933 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1966:12:
+
+ 1966 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:1978:12:
+
+ 1978 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+/Users/tkuehne/work/cp2k-topology-tqc/src/hfx_energy_potential.F:2302:12:
+
+ 2302 | !$OMP MASTER
+      |            1
+Warning: 'master' construct at (1) deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+[14/132] Building Fortran object src/CMakeFiles/cp2k.dir/casino_utils.F.o
+[15/89] Building Fortran object src/CMakeFiles/cp2k.dir/bsse.F.o
+[16/89] Building Fortran object src/CMakeFiles/cp2k.dir/f77_interface.F.o
+[17/56] Building Fortran object src/CMakeFiles/cp2k.dir/optimize_input.F.o
+[18/56] Building Fortran object src/CMakeFiles/cp2k.dir/motion/input_cp2k_restarts.F.o
+[19/29] Building Fortran object src/CMakeFiles/cp2k.dir/motion/neb_io.F.o
+[20/26] Building Fortran object src/CMakeFiles/cp2k.dir/start/cp2k_runs.F.o
+[21/26] Building Fortran object src/CMakeFiles/cp2k.dir/start/cp2k_shell.F.o
+[22/26] Building Fortran object src/CMakeFiles/cp2k.dir/start/libcp2k.F.o
+[23/26] Linking CXX shared library src/libcp2k.2026.2.dylib
+[24/26] Creating library symlink src/libcp2k.dylib
+[25/27] Linking Fortran executable bin/topology_symmetry_unittest.psmp
+[26/27] Building Fortran object src/CMakeFiles/cp2k-bin.dir/start/cp2k.F.o
+[27/27] Linking Fortran executable bin/cp2k.psmp

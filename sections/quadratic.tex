@@ -1,0 +1,58 @@
+\section{Quadratic pseudospectrum and localized approximate states}
+\label{sec:quadratic}
+The quadratic pseudospectrum asks for a normalized state that minimizes
+the combined residual of incompatible observables \cite{Cerjan2023}.
+For a query $(E,\bm x)$, set $A_0=H-ES$, $A_j=X_j-x_jS$,
+$w_0=1$, and $w_j=\kappa$ for $j=1,2,3$. The AO problem is
+\begin{equation}
+ Qc=\lambda Sc,\qquad
+ Q=\sum_{j=0}^3 w_j^2 A_j^\dagger S^{-1}A_j,\qquad c^\dagger Sc=1 .
+ \label{eq:quadratic}
+\end{equation}
+The minimum $\sqrt{\lambda}$ is the quadratic gap.
+Its eigenvector is a joint approximate state, and several low
+eigenpairs can describe a localized subspace.
+The separated residuals are
+\begin{equation}
+ \begin{split}
+ \delta E^2&=(A_0c)^\dagger S^{-1}(A_0c),\\
+ \delta x_j^2&=(A_jc)^\dagger S^{-1}(A_jc),\\
+ \lambda&=\delta E^2+\kappa^2\sum_j\delta x_j^2 .
+ \end{split}
+ \label{eq:quadratic-residuals}
+\end{equation}
+Expectations $c^\dagger Hc$ and $c^\dagger X_jc$ distinguish bias from
+spread around the query. These states need not be eigenstates of $H$.
+Within degenerate minimizing spaces, projectors or subspace observables
+must be compared instead of individual coefficients.
+
+Equation~\eqref{eq:quadratic} is positive semidefinite and covariant
+under Eq.~\eqref{eq:basis-change}. Ordinary matrix products without
+metric solutions would destroy that invariance.
+The position residual concerns the projected position:
+$X_jS^{-1}X_j$ is not an independently integrated continuum
+$\langle r_j^2\rangle$. Small bases can underestimate continuum
+localization errors even when the eigenproblem is solved accurately.
+
+The dense reference uses a complete orthonormalized space.
+The iterative path applies $Q$ without forming it: multiply by
+$A_j$, solve with $S$, multiply by $A_j^\dagger$, and accumulate.
+This avoids fill-in from explicitly squaring sparse matrices.
+A complex block Rayleigh--Ritz iteration, double metric
+reorthogonalization, and thick restarts address clustered low states.
+The residual
+\[
+ \|Qc-\lambda Sc\|_{S^{-1}}
+ \leq\epsilon_{\mathrm{eig}}\max(1,|\lambda|)
+\]
+checks an eigenpair in atomic units; it does not independently prove
+that no lower state was missed.
+
+Reusable MUMPS factors avoid forming $S^{-1}$, but the present
+trial vectors and multiple-right-hand-side communication are not
+fully distributed. Output includes separated residuals,
+expectations, and optional complex AO coefficients.
+The current analysis covers isolated GPW/GAPW systems and post-SCF
+GTH SOC. Periodic quadratic formulations and band unfolding remain
+separate extensions. A small quadratic gap is a localization
+diagnostic, not a Chern or $\mathbb Z_2$ index.

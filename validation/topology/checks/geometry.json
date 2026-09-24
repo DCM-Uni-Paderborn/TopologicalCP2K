@@ -1,0 +1,10 @@
+{
+  "adjoint_error": 0.0,
+  "zero_step_metric_error": 0.0,
+  "opposite_winding_error": 2.4492935982947064e-16,
+  "wcc": [
+    0.7700600885664762,
+    0.2299399114335238
+  ],
+  "atomic_phase_error": 0.00037754759577085273
+}

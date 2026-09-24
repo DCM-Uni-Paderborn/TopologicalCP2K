@@ -1,0 +1,327 @@
+\section{Crystalline representations and topological quantum chemistry}
+\label{sec:tqc}
+\subsection{Implemented inversion analysis}
+An independently versioned native extension evaluates inversion
+representations at time-reversal-invariant momenta (TRIM). This analysis
+requires spatial inversion of the crystal, unlike the time-reversal
+pairing used to reduce a scalar SCF mesh. The TRIM are diagonalized at
+the converged SCF potential independently of the integration mesh,
+without a Wannier90 execution or a Wannier fit. If
+$T_{\mathcal I}(\bk)$ is the coefficient-space action of inversion,
+including atom permutations, orbital parities and lattice phases, its
+representation in the selected subspace is
+\begin{equation}
+ D_{\mathcal I}(\bk)=C^\dagger(\bk)S(\bk)
+                   T_{\mathcal I}(\bk)C(\bk).
+ \label{eq:topology-inversion}
+\end{equation}
+The overlap metric distinguishes the coefficient transformation
+$T_{\mathcal I}$ from the covariant AO matrix of the inversion operator.
+Character decomposition gives even and odd multiplicities without
+assigning gauge-dependent labels to individual vectors within a mixed
+degenerate eigenspace. For spinful time-reversal symmetry, the number of
+odd occupied Kramers pairs yields the two-dimensional plane index or
+the three-dimensional strong and weak Fu--Kane
+indices~\cite{FuKane2007}, together with an inversion $z_4$ indicator
+in three dimensions. An exact integer comparison with the analytic
+inversion-subgroup elementary-band-representation (EBR) signatures also
+tests membership in their integer lattice and the existence of a
+nonnegative decomposition~\cite{Bradlyn2017,Po2017}. The implementation
+uses inversion rather than a complete space-group EBR catalogue, and an
+atomic-compatible signature does not establish trivial topology.
+Metric, subspace, energy-commutator and time-reversal checks precede
+classification. Additional parity calculations recover $\nu=0$ for
+neon and $\nu=1$ for stanene. The separately versioned tests are described
+in the Supporting Information and leave the retained Wilson spectra
+unchanged.
+
+
+\subsection{Little groups, nonsymmorphic phases, and spin}
+The extension from inversion to general crystalline symmetry needs more
+than a list of point rotations. Write a space-group operation as
+$g=\{W_g|\tau_g\}$ in fractional direct coordinates, so that
+$x\mapsto W_gx+\tau_g$. For cell matrix $A$, the Cartesian operation is
+$R_g=AW_gA^{-1}$. Reciprocal fractional vectors transform with
+$W_g^{-T}$, not in general with $W_g$. An antiunitary operation
+$g\Theta$ additionally reverses $\bk$.
+
+At a fixed fractional $\bk$, the little group contains operations
+mapping $\bk$ to itself modulo a reciprocal vector. Choose one
+representative per coset modulo integer translations of the cell.
+Composition gives
+\begin{equation}
+ W_{gh}=W_gW_h,\qquad
+ L(g,h)=\tau_g+W_g\tau_h-\tau_{gh}\in\mathbb Z^3 .
+ \label{eq:coset-products}
+\end{equation}
+For spinors, the SU(2) lifts additionally give a sign $z(g,h)$.
+The matrices acting in a fixed Bloch subspace must satisfy
+\begin{equation}
+ D_g\,{}^{a_g}\!D_h=\omega(g,h)D_{gh},\qquad
+ \omega(g,h)=e^{-2\pi\ii\bk\cdot L(g,h)}z(g,h),
+ \label{eq:projective-group}
+\end{equation}
+where $a_g=1$ denotes antiunitarity and
+\({}^{1}\!D_h=\overline{D_h}\).
+Physical $\Theta^2=-1$ contributes to the spin factor.
+Associativity requires the twisted cocycle identity
+\begin{equation}
+ \omega(g,h)\omega(gh,j)
+ ={}^{a_g}\!\omega(h,j)\,\omega(g,hj).
+ \label{eq:cocycle}
+\end{equation}
+This distinguishes screw/glide operations from a point-group
+approximation and double-valued representations from scalar ones
+\cite{SpglibDefinitions,SpgrepFormulation}.
+
+A conventional centered cell has distinct cosets with the same rotation
+and different translations. Collapsing them by rotation alone loses
+folded translation sectors. Conversely, character data calculated in
+that conventional quotient cannot be matched blindly to a primitive-cell
+EBR table. Both the cell transformation and representation convention
+must be recorded.
+
+\subsection{Metric sewing and degeneracies}
+Let $T_g$ contain the atom/AO action, Bloch-image phases and spin action.
+The sewing matrix between selected frames is
+\begin{equation}
+ B_g(\bk)=C^\dagger(g\bk)S(g\bk)
+ T_g(\bk)\,{}^{a_g}\!C(\bk).
+ \label{eq:sewing}
+\end{equation}
+For a closed selected subspace it is unitary and reconstructs the
+transformed frame. Metric normalization, closure, and energy
+compatibility must be checked before extracting characters.
+Degeneracy is not resolved by labelling individual eigenvectors:
+unitary rotations within a degenerate block are physically arbitrary.
+
+For a unitary little group and a complete character table with the
+same factor system, multiplicities follow from
+\begin{equation}
+ n_\alpha=\frac{1}{|G_{\bk}|}
+ \sum_{g\in G_{\bk}}\overline{\chi_\alpha(g)}\,\chi(g).
+ \label{eq:character-decomposition}
+\end{equation}
+The result must be a nonnegative integer, with consistent reconstructed
+character and total dimension. Antiunitary operations require
+corepresentation theory, not unmodified use of this character formula.
+Characters alone also do not determine the sewing of directed Wilson
+links between different k-points.
+
+The native implementation constructs a complete projective character
+table for the supplied unitary little group, rather than importing
+standard-label tables. Actual GPW/GAPW Gaussian coefficient actions
+include the atom permutation, AO rotation, cell-image phase and,
+where requested, the post-SCF GTH spinor action. The selected band
+sewing matrices are checked against Eq.~\eqref{eq:projective-group}
+before characters are decomposed. Failed covariance or noninteger
+multiplicities are rejected, not repaired by rotating eigenvectors
+or rounding a defective representation.
+
+\subsection{Antiunitary corepresentations}
+Let the little group be $M=H\cup aH$, where $H$ is its unitary
+subgroup. An irreducible projective character $\chi_\alpha$ of $H$
+has antiunitary partner
+\begin{equation}
+ \chi_\alpha^a(h)=
+ \frac{\omega(h,a)}{\omega(a,a^{-1}ha)}
+ \overline{\chi_\alpha(a^{-1}ha)} .
+ \label{eq:corep-partner}
+\end{equation}
+The Wigner indicator is~\cite{SpgrepCorepresentations}
+\begin{equation}
+ w_\alpha=\frac{1}{|H|}\sum_{b\in aH}
+                  \omega(b,b)\chi_\alpha(b^2)\in\{+1,-1,0\}.
+ \label{eq:wigner-corep}
+\end{equation}
+Type $+1$ retains one copy of the unitary irrep, type $-1$ requires
+two copies, and type $0$ pairs two inequivalent partner irreps.
+The native implementation determines these types and their integer
+unitary restriction matrix. Odd type-$-1$ multiplicities or unequal
+type-$0$ partner counts invalidate a selected band space.
+Spin and nonsymmorphic phases enter the same factor system and cannot
+be tested separately after those phases have been discarded.
+
+These signs are neither topological indices nor antiunitary
+eigenvalues. Type $+1$ does not exclude Kramers degeneracy: an
+already multidimensional spin irrep can contain the required doublet
+without additional doubling. At a generic centrosymmetric SOC point,
+in contrast, the identity-only unitary subgroup may be doubled by
+the combined inversion--time-reversal operation.
+No canonical antiunitary eigenvector basis is assigned.
+The electronic-structure path currently constructs the nonmagnetic
+grey extension of the spatial group. The underlying algebra also
+accepts supplied magnetic factor systems, but this is not a magnetic
+space-group search or self-consistent noncollinear SOC calculation.
+
+\subsection{Nonsymmorphic band compatibility on explicit segments}
+For a directed connection from $\bk_a$ to $\bk_b+\bG$, define
+$\mathbf d=\bk_b+\bG-\bk_a$. A segment symmetry must satisfy
+\begin{equation}
+ \sigma_g W_g^T\mathbf d=\mathbf d,\qquad
+ \sigma_g=(-1)^{a_g},
+ \label{eq:line-stabilizer}
+\end{equation}
+within the fractional-coordinate tolerance, not merely modulo a
+reciprocal vector. Intersection of the endpoint little groups is
+insufficient: ordinary time reversal can fix two TRIM endpoints
+without preserving any interior point of their connecting segment.
+
+To compare representations at the endpoints, remove the continuously
+varying translational part using
+\begin{equation}
+ \eta_g(\bk)=e^{2\pi\ii\bk\cdot\tau_g},\qquad
+ \bar\omega(g,h)=\eta_g\,{}^{a_g}\!\eta_h\,
+                         \eta_{gh}^*\omega(g,h).
+ \label{eq:line-rephasing}
+\end{equation}
+The conjugation for an antiunitary first factor is essential.
+Both endpoints must produce the same rephased factor on the segment
+subgroup. Its unitary projective characters provide a common basis
+for integer endpoint-to-line branching matrices $B_a,B_b$.
+With selected endpoint multiplicities $m_a,m_b$, compatibility requires
+\begin{equation}
+ B_a m_a=B_b m_b .
+ \label{eq:line-compatibility}
+\end{equation}
+The destination rephasing uses $\bk_b+\bG$, not just $\bk_b$.
+For example, a screw eigenvalue branch may exchange with another after
+one reciprocal period. Ignoring $\bG$ would erase this monodromy.
+Integer changes of coset representatives cancel between the
+characters and the rephasing.
+
+Endpoint corepresentations are restricted as whole representations.
+If $R_a$ and $R_\ell$ give the unitary restrictions of endpoint and
+line corepresentations, their branching $C_a$ satisfies
+\begin{equation}
+ R_\ell C_a=B_a R_a .
+ \label{eq:corep-subduction}
+\end{equation}
+If the line has no antiunitary stabilizer, $B_aR_a$ instead describes
+the branching into unitary line irreps. This retains endpoint partner
+constraints even when time reversal is absent on the interior.
+A spinful glide model illustrates the distinction: opposite glide
+partners at Gamma become same-branch pairs at the boundary, preventing
+an isolated two-band connection but allowing a four-band one.
+For valid corepresentations, unitary and corepresentation line-count
+compatibility are equivalent; the latter resolves the partner
+structure rather than introducing a new invariant.
+
+These operations are implemented on explicit NNKP or generated Wilson
+links through \texttt{LITTLE\_GROUP\_COMPATIBILITY}, which implies
+\texttt{LITTLE\_GROUP\_IRREPS}. Compatible endpoints do not prove a gap
+between sampled points, a trivial Bloch bundle, or an atomic-band
+decomposition. Automatic complete Brillouin-zone connectivity and
+standard crystallographic irrep labels remain separate work.
+
+\subsection{Site-induced atomic band representations}
+The native induction kernel starts from a supplied fractional site $q$
+and constructs its orbit $q_j=t_jq$ modulo integer translations.
+Representatives $t_j$ are adjusted by lattice translations to reach the
+chosen positions exactly. Localized orbitals carry irreps of the site
+stabilizer; an antiunitary stabilizer instead requires the complete
+corepresentations described above. Their unitary restriction characters
+are denoted by $\chi_\alpha$.
+
+For a unitary little-group operation $g$ that fixes site $j$ modulo
+translations, set
+\begin{equation}
+ L_{gj}=W_gq_j+\tau_g-q_j\in\mathbb Z^3,\qquad
+ h_j=t_j^{-1}\{I|-L_{gj}\}g t_j .
+\end{equation}
+The induced character is
+\begin{equation}
+ \chi^{\uparrow}_\alpha(g;\bk)=
+ \sum_{j:\,gq_j=q_j\bmod\mathbb Z^3}
+ e^{-2\pi\ii\bk\cdot L_{gj}}
+ \frac{z(g,t_j)}{z(t_j,h_j)}\,
+ {}^{a_{t_j}}\!\chi_\alpha(h_j).
+ \label{eq:atomic-induction}
+\end{equation}
+This is the Bloch form of site induction~\cite{CanoBradlyn2021}, with
+the spin factor in the same convention as Eq.~\eqref{eq:projective-group}.
+Antiunitary orbit representatives conjugate the onsite character even
+though $g$ itself is unitary. Omitting this conjugation loses complex
+orbital partners.
+
+The implementation retains conventional-cell centering cosets and keeps
+each local representation column fixed across k points. Its band rank
+is the orbit multiplicity times the local dimension. No full band
+diagonalization or orbital gauge choice is needed to generate these
+atomic reference characters. Validation compares their little-group
+decompositions and segment restrictions with independent Cartesian
+s/p/d orbital and spin traces. Site induction alone neither enumerates
+all Wyckoff positions nor establishes that an induced representation
+is elementary.
+
+\subsection{Band representations and limits of indicators}
+Elementary band representations (EBRs) provide the indecomposable
+building blocks of atomic band representations. Restricting them to
+little groups yields a vector of irrep multiplicities. Compatibility
+relations constrain the vectors that can connect along high-symmetry
+lines. A candidate symmetry vector $n$ can be compared with an integer
+matrix of EBR signatures,
+\begin{equation}
+ E q=n .
+ \label{eq:ebr-system}
+\end{equation}
+Integer solvability, nonnegative solvability, and compatibility
+constraints are different questions. A symmetry indicator is a
+quotient of compatible representation data by atomic data; it can
+miss topology invisible to those symmetry eigenvalues
+\cite{Bradlyn2017,Po2017}.
+An atomic-compatible signature is not proof of a trivial Bloch bundle.
+A signed-only decomposition is not, without additional information,
+a complete diagnosis of fragile topology.
+
+The implemented EBR-signature classifier still uses the inversion
+subgroup and its analytic atomic signatures. The general native
+little-group/corepresentation, explicit-segment and site-induction
+machinery supplies additional representation data, not a complete
+all-space-group classification. Conventional-to-primitive matching,
+standard labels, complete connectivity and a validated catalogue with
+elementarity checks are still required. Algebra tests over all ordinary
+space groups must not be presented as a completed classification
+of all their materials.
+
+\section{Parameter-space topology and phasons}
+\label{sec:phasons}
+A separate native postprocessor, \texttt{topology\_phasons}, extends the
+overlap construction to closed two- or four-parameter families, including
+periodic atomic displacements (phasons) combined with reciprocal
+coordinates. It reads \texttt{STATE\_EXPORT} snapshots and evaluates
+$M_{ab}=C_a^\dagger O_{ab}C_b$, where $O_{ab}$ includes the Gaussian
+centers of both geometries, periodic images, and Bloch and boundary-sewing
+phases. Polar-unitary links give $C_1$ from determinant plaquette
+phases~\cite{Fukui2005} and a four-parameter $C_2$ estimate from full
+non-Abelian plaquette logarithms~\cite{MocholGrzelak2019}. Here $C_2$
+denotes the second Chern character pairing, not generally the second
+Chern class. The postprocessor requires neither Python, Z2Pack, nor
+Wannier90 at runtime. It operates on fixed-cell, fixed-rank families with
+explicit physical endpoint identifications. The Supporting Information
+gives its separate development version, discretization, and model and
+Gaussian-snapshot tests. These tests complement the material examples
+below without changing their Hamiltonians, sampling, or results.
+
+
+For a discrete parameter family, let $Q_\mu(x)$ denote the polar link
+from $x$ to $x+\hat\mu$. An oriented plaquette is
+\begin{equation}
+ P_{\mu\nu}(x)=Q_\mu(x)Q_\nu(x+\hat\mu)
+ Q_\mu^\dagger(x+\hat\nu)Q_\nu^\dagger(x).
+\end{equation}
+With the implemented directed-overlap convention,
+$C_1^{\mathrm{mesh}}=-(2\pi)^{-1}\sum_x\arg\det P_{12}(x)$.
+For four parameters write $F_{\mu\nu}(x)=\log P_{\mu\nu}(x)$
+using the principal matrix logarithm. The non-Abelian estimator is
+\begin{equation}
+ C_2^{\mathrm{mesh}}=-\frac{1}{4\pi^2}\sum_x
+ \Re\Tr\!\left[F_{12}F_{34}-F_{13}F_{24}+F_{14}F_{23}\right](x).
+ \label{eq:phason-c2}
+\end{equation}
+The logarithms already include the discrete plaquette area.
+Mesh refinement, physical endpoint identifications, and a fixed isolated
+rank are essential. Coefficient arrays from different geometries
+cannot be contracted without cross-geometry AO overlaps.
+The numerical value is retained before rounding, and a sampled gap
+does not certify isolation between sampled geometries.

@@ -1,0 +1,140 @@
+\section{Implementation, validation, and development boundaries}
+\label{sec:validation}
+\subsection{Shared operators and optional numerical backends}
+The finite-system property paths share full AO Hamiltonians, overlap,
+analytic positions, and optional GTH-SOC blocks.
+DBCSR supplies distributed block storage and matrix products
+\cite{Borstnik2014}. Localizer assembly retains the union of the
+operator sparsity patterns without additional dropping.
+DBCSR is not itself a general pivoted indefinite factorization or
+Pfaffian solver.
+
+The dense LAPACK path is the small-system reference. MUMPS supplies
+distributed symmetric-indefinite factorizations and reusable metric
+solutions \cite{MumpsGuide}. Complex Hermitian matrices are realified:
+\begin{equation}
+ \mathcal R(A)=
+ \begin{pmatrix}\Re A&-\Im A\\\Im A&\Re A\end{pmatrix}.
+\end{equation}
+Each eigenvalue is duplicated, so inertia-based formulas compensate
+for that duplication. A positive metric is checked separately from
+the indefinite localizer. Static pivot perturbations and low-rank
+compression are not silently accepted as exact sign counts.
+Symbolic analysis is reused across appropriate shift families.
+
+The optional Tacho skew-LDL extension is accessed through a small
+C interface and Fortran interoperability \cite{TachoSkew}.
+No MATLAB dependency is introduced.
+Permutation parity, skew-pivot conventions, numerical residuals, and
+the trivial-reference orientation are explicit.
+Its sparse factorization currently resides on one rank, while
+DBCSR assembly and MUMPS metric/gap checks can be distributed.
+PARDISO and PEXSI are possible alternative backends, not prerequisites
+and not part of the tested backend set reported here.
+
+MUMPS factor storage and process-summed solver memory are not the
+whole application's memory consumption.
+Sparse fill-in, source-rank coordinates, dense reference arrays,
+trial vectors, and MPI buffers must be accounted for separately.
+Similarly, single-node timings cannot establish multi-node scaling.
+
+\subsection{Three levels of validation}
+The first level tests algebra independently of an SCF calculation:
+metric congruences, origins, energy shifts, degeneracies, time
+reversal, permutation orientation, and analytic model indices.
+The second compares numerical algorithms on identical matrices:
+dense eigenvalues against LDL inertia, dense against sparse gap
+brackets, dense against skew-LDL signs, and full against iterative
+quadratic eigenproblems.
+The third exercises operator construction from actual converged
+CP2K GPW/GAPW calculations.
+
+Retained checks include open and periodic Chern models, spin-mixed
+time-reversed model pairs, gap closings, singular and indefinite
+metrics, and deliberately broken symmetry.
+They establish nontrivial topology in controlled models.
+Small molecular and bulk integration fixtures instead establish that
+the AO data reach the algorithms consistently; most are not
+nontrivial first-principles topological materials.
+
+The retained neon and stanene Wilson results in
+Section~\ref{sec:topology} are small band-topology test and demonstration
+calculations, with matching inversion indices. They complement the
+Si/Al k-point demonstrations summarized in
+Section~\ref{sec:applications}, rather than constituting a
+materials-discovery application study.
+They were produced with their recorded executable and sampling.
+They are not relabelled as localizer or Kubo calculations merely
+because the underlying operators are now shared.
+
+\subsection{Quantitative test and demonstration calculations}
+Table~\ref{tab:operator-validation} records representative comparisons
+from the retained development runs. Agreement is measured between
+calculations at identical numerical settings unless noted otherwise.
+These are consistency checks, not a claim of basis- and
+material-converged conductivity.
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{p{0.30\linewidth}p{0.56\linewidth}}
+\toprule
+Comparison & Retained result and meaning\\
+\midrule
+Ne/SOC primitive mesh versus Gamma supercell &
+A $3\times1\times2$ primitive mesh and its explicit Gamma supercell
+give $6.21105320\times10^{-9}$ S at the converged comparison settings.\\
+Bi$_2$/SOC property symmetry &
+Six of 27 eigensystems suffice; the maximum printed full-tensor
+relative difference from the unreduced calculation is
+$2.71\times10^{-15}$.\\
+Primitive diamond/SOC &
+Both K290 and SPGLIB use three of eight representatives; the
+full-tensor relative difference is $2.21\times10^{-11}$.\\
+Bi$_2$ quadratic states &
+Dense and iterative gaps agree within $6\times10^{-15}$ hartree;
+four metric-subspace singular values differ from unity by less
+than $10^{-10}$.\\
+\bottomrule
+\end{tabular}
+\caption{Operator-level checks retained on 24 September 2026.
+Raw settings and limitations are recorded in the Supporting Information.
+The transport numbers are numerical fixtures, not material predictions.}
+\label{tab:operator-validation}
+\end{table}
+
+For the diamond property reconstruction, metric, Hamiltonian, and
+current residuals are checked separately rather than inferred from
+the final scalar conductivity. Degenerate subspaces retain their
+transformed gauge. The representative count measures avoided
+diagonalizations, not total speedup.
+
+The crystalline representation tests cover all 530 Hall settings of
+the 230 ordinary space groups, scalar and spinful factors, and their
+grey extensions. They validate 6,360 unitary projective character
+tables, 5,324 antiunitary corepresentation tables, and 12,720 directed
+segment comparisons; 4,462 segments retain antiunitary symmetry.
+Release and bounds-checked debug runs agree. The Gaussian
+little-group directory passes 47 numerical assertions in both serial
+and two-rank MPI runs, including GPW, GAPW, post-SCF SOC, screw
+monodromy and refined Wilson links. These counts describe algebra and
+small integration tests, not 230 separate converged material studies.
+The Supporting Information separates this evidence from a supplied
+magnetic-group algebra sweep and its independent reference comparison.
+
+The site-induction kernel adds 38,160 site/k-point cases over the same
+Hall settings, using three positions per cell. Their 67,824 induced
+local-representation columns have valid little-group decompositions
+and satisfy the checked directed compatibility relations.
+Independent Cartesian s/p/d orbital traces, with and without physical
+spin, give 114,480 matching character comparisons. This tests atomic
+reference construction rather than a Wyckoff catalogue or an EBR
+classification of first-principles bands.
+
+\subsection{Convergence and material validation}
+Before submission, the material set should include matched crystalline
+band and real-space indices, finite-size SOC flakes, disordered
+configurations, and controlled transitions. Transport studies need
+independent convergence of basis, mesh or size, temperature, and
+dissipation. Localizer studies need a stable scale interval and a
+spatial map of both the index and its protection gap.
+The paper should report failed or unresolved parameter regions rather
+than select only points with the desired integer.

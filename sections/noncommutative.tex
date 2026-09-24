@@ -1,0 +1,86 @@
+\section{Noncommutative geometry and physical interpretation}
+\label{sec:ncg}
+\subsection{Covariance rather than exact order}
+For a family of configurations $\omega\in\Omega$, a spatial action
+$\tau_a$ is represented by
+\begin{equation}
+ U_a H_\omega U_a^{-1}=H_{\tau_a\omega}.
+ \label{eq:covariance}
+\end{equation}
+This covariance is weaker than $[U_a,H_\omega]=0$: a displaced thermal
+configuration need not have the symmetries of its probability measure.
+Bellissard's formulation replaces the Brillouin-zone description by
+an algebra of such covariant observables with a trace per physical
+volume \cite{Bellissard1994}. The operator-algebraic viewpoint therefore
+remains meaningful when a single Bloch momentum is not a good quantum
+number.
+
+For sufficiently local observables, the trace per volume has the
+schematic realization
+\begin{equation}
+ \mathcal T(A)=
+ \lim_{V\rightarrow\infty}\frac{1}{V}
+ \Tr(\chi_V A_\omega\chi_V),
+ \label{eq:trace-volume}
+\end{equation}
+with the appropriate orbital trace and a physical-volume normalization.
+Ergodicity supplies the conditions under which a typical large
+configuration and an ensemble average agree. It does not guarantee
+that a particular small simulation cell has self-averaged.
+
+The first-principles construction must preserve covariance while
+passing from continuum KS operators to AO matrices
+\cite{KuehneTransport2020}. The metric is part of that transformation.
+In a finite AO space, traces of projected covariant matrices use
+$\Tr(S^{-1}A)$; traces of products use the intervening metric factors.
+For local traces the spatial cutoff itself is an operator, not merely
+an arbitrary subset of coefficient indices.
+
+\subsection{Derivations, Fermi projections, and Chern pairings}
+Choose spatial derivations
+$\nabla_a A=-\ii[X_a,A]$ in an orthonormal representation.
+For the Fermi projection $P=\mathbf1_{(-\infty,E_F)}(H)$, a
+two-dimensional Chern pairing can be written, with a fixed orientation,
+as
+\begin{equation}
+ C=2\pi\ii\,\mathcal T\!\left(P[\nabla_1P,\nabla_2P]\right)
+   =-2\pi\ii\,\mathcal T\!\left(P[[X_1,P],[X_2,P]]\right).
+ \label{eq:nc-chern}
+\end{equation}
+The trace normalization and oriented coordinates are chosen so that
+the periodic limit agrees with the Berry-curvature convention used
+below. Reversing that orientation reverses $C$.
+Index theory relates such pairings to stable integers under the
+required locality and gap or localization assumptions
+\cite{ProdanSchulzBaldes2016}. Equation~\eqref{eq:nc-chern} is a theoretical
+connection, not a claim that the current implementation evaluates a
+general thermodynamic-limit noncommutative Chern formula.
+
+A spectral gap excludes eigenvalues in an interval. A mobility gap
+instead concerns localization and transport even when states are
+present. A localizer gap is the smallest singular value of a composite
+energy-position operator. These three gaps answer different questions.
+The localizer is useful precisely because spatially resolved
+information can remain available where a bulk band classification is
+not directly applicable \cite{Dixon2023}. Its numerical invertibility
+does not by itself prove a mobility-gap theorem for a DFT material.
+
+\subsection{Thermal disorder and convergence}
+An AIMD trajectory can supply configurations for a disorder average.
+The nuclear sampling temperature, the electronic Fermi temperature,
+and the dissipative relaxation scale are conceptually distinct.
+A calculation should record all three rather than infer them from a
+single input temperature. Configuration correlations determine how
+many effectively independent samples have been obtained; a small
+standard error computed from strongly correlated snapshots is not a
+substitute for a correlation analysis.
+
+The thermodynamic limit, zero-temperature limit, and vanishing
+dissipation limit cannot generally be interchanged. At fixed finite
+volume the spectrum is discrete, so taking the broadening to zero
+first can give a qualitatively misleading DC response. For a material
+prediction we therefore require size and sampling convergence at a
+specified positive dissipation, followed by a physically justified
+study of its dependence. The present validation examples establish
+numerical identities at fixed inputs, not a microscopic scattering
+model or a disorder-converged transport prediction.

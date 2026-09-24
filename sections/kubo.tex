@@ -1,0 +1,199 @@
+\section{Finite-temperature Kubo transport}
+\label{sec:kubo}
+\subsection{Liouvillian formulation and dissipation}
+Let $f(H)=[1+\exp((H-\mu)/k_BT)]^{-1}$ and define the energy-valued
+Liouvillian $\mathcal L_H(A)=\ii[H,A]$. In the relaxation-time
+approximation, a positive energy broadening $\Gamma$ replaces a
+more general dissipative superoperator. With
+$\nabla_a=-\ii[X_a,\,\cdot\,]$, a convenient conductivity convention is
+\begin{equation}
+ \sigma_{ab}=-\frac{e^2}{\hbar}
+ \mathcal T\!\left[
+   (\nabla_aH)(\Gamma+\mathcal L_H)^{-1}\nabla_b f(H)
+ \right].
+ \label{eq:kubo-liouville}
+\end{equation}
+The real symmetric part gives the dissipative DC response considered
+here. The factor $e>0$ is the magnitude of the electron charge.
+This expression states the operator structure behind the
+finite-volume calculation, including the role of dissipation
+\cite{KuehneTransport2020}. A constant $\Gamma$ is an approximation to
+scattering; it is not obtained from the SCF convergence tolerance or
+from a plotted density-of-states width.
+
+Let $a^b_{nm}=\langle n|\nabla_bH|m\rangle=\hbar v^b_{nm}$, and define
+the nonnegative Fermi divided difference
+\begin{equation}
+ F_{nm}=
+ \begin{cases}
+ \displaystyle-\frac{f(\varepsilon_n)-f(\varepsilon_m)}
+ {\varepsilon_n-\varepsilon_m},&\varepsilon_n\ne\varepsilon_m,\\[0.7em]
+ \displaystyle-f'(\varepsilon_n)
+ =\frac{f(\varepsilon_n)[1-f(\varepsilon_n)]}{k_BT},
+ &\varepsilon_n=\varepsilon_m .
+ \end{cases}
+ \label{eq:fermi-divided}
+\end{equation}
+A spectral expansion of Eq.~\eqref{eq:kubo-liouville} gives
+\begin{equation}
+ \sigma^{\mathrm{diss}}_{ab}
+ =\frac{e^2}{\hbar V_d}
+ \sum_{\bk,s}w_{\bk}\,g_s
+ \sum_{nm}F_{nm\bk s}
+ \frac{\Gamma}{\Gamma^2+(\varepsilon_{n\bk s}-\varepsilon_{m\bk s})^2}
+ \Re\!\left[a^a_{nm\bk s}a^b_{mn\bk s}\right].
+ \label{eq:kubo-spectral}
+\end{equation}
+Here $\sum_{\bk} w_{\bk}=1$, $V_d$ is the periodic length, area, or
+volume, and $g_s$ accounts for spin occupancy without double counting.
+For explicit SOC spinors, each state has unit maximum occupation.
+The tensor is projected onto the periodic Cartesian subspace before
+reporting a reduced-dimensional conductivity.
+
+Equation~\eqref{eq:kubo-spectral} is positive semidefinite for
+$T,\Gamma>0$. In particular, its diagonal elements are nonnegative.
+The units are conductance times length$^{2-d}$: S\,m in one dimension,
+S in two dimensions, and S/m in three dimensions, with the latter
+optionally printed as S/cm. Vacuum padding must not change a
+two-dimensional sheet conductivity through an arbitrary three-dimensional
+volume factor. An isolated finite-system response is not automatically
+a measurable bulk conductivity.
+
+\subsection{Degenerate levels and intraband response}
+The equal-energy branch of Eq.~\eqref{eq:fermi-divided} applies to all
+matrix elements within a degenerate subspace, not just $n=m$.
+In a periodic system, the diagonal band velocity can be nonzero and
+provides an intraband term proportional to $-f'/\Gamma$.
+Discarding diagonal terms would remove this contribution.
+Likewise, dividing current matrix elements by
+$\varepsilon_n-\varepsilon_m$ cannot be used to define a stable
+position operator in a degenerate block.
+
+A unitary change of basis inside an exactly degenerate subspace rotates
+the complete current block. Because the scalar kernel is constant on
+that block, the summed contraction is unchanged.
+This is why comparisons should involve block traces or projectors
+rather than phases of individual eigenvectors.
+Near equal energies, the implementation evaluates the divided
+difference with a smooth finite-temperature expansion instead of
+subtracting nearly identical Fermi functions.
+
+\subsection{Three current-operator choices}
+The historical atom-embedding approximation associates each AO with
+its nuclear center. It provides an economical representation but
+does not contain all intra-atomic Gaussian position matrix elements.
+It remains a distinct, explicitly selected approximation.
+
+For isolated systems, the projected-AO alternative uses
+\begin{equation}
+ J_a=HS^{-1}X_a-X_aS^{-1}H,\qquad
+ \hbar v_a=\ii J_a .
+ \label{eq:projected-current}
+\end{equation}
+$J_a$ is anti-Hermitian. In an $S$-orthonormal eigenbasis it becomes
+$(J_a)_{nm}=(\varepsilon_n-\varepsilon_m)(X_a^{\mathrm{MO}})_{nm}$.
+The complex conjugation in a conductivity contraction must be retained
+when SOC is present. This construction is exact for the projected
+finite AO model; the difference between projected and continuum
+commutators remains a basis-convergence question.
+
+For periodic calculations, a bounded Cartesian position in one
+simulation cell is not a valid replacement for the periodic current.
+The Bloch path uses derivatives of the image Hamiltonian and overlap
+together with analytic first-moment integrals. In atomic units its
+matrix elements are
+\begin{equation}
+ \begin{split}
+ v^a_{nm}(\bk)={}&
+ [C^\dagger\partial_a H C]_{nm}
+ -\varepsilon_n[C^\dagger\partial_a S C]_{nm}\\
+ &+\ii(\varepsilon_n-\varepsilon_m)[C^\dagger D_aC]_{nm},
+ \end{split}
+ \label{eq:bloch-velocity}
+\end{equation}
+where $\partial_a$ differentiates Cartesian $k_a$.
+The cell-gauge connection obeys
+\begin{equation}
+ D_a-D_a^\dagger=-\ii\,\partial_a S .
+ \label{eq:connection-identity}
+\end{equation}
+These identities make explicit why the derivative of $H$ alone,
+the canonical momentum, and the full velocity are not interchangeable
+in a local-orbital calculation
+\cite{EsteveParedes2023}.
+
+Hermiticity can be checked directly: the anti-Hermitian part from
+the energy-weighted overlap derivative is cancelled by
+Eq.~\eqref{eq:connection-identity}.
+For $n=m$, Eq.~\eqref{eq:bloch-velocity} reduces to the generalized
+Hellmann--Feynman derivative
+$c_n^\dagger(\partial_aH-\varepsilon_n\partial_aS)c_n$.
+No eigenvector derivative or energy-denominator division is required.
+
+For distinct band energies, the same operator determines the interband
+position (dipole) matrix elements in atomic units,
+\begin{equation}
+ d^a_{nm}(\bk)
+ =-\frac{\ii\,v^a_{nm}(\bk)}
+ {\varepsilon_{n\bk}-\varepsilon_{m\bk}},
+ \qquad \varepsilon_{n\bk}\ne\varepsilon_{m\bk}.
+ \label{eq:interband-dipole}
+\end{equation}
+Here $d^a_{nm}$ has units of length and does not include the electron
+charge. Substitution of Eq.~\eqref{eq:bloch-velocity} gives the
+Hamiltonian-derivative term, the energy-weighted overlap-derivative term,
+and $[C^\dagger D_a C]_{nm}$. All three are required in a general
+nonorthogonal local-orbital basis~\cite{EsteveParedes2023}.
+The k-point moment calculation constructs these matrices from real-space
+image-cell integrals and can use the SCF mesh, a separate \texttt{KPOINTS}
+set, or a \texttt{KPOINT\_SET} path in the moments print section.
+Equation~\eqref{eq:interband-dipole} is only an interband relation.
+It neither supplies diagonal positions in a periodic system nor replaces
+the undivided velocity blocks needed for degenerate and intraband
+transport.
+
+\subsection{Gauge covariance and nonlocal operators}
+Under a differentiable, nonsingular AO basis change $T(\bk)$,
+$H'=T^\dagger HT$, $S'=T^\dagger ST$, and $C'=T^{-1}C$.
+The connection must transform as
+\begin{equation}
+ D'_a=T^\dagger D_aT-\ii(\partial_aT)^\dagger ST .
+ \label{eq:connection-transform}
+\end{equation}
+Substitution into Eq.~\eqref{eq:bloch-velocity} cancels all derivatives
+of $T$ by using $HC=SC\varepsilon$.
+The physical velocity is therefore unchanged even under a
+k-dependent nonunitary AO transformation.
+This is a stronger test than comparing band energies.
+
+The Hamiltonian derivatives include all retained image contributions,
+including nonlocal pseudopotential and GTH-SOC terms.
+The connection term is still required; including a derivative of the
+SOC Hamiltonian does not make the bare Peierls derivative complete.
+SCF-potential convergence, scalar or spinor basis convergence, and
+analysis-mesh convergence must be checked independently.
+
+\subsection{Property symmetry and practical scope}
+The optional Bloch-Kubo symmetry path diagonalizes only representatives
+of its own analysis mesh. Atom permutations, AO rotations, lattice-image
+phases, physical spin rotations, and antiunitary conjugation reconstruct
+the remaining eigenframes. Each candidate frame is tested through
+$C^\dagger SC=I$, $C^\dagger HC=\varepsilon$, and target/source current
+covariance. An unacceptable map is not silently inserted into the
+conductivity.
+
+For a spatial Cartesian operation $R$, velocities rotate as a polar
+vector. Time reversal adds the reversal of velocity as well as complex
+conjugation. In the anti-Hermitian current convention used internally,
+the extra factor of $\ii$ must also be conjugated.
+The response sums the full tensor over the full mesh; it is not an
+irreducible scalar-weight substitution for anisotropic currents.
+
+The current implementation provides symmetric dissipative DC
+conductivity with a prescribed relaxation scale. It does not yet
+provide anomalous Hall, spin Hall, a general frequency-dependent
+response, or microscopic scattering superoperators.
+Its Bloch matrices and eigenframes are a bounded dense reference path,
+although eigensystems are distributed over MPI ranks.
+Fewer diagonalizations do not imply proportional memory or runtime
+savings when target operators are still explicitly evaluated.

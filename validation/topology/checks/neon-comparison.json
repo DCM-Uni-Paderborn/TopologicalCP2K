@@ -1,0 +1,14 @@
+{
+  "native_z2pack_circle_error": 2.1316282072803006e-14,
+  "atomic_wcc": [
+    0.49999999999999994
+  ],
+  "regular_explicit_raw_error": 1.93240576637759,
+  "regular_explicit_singular_value_error": 0.004270475355619974,
+  "native_surface_converged": true,
+  "z2pack_convergence": "{'PosCheck': np.True_}",
+  "soc_validation": "passed",
+  "soc_native_z2": 0,
+  "soc_z2pack_z2": 0,
+  "soc_z2pack_convergence": "{'line': {'PosCheck': {'PASSED': [np.float64(0.0), np.float64(0.25), np.float64(0.5), np.float64(0.75), np.float64(1.0)], 'FAILED': [], 'MISSING': []}}, 'surface': {'GapCheck': {'PASSED': [(np.float64(0.0), np.float64(0.25)), (np.float64(0.25), np.float64(0.5)), (np.float64(0.5), np.float64(0.75)), (np.float64(0.75), np.float64(1.0))], 'FAILED': []}, 'MoveCheck': {'PASSED': [(np.float64(0.0), np.float64(0.25)), (np.float64(0.25), np.float64(0.5)), (np.float64(0.5), np.float64(0.75)), (np.float64(0.75), np.float64(1.0))], 'FAILED': []}}}"
+}

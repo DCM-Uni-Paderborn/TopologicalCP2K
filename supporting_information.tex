@@ -1,0 +1,574 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,bm,booktabs,longtable,array,xcolor,hyperref}
+\newcommand{\CPtwoK}{\textsc{CP2K}}
+\newcommand{\bk}{\mathbf{k}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\emergencystretch=2em
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\hypersetup{colorlinks=true,urlcolor=blue!50!black,
+pdfauthor={Thomas D. Kuehne; Alexander Cerjan; Vladislav Efremkin; Hermann Schulz-Baldes; Emil Prodan}}
+\title{Supporting Information\\Topological Systems with CP2K}
+\author{Thomas D. K\"uhne, Alexander Cerjan, Vladislav Efremkin,\\
+Hermann Schulz-Baldes, and Emil Prodan\\[0.4em]
+\small Corresponding author: \href{mailto:tkuehne@cp2k.org}{tkuehne@cp2k.org}}
+\date{}
+\begin{document}
+\maketitle
+\section{Scope and Reproduction Boundaries}
+This working document combines the retained band-topology calculations
+transferred from the k-point manuscript with separately validated
+transport, localizer, and quadratic-pseudospectrum developments.
+The original results are not recomputed or relabelled by moving
+the manuscript text.
+The development status is recorded as of 24 September 2026.
+A source freeze and complete public reproduction archive remain
+submission requirements.
+
+\subsection*{Applications versus test calculations}
+TopoHSE-DB and the submitted generative--predictive discovery study
+are cited in the main text as materials-science applications.
+Their VASP-based calculations are not part of the CP2K validation
+records collected here. In particular, their database labels and
+candidate counts do not validate the new CP2K localizer or transport
+implementations.
+
+The smaller calculations below are tests and demonstrations.
+The companion k-point paper additionally reports 18 converged Si/Al
+calculations in conventional cubic cells with eight Si atoms
+($a=5.43$~\AA) and four Al atoms ($a=4.05$~\AA).
+These use PBE, DZVP-MOLOPT-SR-GTH bases, GTH-PBE pseudopotentials,
+600/60~Ry grid cutoffs, and an SCF threshold of $10^{-9}$.
+Al uses Fermi--Dirac occupations at 1000~K, so its compared quantity
+is the electronic free energy. The same-mesh comparison uses
+$4\times4\times4$ sampling: 64 full-grid points, 32 with time reversal,
+and four with either K290 or SPGLIB atomic symmetry.
+The maximum cell-energy/free-energy difference is
+$1.4\times10^{-12}$ hartree; the Al atomic-symmetry stress difference
+is 0.098 bar. These tests demonstrate representation consistency,
+not independently converged material properties or general force accuracy.
+Their source and raw records remain those of the companion manuscript;
+no new Si/Al calculations were performed for the present discussion.
+
+\section{Native Wilson-Loop Test and Demonstration Calculations}
+
+The topology examples form a separate calculation set from the Si/Al
+mainline tests. The native extension supplies directed Gaussian-basis
+overlaps, second-variational spinors, and the Wilson-loop analysis described
+in the main text. The retained calculations were completed on
+17 September 2026 with one MPI process and one OpenMP thread. Source
+provenance and artifact checksums are recorded in
+\texttt{validation/topology/README.md} and the figure manifest.
+
+Both examples use PBE, the \texttt{DZVP-MOLOPT-GGA-GTH} basis from
+\texttt{BASIS\_MOLOPT\_UZH}, SOC pseudopotentials from
+\texttt{GTH\_SOC\_POTENTIALS}, a 200 Ry density cutoff and a 40 Ry relative
+cutoff. The potential labels are \texttt{GTH-PBE-q8} for neon and
+\texttt{GTH-PBE-q4} for tin. Complex orbitals and explicit full SCF meshes
+are used. The neon reference contains one atom at fractional coordinate
+$(1/2,1/2,1/2)$ in a cubic cell of side 5~\AA, with a $2\times2\times2$
+SCF mesh and convergence threshold $10^{-9}$. The stanene cell has lattice
+vectors $(4.674,0,0)$, $(2.337,4.047802737288466,0)$, and $(0,0,20)$~\AA,
+and two tin atoms at fractional positions $(1/3,1/3,0.5213)$ and
+$(2/3,2/3,0.4787)$. It therefore has a buckling height of 0.852~\AA.
+These fixed geometric parameters follow the pristine-stanene reference
+reported by Zhang et al.\footnote{R.-w. Zhang et al., Room temperature
+quantum spin Hall insulator in ethynyl-derivative functionalized stanene
+films, \emph{Sci. Rep.} \textbf{6}, 18879 (2016),
+\url{https://doi.org/10.1038/srep18879}.}
+An $8\times8\times1$ SCF mesh and convergence threshold $10^{-8}$ are used
+for stanene. The examples test the topology implementation at these fixed
+settings, rather than constitute a new structural or band-gap prediction.
+
+Eight occupied spinors are retained in each case. The stanene
+second-variational calculation includes all 26 scalar basis states, giving
+52 spinor states before occupied-band selection. For neon, five scalar
+states produce ten spinors. The selected half-plane is
+$\mathbf k(s,t)=(t,s/2,0)$ in fractional reciprocal coordinates, with
+$0\leq s,t\leq1$. The loop closes with reciprocal shift $(1,0,0)$.
+Starting meshes contain four points on each of three loops for neon and
+12 points on each of 13 loops for stanene. Refinement doubles the points
+per loop and inserts a midpoint between neighboring transverse loops.
+The accepted surfaces have $8\times5$ and $192\times193$ points,
+respectively. The last center changes are $1.28\times10^{-5}$ and
+$2.73\times10^{-4}$ in reduced units. The smallest link singular values
+are 0.99826 and 0.95248.
+
+The native invariants are zero for neon and one for stanene. Z2Pack 2.2.1
+gives the same stanene parity using either the raw overlaps or their
+unitary polar factors. For the latter, the maximum Wilson-eigenvalue
+difference from the native calculation is $7.95\times10^{-14}$. This
+comparison tests the loop algebra with identical input matrices. Separate
+operator checks enforce zero-step normalization, reverse-link adjoint
+relations, loop reversal, and atomic-position phases. A bonded two-atom
+full-spinor check gives maximum adjoint and zero-step residuals of
+$2.79\times10^{-14}$ and $2.00\times10^{-13}$, respectively.
+
+An additional adaptive Z2Pack-driven stanene surface uses 42 CP2K line
+calculations and ends with 15 accepted transverse lines, all satisfying
+the line-position, movement, and gap checks, and again gives $\nu=1$.
+This calculation chooses its sampling independently but uses the same
+CP2K Hamiltonian and overlap implementation. The main-text figure shows
+the native samples without interpolation or artificial separation of
+degenerate centers. It is regenerated by
+\texttt{python3 validation/topology/plot\_wilson.py}, which requires NumPy
+and Matplotlib. Raw \texttt{.wilson} files, inputs, logs, comparison
+reports, generated comma-separated figure data, and checksums accompany
+the figure.
+
+\section{Native Chern and Cross-Geometry Extension}
+\label{sec:si-chern}
+
+\subsection{Source versions and independent analysis routes}
+The Chern and cross-geometry checks were completed on 18 September
+2026 with a separate development executable. They are distinct from the
+retained 17 September neon/stanene calculations and do not reassign
+those earlier results to a newer implementation.
+Source patches, executable records, library versions, and independent
+comparison scripts accompany the validation archive.
+The numerical comparison tools require NumPy and SciPy; Z2Pack 2.2.1
+is an optional independent analysis dependency.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{L{0.22\linewidth}L{0.34\linewidth}L{0.36\linewidth}}
+\caption{Topology analysis routes and runtime requirements. All native
+routes act on Gaussian-basis electronic states without constructing
+maximally localized Wannier orbitals.}
+\label{tab:topology-routes}\\
+\toprule
+Route & Quantity and sampling & Dependencies and scope \\
+\midrule
+\endfirsthead
+\toprule Route & Quantity and sampling & Dependencies and scope \\
+\midrule
+\endhead
+Native Wilson/$\mathbb Z_2$ & Wilson spectra, Berry phases, and
+time-reversal half-plane $\mathbb Z_2$. & CP2K native kernels, including
+second-variational SOC. No Z2Pack or Wannier90 runtime dependency.\\
+Native Wilson/$C_1$ & Determinant-phase winding on a full closed
+reciprocal surface, selected by \texttt{CHERN}. & CP2K native kernels.
+Fixed-rank isolated subspace, closure and refinement checks.\\
+Native inversion analysis & Even/odd irreps, Fu--Kane indices and
+inversion-subgroup EBR signatures at TRIM. & Separate native extension,
+Section~\ref{sec:si-inversion}. No general space-group catalogue.\\
+Native parameter-mesh analysis & $C_1$ on two parameters and the second
+Chern character pairing $C_2$ on four parameters, using physical
+cross-geometry overlaps. & \texttt{topology\_phasons} reads
+\texttt{STATE\_EXPORT} files. One process with optional OpenMP.
+No Python, Z2Pack, or Wannier90 runtime dependency.\\
+External Z2Pack route & Independent loop/surface analysis of CP2K
+overlaps, with optional adaptive CP2K sampling. & Python and Z2Pack.
+Optional analysis and cross-validation, not the implementation of
+the native invariants.\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+\subsection{Parameter-mesh discretization and physical closure}
+Let $Q_\mu(x)$ be the polar-unitary selected-state overlap directed from
+mesh vertex $x$ to $x+\hat\mu$. All boundary links include the specified
+physical sewing. The oriented plaquette is
+\begin{equation}
+ P_{\mu\nu}(x)=Q_\mu(x)Q_\nu(x+\hat\mu)
+ Q_\mu^\dagger(x+\hat\nu)Q_\nu^\dagger(x).
+\end{equation}
+With this link orientation, the two-parameter estimator is
+\begin{equation}
+ C_1^{\mathrm{mesh}}=-\frac{1}{2\pi}\sum_x
+ \operatorname{Arg}\det P_{12}(x).
+\end{equation}
+Its sign matches the determinant Wilson-phase winding convention of the
+main text. For four parameters, define the full principal matrix
+logarithm $F_{\mu\nu}(x)=\log P_{\mu\nu}(x)$. Each $F_{\mu\nu}$ is
+anti-Hermitian and already includes the plaquette area. The estimator is
+\begin{equation}
+ C_2^{\mathrm{mesh}}=-\frac{1}{4\pi^2}\sum_x
+ \operatorname{Re}\operatorname{Tr}
+ \left[F_{12}F_{34}-F_{13}F_{24}+F_{14}F_{23}\right](x).
+ \label{eq:si-c2}
+\end{equation}
+The full matrices are needed for a non-Abelian occupied subspace.
+Equation~\eqref{eq:si-c2} approximates the second Chern character pairing
+and is not generally the second Chern class. Its finite-mesh value is
+reported without integer rounding.
+
+Physical links use $C_a^\dagger O_{ab}C_b$, with both spinor components
+summed when present. The cross-geometry AO matrix $O_{ab}$ retains the
+moving contracted Gaussian centers, periodic images, and reciprocal
+boundary phases. The cell, atom count and selected rank remain fixed
+throughout the family. Endpoint checks use explicit atom permutations,
+lattice translations, basis matching, and selected-subspace sewing.
+The code reports AO-metric errors, sampled selected/excluded-band gaps,
+minimum link singular values, and principal plaquette phases. A refined
+mesh must preserve the same physical family. Sampled isolation and
+invariant convergence do not by themselves establish a bulk spectral
+gap between samples. An indirect gap is interpreted only for a lowest-band
+prefix with a justified common energy reference across geometries.
+
+\subsection{Retained validation results}
+The extension was rebuilt with GNU Fortran 16 and OpenBLAS. Its curvature
+and snapshot unit tests and the existing Wilson/$C_1$/$\mathbb Z_2$ unit
+test passed with two OpenMP threads. All four inputs in
+\texttt{QS/regtest-topology} passed with two MPI ranks and two OpenMP
+threads per rank. The auxiliary parameter-mesh executable itself was
+tested as one process, not as an MPI-distributed postprocessor.
+
+The native tests cover singular or underresolved links, metric and seam
+failures, determinant phases, non-Abelian gauge covariance, and model
+refinement. For the occupied doublet of the four-dimensional Dirac model
+at mass $-3$, the $8^4$ estimate is $-0.7424128463$ and is closer to the
+continuum value $-1$ than the $6^4$ result. This is a finite-resolution
+regression check, not a claim of a converged integer at $8^4$.
+Independent Python/native comparisons additionally check gauge changes
+and reversal of parameter orientation.
+
+For archived CP2K state exports covering skew cells, multiple centers,
+SOC spinors and reciprocal-boundary links, the largest difference between
+native and independently evaluated Gaussian overlaps is
+$1.03\times10^{-15}$ with either one or two OpenMP threads. A
+cross-geometry overlap agrees to $5.56\times10^{-16}$.
+Table~\ref{tab:physical-pumps} reports physical atomic-translation pumps.
+The two-parameter case varies one reciprocal coordinate and one periodic
+atomic displacement. The separable four-parameter case uses the ordered
+coordinates $(k_x,k_y,\phi_x,\phi_y)$.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Native physical Gaussian-snapshot tests. The minimum singular
+value is measured before polar unitarization. The phase column reports
+the largest diagnostic plaquette phase in radians. The $4^4$ separable
+case tests the four-parameter physical workflow, not generic $C_2$
+convergence.}
+\label{tab:physical-pumps}
+\begin{tabular}{lrrr}
+\toprule
+Mesh & Unrounded pairing & Minimum singular value & Maximum phase \\
+\midrule
+$4\times4$ & $C_1=-1.0000000000$ & 0.234278 & 0.402344 \\
+$8\times8$ & $C_1=-1.0000000000$ & 0.609933 & 0.099083 \\
+$12\times12$ & $C_1=-1.0000000000$ & 0.780474 & 0.044040 \\
+$4^4$ & $C_2=-1.0000000000$ & 0.233877 & 0.402347 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The native $4\times4$ to $8\times8$ physical refinement check passed
+at an invariant tolerance of $10^{-8}$. The independent comparison-tool
+suite passed 34 tests without Z2Pack, with five optional-adapter tests
+skipped, and all 39 tests with Z2Pack installed. The accompanying
+\texttt{validation/topology/native-phasons/} directory contains the
+machine-readable overlap and pump results, test logs, and source-version
+record. These are implementation tests and introduce no new material
+prediction or change to the neon/stanene results.
+
+\section{Native Inversion Representations and Symmetry Signatures}
+\label{sec:si-inversion}
+
+The inversion extension was validated separately from the phason
+extension and from the earlier Si/Al and Wilson calculations.
+Its source patch, base snapshot, inputs and outputs remain in
+\texttt{validation/topology/inversion-tqc/}.
+These records identify the original tests without retrospectively
+assigning them to another executable.
+
+The \texttt{WANNIER90} print section accepts
+\texttt{KPOINTS\_SOURCE TRIM}, \texttt{SOC T},
+\texttt{TIME\_REVERSAL T} and \texttt{INVERSION\_TQC T}.
+\texttt{TQC\_DIMENSION} selects the four $k_z=0$ TRIM or all eight
+three-dimensional TRIM. \texttt{PARITY\_ORIGIN} specifies the inversion
+center in fractional direct coordinates. The occupied spinor bands must
+be a complete lowest-band prefix, with excluded states available for
+checking spectral separation. A \texttt{PARITY}-only mode also accepts
+isolated scalar subspaces. Neither route requires Z2Pack, Wannier90
+execution or a Wannier fit. The TRIM calculation holds the converged
+SCF potential fixed and does not require the SCF integration mesh to
+contain those points. The two-dimensional option samples the fractional
+$k_z=0$ plane of a three-dimensionally periodic cell, not a separate
+two-dimensional Poisson boundary condition. The inversion center is
+specified explicitly rather than inferred from a space-group search.
+
+For an orbital of angular momentum $l$ on atom $a$, inversion about
+$\mathbf c$ maps it to an identical Gaussian orbital on atom $b$ when
+$2\mathbf c-\mathbf r_a=\mathbf r_b+\mathbf L$ with integer $\mathbf L$.
+The coefficient multiplier is
+$(-1)^l\exp(2\pi\mathrm{i}\mathbf k\cdot\mathbf L)$. The code verifies
+atom-kind matching, involution, metric covariance, $C^\dagger SC=I$,
+unitarity and Hermiticity of the projected inversion matrix, and its
+commutator with the selected eigenvalues. Spinful time reversal is
+checked through the sewing matrix of $\Theta=\mathrm{i}\sigma_y K$.
+Parity multiplicities must be even before division into Kramers pairs.
+The dimensionless and geometry tolerances are $10^{-6}$ and
+$10^{-6}$ bohr, respectively. The energy-commutator tolerance is
+$10^{-6}$ hartree.
+
+For $N$ occupied Kramers pairs and odd counts $n^-_\kappa$ at
+$\mathbf k=\kappa/2$, $\kappa\in\{0,1\}^d$, the parity index is
+$\nu=\sum_\kappa n^-_\kappa\bmod2$. In three dimensions the weak indices
+restrict this sum to $\kappa_i=1$, and the convention for the inversion
+indicator is $z_4=\sum_\kappa n^-_\kappa\bmod4$.
+The analytic inversion-subgroup EBRs are local even or odd Kramers pairs
+at centers $\mathbf c+\mathbf a/2$. Define
+\begin{equation}
+ d_{\mathbf a}=2^{-d}\sum_\kappa(-1)^{\mathbf a\cdot\kappa}
+                     (N-2n^-_\kappa).
+\end{equation}
+An integer atomic-signature decomposition exists when all
+$d_{\mathbf a}$ are integers and $N-\sum_{\mathbf a}d_{\mathbf a}$ is even.
+A nonnegative decomposition additionally requires
+$N\geq\sum_{\mathbf a}|d_{\mathbf a}|$. The implementation makes these
+decisions with integer arithmetic. Atomic compatibility concerns the
+symmetry signature, not a proof of trivial topology. Likewise, a
+signed-only decomposition does not by itself establish fragile topology.
+This inversion-only EBR test is distinct from the subsequent native
+little-group and explicit-segment analysis described below; it does
+not become a general EBR classifier when that additional analysis is used.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Additional native parity checks with four occupied Kramers pairs.
+The four columns refer to $(k_x,k_y)=(0,0),(1/2,0),(0,1/2),(1/2,1/2)$
+at $k_z=0$. Coordinates of the chosen inversion center are fractional.}
+\label{tab:inversion-checks}
+\begin{tabular}{lccccccl}
+\toprule
+System & $\mathbf c$ & \multicolumn{4}{c}{$n^-_\kappa$} & $\nu$ & Atomic signature\\
+\midrule
+Neon & $(1/2,1/2,1/2)$ & 3 & 3 & 3 & 3 & 0 & Compatible\\
+Stanene & $(0,0,0)$ & 1 & 2 & 2 & 2 & 1 & Obstructed\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These tests retain the basis, cutoff, geometry and SCF meshes of the
+earlier material examples, replacing the Wilson paths by TRIM sampling.
+The three-dimensional neon test, with inversion center at the origin,
+also gives zero strong and weak indices and $z_4=0$. All seven inputs
+in the extended \texttt{QS/regtest-topology} set passed with two MPI
+ranks and two OpenMP threads per rank. The stanene parity result was
+independently reproduced with one rank and one thread. A single-rank,
+multiple-thread run exposed inconsistent state normalization in the
+existing local k-point diagonalization path for this build. The new
+metric checks reject that case. This extension does not resolve or
+validate that threaded path.
+
+The lightweight CI fixture subsequently reduces the stanene SCF mesh
+from $8\times8\times1$ to $4\times4\times1$ and suppresses unused restart
+files. It still evaluates all four TRIM and reproduces the odd-pair
+counts $(1,2,2,2)$ and $\nu=1$. This fixture is distinct from the
+archived $8\times8\times1$ manuscript calculation and does not replace
+it or establish k-mesh convergence.
+
+The native unit test covers multidimensional-character decomposition,
+nonorthogonal metrics, degenerate-state gauge changes, broken-symmetry
+rejection, all inversion-center EBRs and strong, $z_4=2$ and signed-only
+examples. Independent enumeration of all two-Kramers-pair atomic sums
+matches the solver for all 81 two-dimensional and 6,561 three-dimensional
+candidate parity signatures. A deliberately incorrect inversion center
+is rejected in an end-to-end calculation. TRIM sampling does not prove
+a gap over the full Brillouin zone, and the SOC subspace still requires
+its usual convergence checks.
+
+
+\section{Native Little-Group and Compatibility Validation}
+\label{sec:si-little-groups}
+The native algebra constructs unitary projective character tables,
+Wigner corepresentation restrictions, and endpoint-to-segment
+branching without a runtime dependency on Spgrep or a pretabulated
+irrep catalogue. The electronic-structure path uses SPGLIB to detect
+spatial operations and, when requested, adds their nonmagnetic
+time-reversal extension. It retains centering translations and tests
+the metric, band-subspace closure, energy commutators and the complete
+semilinear multiplication law before accepting band multiplicities.
+
+The all-setting sweep covers all 530 Hall settings of the 230 ordinary
+space groups. At each setting, it samples
+$(0,0,0)$, $(1/2,1/2,1/2)$, $(1/2,0,0)$, $(1/3,1/3,0)$,
+$(0,0,1/4)$ and $(0.173,0.217,0.319)$ with scalar and spinful factors.
+The invariant cell metric is obtained by averaging over the supplied
+rotations. Both the ordinary group and its grey extension are checked.
+Generic-site orbits with physical spin multiplicity provide fixed-rank
+compatible band data. Segments run from Gamma to the other sampled
+points and from Gamma to its reciprocal image $(0,0,1)$.
+This tests directed-image monodromy as well as ordinary endpoint
+restrictions; it does not sample every possible line or material.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{p{0.56\linewidth}r}
+\toprule
+Checked object & Successful cases\\
+\midrule
+Ordinary/grey scalar/spinful factor systems & 12,720\\
+Complete unitary projective character tables & 6,360\\
+Endpoint tables with an antiunitary stabilizer & 5,324\\
+Ordinary/grey directed segment comparisons & 12,720\\
+Segments retaining an antiunitary stabilizer & 4,462\\
+Gaussian directory assertions, serial / two MPI ranks & 47 / 47\\
+\bottomrule
+\end{tabular}
+\caption{Native representation validation on 24 September 2026.
+The counts refer to algebraic cases or numerical assertions, not
+distinct material calculations.}
+\end{table}
+
+Analytic cases separately test magnetic half translations, spin
+quaternion doublets, complex conjugate $C_3$ pairs, twisted changes
+of factor gauge, and invalid pairing/doubling counts. Segment cases
+include displaced-origin PT pairs, endpoint-only time reversal,
+magnetic-glide Kramers planes, and spinful glide partner switching:
+a two-band hourglass connection is obstructed, whereas the complete
+four-band space is compatible. Unitary screw and mirror branching,
+reciprocal-image monodromy and changed coset representatives are also
+checked. The complete Hall-setting suite passes in release and with
+bounds checking and floating-point traps enabled.
+
+The Gaussian directory uses UZH MOLOPT bases for its GPW fixtures and
+a contracted all-electron basis for GAPW. Ne tests exercise scalar
+and post-SCF GTH-SOC multiplets at Gamma, a generic PT-symmetric
+point and nonsymmorphic screw sectors. Scalar He/GPW, He/GAPW and
+Ne/SOC close a four-segment reciprocal loop; a separately selected
+single screw branch must report its monodromy obstruction.
+The generated Wilson-link test also exercises repeated refinement.
+Serial runs use two OpenMP threads; MPI runs use two ranks with two
+threads each and the thread-safe BLAS settings stated below.
+An earlier wider corepresentation integration pass additionally gave
+110/110 serial and 111/111 MPI assertions across topology, Kubo,
+localizer and quadratic directories. These are separate test scopes,
+not numbers to add into a material benchmark total.
+
+A separate local algebra sweep uses SPGLIB 2.7 magnetic data in the
+supplied setting for every one of the 1,651 magnetic UNI numbers.
+At the same six points and two spin choices, all 19,812 factor cases
+pass; 14,088 contain an antiunitary stabilizer, and 5,724 do not.
+For 10,154 primitive-cell tables supported by an independent
+Spgrep 0.7.0 comparison, dimensions, Wigner types and unitary
+restriction characters agree within $7.11\times10^{-15}$.
+Both calculations use the same supplied factor system, so this is
+not an independent validation of symmetry detection. Moreover, a
+separate semilinear-product check did not validate every explicit
+antiunitary matrix produced by that reference calculation.
+Those matrices are not imported into CP2K; the comparison is limited
+to types, dimensions and unitary restrictions. CP2K's actual Gaussian
+sewing matrices pass their own full product check.
+
+The separate native site-induction test samples fractional positions
+$(0,0,0)$, $(1/2,0,1/4)$ and $(0.173,0.217,0.319)$ at the same six
+reciprocal points. Ordinary and grey groups, each with scalar and
+spinful factors, give 38,160 site/k-point cases over all 530 Hall
+settings. There are 67,824 local-representation columns evaluated and
+decomposed, and the same number of directed compatibility comparisons.
+Their atomic band rank equals the orbit multiplicity times the local
+irrep or corepresentation dimension. This construction preserves
+conventional-cell translation sectors rather than silently converting
+them to a primitive-cell catalogue.
+
+An independent check constructs Cartesian s/p/d orbital traces and,
+for spinors, multiplies them by the physical SU(2) trace. After matching
+the onsite orbital content, its explicitly translated orbit trace
+agrees with the corresponding induced character sum in 114,480
+comparisons. The numerical acceptance tolerance is $10^{-7}$ for
+these summed traces and decomposition checks; group and orbit geometry
+use $10^{-9}$. Analytic checks additionally cover inversion-center
+parities, screw orbits, spin-quaternion doublets, and complex local
+orbitals related by an antiunitary half translation. These are
+algorithmic reference tests, not new material calculations or a new
+production input mode.
+Additional scalar and spinful checks preserve the characters under
+passive origin shifts and unimodular changes to a sheared cell, and
+verify the expected Bloch rephasing under integer changes of operation
+representatives. The full database sweeps pass in serial, two-rank MPI,
+and a separate bounds-checked build with floating-point traps.
+
+These algebra sweeps do not implement magnetic-space-group detection,
+a magnetic noncollinear ground state, canonical irrep labels, a complete
+Brillouin-zone connectivity graph or a full elementary-band catalogue.
+Explicit-segment compatibility is necessary, not sufficient, for a
+gapped band subspace. The retained summaries and test logs are in
+\texttt{validation/development/}; no production material classification
+is inferred solely from a successful database sweep.
+
+\section{Bloch Kubo and Property-Symmetry Validation}
+\label{sec:si-kubo}
+The retained development report is
+\texttt{validation/development/bloch-response-summary.md}.
+It records distinct finite-cutoff regression fixtures and the
+higher-cutoff primitive/supercell comparison.
+For Ne with post-SCF GTH SOC and PBE at 2000 Ry, the
+$3\times1\times2$ primitive mesh gives
+$-34.923548219306689$ hartree, compared with
+$-209.541289276241002$ hartree for six cells sampled explicitly
+at Gamma. Both print $6.21105320\times10^{-9}$ S.
+At the inexpensive 200 Ry PADE regression settings, the respective
+conductivities are $6.42389197\times10^{-9}$ and
+$6.35401974\times10^{-9}$ S. Those distinct references are retained:
+the mismatch is not removed by changing a reference value.
+
+Ne/SOC on a $2^3$ property mesh uses four representatives.
+Bi$_2$/SOC on $3^3$ uses six; its printed nine-component tensor
+differs from full-grid by at most $2.71\times10^{-15}$ relative
+to its largest entry. Primitive diamond/SOC on $2^3$ uses three
+representatives with either K290 or SPGLIB.
+Its tensor difference is $2.21\times10^{-11}$ in the same normalization.
+Metric, Hamiltonian and current reconstruction residuals are
+approximately $2.1\times10^{-13}$, $6\times10^{-11}$ and
+$1.3\times10^{-11}$, respectively.
+These are operator-covariance fixtures, not converged material
+transport predictions.
+
+The final recorded directory drivers passed 132 serial and
+162 MPI assertions. The MPI layout was four ranks with two
+OpenMP threads, and the serial build also used two OpenMP threads.
+Coverage includes moments, k-point/Wannier export, topology, Kubo,
+localizer, and quadratic directories; the MPI build additionally
+tests MUMPS and Tacho. Mathematical unit tests cover the constituent
+operator identities separately.
+
+The Apple ARM runtime required one BLAS thread, a consistent
+thread-safe OpenBLAS preload, and an OpenMP stack of 128 MiB.
+Without these settings, failures occurred before the property code.
+An implicit-Gamma high-cutoff conversion also exposed a slow
+Miller-index lookup; the completed comparison uses an explicit
+Gamma input. These runtime qualifications must accompany the
+results, rather than be presented as production scalability.
+
+\section{Localizer and Quadratic Validation Records}
+The transferred developer notes in
+\texttt{validation/development/} document finite and periodic
+formulations, dense and sparse factorization, and their limitations.
+They are implementation records, not independent material benchmarks.
+The matrix tests include nontrivial and trivial Chern models,
+spin-mixed Kramers-pair models, origin and energy shifts,
+nonorthogonal congruences, invalid metrics, and gap closings.
+
+Dense LDL tests cover both $1\times1$ and $2\times2$ blocks.
+Pfaffian tests independently cover odd permutations and recursive
+small-matrix reference polynomials.
+Sparse gap brackets are compared with generalized dense spectra,
+not with pivot sizes. Realification duplicates the spectrum
+and is accounted for in every inertia comparison.
+
+For a larger molecular quadratic check, Bi$_2$ uses
+TZVP-MOLOPT-GGA-GTH-q5, GTH SOC, 68 spinor coefficients, four
+requested states and a 32-dimensional trial space.
+GPW and GAPW dense/iterative comparisons on four MPI ranks agree
+in gaps within $6\times10^{-15}$ hartree, with all four
+metric-subspace singular values within $10^{-10}$ of unity.
+This is separate from the smaller mandatory regression fixtures.
+
+\section{Submission Validation Still Required}
+The current record does not establish a nontrivial, size-converged
+DFT localizer classification for a large SOC flake, multi-node sparse
+scaling, or general 230-space-group TQC.
+The final archive should contain complete material inputs and
+potentials, basis and cutoff studies, spatial/energy/scale scans,
+independent band references, and timed runs with whole-process memory.
+Development diagnostics and planned work must not be merged into
+tables of completed material results.
+\end{document}

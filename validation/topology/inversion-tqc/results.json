@@ -1,0 +1,125 @@
+{
+  "source_commit": "d97839c4bc47c7d921137641d3a06086886a6056",
+  "regression": {
+    "helium.inp": [
+      {
+        "matcher": "TOPOLOGY_SURFACE_CONVERGED",
+        "status": "OK",
+        "error": null,
+        "value": null
+      }
+    ],
+    "helium-chern.inp": [
+      {
+        "matcher": "TOPOLOGY_CHERN_TRIVIAL",
+        "status": "OK",
+        "error": null,
+        "value": null
+      }
+    ],
+    "neon-soc.inp": [
+      {
+        "matcher": "TOPOLOGY_Z2_TRIVIAL",
+        "status": "OK",
+        "error": null,
+        "value": null
+      }
+    ],
+    "helium-nnkp.inp": [
+      {
+        "matcher": "TOPOLOGY_BERRY_PHASE",
+        "status": "OK",
+        "error": null,
+        "value": 3.14159265359
+      }
+    ],
+    "neon-tqc.inp": [
+      {
+        "matcher": "TQC_PARITY_INDEX",
+        "status": "OK",
+        "error": null,
+        "value": 0.0
+      },
+      {
+        "matcher": "TQC_ATOMIC_SIGNATURE",
+        "status": "OK",
+        "error": null,
+        "value": null
+      },
+      {
+        "matcher": "TQC_INVERSION_Z4",
+        "status": "OK",
+        "error": null,
+        "value": 0.0
+      }
+    ],
+    "neon-tqc-plane.inp": [
+      {
+        "matcher": "TQC_PARITY_INDEX",
+        "status": "OK",
+        "error": null,
+        "value": 0.0
+      },
+      {
+        "matcher": "TQC_ATOMIC_SIGNATURE",
+        "status": "OK",
+        "error": null,
+        "value": null
+      }
+    ],
+    "stanene-tqc.inp": [
+      {
+        "matcher": "TQC_PARITY_INDEX",
+        "status": "OK",
+        "error": null,
+        "value": 1.0
+      }
+    ]
+  },
+  "parities": {
+    "neon-tqc.inp": {
+      "odd_kramers_pairs": [
+        3,
+        1,
+        1,
+        3,
+        1,
+        3,
+        3,
+        1
+      ],
+      "max_residual": 3.55271e-15,
+      "max_energy_commutator_hartree": 3.63182e-12,
+      "minimum_trim_gap_hartree": 0.789034
+    },
+    "neon-tqc-plane.inp": {
+      "odd_kramers_pairs": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "max_residual": 2.53502e-15,
+      "max_energy_commutator_hartree": 7.48818e-12,
+      "minimum_trim_gap_hartree": 0.789034
+    },
+    "stanene-tqc.inp": {
+      "odd_kramers_pairs": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "max_residual": 4.44089e-15,
+      "max_energy_commutator_hartree": 2.49223e-14,
+      "minimum_trim_gap_hartree": 0.012965
+    }
+  },
+  "unit_candidate_signatures": {
+    "2D": 81,
+    "3D": 6561
+  },
+  "serial_stanene": "PASS",
+  "wrong_inversion_center": "REJECTED",
+  "source_patch_sha256": "82b0faf3f6a132135baa2a02a13250ff709dc518b58f18ff8a5b7a40d5748a7c"
+}

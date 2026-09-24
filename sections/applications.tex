@@ -1,0 +1,94 @@
+\section{Materials-discovery applications and demonstrative tests}
+\label{sec:applications}
+\subsection{Hybrid-functional topological materials databases}
+TopoHSE-DB provides an application example of electronic-structure-based
+topological classification at database scale
+\cite{Mirhosseini2026TopoHSE}. Mirhosseini, Elcoro, Kn\"upfer and
+K\"uhne combine consistently relaxed nonmagnetic crystal structures,
+PBE and screened-hybrid HSE06 electronic structures, and topological
+quantum chemistry. Comparing the resulting labels exposes the
+sensitivity of a symmetry-based classification to the underlying
+exchange--correlation approximation. A converged integer or symmetry
+label is therefore not, by itself, evidence that the electronic
+Hamiltonian has been described accurately.
+
+The original database workflow uses VASP, VASP2Trace, and
+CheckTopologicalMat. It is cited here as a materials-discovery
+application and a source of future comparison cases, not as a
+calculation performed with the new CP2K topology routines.
+Connecting such a workflow to CP2K requires equivalent electronic
+structure and symmetry conventions as well as the general little-group,
+compatibility-relation, and EBR machinery discussed in
+Section~\ref{sec:tqc}. The currently implemented inversion analysis
+does not yet reproduce the database's full classification workflow.
+
+\subsection{Generative--predictive discovery of candidate materials}
+The submitted study by Brocai, K\"uhne, Kn\"upfer and Mirhosseini,
+\emph{Generative--predictive models enable the discovery of topological
+materials}, provides a complementary application
+\cite{Brocai2026Discovery}. It couples topology-conditioned crystal
+generation to a predictive filter using a shared pretrained
+representation, followed by hybrid-functional electronic-structure
+and TQC analysis. The submitted manuscript reports 1,033 successfully
+calculated hybrid-functional band structures; 629 receive an unambiguous
+classification and 523 are classified as topological. The corresponding
+83.15\% rate applies to the classified subset, whereas the confirmed
+yield across all 1,033 calculated cases is 50.6\%. The 404 unresolved
+classifications must not be silently counted as either trivial or
+topological.
+
+These results, obtained with the study's VASP-based workflow, illustrate
+the demand for reliable post-processing and explicit failure diagnostics.
+They also motivate subsequent, distinct questions: Wilson spectra can
+probe isolated band subspaces, Kubo calculations can address transport
+at specified temperature and dissipation, and localizers can investigate
+finite, defective, or disordered realizations of selected candidates.
+These are prospective CP2K follow-up applications, not calculations
+already completed for the reported candidate set. A TQC label alone
+does not supply a conductivity or a localizer protection gap.
+
+\subsection{Small calculations as tests and demonstrations}
+The smaller calculations in this paper and the companion k-point
+study serve a different purpose \cite{KpointCompanion2026}.
+They provide transparent tests and demonstrations of individual
+algorithmic steps, not a second materials-discovery survey.
+Table~\ref{tab:demonstration-roles} states the role of each set.
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{L{0.27\linewidth}L{0.59\linewidth}}
+\toprule
+Calculation set & Demonstration and test objective\\
+\midrule
+Si and Al, companion k-point study &
+Quadrature dependence and equivalent full-grid, time-reversal,
+K290, and SPGLIB representations. At fixed $4^3$ sampling,
+64 eigensystems reduce to four with atomic symmetry.\\
+Periodic neon and buckled stanene &
+Trivial and nontrivial Wilson-loop examples, with $\nu=0$ and
+$\nu=1$, respectively; comparison of native and external analyses.\\
+Ne/SOC, Bi$_2$/SOC, and diamond/SOC &
+Primitive-mesh versus supercell and reduced versus full-property-grid
+checks of the metric, Hamiltonian, and current operators.\\
+Analytic localizer models and small GPW/GAPW systems &
+Known indices, gap closings, basis covariance, and dense/sparse
+solver consistency; quadratic-state residual and subspace checks.\\
+\bottomrule
+\end{tabular}
+\caption{Test and demonstration calculations, distinct from the
+materials-discovery applications cited above. The Si/Al results are
+retained from the companion study, not rerun or reassigned to the
+new topology implementation.}
+\label{tab:demonstration-roles}
+\end{table}
+
+For Si and Al, the largest fixed-mesh cell-energy or electronic-free-energy
+difference among the compared representations is
+$1.4\times10^{-12}$ hartree. This tests representation equivalence,
+not complete basis or k-point convergence. In particular, the Al
+free energy still changes by 10.721 meV per atom between the
+$6^3$ and $8^3$ meshes. Likewise, agreement between Wilson analyses
+using the same overlap matrices tests the analysis stage, while
+independent operator identities test the AO construction.
+The quantitative checks in Section~\ref{sec:validation} and the
+Supporting Information retain these distinctions and their original
+calculation provenance.

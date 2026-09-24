@@ -1,0 +1,1410 @@
+diff --git a/docs/methods/properties/index.md b/docs/methods/properties/index.md
+index 1424a46..da8bf05 100644
+--- a/docs/methods/properties/index.md
++++ b/docs/methods/properties/index.md
+@@ -11,4 +11,5 @@ infrared
+ raman
+ nmr
+ stm_images
++inversion_topology
+ ```
+diff --git a/docs/methods/properties/inversion_topology.md b/docs/methods/properties/inversion_topology.md
+new file mode 100644
+index 0000000..145b13d
+--- /dev/null
++++ b/docs/methods/properties/inversion_topology.md
+@@ -0,0 +1,173 @@
++# Native inversion representations and symmetry indicators
++
++CP2K can evaluate inversion representations directly from Gaussian-basis Bloch
++states, including second-variational spin-orbit coupling (SOC). The analysis does
++not require Z2Pack, Wannier90 execution, or maximally localized Wannier functions.
++The input resides in `DFT/PRINT/WANNIER90`, alongside the native Wilson-loop
++analysis and overlap export.
++
++This implementation covers the **inversion subgroup**, with spinful
++time-reversal symmetry for the topological classification. It is not an
++automatic irreducible-representation or elementary-band-representation (EBR)
++catalogue for all space groups. Additional crystal symmetries are not used to
++classify the bands.
++
++## Input
++
++After a converged complex-k-point GPW calculation, request:
++
++```text
++&WANNIER90
++  KPOINTS_SOURCE TRIM
++  SOC T
++  TIME_REVERSAL T
++  INVERSION_TQC T
++  TQC_DIMENSION 3
++  PARITY_ORIGIN 0.0 0.0 0.0
++  ! EXCLUDE_BANDS must exclude all unoccupied spinor bands.
++&END WANNIER90
++```
++
++`KPOINTS_SOURCE TRIM` generates the eight time-reversal-invariant momenta (TRIM)
++in three dimensions. `TQC_DIMENSION 2` instead generates the four TRIM of the
++fractional `kz=0` plane. The SCF potential is held fixed during the additional
++diagonalizations. A slab still uses a three-dimensionally periodic cell.
++
++`PARITY_ORIGIN` is the inversion center in fractional direct-lattice coordinates
++in the input cell setting. It is not inferred from the structure. For example,
++inversion about `(1/2,1/2,1/2)` has translation `(1,1,1)` relative to inversion
++about the origin. These operations can have different individual parities at
++zone-boundary TRIM, so the setting must accompany reported symmetry data.
++
++`INVERSION_TQC` requires an even number of occupied spinor states, selected as
++the lowest consecutive bands. The number must equal the electron count. Compute
++excluded bands as well so that a selected/excluded spectral separation can be
++checked. Converge the scalar-state basis used for second-variational SOC.
++`TIME_REVERSAL T` asserts physical time-reversal symmetry of the Hamiltonian.
++The code additionally checks its action on the selected subspace at each TRIM.
++
++`PARITY T` without `INVERSION_TQC` is also available for isolated scalar or
++spinor subspaces. It reports even and odd inversion-irrep multiplicities,
++counting individual states rather than Kramers pairs. The `TRIM` point source
++implicitly enables this diagnostic. Alternatively, `NNKP` or `WILSON` point
++sources can be used, provided they include the required TRIM. The `TRIM` source
++itself does not define Wilson loops and cannot be combined with `WILSON_LOOP T`.
++
++`PARITY_TOLERANCE` defaults to `1e-6`. It controls dimensionless representation
++residuals and the atom-mapping distance in Bohr. `PARITY_ENERGY_TOL` defaults to
++`1e-6` Hartree and controls projected symmetry/eigenvalue commutators.
++`WILSON_GAP_TOL` sets the minimum selected/excluded separation at sampled points.
++Fractional occupations or a metallic occupied manifold do not define the
++insulating classification described here.
++
++## Metric-aware inversion representations
++
++For a basis orbital of angular momentum $l$ on atom $a$, let
++
++$$2\mathbf c-\mathbf r_a=\mathbf r_b+\mathbf L$$
++
++with fractional coordinates and integer lattice translation $\mathbf L$.
++Inversion maps that orbital to the same Gaussian function on atom $b$ with
++multiplier $(-1)^l\exp(2\pi i\mathbf k\cdot\mathbf L)$. Atom mapping requires
++identical CP2K atomic kinds and a unique inversion partner. Spatial inversion
++does not rotate spin. The resulting sparse coefficient-space operator is $P$.
++
++For selected Bloch coefficients $C$ with $C^\dagger S C=I$, the representation is
++
++$$D(P)=C^\dagger S P C.$$
++
++For spinors, $S$ is repeated on the two spin blocks. CP2K checks metric
++covariance, subspace normalization, Hermiticity and unitarity of $D(P)$, and
++commutation with the selected eigenvalues. This treats arbitrary mixtures
++within degenerate eigenspaces without assigning a parity to a gauge-dependent
++individual vector. A native character-decomposition kernel yields the even and
++odd multiplicities from $\chi(E)$ and $\chi(P)$. That kernel also accepts a
++complete unitary character table supplied per group element, but automatic
++general little-group tables and AO rotation representations are not provided.
++
++For spinful time reversal, the sewing matrix of $\Theta=i\sigma_y K$ is checked
++for unitarity, skew symmetry and consistency with the eigenvalues. Each parity
++multiplicity must be even before converting from states to Kramers pairs.
++
++## Indicators and atomic signatures
++
++Let $n^-_\kappa$ be the number of odd occupied Kramers pairs at TRIM
++$\kappa\in\{0,1\}^d$, where $\mathbf k=\kappa/2$ and the first reciprocal
++coordinate is the fastest-changing bit. The Fu--Kane parity index is
++
++$$\nu=\sum_\kappa n^-_\kappa\pmod 2.$$
++
++In three dimensions this is the strong index. The weak index $\nu_i$ is the
++same sum restricted to $\kappa_i=1$. CP2K defines its inversion indicator as
++
++$$z_4=\sum_\kappa n^-_\kappa\pmod 4.$$
++
++The sign convention is stated explicitly because other conventions exchange
++$z_4=1$ and $z_4=3$. In two dimensions only the plane $\mathbb Z_2$ index is
++reported. A bulk insulating gap and physical time-reversal symmetry are
++prerequisites for interpreting these as insulating topological indices.
++
++The inversion-subgroup EBR catalogue is generated analytically. One local
++Kramers pair of parity $s=\pm1$ at an inversion center $\mathbf a/2$ has
++character $s(-1)^{\mathbf a\cdot\kappa}$. For $N$ occupied Kramers pairs,
++define $t_\kappa=N-2n^-_\kappa$. Its discrete Fourier coefficients are
++
++$$d_\mathbf a=2^{-d}\sum_\kappa
++  (-1)^{\mathbf a\cdot\kappa}t_\kappa.$$
++
++The signature belongs to the **integer lattice of atomic signatures** if all
++$d_\mathbf a$ are integers and $N-\sum_\mathbf a d_\mathbf a$ is even. It admits
++a **nonnegative atomic decomposition** if additionally
++$N\geq\sum_\mathbf a|d_\mathbf a|$. These tests use exact integer arithmetic.
++A nonnegative decomposition is printed as even/odd local Kramers-pair counts
++at each center relative to `PARITY_ORIGIN`. A general inversion-related pair
++of sites has a signature already represented by the sum of even and odd
++centered EBRs, so it adds no new signature generator.
++
++An atomic-compatible signature is not a proof of trivial topology. An integer
++but not nonnegative decomposition is an EBR-signature obstruction; calling it
++fragile requires excluding stable topology invisible to these symmetry data.
++A nonzero stable indicator is likewise conditional on band isolation and the
++assumed symmetries. TRIM checks alone do not demonstrate a gap throughout the
++Brillouin zone. Wilson loops provide complementary information.
++
++## Tests and implementation boundaries
++
++`topology_symmetry_unittest` tests character decomposition including a
++two-dimensional irrep, metric-aware scalar/spinor inversion, degenerate-state
++gauge changes, rejection of broken inversion and time reversal, all individual
++inversion-center EBRs, strong and inversion-$z_4$ examples, and a signed-only
++signature. It independently enumerates all rank-two atomic sums and compares
++the solver for all 81 two-dimensional and 6,561 three-dimensional candidate
++parity signatures, including indicator/atomic-lattice consistency.
++
++`QS/regtest-topology/neon-tqc.inp` and `neon-tqc-plane.inp` exercise the complete
++SCF-to-parity/EBR path with SOC in three and two dimensions and with different
++inversion origins. They are atomic-limit regression tests, not tests of a
++topologically nontrivial material.
++
++`stanene-tqc.inp` uses the fixed buckled-stanene benchmark geometry and SOC
++basis to obtain the nontrivial plane parity index, complementing Wilson-loop
++validation. These end-to-end tests have been run with two MPI ranks and two
++OpenMP threads per rank. Stanene was also checked with one rank and one thread.
++The existing single-rank, multiple-thread local k-point diagonalization path
++can produce non-normalized states with the tested GNU 16/OpenBLAS 0.3.33/DBCSR
++2.10.0 build. The new metric checks reject those states. Use one OpenMP thread
++per rank for single-rank runs until that independent threading issue is
++resolved; this extension does not claim to fix it.
++
++Automatic space-group identification, nonsymmorphic little-group sewing
++matrices, general double-group irreps, compatibility graphs, magnetic groups
++and a complete space-group EBR catalogue are outside this implementation.
++
++## References
++
++- L. Fu and C. L. Kane, *Topological insulators with inversion symmetry*,
++  [Phys. Rev. B **76**, 045302 (2007)](https://doi.org/10.1103/PhysRevB.76.045302).
++- B. Bradlyn et al., *Topological quantum chemistry*,
++  [Nature **547**, 298--305 (2017)](https://doi.org/10.1038/nature23268).
++- H. C. Po, A. Vishwanath and H. Watanabe, *Symmetry-based indicators of band
++  topology in the 230 space groups*,
++  [Nature Communications **8**, 50 (2017)](https://doi.org/10.1038/s41467-017-00133-2).
++- J. Cano and B. Bradlyn, *Band representations and topological quantum chemistry*,
++  [Annual Review of Condensed Matter Physics **12**, 225--246 (2021)](https://arxiv.org/abs/2006.04890).
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index a1399c0..7544785 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -901,6 +901,9 @@ list(
+   wannier90_nnkpts.F
+   topology_wilson.F
+   topology_state_io.F
++  topology_symmetry.F
++  topology_inversion.F
++  topology_tqc.F
+   wannier_states.F
+   wannier_states_types.F
+   xas_control.F
+@@ -1574,6 +1577,7 @@ set(CP2K_PROGS_F
+     kpoint_lattice_fft_unittest.F
+     kpoint_smearing_unittest.F
+     topology_wilson_unittest.F
++    topology_symmetry_unittest.F
+     kpsym_unittest.F
+     qs_ot_minimizer_unittest.F
+     optbas_frontier_orbitals_utils_unittest.F
+@@ -1991,6 +1995,7 @@ list(
+   "kpoint_lattice_fft_unittest"
+   "kpoint_smearing_unittest"
+   "topology_wilson_unittest"
++  "topology_symmetry_unittest"
+   "kpsym_unittest"
+   "qs_ot_minimizer_unittest"
+   "optbas_frontier_orbitals_utils_unittest"
+@@ -2025,6 +2030,7 @@ add_executable(parallel_rng_types_unittest common/parallel_rng_types_unittest.F)
+ add_executable(kpoint_lattice_fft_unittest kpoint_lattice_fft_unittest.F)
+ add_executable(kpoint_smearing_unittest kpoint_smearing_unittest.F)
+ add_executable(topology_wilson_unittest topology_wilson_unittest.F)
++add_executable(topology_symmetry_unittest topology_symmetry_unittest.F)
+ add_executable(kpsym_unittest kpsym_unittest.F)
+ add_executable(qs_ot_minimizer_unittest qs_ot_minimizer_unittest.F)
+ add_executable(optbas_frontier_orbitals_utils_unittest
+diff --git a/src/input_cp2k_print_dft.F b/src/input_cp2k_print_dft.F
+index 9f6c5e7..b41c67b 100644
+--- a/src/input_cp2k_print_dft.F
++++ b/src/input_cp2k_print_dft.F
+@@ -2915,14 +2915,16 @@ CONTAINS
+                           "reduction, the corresponding unreduced mesh is used for Wannier90 because "// &
+                           "Wannier90 requires a complete mesh. NNKP reads explicit k-points and directed "// &
+                           "overlap connections from NNKP_FILE, without a regular-mesh requirement. "// &
+-                          "WILSON generates and refines a surface of closed loops at the SCF potential.", &
++                          "WILSON generates and refines a surface of closed loops at the SCF potential. "// &
++                          "TRIM generates four or eight time-reversal-invariant points for native parity analysis.", &
+                           usage="KPOINTS_SOURCE MP_GRID", type_of_var=enum_t, &
+-                          enum_c_vals=s2a("MP_GRID", "SCF", "NNKP", "WILSON"), &
+-                          enum_i_vals=[0, 1, 2, 3], &
++                          enum_c_vals=s2a("MP_GRID", "SCF", "NNKP", "WILSON", "TRIM"), &
++                          enum_i_vals=[0, 1, 2, 3, 4], &
+                           enum_desc=s2a("Build the Wannier90 k-point mesh from WANNIER90%MP_GRID.", &
+                                         "Use the full k-point mesh from DFT%KPOINTS.", &
+                                         "Read explicit k-points and connections from NNKP_FILE.", &
+-                                        "Generate a family of closed Wilson loops."), &
++                                        "Generate a family of closed Wilson loops.", &
++                                        "Generate TRIM and enable native inversion-parity analysis."), &
+                           default_i_val=0)
+       CALL section_add_keyword(print_key, keyword)
+       CALL keyword_release(keyword)
+@@ -2988,6 +2990,44 @@ CONTAINS
+                           default_l_val=.FALSE., citations=[Gresch2017])
+       CALL section_add_keyword(print_key, keyword)
+       CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="PARITY", &
++                          description="Compute native even/odd inversion irreps at explicit TRIM. Uses the Gaussian "// &
++                          "AO metric, orbital parities, atom permutations and Bloch lattice phases. Validates the "// &
++                          "selected representation and its energy commutator. No Z2Pack or Wannier fit is needed.", &
++                          default_l_val=.FALSE.)
++      CALL section_add_keyword(print_key, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="INVERSION_TQC", &
++                          description="Enable PARITY and classify the inversion-subgroup symmetry signature of "// &
++                          "the occupied spinor bands. Requires SOC and TIME_REVERSAL and all four/eight TRIM. "// &
++                          "Reports Fu-Kane indices, 3D Z4, and an exact signed/nonnegative atomic EBR-signature test. "// &
++                          "Not a full-space-group TQC classifier or a certificate of a bulk gap/trivial topology.", &
++                          default_l_val=.FALSE.)
++      CALL section_add_keyword(print_key, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="TQC_DIMENSION", &
++                          description="Dimension of the inversion analysis: 2 uses the four kz=0 TRIM; "// &
++                          "3 uses all eight TRIM of the supplied reciprocal cell. All cell directions must be periodic.", &
++                          default_i_val=3)
++      CALL section_add_keyword(print_key, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="PARITY_ORIGIN", &
++                          description="Inversion center in fractional direct-cell coordinates. The operation is "// &
++                          "r -> 2*center-r. Atomic kinds, basis and the selected Hamiltonian subspace must be invariant.", &
++                          n_var=3, default_r_vals=[0.0_dp, 0.0_dp, 0.0_dp], type_of_var=real_t)
++      CALL section_add_keyword(print_key, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="PARITY_TOLERANCE", &
++                          description="Tolerance for parity metric, subspace and character checks. Also used "// &
++                          "as the inversion geometry tolerance in Bohr. Tighten with numerical convergence.", &
++                          default_r_val=1.e-6_dp)
++      CALL section_add_keyword(print_key, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="PARITY_ENERGY_TOL", &
++                          description="Maximum projected symmetry/eigenvalue commutator in Hartree.", &
++                          default_r_val=1.e-6_dp)
++      CALL section_add_keyword(print_key, keyword)
++      CALL keyword_release(keyword)
+       CALL keyword_create(keyword, __LOCATION__, name="REQUIRE_GLOBAL_GAP", &
+                           description="Require a positive sampled indirect gap above the lowest selected bands. "// &
+                           "Unlike the direct subspace gap this tests a common energy interval over all sampled "// &
+@@ -2998,7 +3038,7 @@ CONTAINS
+       CALL keyword_create(keyword, __LOCATION__, name="STATE_EXPORT", &
+                           description="Export selected complex AO states, all eigenvalues and full contracted "// &
+                           "Gaussian basis to SEED_NAME.topology for cross-geometry/phason overlaps. "// &
+-                          "Requires NNKP or WILSON, uses atomic units, and can generate large files. "// &
++                          "Requires NNKP, WILSON or TRIM, uses atomic units, and can generate large files. "// &
+                           "Spinor coefficients include second-variational SOC when enabled. "// &
+                           "No Wannier fit or Fermi-energy alignment is performed.", default_l_val=.FALSE.)
+       CALL section_add_keyword(print_key, keyword)
+diff --git a/src/qs_wannier90.F b/src/qs_wannier90.F
+index 4d4e97a..16c7cae 100644
+--- a/src/qs_wannier90.F
++++ b/src/qs_wannier90.F
+@@ -90,8 +90,12 @@ MODULE qs_wannier90
+    USE qs_scf_types,                    ONLY: qs_scf_env_type
+    USE scf_control_types,               ONLY: scf_control_type
+    USE soc_pseudopotential_methods,     ONLY: V_SOC_xyz_from_pseudopotential
++   USE topology_inversion,              ONLY: gaussian_inversion_action
+    USE topology_state_io,               ONLY: topology_state_begin,&
+                                               topology_state_point
++   USE topology_symmetry,               ONLY: inversion_representation
++   USE topology_tqc,                    ONLY: inversion_ebr_signature,&
++                                              inversion_indicators
+    USE topology_wilson,                 ONLY: chern_from_wcc,&
+                                               surface_resolved,&
+                                               wcc_distance,&
+@@ -107,7 +111,8 @@ MODULE qs_wannier90
+ 
+    CHARACTER(len=*), PARAMETER, PRIVATE :: moduleN = 'qs_wannier90'
+    INTEGER, PARAMETER, PRIVATE :: w90_kpoints_mp_grid = 0, &
+-                                  w90_kpoints_scf = 1, w90_kpoints_nnkp = 2, w90_kpoints_wilson = 3
++                                  w90_kpoints_scf = 1, w90_kpoints_nnkp = 2, w90_kpoints_wilson = 3, &
++                                  w90_kpoints_trim = 4
+ 
+    TYPE berry_matrix_type
+       TYPE(dbcsr_p_type), DIMENSION(:, :), POINTER      :: sinmat => NULL(), cosmat => NULL()
+@@ -241,15 +246,16 @@ CONTAINS
+                                                             seed_name
+       CHARACTER(LEN=timestamp_length)                    :: timestamp
+       COMPLEX(KIND=dp), ALLOCATABLE :: export_coeff(:, :), export_scalar(:, :), link_matrix(:, :), &
+-         scalar_overlap(:, :), soc_h(:, :), soc_u(:, :), soc_xyz(:, :, :), spinor_coeff(:, :, :), &
+-         wilson_product(:, :, :)
++         parity_metric(:, :), parity_phase(:), scalar_overlap(:, :), soc_h(:, :), soc_u(:, :), &
++         soc_xyz(:, :, :), spinor_coeff(:, :, :), wilson_product(:, :, :)
+       INTEGER :: aligned_degenerate_blocks, aligned_degenerate_max_size, axis, base_mesh(2), &
+-         first_point, i, i_rep, ib, ib1, ib2, ibs, ik, ik2, ikk, ikpgr, iloop, ipoint, ispin, &
+-         iunit, ix, iy, iz, k, kpoints_source, loop_direction(3), n_rep, nadd, nao, nberry_images, &
+-         nbs, nelectron, nexcl, nkp, nloop, nmo, nntot, npoint, nscalar, nspins, num_atoms, &
+-         num_bands, num_bands_tot, num_kpts, num_wann, spin_channel, state_components, state_unit, &
+-         status
+-      INTEGER, ALLOCATABLE                               :: loop_index(:)
++         counts(2), first_point, i, i_rep, ib, ib1, ib2, ibs, ik, ik2, ikk, ikpgr, iloop, ipoint, &
++         ispin, iunit, ix, iy, iz, jpar, k, kpoints_source, loop_direction(3), n_rep, nadd, nao, &
++         nberry_images, nbs, nelectron, nexcl, nkp, nloop, nmo, nntot, npoint, nscalar, nspins, &
++         num_atoms, num_bands, num_bands_tot, num_kpts, num_wann, spin_channel, state_components, &
++         state_unit, status, strong, tqc_dimension, trim_id, weak(3), z4
++      INTEGER, ALLOCATABLE                               :: ebr_coefficients(:, :), loop_index(:), &
++                                                            parity_map(:), parity_odd(:)
+       INTEGER, ALLOCATABLE, DIMENSION(:)                 :: band_map, exclude_bands
+       INTEGER, ALLOCATABLE, DIMENSION(:, :)              :: nblist, nnlist
+       INTEGER, ALLOCATABLE, DIMENSION(:, :, :)           :: nncell
+@@ -257,20 +263,23 @@ CONTAINS
+       INTEGER, DIMENSION(3)                              :: input_nkp_grid, mp_grid
+       INTEGER, DIMENSION(:), POINTER                     :: invals
+       INTEGER, DIMENSION(:, :, :), POINTER               :: berry_cell_index, cell_to_index
+-      LOGICAL :: diis_step, do_chern, do_kpoints, do_soc, do_wilson, do_z2, export_state, &
+-         full_mesh_diagonalized, gamma_only, input_full_grid, input_gamma_centered, &
++      LOGICAL :: diis_step, do_chern, do_kpoints, do_parity, do_soc, do_tqc, do_wilson, do_z2, &
++         export_state, full_mesh_diagonalized, gamma_only, input_full_grid, input_gamma_centered, &
+          input_kpoint_symmetry, lowest_bands, mp_grid_explicit, mp_grid_valid, my_kpgrp, mygrp, &
+-         ordered_berry, require_global_gap, reuse_scf_mos, reused_scf_mos, spinors, time_reversal, &
+-         use_bloch_phases, validate_reuse_ok, validate_reuse_scf_mos
++         nonnegative_atomic, ordered_berry, require_global_gap, reuse_scf_mos, reused_scf_mos, &
++         signed_atomic, spinors, time_reversal, use_bloch_phases, validate_reuse_ok, &
++         validate_reuse_scf_mos
+       LOGICAL, ALLOCATABLE, DIMENSION(:)                 :: keep_band
+       REAL(KIND=dp) :: aligned_degenerate_min_svalue, berry_phase, chern_winding, cmmn, &
+          conduction_min, direct_gap, gap_tol, gauge_arg, gauge_imag, gauge_real, gauge_tmp, ksign, &
+-         link_sv, loop_origin(3), pair_gap, reuse_candidate_deviation, &
+-         reuse_candidate_metric_deviation, reuse_candidate_min_svalue, reuse_candidate_residual, &
+-         rmmn, transverse(3), valence_max, validation_eigenvalue_deviation, validation_min_svalue, &
+-         validation_subspace_deviation, wkp_ref
+-      REAL(KIND=dp), ALLOCATABLE                         :: loop_sv(:), scalar_values(:), &
+-                                                            spinor_values(:, :)
++         link_sv, loop_origin(3), pair_gap, parity_checks(4), parity_energy_error, &
++         parity_energy_tolerance, parity_error, parity_gap, parity_origin(3), parity_tolerance, &
++         reuse_candidate_deviation, reuse_candidate_metric_deviation, reuse_candidate_min_svalue, &
++         reuse_candidate_residual, rmmn, transverse(3), valence_max, &
++         validation_eigenvalue_deviation, validation_min_svalue, validation_subspace_deviation, &
++         wkp_ref
++      REAL(KIND=dp), ALLOCATABLE                         :: loop_sv(:), parity_energies(:), &
++                                                            scalar_values(:), spinor_values(:, :)
+       REAL(KIND=dp), ALLOCATABLE, DIMENSION(:)           :: eigval
+       REAL(KIND=dp), ALLOCATABLE, DIMENSION(:, :)        :: atoms_cart, b_latt, kpt_latt
+       REAL(KIND=dp), ALLOCATABLE, DIMENSION(:, :, :)     :: reference_eigenvalues
+@@ -319,16 +328,37 @@ CONTAINS
+       CALL section_vals_val_get(input, "CHERN", l_val=do_chern)
+       CALL section_vals_val_get(input, "REQUIRE_GLOBAL_GAP", l_val=require_global_gap)
+       CALL section_vals_val_get(input, "STATE_EXPORT", l_val=export_state)
++      CALL section_vals_val_get(input, "PARITY", l_val=do_parity)
++      CALL section_vals_val_get(input, "INVERSION_TQC", l_val=do_tqc)
++      CALL section_vals_val_get(input, "TQC_DIMENSION", i_val=tqc_dimension)
++      CALL section_vals_val_get(input, "PARITY_ORIGIN", r_vals=rvals)
++      parity_origin = rvals
++      CALL section_vals_val_get(input, "PARITY_TOLERANCE", r_val=parity_tolerance)
++      CALL section_vals_val_get(input, "PARITY_ENERGY_TOL", r_val=parity_energy_tolerance)
++      do_parity = do_parity .OR. do_tqc .OR. kpoints_source == w90_kpoints_trim
++      IF (do_parity .AND. .NOT. ordered_berry) THEN
++         CPABORT("PARITY requires explicit NNKP, WILSON or TRIM points.")
++      END IF
++      IF (tqc_dimension < 2 .OR. tqc_dimension > 3) CPABORT("TQC_DIMENSION must be 2 or 3.")
++      IF (parity_tolerance <= 0.0_dp .OR. parity_energy_tolerance <= 0.0_dp) THEN
++         CPABORT("Invalid parity tolerance.")
++      END IF
+       IF (export_state .AND. .NOT. ordered_berry) THEN
+-         CPABORT("STATE_EXPORT requires explicit NNKP or WILSON points.")
++         CPABORT("STATE_EXPORT requires explicit NNKP, WILSON or TRIM points.")
+       END IF
+       CALL section_vals_val_get(input, "TIME_REVERSAL", l_val=time_reversal)
+       CALL section_vals_val_get(input, "SOC", l_val=do_soc)
++      IF (do_tqc .AND. (.NOT. do_soc .OR. .NOT. time_reversal)) THEN
++         CPABORT("INVERSION_TQC requires SOC T and TIME_REVERSAL T.")
++      END IF
+       CALL section_vals_val_get(input, "WILSON_GAP_TOL", r_val=gap_tol)
+       IF (gap_tol <= 0.0_dp) CPABORT("WILSON_GAP_TOL must be positive.")
+       z2_value = -1
+       chern_value = HUGE(0)
+       do_wilson = do_wilson .OR. kpoints_source == w90_kpoints_wilson
++      IF (do_wilson .AND. kpoints_source == w90_kpoints_trim) THEN
++         CPABORT("TRIM points are not Wilson loops; use KPOINTS_SOURCE WILSON.")
++      END IF
+       IF (do_wilson) CALL cite_reference(Gresch2017)
+       IF (do_z2) CALL cite_reference(Soluyanov2011)
+       IF ((do_wilson .OR. do_soc) .AND. kpoints_source < w90_kpoints_nnkp) THEN
+@@ -404,9 +434,20 @@ CONTAINS
+       CALL kpoint_create(kpoint)
+ 
+       SELECT CASE (kpoints_source)
+-      CASE (w90_kpoints_nnkp, w90_kpoints_wilson)
++      CASE (w90_kpoints_nnkp, w90_kpoints_wilson, w90_kpoints_trim)
+          IF (kpoints_source == w90_kpoints_nnkp) THEN
+             CALL read_wannier90_nnkpts(nnkp_file, real_lattice, recip_lattice, kpt_latt, nnlist, nncell)
++         ELSE IF (kpoints_source == w90_kpoints_trim) THEN
++            num_kpts = 2**tqc_dimension
++            ALLOCATE (kpt_latt(3, num_kpts), nnlist(num_kpts, 1), nncell(3, num_kpts, 1))
++            kpt_latt = 0.0_dp
++            nncell = 0
++            DO i = 1, num_kpts
++               DO axis = 1, tqc_dimension
++                  IF (BTEST(i - 1, axis - 1)) kpt_latt(axis, i) = 0.5_dp
++               END DO
++               nnlist(i, 1) = i
++            END DO
+          ELSE
+             CALL section_vals_val_get(input, "WILSON_MESH", i_vals=invals)
+             base_mesh = invals
+@@ -1204,12 +1245,26 @@ CONTAINS
+          END DO
+       END DO
+       ! Optional full-state snapshots, before the distributed work matrices are released.
+-      IF (export_state) THEN
++      IF (export_state .OR. do_parity) THEN
+          state_components = 1
+          IF (do_soc) state_components = 2
+          ALLOCATE (export_scalar(nao, nscalar), export_coeff(nao*state_components, num_bands))
+-         CALL topology_state_begin(qs_env_kp, TRIM(seed_name)//".topology", nao, num_bands, num_kpts, &
+-                                   state_components, num_bands_tot, spin_channel, band_map, state_unit)
++         state_unit = -1
++         IF (export_state) CALL topology_state_begin(qs_env_kp, TRIM(seed_name)//".topology", nao, num_bands, num_kpts, &
++                                                     state_components, num_bands_tot, spin_channel, band_map, state_unit)
++         IF (do_parity) THEN
++            CPASSERT(ALL(kpoint%kp_range == [1, num_kpts]))
++            ALLOCATE (parity_metric(nao, nao), parity_phase(nao), parity_map(nao), &
++                      parity_odd(2**tqc_dimension), ebr_coefficients(2, 2**tqc_dimension), &
++                      parity_energies(num_bands_tot))
++            parity_odd = -1
++            IF (do_tqc) THEN
++               IF (num_bands /= nelectron .OR. MOD(num_bands, 2) /= 0 .OR. &
++                   ANY(band_map /= [(i, i=1, num_bands)])) THEN
++                  CPABORT("INVERSION_TQC requires the full occupied spinor band prefix.")
++               END IF
++            END IF
++         END IF
+          DO ik = 1, num_kpts
+             kp => kpoint%kp_env(ik)%kpoint_env
+             CALL cp_fm_copy_general(kp%mos(1, spin_channel)%mo_coeff, fmk1(1), para_env)
+@@ -1220,13 +1275,103 @@ CONTAINS
+                export_coeff(:nao, :) = MATMUL(export_scalar, spinor_coeff(:nscalar, :, ik))
+                export_coeff(nao + 1:, :) = MATMUL(export_scalar, spinor_coeff(nscalar + 1:, :, ik))
+                CALL topology_state_point(state_unit, ik, kpt_latt(:, ik), spinor_values(:, ik), export_coeff)
++               IF (do_parity) parity_energies(:) = spinor_values(:, ik)
+             ELSE
+                export_coeff(:, :) = export_scalar(:, band_map)
+                CALL get_mo_set(kp%mos(1, spin_channel), eigenvalues=eigenvalues)
+                CALL topology_state_point(state_unit, ik, kpt_latt(:, ik), eigenvalues(:nscalar), export_coeff)
++               IF (do_parity) parity_energies(:) = eigenvalues(:nscalar)
++            END IF
++            IF (.NOT. do_parity) CYCLE
++            parity_gap = HUGE(1.0_dp)
++            DO jpar = 1, num_bands_tot
++               IF (ANY(band_map == jpar)) CYCLE
++               parity_gap = MIN(parity_gap, MINVAL(ABS(parity_energies(band_map) - parity_energies(jpar))))
++            END DO
++            IF (num_bands == num_bands_tot .OR. parity_gap <= gap_tol) THEN
++               CPABORT("PARITY requires an isolated selected subspace and computed excluded bands.")
++            END IF
++            IF (MAXVAL(ABS(2*kpt_latt(:, ik) - NINT(2*kpt_latt(:, ik)))) > 1.e-8_dp) CYCLE
++            CALL gaussian_inversion_action(qs_env_kp, kpt_latt(:, ik), parity_origin, parity_map, &
++                                           parity_phase, parity_tolerance, status)
++            IF (status /= 0) THEN
++               CPABORT("PARITY: inversion does not preserve geometry and atomic kinds.")
+             END IF
++            CALL dbcsr_set(rmatrix, 0.0_dp)
++            CALL dbcsr_set(cmatrix, 0.0_dp)
++            CALL rskp_transform(rmatrix, cmatrix, rsmat=matrix_s, ispin=1, xkp=kpoint%xkp(:, ik), &
++                                cell_to_index=cell_to_index, sab_nl=sab_nl)
++            CALL dbcsr_desymmetrize(rmatrix, rmatrix_full)
++            CALL dbcsr_desymmetrize(cmatrix, cmatrix_full)
++            CALL copy_dbcsr_to_fm(rmatrix_full, mat_real)
++            CALL copy_dbcsr_to_fm(cmatrix_full, mat_imag)
++            CALL cp_fm_to_cfm(mat_real, mat_imag, omat_cfm)
++            CALL cp_cfm_get_submatrix(omat_cfm, parity_metric)
++            CALL inversion_representation(parity_metric, export_coeff, parity_map, parity_phase, &
++                                          parity_energies(band_map), do_soc .AND. time_reversal, parity_tolerance, &
++                                          parity_energy_tolerance, counts, parity_error, parity_energy_error, status, parity_checks)
++            IF (iw > 0) THEN
++               WRITE (iw, '(T2,A,3F10.5,A,2I8,A,3ES14.5)') 'TQC| TRIM ', kpt_latt(:, ik), &
++                  ' even/odd states ', counts, ' residuals/gap ', parity_error, parity_energy_error, parity_gap
++               WRITE (iw, '(T2,A,4ES14.5)') 'TQC| Metric/normalization/inversion/TR residuals: ', parity_checks
++            END IF
++            IF (status /= 0) THEN
++               CPABORT("PARITY: metric, subspace or symmetry representation check failed.")
++            END IF
++            IF (tqc_dimension == 2 .AND. MODULO(NINT(2*kpt_latt(3, ik)), 2) /= 0) CYCLE
++            trim_id = 1
++            DO axis = 1, tqc_dimension
++               trim_id = trim_id + 2**(axis - 1)*MODULO(NINT(2*kpt_latt(axis, ik)), 2)
++            END DO
++            IF (parity_odd(trim_id) >= 0 .AND. parity_odd(trim_id) /= counts(2)) THEN
++               CPABORT("PARITY: repeated equivalent TRIM have inconsistent multiplicities.")
++            END IF
++            parity_odd(trim_id) = counts(2)
+          END DO
+          IF (state_unit > 0) CALL close_file(state_unit)
++         IF (do_parity) THEN
++            IF (ALL(parity_odd < 0)) THEN
++               CPABORT("PARITY requires a TRIM in the requested dimension.")
++            END IF
++         END IF
++         IF (do_tqc) THEN
++            IF (ANY(parity_odd < 0)) THEN
++               CPABORT("INVERSION_TQC requires all four (2D) or eight (3D) TRIM.")
++            END IF
++            IF (ANY(MOD(parity_odd, 2) /= 0)) THEN
++               CPABORT("INVERSION_TQC requires whole odd-parity Kramers pairs.")
++            END IF
++            parity_odd(:) = parity_odd/2
++            CALL inversion_indicators(parity_odd, num_bands/2, tqc_dimension, strong, weak, z4, status)
++            IF (status /= 0) CPABORT("Invalid inversion indicator data.")
++            CALL inversion_ebr_signature(parity_odd, num_bands/2, signed_atomic, nonnegative_atomic, &
++                                         ebr_coefficients, status)
++            IF (status /= 0) CPABORT("Invalid inversion EBR data.")
++            IF (iw > 0) THEN
++               WRITE (iw, '(T2,A,I0)') 'TQC| Inversion-subgroup dimension: ', tqc_dimension
++               WRITE (iw, '(T2,A,I0)') 'TQC| Fu-Kane parity index: ', strong
++               IF (tqc_dimension == 3) THEN
++                  WRITE (iw, '(T2,A,3I3)') 'TQC| Weak parity indices: ', weak
++                  WRITE (iw, '(T2,A,I0)') 'TQC| Inversion Z4 (sum odd pairs mod 4): ', z4
++               END IF
++               WRITE (iw, '(T2,A,L1)') 'TQC| Signed atomic signature: ', signed_atomic
++               WRITE (iw, '(T2,A,L1)') 'TQC| Nonnegative atomic signature: ', nonnegative_atomic
++               IF (nonnegative_atomic) THEN
++                  DO i = 1, SIZE(parity_odd)
++                     WRITE (iw, '(T2,A,I0,A,2I8)') 'TQC| Center bit index ', i - 1, &
++                        ' even/odd EBR pairs ', ebr_coefficients(:, i)
++                  END DO
++                  WRITE (iw, '(T2,A)') 'TQC| Atomic-compatible symmetry signature; not a proof of trivial topology.'
++               ELSE IF (signed_atomic) THEN
++                  WRITE (iw, '(T2,A)') 'TQC| Nonnegative EBR obstruction; '// &
++                     'exclude hidden stable topology before calling it fragile.'
++               ELSE
++                  WRITE (iw, '(T2,A)') 'TQC| Stable inversion-symmetry indicator obstruction.'
++               END IF
++               WRITE (iw, '(T2,A)') 'TQC| TRIM checks do not establish a bulk gap; verify band isolation over the BZ.'
++               WRITE (iw, '(T2,A)') 'TQC| Converge the scalar-state basis used for second-variational SOC.'
++            END IF
++         END IF
+       END IF
+       DO i = 1, nbs
+          CALL dbcsr_deallocate_matrix_set(berry_matrix(i)%cosmat)
+diff --git a/src/topology_inversion.F b/src/topology_inversion.F
+new file mode 100644
+index 0000000..673ca16
+--- /dev/null
++++ b/src/topology_inversion.F
+@@ -0,0 +1,108 @@
++!--------------------------------------------------------------------------------------------------!
++!   CP2K: A general program to perform molecular dynamics simulations                              !
++!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
++!                                                                                                  !
++!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!--------------------------------------------------------------------------------------------------!
++
++! **************************************************************************************************
++!> \brief Inversion action on CP2K Gaussian Bloch coefficients, including lattice phases.
++! **************************************************************************************************
++MODULE topology_inversion
++   USE atomic_kind_types,               ONLY: get_atomic_kind
++   USE basis_set_types,                 ONLY: gto_basis_set_type
++   USE cell_types,                      ONLY: cell_type,&
++                                              pbc
++   USE ieee_arithmetic,                 ONLY: ieee_is_finite
++   USE kinds,                           ONLY: dp
++   USE mathconstants,                   ONLY: twopi
++   USE particle_types,                  ONLY: particle_type
++   USE qs_environment_types,            ONLY: get_qs_env,&
++                                              qs_environment_type
++   USE qs_kind_types,                   ONLY: get_qs_kind,&
++                                              qs_kind_type
++
++   IMPLICIT NONE
++   PRIVATE
++   PUBLIC :: gaussian_inversion_action
++CONTAINS
++
++! **************************************************************************************************
++!> \brief Construct sparse AO inversion at a TRIM for the operation r -> 2*center-r.
++!> \param qs_env Electronic environment
++!> \param k Fractional reciprocal coordinate at a TRIM
++!> \param center Fractional inversion center in the user's cell setting
++!> \param mapping Target AO row for every source row
++!> \param phase AO parity times exp(+2*pi*i*k.L), with 2c-r_a=r_b+L
++!> \param tolerance Geometry tolerance in Bohr
++!> \param status Zero on success, negative if geometry/basis/periodicity is incompatible
++! **************************************************************************************************
++   SUBROUTINE gaussian_inversion_action(qs_env, k, center, mapping, phase, tolerance, status)
++      TYPE(qs_environment_type), POINTER                 :: qs_env
++      REAL(KIND=dp), INTENT(IN)                          :: k(3), center(3)
++      INTEGER, INTENT(OUT)                               :: mapping(:)
++      COMPLEX(KIND=dp), INTENT(OUT)                      :: phase(:)
++      REAL(KIND=dp), INTENT(IN)                          :: tolerance
++      INTEGER, INTENT(OUT)                               :: status
++
++      INTEGER                                            :: a, b, found, i, iset, l, n, shell, total
++      INTEGER, ALLOCATABLE                               :: kind(:), offset(:), TARGET(:)
++      REAL(KIND=dp)                                      :: angle, delta(3), image(3)
++      REAL(KIND=dp), ALLOCATABLE                         :: position(:, :)
++      TYPE(cell_type), POINTER                           :: cell
++      TYPE(gto_basis_set_type), POINTER                  :: basis
++      TYPE(particle_type), POINTER                       :: particles(:)
++      TYPE(qs_kind_type), POINTER                        :: kinds_set(:)
++
++      status = -1
++      mapping = 0
++      phase = CMPLX(0, 0, dp)
++      IF (tolerance <= 0.0_dp .OR. SIZE(phase) /= SIZE(mapping)) RETURN
++      IF (.NOT. ieee_is_finite(tolerance) .OR. .NOT. ALL(ieee_is_finite(center))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(k))) RETURN
++      IF (MAXVAL(ABS(2*k - NINT(2*k))) > 1.e-8_dp) RETURN
++      CALL get_qs_env(qs_env, cell=cell, particle_set=particles, qs_kind_set=kinds_set)
++      IF (ANY(cell%perd /= 1)) RETURN
++      n = SIZE(particles)
++      ALLOCATE (KIND(n), offset(n), TARGET(n), position(3, n))
++      total = 0
++      DO a = 1, n
++         CALL get_atomic_kind(particles(a)%atomic_kind, kind_number=KIND(a))
++         CALL get_qs_kind(kinds_set(KIND(a)), basis_set=basis)
++         IF (.NOT. ASSOCIATED(basis)) RETURN
++         offset(a) = total
++         total = total + basis%nsgf
++         position(:, a) = MATMUL(cell%h_inv, pbc(particles(a)%r, cell))
++      END DO
++      IF (total /= SIZE(mapping)) RETURN
++      DO a = 1, n
++         found = 0
++         DO b = 1, n
++            IF (KIND(a) /= KIND(b)) CYCLE
++            delta = 2*center - position(:, a) - position(:, b)
++            IF (SQRT(SUM(MATMUL(cell%hmat, delta - NINT(delta))**2)) > tolerance) CYCLE
++            found = found + 1
++            TARGET(a) = b
++         END DO
++         IF (found /= 1) RETURN
++      END DO
++      DO a = 1, n
++         b = TARGET(a)
++         IF (TARGET(b) /= a) RETURN
++         image = REAL(NINT(2*center - position(:, a) - position(:, b)), dp)
++         angle = twopi*DOT_PRODUCT(k, image)
++         CALL get_qs_kind(kinds_set(KIND(a)), basis_set=basis)
++         DO iset = 1, basis%nset
++            DO shell = 1, basis%nshell(iset)
++               l = basis%l(shell, iset)
++               DO i = basis%first_sgf(shell, iset), basis%last_sgf(shell, iset)
++                  mapping(offset(a) + i) = offset(b) + i
++                  phase(offset(a) + i) = (-1)**l*CMPLX(COS(angle), SIN(angle), dp)
++               END DO
++            END DO
++         END DO
++      END DO
++      IF (ANY(mapping == 0)) RETURN
++      status = 0
++   END SUBROUTINE gaussian_inversion_action
++END MODULE topology_inversion
+diff --git a/src/topology_symmetry.F b/src/topology_symmetry.F
+new file mode 100644
+index 0000000..528c116
+--- /dev/null
++++ b/src/topology_symmetry.F
+@@ -0,0 +1,215 @@
++!--------------------------------------------------------------------------------------------------!
++!   CP2K: A general program to perform molecular dynamics simulations                              !
++!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
++!                                                                                                  !
++!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!--------------------------------------------------------------------------------------------------!
++
++! **************************************************************************************************
++!> \brief Native character decomposition and metric-aware inversion representations.
++! **************************************************************************************************
++MODULE topology_symmetry
++   USE ieee_arithmetic,                 ONLY: ieee_is_finite
++   USE kinds,                           ONLY: dp
++
++   IMPLICIT NONE
++   PRIVATE
++   PUBLIC :: character_multiplicities, inversion_representation
++CONTAINS
++
++! **************************************************************************************************
++!> \brief Decompose a character against a complete unitary character table.
++!> \param character One character per group element (not per conjugacy class)
++!> \param table Characters, group element first and irrep second; identity first
++!> \param multiplicities Nonnegative integer multiplicities, invalid unless status=0
++!> \param tolerance Absolute numerical tolerance
++!> \param status Zero on success, negative for invalid/incomplete/nonintegral data
++!> \note All projective irreps must use the same factor system. This kernel does not
++!>       infer a space group or certify the supplied character table's provenance.
++! **************************************************************************************************
++   SUBROUTINE character_multiplicities(CHARACTER, table, multiplicities, tolerance, status)
++      COMPLEX(KIND=dp), INTENT(IN)                       :: character(:), table(:, :)
++      INTEGER, INTENT(OUT)                               :: multiplicities(:)
++      REAL(KIND=dp), INTENT(IN)                          :: tolerance
++      INTEGER, INTENT(OUT)                               :: status
++
++      COMPLEX(KIND=dp)                                   :: value
++      INTEGER                                            :: dimension, i, j, nirrep, order, total
++
++      status = -1
++      multiplicities = -1
++      order = SIZE(CHARACTER)
++      nirrep = SIZE(table, 2)
++      IF (order < 1 .OR. order > 1024 .OR. nirrep < 1 .OR. SIZE(table, 1) /= order) RETURN
++      IF (SIZE(multiplicities) /= nirrep .OR. tolerance <= 0.0_dp) RETURN
++      IF (.NOT. ieee_is_finite(tolerance)) RETURN
++      IF (.NOT. ALL(ieee_is_finite(REAL(CHARACTER, dp)))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(AIMAG(CHARACTER)))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(REAL(table, dp)))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(AIMAG(table)))) RETURN
++      IF (MAXVAL(ABS(table)) > REAL(order, dp) + tolerance) RETURN
++      IF (MAXVAL(ABS(CHARACTER)) > 1.e6_dp) RETURN
++      total = 0
++      DO i = 1, nirrep
++         DIMENSION = NINT(REAL(table(1, i), dp))
++         IF (DIMENSION < 1 .OR. DIMENSION > order) RETURN
++         IF (ABS(table(1, i) - DIMENSION) > tolerance) RETURN
++         total = total + DIMENSION**2
++         IF (total > order) RETURN
++         DO j = 1, nirrep
++            value = SUM(CONJG(table(:, i))*table(:, j))/REAL(order, dp)
++            IF (i == j) value = value - 1.0_dp
++            IF (ABS(value) > tolerance) RETURN
++         END DO
++      END DO
++      IF (total /= order) RETURN
++      status = -2
++      DO i = 1, nirrep
++         value = SUM(CONJG(table(:, i))*CHARACTER)/REAL(order, dp)
++         j = NINT(REAL(value, dp))
++         IF (j < 0 .OR. ABS(value - j) > tolerance) RETURN
++         multiplicities(i) = j
++      END DO
++      IF (MAXVAL(ABS(MATMUL(table, CMPLX(multiplicities, 0, dp)) - CHARACTER)) > tolerance) RETURN
++      status = 0
++   END SUBROUTINE character_multiplicities
++
++! **************************************************************************************************
++!> \brief Inversion irreps of an isolated scalar or spinor eigenspace in an AO metric.
++!> \param metric Scalar AO overlap at a TRIM
++!> \param coeff Selected coefficients, spinor components stacked by AO
++!> \param mapping Target AO index under inversion
++!> \param phase Source-AO multiplier, including orbital parity and lattice phase
++!> \param energies Selected eigenvalues in Hartree
++!> \param check_tr Check physical spinful time reversal as well as inversion
++!> \param tolerance Dimensionless metric/subspace/character tolerance
++!> \param energy_tolerance Eigenvalue-commutator tolerance in Hartree
++!> \param counts Multiplicities of even/odd inversion irreps, counting states not pairs
++!> \param error Largest dimensionless residual
++!> \param energy_error Largest projected symmetry/eigenvalue commutator
++!> \param status Zero on success; invalid output for nonzero status
++!> \param diagnostics Optional metric, normalization, inversion and time-reversal residuals
++! **************************************************************************************************
++   SUBROUTINE inversion_representation(metric, coeff, mapping, phase, energies, check_tr, &
++                                       tolerance, energy_tolerance, counts, error, energy_error, status, diagnostics)
++      COMPLEX(KIND=dp), INTENT(IN)                       :: metric(:, :), coeff(:, :)
++      INTEGER, INTENT(IN)                                :: mapping(:)
++      COMPLEX(KIND=dp), INTENT(IN)                       :: phase(:)
++      REAL(KIND=dp), INTENT(IN)                          :: energies(:)
++      LOGICAL, INTENT(IN)                                :: check_tr
++      REAL(KIND=dp), INTENT(IN)                          :: tolerance, energy_tolerance
++      INTEGER, INTENT(OUT)                               :: counts(2)
++      REAL(KIND=dp), INTENT(OUT)                         :: error, energy_error
++      INTEGER, INTENT(OUT)                               :: status
++      REAL(KIND=dp), INTENT(OUT), OPTIONAL               :: diagnostics(4)
++
++      COMPLEX(KIND=dp)                                   :: characters(2), table(2, 2)
++      COMPLEX(KIND=dp), ALLOCATABLE                      :: pc(:, :), projected(:, :), sc(:, :), &
++                                                            trc(:, :), work(:, :)
++      INTEGER                                            :: first, i, j, last, nao, nspin, rank, s
++      REAL(KIND=dp)                                      :: metric_scale
++
++      status = -1
++      counts = -1
++      error = HUGE(1.0_dp)
++      energy_error = HUGE(1.0_dp)
++      IF (PRESENT(diagnostics)) diagnostics = HUGE(1.0_dp)
++      nao = SIZE(metric, 1)
++      rank = SIZE(coeff, 2)
++      IF (nao < 1 .OR. rank < 1 .OR. SIZE(metric, 2) /= nao) RETURN
++      IF (MOD(SIZE(coeff, 1), nao) /= 0) RETURN
++      nspin = SIZE(coeff, 1)/nao
++      IF (nspin < 1 .OR. nspin > 2) RETURN
++      IF (check_tr .AND. (nspin /= 2 .OR. MOD(rank, 2) /= 0)) RETURN
++      IF (SIZE(mapping) /= nao .OR. SIZE(phase) /= nao .OR. SIZE(energies) /= rank) RETURN
++      IF (tolerance <= 0.0_dp .OR. energy_tolerance <= 0.0_dp) RETURN
++      IF (.NOT. ieee_is_finite(tolerance) .OR. .NOT. ieee_is_finite(energy_tolerance)) RETURN
++      IF (.NOT. ALL(ieee_is_finite(REAL(metric, dp))) .OR. .NOT. ALL(ieee_is_finite(AIMAG(metric)))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(REAL(coeff, dp))) .OR. .NOT. ALL(ieee_is_finite(AIMAG(coeff)))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(REAL(phase, dp))) .OR. .NOT. ALL(ieee_is_finite(AIMAG(phase)))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(energies))) RETURN
++      IF (ANY(mapping < 1) .OR. ANY(mapping > nao)) RETURN
++      IF (ANY(ABS(ABS(phase) - 1.0_dp) > tolerance)) RETURN
++      DO i = 1, nao
++         IF (mapping(mapping(i)) /= i) RETURN
++         IF (ABS(phase(i)*phase(mapping(i)) - 1.0_dp) > tolerance) RETURN
++      END DO
++      metric_scale = MAX(1.0_dp, MAXVAL(ABS(metric)))
++      error = MAXVAL(ABS(metric - CONJG(TRANSPOSE(metric))))/metric_scale
++      DO j = 1, nao
++         DO i = 1, nao
++            error = MAX(error, ABS(CONJG(phase(i))*metric(mapping(i), mapping(j))*phase(j) - metric(i, j))/ &
++                        metric_scale)
++         END DO
++      END DO
++      IF (PRESENT(diagnostics)) diagnostics(1) = error
++      ALLOCATE (sc(nao*nspin, rank), pc(nao*nspin, rank), projected(rank, rank), work(rank, rank))
++      DO s = 1, nspin
++         first = (s - 1)*nao
++         last = s*nao
++         sc(first + 1:last, :) = MATMUL(metric, coeff(first + 1:last, :))
++         DO i = 1, nao
++            pc(first + mapping(i), :) = phase(i)*coeff(first + i, :)
++         END DO
++      END DO
++      work(:, :) = MATMUL(CONJG(TRANSPOSE(coeff)), sc)
++      DO i = 1, rank
++         work(i, i) = work(i, i) - 1.0_dp
++      END DO
++      error = MAX(error, MAXVAL(ABS(work)))
++      IF (PRESENT(diagnostics)) diagnostics(2) = MAXVAL(ABS(work))
++      projected(:, :) = MATMUL(CONJG(TRANSPOSE(sc)), pc)
++      IF (.NOT. ALL(ieee_is_finite(REAL(projected, dp)))) RETURN
++      IF (.NOT. ALL(ieee_is_finite(AIMAG(projected)))) RETURN
++      work(:, :) = MATMUL(CONJG(TRANSPOSE(projected)), projected)
++      DO i = 1, rank
++         work(i, i) = work(i, i) - 1.0_dp
++      END DO
++      error = MAX(error, MAXVAL(ABS(work)), MAXVAL(ABS(projected - CONJG(TRANSPOSE(projected)))))
++      IF (PRESENT(diagnostics)) diagnostics(3) = MAX(MAXVAL(ABS(work)), &
++                                                     MAXVAL(ABS(projected - CONJG(TRANSPOSE(projected)))))
++      IF (PRESENT(diagnostics)) THEN
++         IF (.NOT. check_tr) diagnostics(4) = 0.0_dp
++      END IF
++      energy_error = 0.0_dp
++      DO j = 1, rank
++         DO i = 1, rank
++            energy_error = MAX(energy_error, ABS(projected(i, j)*(energies(i) - energies(j))))
++         END DO
++      END DO
++      characters(1) = CMPLX(rank, 0, dp)
++      characters(2) = CMPLX(0, 0, dp)
++      DO i = 1, rank
++         characters(2) = characters(2) + projected(i, i)
++      END DO
++      table(:, 1) = CMPLX([1, 1], 0, dp)
++      table(:, 2) = CMPLX([1, -1], 0, dp)
++      CALL character_multiplicities(characters, table, counts, tolerance*rank, status)
++      IF (status /= 0) RETURN
++      status = -3
++      IF (check_tr) THEN
++         ! In a real Gaussian Bloch basis at a TRIM, Theta=(i sigma_y) K.
++         error = MAX(error, MAXVAL(ABS(AIMAG(metric)))/MAX(1.0_dp, MAXVAL(ABS(metric))))
++         ALLOCATE (trc(2*nao, rank))
++         trc(:nao, :) = CONJG(coeff(nao + 1:, :))
++         trc(nao + 1:, :) = -CONJG(coeff(:nao, :))
++         projected(:, :) = MATMUL(CONJG(TRANSPOSE(sc)), trc)
++         work(:, :) = MATMUL(CONJG(TRANSPOSE(projected)), projected)
++         DO i = 1, rank
++            work(i, i) = work(i, i) - 1.0_dp
++         END DO
++         error = MAX(error, MAXVAL(ABS(work)), MAXVAL(ABS(projected + TRANSPOSE(projected))))
++         IF (PRESENT(diagnostics)) diagnostics(4) = MAX(MAXVAL(ABS(work)), &
++                                                        MAXVAL(ABS(projected + TRANSPOSE(projected))))
++         DO j = 1, rank
++            DO i = 1, rank
++               energy_error = MAX(energy_error, ABS(projected(i, j)*(energies(i) - energies(j))))
++            END DO
++         END DO
++         IF (ANY(MOD(counts, 2) /= 0)) RETURN
++      END IF
++      IF (.NOT. ieee_is_finite(error) .OR. .NOT. ieee_is_finite(energy_error)) RETURN
++      IF (error > tolerance .OR. energy_error > energy_tolerance) RETURN
++      status = 0
++   END SUBROUTINE inversion_representation
++END MODULE topology_symmetry
+diff --git a/src/topology_symmetry_unittest.F b/src/topology_symmetry_unittest.F
+new file mode 100644
+index 0000000..1c6a5cc
+--- /dev/null
++++ b/src/topology_symmetry_unittest.F
+@@ -0,0 +1,162 @@
++!--------------------------------------------------------------------------------------------------!
++!   CP2K: A general program to perform molecular dynamics simulations                              !
++!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
++!                                                                                                  !
++!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!--------------------------------------------------------------------------------------------------!
++PROGRAM topology_symmetry_unittest
++   USE ieee_arithmetic,                 ONLY: ieee_quiet_nan,&
++                                              ieee_value
++   USE kinds,                           ONLY: dp
++   USE topology_symmetry,               ONLY: character_multiplicities,&
++                                              inversion_representation
++   USE topology_tqc,                    ONLY: inversion_ebr_signature,&
++                                              inversion_indicators
++
++   IMPLICIT NONE
++   COMPLEX(KIND=dp) :: table(6, 3), CHARACTER(6), metric(2, 2), coeff(4, 4), phase(2), tmp(4)
++   REAL(KIND=dp) :: error, energy_error, energies(4)
++   INTEGER :: multiplicities(3), status, counts(2), odd(8), ebr(2, 8), a, k, sign, strong, weak(3), z4
++   LOGICAL :: signed_atomic, nonnegative_atomic
++
++   ! Complete C3v/S3 character table per element, including a two-dimensional irrep.
++   table(:, 1) = CMPLX([1, 1, 1, 1, 1, 1], 0, dp)
++   table(:, 2) = CMPLX([1, 1, 1, -1, -1, -1], 0, dp)
++   table(:, 3) = CMPLX([2, -1, -1, 0, 0, 0], 0, dp)
++   CHARACTER = table(:, 1) + 2*table(:, 3)
++   CALL character_multiplicities(CHARACTER, table, multiplicities, 1.e-10_dp, status)
++   IF (status /= 0 .OR. ANY(multiplicities /= [1, 0, 2])) ERROR STOP 'C3v decomposition failed'
++   CHARACTER(2) = CHARACTER(2) + 0.1_dp
++   CALL character_multiplicities(CHARACTER, table, multiplicities, 1.e-10_dp, status)
++   IF (status == 0) ERROR STOP 'Invalid character accepted'
++   metric = CMPLX(0, 0, dp)
++   metric(1, 1) = 2.0_dp
++   metric(2, 2) = 0.5_dp
++   coeff = CMPLX(0, 0, dp)
++   coeff(1, 1) = SQRT(0.5_dp)
++   coeff(2, 2) = SQRT(2.0_dp)
++   coeff(3, 3) = SQRT(0.5_dp)
++   coeff(4, 4) = SQRT(2.0_dp)
++   phase = CMPLX([1, -1], 0, dp)
++   energies = 0.0_dp
++   CALL inversion_representation(metric, coeff, [1, 2], phase, energies, .TRUE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status /= 0 .OR. ANY(counts /= [2, 2])) ERROR STOP 'Metric/spinor parity failed'
++   tmp = coeff(:, 1)
++   coeff(:, 1) = (tmp + CMPLX(0, 1, dp)*coeff(:, 2))/SQRT(2.0_dp)
++   coeff(:, 2) = (CMPLX(0, 1, dp)*tmp + coeff(:, 2))/SQRT(2.0_dp)
++   CALL inversion_representation(metric, coeff, [1, 2], phase, energies, .TRUE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status /= 0 .OR. ANY(counts /= [2, 2])) ERROR STOP 'Degenerate-gauge parity failed'
++   CALL inversion_representation(metric, coeff(:, :1), [1, 2], phase, energies(:1), .FALSE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status == 0) ERROR STOP 'Nonclosed parity subspace accepted'
++   CALL inversion_representation(metric, coeff(:, :2), [1, 2], phase, energies(:2), .TRUE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status == 0) ERROR STOP 'Broken physical time reversal accepted'
++   energies(2) = 1.0_dp
++   CALL inversion_representation(metric, coeff, [1, 2], phase, energies, .TRUE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status == 0) ERROR STOP 'Noncommuting eigenspace accepted'
++   ! Scalar two-site inversion with a genuinely off-diagonal AO metric.
++   metric = CMPLX(0.2_dp, 0, dp)
++   metric(1, 1) = 1.0_dp
++   metric(2, 2) = 1.0_dp
++   coeff(:2, 1) = CMPLX([1.0_dp, 1.0_dp]/SQRT(2.4_dp), 0, dp)
++   coeff(:2, 2) = CMPLX([1.0_dp, -1.0_dp]/SQRT(1.6_dp), 0, dp)
++   phase = CMPLX(1, 0, dp)
++   CALL inversion_representation(metric, coeff(:2, :2), [2, 1], phase, energies(:2), .FALSE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status /= 0 .OR. ANY(counts /= [1, 1])) ERROR STOP 'Scalar two-site inversion failed'
++   CALL inversion_representation(metric, coeff(:2, :1), [2, 1], -phase, energies(:1), .FALSE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status /= 0 .OR. ANY(counts /= [0, 1])) ERROR STOP 'Zone-boundary inversion phase failed'
++   metric(1, 2) = CMPLX(0.2_dp, 0.01_dp, dp)
++   CALL inversion_representation(metric, coeff(:2, :2), [2, 1], phase, energies(:2), .FALSE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status == 0) ERROR STOP 'Invalid metric accepted'
++   metric(1, 2) = CMPLX(ieee_value(0.0_dp, ieee_quiet_nan), 0, dp)
++   CALL inversion_representation(metric, coeff(:2, :2), [2, 1], phase, energies(:2), .FALSE., &
++                                 1.e-9_dp, 1.e-9_dp, counts, error, energy_error, status)
++   IF (status == 0) ERROR STOP 'Nonfinite metric accepted'
++   DO a = 0, 7
++      DO sign = -1, 1, 2
++         DO k = 0, 7
++            odd(k + 1) = (1 - sign*(-1)**POPCNT(IAND(a, k)))/2
++         END DO
++         CALL inversion_indicators(odd, 1, 3, strong, weak, z4, status)
++         IF (status /= 0 .OR. strong /= 0 .OR. ANY(weak /= 0) .OR. z4 /= 0) ERROR STOP 'Atomic indicator failed'
++         CALL inversion_ebr_signature(odd, 1, signed_atomic, nonnegative_atomic, ebr, status)
++         IF (status /= 0 .OR. .NOT. nonnegative_atomic .OR. .NOT. signed_atomic) ERROR STOP 'Atomic EBR failed'
++         IF (SUM(ebr) /= 1) ERROR STOP 'EBR rank failed'
++      END DO
++   END DO
++   odd = 0
++   odd(1) = 1
++   CALL inversion_indicators(odd, 1, 3, strong, weak, z4, status)
++   IF (status /= 0 .OR. strong /= 1 .OR. z4 /= 1) ERROR STOP 'Strong index failed'
++   CALL inversion_ebr_signature(odd, 1, signed_atomic, nonnegative_atomic, ebr, status)
++   IF (status /= 0 .OR. signed_atomic .OR. nonnegative_atomic) ERROR STOP 'Stable obstruction missed'
++   odd(1) = 2
++   CALL inversion_indicators(odd, 2, 3, strong, weak, z4, status)
++   IF (status /= 0 .OR. strong /= 0 .OR. z4 /= 2) ERROR STOP 'Inversion Z4=2 missed'
++   odd(1) = 4
++   CALL inversion_ebr_signature(odd, 4, signed_atomic, nonnegative_atomic, ebr, status)
++   IF (status /= 0 .OR. .NOT. signed_atomic .OR. nonnegative_atomic) ERROR STOP 'Signed-only EBR missed'
++   odd = -1
++   CALL inversion_ebr_signature(odd, 4, signed_atomic, nonnegative_atomic, ebr, status)
++   IF (status == 0) ERROR STOP 'Invalid multiplicity accepted'
++   CALL exhaustive_signatures(2)
++   CALL exhaustive_signatures(3)
++   PRINT *, 'Native characters, parity, inversion indicators and EBR tests passed.'
++CONTAINS
++
++! **************************************************************************************************
++!> \brief Compare the exact solver against independent enumeration of rank-two atomic sums.
++!> \param dimension Dimension of the inversion subgroup
++! **************************************************************************************************
++   SUBROUTINE exhaustive_signatures(DIMENSION)
++      INTEGER, INTENT(IN)                                :: dimension
++
++      INTEGER :: code, digit, i, ierr, indicator, indices(3), j, n, nu, x, y, &
++         values(2**DIMENSION), signatures(2**DIMENSION, 2**(DIMENSION + 1)), &
++         reconstructed(2**DIMENSION), coefficients(2, 2**DIMENSION)
++      LOGICAL :: indicators_zero, nonnegative_ok, possible(0:3**(2**DIMENSION) - 1), signed_ok
++
++      n = 2**DIMENSION
++      DO x = 0, n - 1
++         DO i = 0, n - 1
++            signatures(i + 1, 2*x + 1) = (1 - (-1)**POPCNT(IAND(x, i)))/2
++            signatures(i + 1, 2*x + 2) = 1 - signatures(i + 1, 2*x + 1)
++         END DO
++      END DO
++      possible = .FALSE.
++      DO x = 1, 2*n
++         DO y = 1, 2*n
++            code = SUM((signatures(:, x) + signatures(:, y))*[(3**i, i=0, n - 1)])
++            possible(code) = .TRUE.
++         END DO
++      END DO
++      DO code = 0, 3**n - 1
++         digit = code
++         DO i = 1, n
++            values(i) = MOD(digit, 3)
++            digit = digit/3
++         END DO
++         CALL inversion_ebr_signature(values, 2, signed_ok, nonnegative_ok, coefficients, ierr)
++         IF (ierr /= 0 .OR. (nonnegative_ok .NEQV. possible(code))) ERROR STOP 'Enumerated EBR mismatch'
++         CALL inversion_indicators(values, 2, DIMENSION, nu, indices, indicator, ierr)
++         IF (ierr /= 0) ERROR STOP 'Enumerated indicator failure'
++         indicators_zero = nu == 0
++         IF (DIMENSION == 3) indicators_zero = indicator == 0 .AND. ALL(indices == 0)
++         IF (signed_ok .NEQV. indicators_zero) ERROR STOP 'Indicator/atomic-lattice mismatch'
++         IF (.NOT. nonnegative_ok) CYCLE
++         reconstructed = 0
++         DO j = 1, n
++            reconstructed = reconstructed + coefficients(1, j)*signatures(:, 2*j - 1) + &
++                            coefficients(2, j)*signatures(:, 2*j)
++         END DO
++         IF (ANY(reconstructed /= values) .OR. SUM(coefficients) /= 2) ERROR STOP 'EBR reconstruction failed'
++      END DO
++   END SUBROUTINE exhaustive_signatures
++END PROGRAM topology_symmetry_unittest
+diff --git a/src/topology_tqc.F b/src/topology_tqc.F
+new file mode 100644
+index 0000000..bf49576
+--- /dev/null
++++ b/src/topology_tqc.F
+@@ -0,0 +1,101 @@
++!--------------------------------------------------------------------------------------------------!
++!   CP2K: A general program to perform molecular dynamics simulations                              !
++!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
++!                                                                                                  !
++!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!--------------------------------------------------------------------------------------------------!
++
++! **************************************************************************************************
++!> \brief Exact inversion-subgroup EBR and symmetry-indicator analysis (spinful TR).
++!> \note These are symmetry signatures, not a complete topological classification.
++! **************************************************************************************************
++MODULE topology_tqc
++   IMPLICIT NONE
++   PRIVATE
++   PUBLIC :: inversion_indicators, inversion_ebr_signature
++CONTAINS
++
++! **************************************************************************************************
++!> \brief Fu--Kane indices and inversion indicator with an explicit sign convention.
++!> \param odd Number of odd Kramers pairs at each TRIM, x-bit fastest
++!> \param pairs Number of occupied Kramers pairs
++!> \param dimension Two (kz=0 plane) or three (full reciprocal torus)
++!> \param strong Plane index in 2D, strong index in 3D
++!> \param weak Three weak indices in 3D; -1 (unavailable) in 2D
++!> \param z4 sum(odd) mod 4 in 3D; -1 (unavailable) in 2D
++!> \param status Zero on valid input
++! **************************************************************************************************
++   SUBROUTINE inversion_indicators(odd, pairs, DIMENSION, strong, weak, z4, status)
++      INTEGER, INTENT(IN)                                :: odd(:), pairs, DIMENSION
++      INTEGER, INTENT(OUT)                               :: strong, weak(3), z4, status
++
++      INTEGER                                            :: axis, k
++
++      status = -1
++      strong = -1
++      weak = -1
++      z4 = -1
++      IF (DIMENSION < 2 .OR. DIMENSION > 3) RETURN
++      IF (SIZE(odd) /= 2**DIMENSION .OR. pairs < 1 .OR. pairs > 1000000) RETURN
++      IF (ANY(odd < 0) .OR. ANY(odd > pairs)) RETURN
++      strong = MOD(SUM(odd), 2)
++      IF (DIMENSION == 3) THEN
++         z4 = MOD(SUM(odd), 4)
++         weak = 0
++         DO axis = 1, 3
++            DO k = 0, 7
++               IF (BTEST(k, axis - 1)) weak(axis) = weak(axis) + odd(k + 1)
++            END DO
++         END DO
++         weak = MOD(weak, 2)
++      END IF
++      status = 0
++   END SUBROUTINE inversion_indicators
++
++! **************************************************************************************************
++!> \brief Exact signed/nonnegative EBR-signature test for the inversion subgroup.
++!> \param odd Odd Kramers pairs, x-bit fastest, 4 or 8 TRIM
++!> \param pairs Selected number of Kramers pairs
++!> \param signed_atomic Signature belongs to the integer lattice of atomic signatures
++!> \param nonnegative_atomic A physical nonnegative EBR-signature decomposition exists
++!> \param coefficients Even/odd local-parity EBR coefficients at the 2^d inversion centers
++!> \param status Zero on valid input, coefficients valid only if nonnegative_atomic
++!> \note EBR at r=a/2 has inversion character s*(-1)^(a.k). Fourier inversion
++!>       determines the differences between even/odd multiplicities exactly.
++!>       No database or floating-point integer decision is used.
++! **************************************************************************************************
++   SUBROUTINE inversion_ebr_signature(odd, pairs, signed_atomic, nonnegative_atomic, coefficients, status)
++      INTEGER, INTENT(IN)                                :: odd(:), pairs
++      LOGICAL, INTENT(OUT)                               :: signed_atomic, nonnegative_atomic
++      INTEGER, INTENT(OUT)                               :: coefficients(:, :), status
++
++      INTEGER                                            :: a, k, n, numerator, spare, &
++                                                            difference(SIZE(odd))
++
++      status = -1
++      signed_atomic = .FALSE.
++      nonnegative_atomic = .FALSE.
++      coefficients = 0
++      n = SIZE(odd)
++      IF (n /= 4 .AND. n /= 8) RETURN
++      IF (SIZE(coefficients, 1) /= 2 .OR. SIZE(coefficients, 2) /= n) RETURN
++      IF (pairs < 1 .OR. pairs > 1000000 .OR. ANY(odd < 0) .OR. ANY(odd > pairs)) RETURN
++      status = 0
++      DO a = 0, n - 1
++         numerator = 0
++         DO k = 0, n - 1
++            numerator = numerator + (-1)**POPCNT(IAND(a, k))*(pairs - 2*odd(k + 1))
++         END DO
++         IF (MOD(numerator, n) /= 0) RETURN
++         difference(a + 1) = numerator/n
++      END DO
++      IF (MOD(pairs - SUM(difference), 2) /= 0) RETURN
++      signed_atomic = .TRUE.
++      spare = pairs - SUM(ABS(difference))
++      IF (spare < 0) RETURN
++      nonnegative_atomic = .TRUE.
++      coefficients(1, :) = MAX(difference, 0)
++      coefficients(2, :) = MAX(-difference, 0)
++      coefficients(:, 1) = coefficients(:, 1) + spare/2
++   END SUBROUTINE inversion_ebr_signature
++END MODULE topology_tqc
+diff --git a/tests/QS/regtest-topology/TEST_FILES.toml b/tests/QS/regtest-topology/TEST_FILES.toml
+index 34230f0..0be461b 100644
+--- a/tests/QS/regtest-topology/TEST_FILES.toml
++++ b/tests/QS/regtest-topology/TEST_FILES.toml
+@@ -2,3 +2,9 @@
+ "helium-chern.inp" = [{matcher="TOPOLOGY_CHERN_TRIVIAL", tol=0.0, ref=1.0}]
+ "neon-soc.inp" = [{matcher="TOPOLOGY_Z2_TRIVIAL", tol=0.0, ref=1.0}]
+ "helium-nnkp.inp" = [{matcher="TOPOLOGY_BERRY_PHASE", tol=1e-4, ref=3.141592653589793}]
++"neon-tqc.inp" = [{matcher="TQC_PARITY_INDEX", tol=0.0, ref=0.0},
++                  {matcher="TQC_ATOMIC_SIGNATURE", tol=0.0, ref=1.0},
++                  {matcher="TQC_INVERSION_Z4", tol=0.0, ref=0.0}]
++"neon-tqc-plane.inp" = [{matcher="TQC_PARITY_INDEX", tol=0.0, ref=0.0},
++                        {matcher="TQC_ATOMIC_SIGNATURE", tol=0.0, ref=1.0}]
++"stanene-tqc.inp" = [{matcher="TQC_PARITY_INDEX", tol=0.0, ref=1.0}]
+diff --git a/tests/QS/regtest-topology/neon-tqc-common.inc b/tests/QS/regtest-topology/neon-tqc-common.inc
+new file mode 100644
+index 0000000..646317d
+--- /dev/null
++++ b/tests/QS/regtest-topology/neon-tqc-common.inc
+@@ -0,0 +1,69 @@
++&GLOBAL
++  PRINT_LEVEL LOW
++  PROJECT neon-tqc
++  RUN_TYPE ENERGY
++&END GLOBAL
++&FORCE_EVAL
++  METHOD QUICKSTEP
++  &DFT
++    BASIS_SET_FILE_NAME BASIS_MOLOPT_UZH
++    POTENTIAL_FILE_NAME GTH_SOC_POTENTIALS
++    &KPOINTS
++      FULL_GRID T
++      SCHEME MONKHORST-PACK 2 2 2
++      SYMMETRY F
++      WAVEFUNCTIONS COMPLEX
++    &END KPOINTS
++    &MGRID
++      CUTOFF 200
++      REL_CUTOFF 40
++    &END MGRID
++    &PRINT
++      &WANNIER90 ON
++        EXCLUDE_BANDS 9 10
++        KPOINTS_SOURCE TRIM
++        SEED_NAME neon-tqc
++        SOC T
++        TIME_REVERSAL T
++        INVERSION_TQC T
++        TQC_DIMENSION ${TQC_DIMENSION}
++        PARITY_ORIGIN ${PARITY_ORIGIN} ${PARITY_ORIGIN} ${PARITY_ORIGIN}
++      &END WANNIER90
++    &END PRINT
++    &QS
++      EPS_DEFAULT 1.0E-12
++      EPS_PGF_ORB 1.0E-14
++      EPS_PPNL 1.0E-14
++      METHOD GPW
++    &END QS
++    &SCF
++      ADDED_MOS 1
++      EPS_SCF 1.0E-9
++      MAX_SCF 100
++      SCF_GUESS ATOMIC
++      &DIAGONALIZATION
++      &END DIAGONALIZATION
++      &MIXING
++        ALPHA 0.4
++        METHOD BROYDEN_MIXING
++      &END MIXING
++    &END SCF
++    &XC
++      &XC_FUNCTIONAL PBE
++      &END XC_FUNCTIONAL
++    &END XC
++  &END DFT
++  &SUBSYS
++    &CELL
++      ABC 5.0 5.0 5.0
++    &END CELL
++    &COORD
++      SCALED
++      Ne 0.5 0.5 0.5
++    &END COORD
++    &KIND Ne
++      BASIS_SET DZVP-MOLOPT-GGA-GTH-q8
++      POTENTIAL GTH-PBE-q8
++    &END KIND
++  &END SUBSYS
++&END FORCE_EVAL
+diff --git a/tests/QS/regtest-topology/neon-tqc-plane.inp b/tests/QS/regtest-topology/neon-tqc-plane.inp
+new file mode 100644
+index 0000000..1443671
+--- /dev/null
++++ b/tests/QS/regtest-topology/neon-tqc-plane.inp
+@@ -0,0 +1,3 @@
++@SET TQC_DIMENSION 2
++@SET PARITY_ORIGIN 0.5
++@INCLUDE neon-tqc-common.inc
+diff --git a/tests/QS/regtest-topology/neon-tqc.inp b/tests/QS/regtest-topology/neon-tqc.inp
+new file mode 100644
+index 0000000..4aea22b
+--- /dev/null
++++ b/tests/QS/regtest-topology/neon-tqc.inp
+@@ -0,0 +1,3 @@
++@SET TQC_DIMENSION 3
++@SET PARITY_ORIGIN 0.0
++@INCLUDE neon-tqc-common.inc
+diff --git a/tests/QS/regtest-topology/stanene-tqc.inp b/tests/QS/regtest-topology/stanene-tqc.inp
+new file mode 100644
+index 0000000..94ebc2e
+--- /dev/null
++++ b/tests/QS/regtest-topology/stanene-tqc.inp
+@@ -0,0 +1,74 @@
++! Nontrivial DFT benchmark, not a converged materials prediction.
++! Geometry: a=4.674 A, buckling=0.852 A; doi:10.1038/srep18879.
++&GLOBAL
++  PROJECT stanene
++  RUN_TYPE ENERGY
++  PRINT_LEVEL LOW
++&END
++&FORCE_EVAL
++  METHOD QUICKSTEP
++  &DFT
++    BASIS_SET_FILE_NAME BASIS_MOLOPT_UZH
++    POTENTIAL_FILE_NAME GTH_SOC_POTENTIALS
++    &KPOINTS
++      SCHEME MONKHORST-PACK 8 8 1
++      FULL_GRID T
++      SYMMETRY F
++      WAVEFUNCTIONS COMPLEX
++    &END
++    &MGRID
++      CUTOFF 200
++      REL_CUTOFF 40
++    &END
++    &QS
++      EPS_DEFAULT 1.0E-12
++      EPS_PPNL 1.0E-14
++      EPS_PGF_ORB 1.0E-14
++      METHOD GPW
++    &END
++    &SCF
++      ADDED_MOS -1
++      EPS_SCF 1.0E-8
++      MAX_SCF 150
++      SCF_GUESS ATOMIC
++      &DIAGONALIZATION
++      &END
++      &MIXING
++        ALPHA 0.15
++        METHOD BROYDEN_MIXING
++      &END
++    &END
++    &XC
++      &XC_FUNCTIONAL PBE
++      &END
++    &END
++    &PRINT
++      &WANNIER90
++        KPOINTS_SOURCE TRIM
++        SEED_NAME stanene
++        SOC T
++        INVERSION_TQC T
++        TQC_DIMENSION 2
++        TIME_REVERSAL T
++        EXCLUDE_BANDS 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
++        EXCLUDE_BANDS 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
++      &END
++    &END
++  &END
++  &SUBSYS
++    &CELL
++      A 4.674 0 0
++      B 2.337 4.047802737288466 0
++      C 0 0 20
++    &END
++    &COORD
++      SCALED
++      Sn 0.3333333333333333 0.3333333333333333 0.5213
++      Sn 0.6666666666666667 0.6666666666666667 0.4787
++    &END
++    &KIND Sn
++      BASIS_SET DZVP-MOLOPT-GGA-GTH-q4
++      POTENTIAL GTH-PBE-q4
++    &END
++  &END
++&END
+diff --git a/tests/UNIT_TESTS b/tests/UNIT_TESTS
+index fb142b1..83d461d 100644
+--- a/tests/UNIT_TESTS
++++ b/tests/UNIT_TESTS
+@@ -8,6 +8,7 @@ grid_unittest
+ kpoint_lattice_fft_unittest
+ kpoint_smearing_unittest
+ topology_wilson_unittest
++topology_symmetry_unittest
+ kpsym_unittest
+ qs_ot_minimizer_unittest
+ low_rank_preconditioner_unittest
+diff --git a/tests/matchers.py b/tests/matchers.py
+index ee6050c..4018600 100644
+--- a/tests/matchers.py
++++ b/tests/matchers.py
+@@ -124,6 +124,9 @@ registry["TOPOLOGY_Z2_TRIVIAL"] = TextPresenceMatcher(
+ registry["TOPOLOGY_CHERN_TRIVIAL"] = TextPresenceMatcher(
+     "TOPOLOGY| Converged first Chern number: 0"
+ )
++registry["TQC_PARITY_INDEX"] = GenericMatcher("TQC| Fu-Kane parity index:", col=5)
++registry["TQC_INVERSION_Z4"] = GenericMatcher("TQC| Inversion Z4 (sum odd pairs mod 4):", col=9)
++registry["TQC_ATOMIC_SIGNATURE"] = TextPresenceMatcher("TQC| Nonnegative atomic signature: T")
+ registry["TOPOLOGY_BERRY_PHASE"] = GenericMatcher(
+     "Berry phase [rad]:", col=7, abs_value=True
+ )

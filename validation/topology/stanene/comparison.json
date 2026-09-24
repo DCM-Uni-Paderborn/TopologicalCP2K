@@ -1,0 +1,11 @@
+{
+  "native_z2": 1,
+  "z2pack_polar_z2": 1,
+  "z2pack_raw_z2": 1,
+  "native_surface_converged": true,
+  "lines": 193,
+  "points_per_line": 192,
+  "maximum_wilson_eigenvalue_error": 7.948953724803516e-14,
+  "minimum_link_singular_value": 0.9524814244559875,
+  "scope": "Second-variational DFT SOC benchmark, not a basis/cutoff-converged material prediction"
+}
