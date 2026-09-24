@@ -4,6 +4,10 @@ Verified 24 September 2026. This builds on `wyckoff-validation.md` and
 `atomic-band-validation.md`; those earlier records describe their individual
 construction stages, not the combined matrix layer documented here.
 
+The subsequent integer decomposition is recorded separately in
+`integer-signature-validation.md`; its results supersede the integer-solvability
+item in this historical report's remaining requirements.
+
 ## Scope
 
 `topology_atomic_signatures` builds an integer atomic reference matrix from all

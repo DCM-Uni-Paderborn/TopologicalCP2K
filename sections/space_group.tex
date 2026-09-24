@@ -310,8 +310,49 @@ uses the same spin/Bloch convention. This algebraic check does not replace
 Hamiltonian covariance or selected-subspace closure for actual Gaussian
 states. The matrix remains a redundant atomic reference for the
 explicit set $\mathcal K$, not an automatically complete EBR matrix:
-reciprocal-stratum completeness, representation elementarity and the
-subsequent integer and nonnegative decomposition problems are separate.
+reciprocal-stratum completeness and representation elementarity remain
+separate from the integer decomposition of this supplied matrix.
+
+\subsection{Exact signed and nonnegative signature decompositions}
+For an integer signature matrix $A\in\mathbb Z^{m\times n}$, the native
+integer kernel constructs a Smith form~\cite{CanoBradlyn2021},
+\begin{equation}
+ UAV=D,\qquad
+ D=\operatorname{diag}(d_1,\ldots,d_r,0,\ldots),\qquad
+ d_i>0,\quad d_i\mid d_{i+1},
+\end{equation}
+where $U$ and $V$ are unimodular integer matrices. With $c=Ub$,
+the equation $Ax=b$ has an integer solution precisely when
+\begin{equation}
+ c_i=0\quad(i>r),\qquad c_i\equiv0\pmod{d_i}\quad(i\leq r).
+\end{equation}
+A witness is obtained as $x=Vy$, with $y_i=c_i/d_i$ for $i\leq r$
+and zero free components. The implementation checks both $UAV=D$
+and $Ax=b$ using bounded 64-bit integer arithmetic. Rank decisions
+do not use floating-point thresholds. Growth beyond the arithmetic
+bound or exhaustion of the factorization work limit returns an
+unresolved status, not a negative membership decision.
+
+For the nonnegative signature matrices used here, the stronger condition
+$Ax=b$, $x\in\mathbb Z_{\geq0}^n$, is tested separately. At a search
+node with residual $b'\geq0$, a nonzero column $j$ has the finite bound
+\begin{equation}
+ 0\leq x_j\leq
+ \min_{i:A_{ij}>0}\left\lfloor\frac{b'_i}{A_{ij}}\right\rfloor.
+\end{equation}
+Row-wise gcds of the remaining columns and their zero supports prune
+the complete enumeration; zero columns can be set to zero. Every
+accepted witness is checked exactly. A caller-specified node budget
+bounds the potentially exponential search. An exhausted budget is
+explicitly undecided and must not be interpreted as absence of an
+atomic decomposition.
+
+These are decisions about the supplied columns and sampled rows.
+The Smith divisors of an incomplete reciprocal sample are not, by
+themselves, the space group's symmetry-indicator group. Nonnegative
+membership likewise does not prove triviality of a Bloch bundle.
+The integer routines do not add an automatic general-classification
+input mode or replace spectral isolation and compatibility checks.
 
 \subsection{Band representations and limits of indicators}
 Elementary band representations (EBRs) provide the indecomposable

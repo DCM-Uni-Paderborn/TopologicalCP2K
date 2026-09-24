@@ -536,6 +536,43 @@ validation logs are retained separately from material results.
 No new general-classification input mode, elementarity assertion or
 complete reciprocal-stratum coverage follows from these matrix tests.
 
+The integer-signature extension factors these same 2,120 matrices
+using checked 64-bit Smith reduction. Each factorization verifies its
+full integer certificate. One signed target per matrix is reconstructed,
+and the nonnegative search recovers every atomic column and a
+three-column sum per matrix: 33,199 witnesses in total. These deliberately
+constructed targets test recovery, not a classification of DFT bands.
+
+An independent unit program compares Smith invariants with the gcds
+of all minors and computes the determinants of both unimodular
+transforms for 384 matrices with dimensions one through four.
+The rank-zero through rank-four case counts are 38, 167, 103, 60 and 16.
+The analytic inversion Fourier criterion supplies a separate exact
+oracle for every odd-parity-count pattern with two Kramers pairs:
+among 81 four-TRIM patterns, 41 admit signed and 33 admit nonnegative
+atomic signatures; among 6,561 eight-TRIM patterns, the counts are
+241 and 129. Thus signed-only cases are tested explicitly.
+For every $2\times3$ matrix with entries in $\{0,1,2\}$ and every
+two-component target in $\{0,\ldots,4\}^2$, a brute-force enumeration
+of coefficients zero through four supplies another oracle, covering
+18,225 systems. Coefficients beyond four cannot contribute to a
+target in this range through any nonzero nonnegative column.
+Zero columns, deficient rank, invalid data, unsafe arithmetic and
+exhausted node budgets have distinct tests. The latter return an
+unresolved decision, not a symmetry obstruction.
+
+The expanded matrix tests pass in optimized serial and two-rank MPI
+runs, and with the integer kernel compiled using bounds checks,
+floating-point traps and undefined-behavior instrumentation.
+The focused driver now passes 51 assertions in each configuration:
+four native unit programs and 47 Gaussian little-group assertions.
+The new integer unit takes about 0.19 s serially and 0.50 s under
+two-rank MPI on the local machine; these are test costs, not scaling
+benchmarks. MPI repeats the native algebra on each rank and does not
+distribute the catalogue construction. The analytic matrix path also
+passes with the test's SPGLIB preprocessor option disabled, linked
+against the existing library; this is not a full no-SPGLIB rebuild.
+
 These algebra sweeps do not implement magnetic-space-group detection,
 a magnetic noncollinear ground state, canonical irrep labels, a complete
 Brillouin-zone connectivity graph or a full elementary-band catalogue.

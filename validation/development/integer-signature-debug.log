@@ -1,0 +1,6 @@
+ Smith minor/unimodularity certificates, ranks 0 through 4:                   38                  167                  103                   60                   16
+ Inversion TRIM/patterns/signed/nonnegative/search nodes:           4          81          41          33                  827
+ Inversion TRIM/patterns/signed/nonnegative/search nodes:           8        6561         241         129               133267
+ Independent bounded-coefficient cases:       18225
+ Integer invalid-input, growth and unresolved-budget tests passed.
+ Integer atomic-signature decomposition tests passed.
