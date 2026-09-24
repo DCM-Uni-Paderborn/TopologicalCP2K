@@ -513,6 +513,29 @@ and bounds-checked debug builds. The regular focused driver passes
 the two native unit programs with the Gaussian little-group directory.
 These assertion counts are not numbers of independently converged materials.
 
+The subsequent atomic-signature module combines all generated sites
+and onsite irreps/corepresentations over the six reciprocal points
+listed above. Ordinary/grey and scalar/spinful variants yield 2,120
+matrices, 31,079 provenance-preserving columns and 707,038 integer
+entries. Seven directed comparisons per column include the supplied
+point connections and a reciprocal-image loop, totalling 217,553
+column/segment checks. Each block reproduces the column's band rank;
+antiunitary rows count full corepresentations rather than treating all
+states as Kramers pairs. Additivity, permuted operation rows, and
+integer coset rephasing are checked. All sixteen inversion-center
+signatures and the generic-site signature are recovered analytically.
+
+These full sweeps pass in serial release, two-rank MPI and debug with
+bounds and floating-point checks. The updated focused driver passes
+50 assertions in each of the serial and MPI builds, including the new
+matrix unit test. A local optimized-compiler issue in automatic
+\texttt{MATMUL} result resizing was independently reproduced without
+CP2K and avoided by explicitly dimensioning the test vectors; no
+physical reference values were adjusted. The compiler reproducer and
+validation logs are retained separately from material results.
+No new general-classification input mode, elementarity assertion or
+complete reciprocal-stratum coverage follows from these matrix tests.
+
 These algebra sweeps do not implement magnetic-space-group detection,
 a magnetic noncollinear ground state, canonical irrep labels, a complete
 Brillouin-zone connectivity graph or a full elementary-band catalogue.

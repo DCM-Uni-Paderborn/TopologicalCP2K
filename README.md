@@ -24,7 +24,8 @@ Affiliations and submission declarations remain subject to author approval.
 - sections/kubo.tex: Liouvillian response, divided differences, currents and property symmetry.
 - sections/band_topology.tex: native Wilson/Z2/Chern with retained neon/stanene figure.
 - sections/space_group.tex: inversion TQC, native projective irreps, antiunitary
-  corepresentations, explicit-segment compatibility, generated Wyckoff families, site-induced atomic bands
+  corepresentations, explicit-segment compatibility, generated Wyckoff families, site-induced atomic bands,
+  atomic signature matrices on explicit reciprocal sets
   and phasons.
 - sections/localizers.tex: finite/periodic localizers, metric gap, LDL and Pfaffian.
 - sections/quadratic.tex: quadratic pseudospectrum and matrix-free iteration.
@@ -74,6 +75,11 @@ Native generation also covers 3,467 Wyckoff families and 5,648 specialization
 relations across all 530 Hall settings, with an independent tabulated-coordinate
 comparison. The generated sites are connected to the spinful site-induction
 tests; this does not yet establish representation elementarity.
+The combined atomic-signature layer has 2,120 checked matrices over ordinary/grey
+and scalar/spinful variants on six explicit reciprocal points. Its 31,079
+atomic columns satisfy the tested rank and compatibility conditions. Complete
+reciprocal-stratum sampling and general integer/nonnegative classification are
+not yet supplied by this layer.
 The separate supplied-magnetic-group sweep tests algebra, not magnetic SCF.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and

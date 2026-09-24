@@ -1,0 +1,195 @@
+*************************** Testing started ****************************
+
+----------------------------- Settings ---------------------------------
+MPI ranks:      1
+OpenMP threads: 2
+GPU devices:    0
+Workers:        1
+Timeout [s]:    150
+Work base dir:  /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38
+MPI exec:       mpiexec -n {N} --bind-to none
+Smoke test:     False
+Valgrind:       False
+Keepalive:      False
+Flag slow:      False
+Debug:          False
+Binary dir:     /Users/tkuehne/cp2k-spectral-localizer/build-serial/bin
+CP2K data dir:  /Users/tkuehne/cp2k-spectral-localizer/data
+VERSION:        ssmp
+Flags:          omp,libint,fftw3,libxc,no_statm_access,spglib,openblas
+------------------------------------------------------------------------
+Copying test files ... done
+Skipping UNIT/spectral_localizer_sparse_unittest because its requirements are not satisfied.
+Skipping UNIT/message_passing_thread_unittest because its requirements are not satisfied.
+Skipping UNIT/nequip_unittest because its requirements are not satisfied.
+Skipping UNIT/gx_ac_unittest because its requirements are not satisfied.
+Skipping QMMM/QS/regtest-mpi because its requirements are not satisfied.
+Skipping QS/regtest-libgint because its requirements are not satisfied.
+Skipping MIMIC/regtest-qmmm because its requirements are not satisfied.
+Skipping TMC/regtest_ana_on_the_fly because its requirements are not satisfied.
+Skipping QS/regtest-cusolver because its requirements are not satisfied.
+Skipping QS/regtest-dlaf because its requirements are not satisfied.
+Skipping QS/regtest-dlaf-2 because its requirements are not satisfied.
+Skipping QS/regtest-openpmd because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-cuda because its requirements are not satisfied.
+Skipping QS/regtest-pexsi because its requirements are not satisfied.
+Skipping Fist/regtest-deepmd because its requirements are not satisfied.
+Skipping Fist/regtest-quip because its requirements are not satisfied.
+Skipping QS/regtest-ec because its requirements are not satisfied.
+Skipping xTB/regtest-gfn0-m1 because its requirements are not satisfied.
+Skipping xTB/regtest-gfn0-m4 because its requirements are not satisfied.
+Skipping xTB/regtest-gfn0-m3 because its requirements are not satisfied.
+Skipping xTB/regtest-gfn0-m2 because its requirements are not satisfied.
+Skipping QS/regtest-gpw-1 because its requirements are not satisfied.
+Skipping SIRIUS/regtest-1 because its requirements are not satisfied.
+Skipping xTB/regtest-gfn0 because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn2-1 because its requirements are not satisfied.
+Skipping QS/regtest-gapw because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn1-grad because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gapw-gth because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn2-3 because its requirements are not satisfied.
+Skipping QS/regtest-gw-kpoints because its requirements are not satisfied.
+Skipping QS/regtest-dft-vdw-corr-4 because its requirements are not satisfied.
+Skipping QS/regtest-mp2-grad-1 because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gpw-coords because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-cdft because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn2-2 because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gpw-mech because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gapw-ecp because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn1 because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn2-5 because its requirements are not satisfied.
+Skipping QS/regtest-cdft-3 because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gpw-mol because its requirements are not satisfied.
+Skipping QMMM/QS/regtest-cdft because its requirements are not satisfied.
+Skipping QS/regtest-mp2-block because its requirements are not satisfied.
+Skipping QS/regtest-dft-d4-auto-ref because its requirements are not satisfied.
+Skipping xTB/regtest-3-spglib because its requirements are not satisfied.
+Skipping DFTB/regtest-scc-1-4 because its requirements are not satisfied.
+Skipping QS/regtest-dft-d3-lib-ref because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn2-4 because its requirements are not satisfied.
+Skipping QS/regtest-dft-d3bj-lib-ref because its requirements are not satisfied.
+Skipping QS/regtest-smeagol-2 because its requirements are not satisfied.
+Skipping QS/regtest-dft-d3bj-s-ref because its requirements are not satisfied.
+Skipping TMC/regtest because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gpw-nlcc because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-gfn1-periodic because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-api because its requirements are not satisfied.
+Skipping QS/regtest-rpa-sigma because its requirements are not satisfied.
+Skipping xTB/regtest-tblite-ipea1 because its requirements are not satisfied.
+Skipping QS/regtest-dft-d3-s-ref because its requirements are not satisfied.
+Skipping QS/regtest-elpa-qr because its requirements are not satisfied.
+Skipping LIBTEST/libvori because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gapw-ae-kp because its requirements are not satisfied.
+Skipping LIBTEST/libbqb because its requirements are not satisfied.
+Skipping QS/regtest-pao-5 because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gapw-base because its requirements are not satisfied.
+Skipping QS/regtest-cdft-hirshfeld-2 because its requirements are not satisfied.
+Skipping QS/regtest-as-fci because its requirements are not satisfied.
+Skipping TMC/regtest_ana_post_proc because its requirements are not satisfied.
+Skipping xTB/regtest-gfn0-d because its requirements are not satisfied.
+Skipping QS/regtest-trexio because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gapw-gth-kp because its requirements are not satisfied.
+Skipping xTB/regtest-stda because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-api-debug because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-gpw-kp because its requirements are not satisfied.
+Skipping QS/regtest-spectral-localizer-mumps because its requirements are not satisfied.
+Skipping QS/regtest-spectral-localizer-tacho because its requirements are not satisfied.
+Skipping QS/regtest-quadratic-pseudospectrum-mumps because its requirements are not satisfied.
+Skipping Fist/regtest-ace because its requirements are not satisfied.
+Skipping QS/regtest-as-3 because its requirements are not satisfied.
+Skipping QS/regtest-gauxc-skala because its requirements are not satisfied.
+Skipping QS/regtest-elpa because its requirements are not satisfied.
+Skipping QS/regtest-scalapack-generalized because its requirements are not satisfied.
+Skipping QS/regtest-as-qcschema because its requirements are not satisfied.
+Skipping QS/regtest-rtbse-gxac because its requirements are not satisfied.
+Skipping Fist/regtest-nequip because its requirements are not satisfied.
+Skipping Fist/regtest-allegro because its requirements are not satisfied.
+Skipping Fist/regtest-mace because its requirements are not satisfied.
+Skipping QS/regtest-trexio-2 because its requirements are not satisfied.
+Skipping QS/regtest-elpa-2 because its requirements are not satisfied.
+Skipping QMMM/xTB/regtest-tblite because its requirements are not satisfied.
+Skipping QS/regtest-eht-guess because its requirements are not satisfied.
+Skipping Fist/regtest-plumed2 because its requirements are not satisfied.
+Skipping 445 test directories because of --restrictdir.
+Launched 4 test directories and 1 worker...
+
+>>> /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/UNIT/topology_band_unittest
+    topology_band_unittest                                                                           -           OK (  12.68 sec)
+<<< /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/UNIT/topology_band_unittest (1 of 4) done in 12.68 sec
+>>> /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/UNIT/topology_wyckoff_unittest
+    topology_wyckoff_unittest                                                                        -           OK (   0.44 sec)
+<<< /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/UNIT/topology_wyckoff_unittest (2 of 4) done in 0.44 sec
+>>> /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/UNIT/topology_atomic_unittest
+    topology_atomic_unittest                                                                         -           OK (   0.02 sec)
+<<< /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/UNIT/topology_atomic_unittest (3 of 4) done in 0.02 sec
+>>> /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/QS/regtest-little-group
+    neon.inp:TQC_LITTLE_BANDS                                                                        4           OK (   0.69 sec)
+    neon.inp:TQC_LITTLE_1D                                                                           1           OK
+    neon.inp:TQC_LITTLE_3D                                                                           1           OK
+    neon.inp:TQC_COREP_BANDS                                                                         4           OK
+    neon.inp:TQC_COREP_UNDOUBLED                                                                     2           OK
+    neon-soc.inp:TQC_LITTLE_BANDS                                                                    8           OK (   1.06 sec)
+    neon-soc.inp:TQC_LITTLE_2D                                                                       2           OK
+    neon-soc.inp:TQC_LITTLE_4D                                                                       1           OK
+    neon-soc.inp:TQC_COREP_BANDS                                                                     8           OK
+    neon-soc.inp:TQC_COREP_UNDOUBLED                                                                 3           OK
+    neon-soc.inp:TQC_COREP_DOUBLED                                                                   -           OK
+    neon-generic.inp:TQC_COREP_BANDS                                                                 8           OK (   1.01 sec)
+    neon-generic.inp:TQC_COREP_DOUBLED                                                               4           OK
+    helium.inp:TQC_LITTLE_BANDS                                                                      2           OK (   2.64 sec)
+    helium.inp:TQC_LITTLE_1D                                                                         2           OK
+    helium-shear.inp:TQC_LITTLE_BANDS                                                                2           OK (   4.28 sec)
+    helium-shear.inp:TQC_LITTLE_1D                                                                   2           OK
+    helium-screw.inp:TQC_LITTLE_BANDS                                                                2           OK (   2.63 sec)
+    helium-screw.inp:TQC_LITTLE_1D                                                                   2           OK
+    helium-screw.inp:TQC_LITTLE_SCREW_SQUARE                                                        -1           OK
+    helium-screw.inp:TQC_LITTLE_SCREW_REAL                                                0.7071067812           OK
+    helium-screw.inp:TQC_LITTLE_SCREW_IMAG                                                0.7071067812           OK
+    helium-screw.inp:TQC_COMPATIBILITY_SEGMENTS                                                      4           OK
+    helium-screw.inp:TQC_ANTIUNITARY_SEGMENTS                                                        4           OK
+    helium-screw.inp:TQC_INCOMPATIBLE_SEGMENTS                                                       -           OK
+    neon-screw.inp:TQC_LITTLE_BANDS                                                                 16           OK (   2.35 sec)
+    neon-screw.inp:TQC_COREP_BANDS                                                                  16           OK
+    neon-screw.inp:TQC_COREP_PAIRED                                                                  8           OK
+    neon-screw.inp:TQC_LITTLE_1D                                                                    16           OK
+    neon-screw.inp:TQC_LITTLE_SCREW_SQUARE                                                           1           OK
+    neon-screw.inp:TQC_LITTLE_SCREW_REAL                                                  0.7071067812           OK
+    neon-screw.inp:TQC_LITTLE_SCREW_IMAG                                                  0.7071067812           OK
+    neon-screw.inp:TQC_COMPATIBILITY_SEGMENTS                                                        4           OK
+    neon-screw.inp:TQC_ANTIUNITARY_SEGMENTS                                                          4           OK
+    neon-screw.inp:TQC_INCOMPATIBLE_SEGMENTS                                                         -           OK
+    helium-gapw.inp:TQC_LITTLE_BANDS                                                                 2           OK (   2.37 sec)
+    helium-gapw.inp:TQC_LITTLE_1D                                                                    2           OK
+    helium-gapw.inp:TQC_LITTLE_SCREW_SQUARE                                                         -1           OK
+    helium-gapw.inp:TQC_COMPATIBILITY_SEGMENTS                                                       4           OK
+    helium-gapw.inp:TQC_ANTIUNITARY_SEGMENTS                                                         4           OK
+    helium-gapw.inp:TQC_INCOMPATIBLE_SEGMENTS                                                        -           OK
+    helium-monodromy.inp:TQC_LITTLE_BANDS                                                            1           OK (   2.53 sec)
+    helium-monodromy.inp:TQC_COMPATIBILITY_SEGMENTS                                                  1           OK
+    helium-monodromy.inp:TQC_INCOMPATIBLE_SEGMENTS                                                   1           OK
+    helium-wilson.inp:TQC_LITTLE_BANDS                                                               1           OK (   1.15 sec)
+    helium-wilson.inp:TQC_COMPATIBILITY_SEGMENTS                                                    12           OK
+    helium-wilson.inp:TQC_INCOMPATIBLE_SEGMENTS                                                      -           OK
+<<< /Users/tkuehne/cp2k-spectral-localizer/build-serial/atomic-signature-regtests/TEST-2026-09-24_17-11-38/QS/regtest-little-group (4 of 4) done in 20.71 sec
+------------------------------- Errors ---------------------------------
+
+
+------------------------------- Timings --------------------------------
+Plot: name="timings", title="Timing Distribution", ylabel="time [s]"
+PlotPoint: name="100th_percentile", plot="timings", label="100th %ile", y=12.68, yerr=0.0
+PlotPoint: name="99th_percentile", plot="timings", label="99th %ile", y=11.68, yerr=0.0
+PlotPoint: name="98th_percentile", plot="timings", label="98th %ile", y=10.67, yerr=0.0
+PlotPoint: name="95th_percentile", plot="timings", label="95th %ile", y=7.64, yerr=0.0
+PlotPoint: name="90th_percentile", plot="timings", label="90th %ile", y=3.96, yerr=0.0
+PlotPoint: name="80th_percentile", plot="timings", label="80th %ile", y=2.64, yerr=0.0
+
+------------------------------- Summary --------------------------------
+Number of FAILED  tests 0
+Number of WRONG   tests 0
+Number of CORRECT tests 50
+Total number of   tests 50
+
+Summary: correct: 50 / 50; 1min
+Status: OK
+
+*************************** Testing ended ******************************

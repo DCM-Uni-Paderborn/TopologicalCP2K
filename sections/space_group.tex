@@ -281,6 +281,38 @@ but does not replace the representation-level elementarity tests needed
 for an EBR catalogue. The construction retains the supplied cell and
 origin conventions and does not assign standard Wyckoff letters.
 
+\subsection{Atomic signature matrices on explicit reciprocal sets}
+Combining the generated sites with the induction kernel gives a native
+integer signature matrix for a supplied reciprocal set $\mathcal K$,
+\begin{equation}
+ A_{(\bk,\beta),(q,\alpha)}
+ =n_{\beta}\!\left[\chi^{\uparrow}_{q,\alpha}(\cdot;\bk)\right],
+ \qquad \bk\in\mathcal K .
+\end{equation}
+The column $(q,\alpha)$ retains one Wyckoff-family representative and
+one onsite irrep or corepresentation at every point. Rows use unitary
+irreps unless the little group has an antiunitary coset; in that case
+they count complete corepresentations after checking the required
+unitary partner multiplicities. Consequently,
+\begin{equation}
+ \sum_\beta d_{\bk\beta} A_{(\bk,\beta),(q,\alpha)}
+ =N_{q\alpha}
+\end{equation}
+is the same physical band rank for every $\bk$. Counts are not generally
+numbers of Kramers pairs: corepresentation dimensions and pairing types
+are retained explicitly.
+
+The implementation preserves all sites, including nonmaximal ones,
+and does not identify columns merely because their sampled signatures
+coincide. An incoming unitary character vector can be decomposed in
+the same row basis after matching its operation indices, provided it
+uses the same spin/Bloch convention. This algebraic check does not replace
+Hamiltonian covariance or selected-subspace closure for actual Gaussian
+states. The matrix remains a redundant atomic reference for the
+explicit set $\mathcal K$, not an automatically complete EBR matrix:
+reciprocal-stratum completeness, representation elementarity and the
+subsequent integer and nonnegative decomposition problems are separate.
+
 \subsection{Band representations and limits of indicators}
 Elementary band representations (EBRs) provide the indecomposable
 building blocks of atomic band representations. Restricting them to
