@@ -135,6 +135,19 @@ physical inputs or symmetry tolerances. Including this test, the serial
 and two-rank MPI drivers each pass 179/179 assertions; focused instrumented
 spin/frame tests pass as well. See the shared-lift validation section in
 the SI and `validation/development/gaussian-spin-lift-validation.md`.
+The onsite matcher now retains explicit Cartesian axes and spin lifts.
+Across 460 Gamma reference tables and three coordinate variants, all
+1,380 complete-table matches pass; 88,602 reference-normalized characters
+agree across serial, both MPI processes and an instrumented build within
+8.44e-15, and across coordinate variants within 9.77e-15. Native column
+numbering can differ between builds and is not a physical identifier.
+This sweep removes space-group translations to realize point groups at
+a site. Analytic C3, P6_3 and magnetic examples additionally test actual
+onsite restrictions and nonsymmorphic induction. It is not a complete
+real-Wyckoff-site EBR match or automatic Gaussian standard labeling.
+Final serial/MPI drivers both remain 179/179. See the new SI subsection
+and `validation/development/onsite-reference-validation.md` for scope,
+raw records, reproduction scripts and precision conventions.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
 multi-node scaling remain open. The working draft is not submission-ready.

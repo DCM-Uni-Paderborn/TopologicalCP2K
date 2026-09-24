@@ -24,7 +24,7 @@ transferred from the k-point manuscript with separately validated
 transport, localizer, and quadratic-pseudospectrum developments.
 The original results are not recomputed or relabelled by moving
 the manuscript text.
-The development status is recorded as of 24 September 2026.
+The development status is recorded as of 25 September 2026.
 A source freeze and complete public reproduction archive remain
 submission requirements.
 
@@ -928,6 +928,88 @@ existing topology/export/k-point assertions. No physical reference
 value was changed for this work.
 Scripts, provenance and numerical logs are retained in
 \texttt{validation/development/character-reference-validation.md}.
+
+\subsection{Onsite axes, spin phases and reference correspondence}
+\label{sec:si-onsite-reference}
+The onsite matcher retains the seed stabilizer's Cartesian rotations,
+antiunitary flags, product table and actual spin lifts. An explicitly
+supplied orthogonal map aligns the reference axes with the native
+axes. With its spin representative $V$, a unitary reference lift
+transforms as $VUV^\dagger$, whereas the matrix part of an antiunitary
+lift transforms as $VAV^T$. Here $A$ includes $i\sigma_y$ for physical
+time reversal. Comparing these matrices with the retained native
+lifts determines a single phase per operation. The product and
+factor tables and all character columns must then agree after this
+declared operation/phase map; phases are not fitted independently
+to different irreps. The interface returns both the column
+correspondence and its operation/phase provenance.
+
+For an independent point-group test, the 460 scalar/spinful Gamma
+tables of \texttt{irreptables} 3.1.0 are reused, with their space-group
+translations removed. Thus the group fixes the chosen site: this is
+not an enumeration of every actual Wyckoff-site stabilizer in the
+230 space groups. Three variants combine cell scales $10^{-100}$,
+$1$ and $10^{100}$, basis shear, shifted origin, reversed operation
+order, integer coset changes and Cartesian rotation.
+Table~\ref{tab:onsite-reference} summarizes the resulting comparison.
+The $10^{-9}$ native tolerance is unchanged; the external tolerance
+is $2\times10^{-4}$ for the finite-precision reference rotations,
+spin matrices and characters.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{p{0.62\linewidth}r}
+\toprule
+Onsite correspondence check & Result\\
+\midrule
+Gamma reference tables / coordinate variants & $460 / 3$\\
+Complete-table matches / matched column records & $1,380 / 6,384$\\
+Reference-normalized character entries per executable & 88,602\\
+Largest combined external comparison residual & $3.14\times10^{-5}$\\
+Largest cross-build character difference & $8.44\times10^{-15}$\\
+Largest cross-coordinate character difference & $9.77\times10^{-15}$\\
+\bottomrule
+\end{tabular}
+\caption{Onsite point-group correspondence validated on
+24--25 September 2026. Each MPI process repeats the complete audit;
+these counts do not measure distributed speedup or material coverage.}
+\label{tab:onsite-reference}
+\end{table}
+
+In several cubic spinful cases, 52 native-column/label records differ
+between release and instrumented builds. The corresponding complete
+characters, indexed by the returned reference labels and operations
+and divided by the explicit lift phases, agree to the tolerance
+shown above. Raw internal irrep indices therefore must not serve as
+cross-build physical identifiers. Both MPI processes retain the
+release ordering, but correctness does not depend on that coincidence.
+
+The bounded analytic tests distinguish the three complex $C_3$
+characters and their scalar/spinful grey restrictions, test improper
+axis changes and complex spin-lift rephasings, and reject inconsistent
+characters, missing antiunitary spin factors, duplicate operations
+and nonfinite or unbounded input. A nonsymmorphic $P6_3$ example has
+two sites and a $C_3$ onsite subgroup. At $k_z=0,1/4,1/2$, operations
+exchanging sites have zero induced trace; the remaining characters
+agree with the analytic onsite sum and screw-translation phase.
+This holds for scalar/spinful ordinary and grey variants after
+origin, basis, axes and operation-order changes. Separate magnetic
+tests distinguish an onsite $C_2\mathcal T$ operation, whose spinful
+square is $+1$, from an antiunitary half translation exchanging sites.
+
+The focused instrumented executable checks the symmetry, little-group,
+corepresentation, character-matching and site-induction modules with
+bounds checks, floating-point traps and undefined-behavior
+instrumentation. It omits its SPGLIB database test interface but links
+the existing release CP2K library; it is neither a fully instrumented
+Gaussian calculation nor a complete no-SPGLIB build. The official
+serial and two-rank MPI directories each pass 179/179 assertions
+after this extension, without changes to physical reference values.
+Scripts, input hashes, complete character records and driver logs are
+retained with \texttt{validation/development/onsite-reference-validation.md}.
+This establishes a convention-aware onsite matching kernel, not
+automatic standard labels in the Gaussian output, complete
+actual-site EBR identities or a material topology classification.
 
 \subsection{Shared spin lifts in the Gaussian SOC analysis}
 The Gaussian sewing matrices must use the same SU(2) representatives

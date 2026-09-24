@@ -1,0 +1,22 @@
+{
+  "reference_gamma_tables": 460,
+  "coordinate_variants": 3,
+  "cases": 1380,
+  "label_records": 6384,
+  "largest_residual": 3.1415927e-05,
+  "character_records": 88602,
+  "largest_cross_build_character_error": 8.437695077709886e-15,
+  "largest_cross_coordinate_character_error": 9.769962860505279e-15,
+  "native_label_order_differences": {
+    "build-mpi/onsite-reference-external.log:0": 0,
+    "build-mpi/onsite-reference-external.log:1": 0,
+    "build-serial/onsite-reference-debug.log:None": 52
+  },
+  "builds": [
+    "ssmp",
+    "psmp-rank-0",
+    "psmp-rank-1",
+    "instrumented"
+  ],
+  "key_sha256": "fc4093398e4e81255cbc07912dd6e970d700ad6464d01dcabb937e34b83f0edd"
+}
