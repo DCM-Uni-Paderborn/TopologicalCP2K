@@ -148,6 +148,15 @@ real-Wyckoff-site EBR match or automatic Gaussian standard labeling.
 Final serial/MPI drivers both remain 179/179. See the new SI subsection
 and `validation/development/onsite-reference-validation.md` for scope,
 raw records, reproduction scripts and precision conventions.
+An additional actual-site audit retains all fractional translations and
+generic representatives of all 1,731 conventional Wyckoff families. Four
+symmetry variants and two coordinate conventions give 13,848 onsite-table
+matches and 83,088 independently checked induced tables at six k points.
+All 1,384,328 induced character entries agree across builds/coordinates
+within 2.67e-14. The reference point-group axes are explicitly recorded,
+not assumed to be canonical Bilbao onsite axes. This is real-site induction
+validation, not complete canonical EBR naming or global band connectivity.
+See `validation/development/wyckoff-character-validation.md` and the SI.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
 multi-node scaling remain open. The working draft is not submission-ready.

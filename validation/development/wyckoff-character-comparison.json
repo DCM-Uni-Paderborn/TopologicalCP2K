@@ -1,0 +1,20 @@
+{
+  "actual_wyckoff_families": 1731,
+  "variants": 4,
+  "coordinate_variants": 2,
+  "complete_table_matches": 13848,
+  "onsite_columns": 16957,
+  "character_entries": 189664,
+  "largest_reference_residual": 3.1415927e-05,
+  "largest_cross_build_character_difference": 8.21568855656745e-15,
+  "largest_cross_coordinate_character_difference": 6.217283432986974e-15,
+  "induced_tables": 83088,
+  "induced_character_entries": 1384328,
+  "largest_induced_reference_dimension_scaled_error": 1.0471976e-05,
+  "largest_induced_reference_absolute_error": 0.00014510351,
+  "largest_induced_cross_build_error": 1.865174681370263e-14,
+  "largest_induced_cross_coordinate_error": 2.6645352591003757e-14,
+  "fixture_sha256": "8125541795958a472017cae45ad4e67b05141353ad80729073f4a7496e75ab83",
+  "character_key_sha256": "ec7c78c918e42a9d289fbe76437775f5872573b6659cabcb8ab40970a754fd8b",
+  "induced_character_key_sha256": "482932cf724c056ef0bf9ef40c3aece64009653efffddf44cda81eed068fd7ca"
+}

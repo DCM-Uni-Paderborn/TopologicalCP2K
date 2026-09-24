@@ -1011,6 +1011,90 @@ This establishes a convention-aware onsite matching kernel, not
 automatic standard labels in the Gaussian output, complete
 actual-site EBR identities or a material topology classification.
 
+\subsection{Actual Wyckoff sites and independent Bloch induction}
+The subsequent comparison retains the real fractional space-group
+translations. The independently archived affine families supply one
+generic point per family, formed from their origin and tangent
+parameters $\sqrt{2}/7$, $\sqrt{3}/7$ and $\sqrt{5}/7$. An explicit
+integer-Hermite construction removes centering and records the
+primitive basis. All 1,731 conventional families are retained,
+including nonmaximal sites, rather than selecting a subset by EBR
+dimension or by the archive's decomposability field.
+
+The reference reader uses Gamma character tables for 32 symmorphic
+point-group representatives, separately for scalar and spinful
+representations. It matches their Cartesian operation sets to each
+actual site stabilizer by an explicit orthogonal conjugacy and
+records the chosen axes. For grey groups, independent character
+conjugation and the spin-aware Frobenius--Schur indicator construct
+paired or doubled unitary restrictions. These reference axes are
+not automatically the standard Bilbao onsite-label convention.
+The native matcher must accept the complete table, including
+equal-dimensional columns, in both the original and simultaneously
+rotated, sheared, origin-shifted, reordered and integer-coset-shifted
+coordinates.
+
+An independent Python calculation then builds the real-space orbit
+and its representatives. For each unitary operation that fixes an
+orbit site modulo a translation, it evaluates the onsite character
+with an explicit physical SU(2) intertwiner and multiplies it by
+$\exp(-2\pi i k\cdot L)$. Summing these contributions gives the
+whole-band trace without using CP2K's cached induction coefficients.
+The primitive reciprocal points are
+$(0,0,0)$, $(1/2,0,0)$, $(0,1/2,0)$, $(0,0,1/2)$,
+$(1/4,1/4,1/4)$ and $(0.173,0.217,0.319)$.
+Only unitary little-group operations are compared at each point;
+their complete membership is checked independently. The native
+results are converted using explicit spin-lift and integer-coset
+phases, not by fitting a phase to each band representation.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{p{0.63\linewidth}r}
+\toprule
+Actual-site and induction comparison & Result\\
+\midrule
+Wyckoff families / symmetry variants / coordinate variants & $1,731/4/2$\\
+Complete onsite-table matches & 13,848\\
+Onsite columns before coordinate repetition & 16,957\\
+Induced tables / character entries per executable & $83,088/1,384,328$\\
+Largest absolute induced reference difference & $1.4510\times10^{-4}$\\
+Largest dimension-scaled reference difference & $1.05\times10^{-5}$\\
+Largest induced cross-build difference & $1.87\times10^{-14}$\\
+Largest induced cross-coordinate difference & $2.67\times10^{-14}$\\
+\bottomrule
+\end{tabular}
+\caption{Complete actual-site comparison on 25 September 2026.
+The external differences reflect the finite-precision reference
+characters and spin matrices. Native construction uses $10^{-9}$;
+the external bound is $2\times10^{-4}$ after division by each
+induced column's positive band dimension.}
+\label{tab:wyckoff-induction}
+\end{table}
+
+The optimized SSMP, both MPI processes and the focused instrumented
+executable pass all cases. The 189,664 onsite character entries agree
+across builds within $8.22\times10^{-15}$; the larger induced
+comparison is summarized in Table~\ref{tab:wyckoff-induction}.
+A deliberate phase reversal at site $c$ of space group 100 changes
+one scalar induced character from $-2i$ to $+2i$ at the quarter-diagonal
+point. The test rejects it with absolute error 4 and dimension-scaled
+error 1. A separate output audit caught and corrected list-directed
+Fortran parsing of labels such as \texttt{2*GM1}; these labels are now
+read literally, without changing numerical reference characters.
+
+This optional reference sweep adds no external database dependency
+or input keyword to production calculations. The standard native
+unit tests also pass in serial and MPI with two OpenMP threads;
+the preceding 179/179 Gaussian/export driver results are not counted
+as new DFT runs for this test-only extension. The focus remains
+generic representatives and six sampled reciprocal points, not
+every coordinate in a free family, complete reciprocal-stratum
+connectivity, magnetic-space-group site enumeration or automatic
+canonical EBR naming. The archive, source/fixture hashes and replay
+scripts are recorded in
+\texttt{validation/development/wyckoff-character-validation.md}.
+
 \subsection{Shared spin lifts in the Gaussian SOC analysis}
 The Gaussian sewing matrices must use the same SU(2) representatives
 as their factor table. This is tested with Ne in the primitive
