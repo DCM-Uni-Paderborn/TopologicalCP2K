@@ -1129,6 +1129,56 @@ snapshot audit additionally passes all 2,120 Hall-setting/symmetry
 variants. The evidence and replay tools are retained in
 \texttt{validation/development/onsite-export-validation.md}.
 
+\subsection{Site-resolved named EBR character sequences}
+The EBR vectors supplied with \texttt{irreptables} 3.1.0 are combined
+with its independently tabulated little-group characters, without
+using the native induction algorithm to create the reference.
+The ordinary-group scalar and spinful datasets contain 1,599
+site/spin cases and 5,641 named reference columns across all 230
+space groups. There are 9,667 reciprocal queries and 297,529 induced
+character entries per coordinate convention. Every reference column
+must match the same native onsite column at all supplied points and
+operations. Candidate sets are retained, and their multiplicities
+are checked so that duplicate reference columns cannot consume one
+native column twice.
+
+The earlier little-group fixture lacks some opposite-valley points.
+Explicit type-I tables supply 62 such points in 40 scalar/spinful
+tables, including KA/HA and PA/WA. Before use, the adapter verifies
+the complete operation map, physical spin lifts and integer coset
+shifts; all shared labelled characters agree within
+$3.01\times10^{-16}$. Missing labels are not assigned by guessed
+complex conjugation. The reference uses the already validated
+$\mathbf k_{\rm native}=-P^T\mathbf k_{\rm table}$ convention and
+retains the printed character precision.
+
+Optimized serial, both processes of a two-rank MPI run and a focused
+instrumented executable pass the original and combined
+sheared/rotated/origin-shifted/reordered conventions. They agree on
+all candidate multiplicities. Within the specified Wyckoff
+position, 5,263 reference columns have one candidate and 378 have
+multiple candidates. The largest dimension-scaled character
+residual is $1.05\times10^{-5}$, below the unchanged
+$2\times10^{-4}$ reference tolerance; native construction still
+uses $10^{-9}$. The MPI processes repeat the audit independently,
+so these results are not a scaling measurement.
+
+Six deliberately malformed P4 spinful references are rejected by
+both optimized executables: a boundary character, a shifted site
+with unchanged Gamma data, a duplicated character column, a zeroed
+spin lift, a duplicate operation, and unexpected trailing data.
+The unchanged baseline passes. Instrumentation covers the test and
+the symmetry, little-group, corepresentation, character-matching
+and induction kernels; other modules remain release-library code.
+This is not a fully instrumented Gaussian or MPI calculation.
+The generated local space contains 5,704 columns at the selected
+sites; 63 are absent from the supplied EBR references. Their
+elementarity, grey-group reference matching, canonical onsite axes
+and complete band connectivity are not certified by this test.
+Scripts, input and source hashes, full output and replay instructions
+are retained in
+\texttt{validation/development/ebr-character-validation.md}.
+
 \subsection{Shared spin lifts in the Gaussian SOC analysis}
 The Gaussian sewing matrices must use the same SU(2) representatives
 as their factor table. This is tested with Ne in the primitive

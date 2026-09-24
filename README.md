@@ -164,6 +164,14 @@ outputs per build reconstructs 31,537 induced character entries within
 point-group references. Serial and MPI drivers each pass 179/179 checks.
 This preserves reference-label provenance, not canonical EBR naming; see
 `validation/development/onsite-export-validation.md` and the SI.
+A subsequent site-resolved audit compares complete tabulated character
+sequences for 5,641 named ordinary-group scalar/spinful EBR columns in all
+230 space groups. All columns match in two coordinate conventions and
+across serial, two MPI processes and focused instrumentation; 378 retain
+multiple candidates at the sampled points. Explicit type-I tables supply
+the previously absent opposite-valley references. This is not unique onsite
+labelling or a connectivity proof; see
+`validation/development/ebr-character-validation.md` and the SI.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
 multi-node scaling remain open. The working draft is not submission-ready.
