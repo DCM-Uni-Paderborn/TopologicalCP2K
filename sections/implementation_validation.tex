@@ -263,6 +263,19 @@ label records. This establishes named reference correspondences,
 not automatic standard labels in the Gaussian analysis or complete
 EBR identities and connectivity.
 
+A Gaussian post-SCF GTH-SOC test independently checks that the
+spin lifts used for the factor algebra and for the actual band
+sewing agree. For a Ne Kramers doublet in a primitive body-centered
+cubic cell, independent quaternion reconstruction gives a product-law
+residual of 2 despite passing the metric, subspace and energy tests.
+Reusing the stored lifts reduces this residual to
+$8.5\times10^{-14}$ without altering the input or validation tolerances;
+the SCF energies agree within $3\times10^{-14}$ hartree.
+The property point and the SCF point are both
+Gamma; the primitive-basis $2\times2\times2$ mesh is not a
+full-cubic-symmetry reference. Details and the separate quadrature
+convergence checks are given in the Supporting Information.
+
 \subsection{Convergence and material validation}
 Before submission, the material set should include matched crystalline
 band and real-space indices, finite-size SOC flakes, disordered

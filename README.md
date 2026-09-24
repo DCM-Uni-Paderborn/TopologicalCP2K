@@ -119,6 +119,13 @@ spin-lift conventions, central-projector checks, and full column bijections
 are tested in serial, on both MPI processes and in an instrumented build;
 the official local drivers each pass 173/173 assertions. This is reference
 correspondence, not automatic standard labels in the Gaussian input path.
+The Gaussian SOC sewing path now reuses these factor-system spin lifts.
+A primitive BCC Ne doublet reproduces the previous product residual of 2
+and passes with a residual below 9e-14 after the fix, without changing
+physical inputs or symmetry tolerances. Including this test, the serial
+and two-rank MPI drivers each pass 179/179 assertions; focused instrumented
+spin/frame tests pass as well. See the shared-lift validation section in
+the SI and `validation/development/gaussian-spin-lift-validation.md`.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
 multi-node scaling remain open. The working draft is not submission-ready.

@@ -174,8 +174,15 @@ conventions: solving a factor-system coboundary alone cannot fix
 names, since an additional one-dimensional character can preserve
 the factors while permuting equal-dimensional irreps. In particular,
 the spin lifts returned by the factor construction are reused;
-independently recomputing a lift near a $\pi$ rotation can choose
-the other SU(2) representative through rounding.
+independently recomputing a lift at a quaternion branch tie can choose
+the other SU(2) representative through rounding. This includes some
+cubic rotations as well as $\pi$ rotations. The Gaussian SOC sewing
+path uses these same stored lifts, not a second Cartesian-to-spin
+conversion. For an antiunitary operation the stored spin factor
+already contains $J=i\sigma_y$; this factor is removed before the
+frame transformation applies $JK$, so that physical time reversal
+is included exactly once. The conjugate spin convention of the
+CP2K SOC Hamiltonian is retained.
 
 Orthogonality alone is also insufficient to certify a reference
 table. Let $L_g$ denote the left regular action of the twisted

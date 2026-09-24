@@ -929,6 +929,53 @@ value was changed for this work.
 Scripts, provenance and numerical logs are retained in
 \texttt{validation/development/character-reference-validation.md}.
 
+\subsection{Shared spin lifts in the Gaussian SOC analysis}
+The Gaussian sewing matrices must use the same SU(2) representatives
+as their factor table. This is tested with Ne in the primitive
+body-centered cubic basis
+\begin{equation}
+ A=4.2\begin{pmatrix}1&0&1/2\\0&1&1/2\\0&0&1/2\end{pmatrix}
+ \;\text{\AA},
+\end{equation}
+with roundoff-sized perturbations of the input components.
+The calculation uses PBE, the DZVP-MOLOPT-GGA-GTH-q8 basis from
+\texttt{BASIS\_MOLOPT\_UZH}, post-SCF GTH SOC, all 13 scalar
+states in the second variation, and the lowest isolated Kramers
+doublet as the represented subspace. Both the SCF and the property
+calculation use Gamma. A single 1200 Ry real-space grid resolves the
+quadrature sufficiently for the unchanged $10^{-6}$ metric/subspace
+and $10^{-6}$ hartree energy-commutator tolerances.
+
+For identical inputs, the independent-lift and shared-lift paths have
+metric residual $1.21\times10^{-15}$ and subspace residual
+$2.90\times10^{-7}$. Their product-law residuals are respectively
+2 and $8.49\times10^{-14}$. The former correctly aborts; the latter
+identifies one two-dimensional unitary irrep and one undoubled
+corepresentation, with signed and nonnegative atomic membership.
+The SCF energy is $-34.905537447716$ hartree in both runs, differing
+by less than $3\times10^{-14}$ hartree before rounding. There is no
+post-hoc fitting of sewing matrices, reference-energy change, or
+relaxation of the symmetry checks.
+
+Two distinct convergence issues were separated from the lift defect.
+At 400 Ry, the Gamma calculation has subspace residual
+$9.19\times10^{-5}$ and fails the closure test before reaching the
+product test. Also, the shifted $2\times2\times2$ Monkhorst--Pack set
+in this particular primitive basis is preserved by only 8 of the
+48 cubic spatial operations; increasing its real-space cutoff does
+not restore the missing integration-set symmetry. These diagnostic
+failures are retained, not converted to successful references.
+The shared-lift native test additionally applies all 48 cubic
+operations and their 48 time-reversed partners to complex frames,
+including cell scales from $10^{-100}$ to $10^{100}$.
+With this additional Gaussian test the official SSMP and two-rank MPI
+drivers each pass 179/179 assertions. The focused spin/factor unit
+tests also pass with bounds checking, floating-point traps and
+undefined-behavior instrumentation; this is not a fully instrumented
+Gaussian or MPI build.
+The reproduction record is
+\texttt{validation/development/gaussian-spin-lift-validation.md}.
+
 \section{Bloch Kubo and Property-Symmetry Validation}
 \label{sec:si-kubo}
 The retained development report is
