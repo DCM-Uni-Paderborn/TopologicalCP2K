@@ -254,6 +254,33 @@ s/p/d orbital and spin traces. Site induction alone neither enumerates
 all Wyckoff positions nor establishes that an induced representation
 is elementary.
 
+\subsection{Generating site-symmetry families}
+The possible atomic reference positions need not be occupied by atoms
+in the input structure. A separate geometric kernel obtains them from
+the complete supplied space group. For each operation it solves
+\begin{equation}
+ (W_g-I)q=-\tau_g\pmod{\mathbb Z^3}
+\end{equation}
+and closes the resulting connected fixed sets under nonempty
+intersection. Saturating the integer row lattice yields primitive
+normals $B$ for each connected affine torus,
+\begin{equation}
+ Bq=c\pmod{\mathbb Z^r},\qquad d=3-r.
+\end{equation}
+Distinct components are retained: for example, $2q_x=0\pmod1$
+contains both $q_x=0$ and $q_x=1/2$. Integer right-hand sides are
+enumerated from the bounds of the unit cube rather than by sampling
+a coordinate mesh. Subsequent space-group equivalence identifies the
+families, and a generic representative is checked against its entire
+site stabilizer.
+
+Closure containment supplies specialization relations between families.
+A site group is maximal when its family has no higher-symmetry
+specialization. This provides the geometric input to site induction,
+but does not replace the representation-level elementarity tests needed
+for an EBR catalogue. The construction retains the supplied cell and
+origin conventions and does not assign standard Wyckoff letters.
+
 \subsection{Band representations and limits of indicators}
 Elementary band representations (EBRs) provide the indecomposable
 building blocks of atomic band representations. Restricting them to
@@ -276,7 +303,7 @@ a complete diagnosis of fragile topology.
 
 The implemented EBR-signature classifier still uses the inversion
 subgroup and its analytic atomic signatures. The general native
-little-group/corepresentation, explicit-segment and site-induction
+little-group/corepresentation, explicit-segment, Wyckoff-family and site-induction
 machinery supplies additional representation data, not a complete
 all-space-group classification. Conventional-to-primitive matching,
 standard labels, complete connectivity and a validated catalogue with

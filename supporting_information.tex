@@ -486,6 +486,33 @@ verify the expected Bloch rephasing under integer changes of operation
 representatives. The full database sweeps pass in serial, two-rank MPI,
 and a separate bounds-checked build with floating-point traps.
 
+The native Wyckoff generator separately constructs 3,467 affine
+site-symmetry families across all 530 Hall settings and determines
+5,648 directed specialization relations. External validation uses
+SPGLIB's tabulated \texttt{Wyckoff.csv} coordinates, not the production
+fixed-set algorithm, to check dimensions, orbit multiplicities,
+family equivalence and closure containment. Every family matches
+bijectively, with largest affine residual $2.22\times10^{-16}$.
+The reference table's version and checksum, comparison script and
+results are retained in the development record. No tabulated
+coordinates are read by the CP2K implementation.
+
+For each generated seed the separate spinful induction kernel
+confirms its orbit and site stabilizer. Combined arbitrary origin
+shifts, nonorthogonal unimodular cell changes, integer shifts of
+operation representatives and reordered operations preserve the
+families and their specialization graph. Analytic tests cover
+inversion centers, intersecting mirrors, fixed-point-free screw
+axes, grey groups and an antiunitary half translation. Failure to
+resolve a generic stabilizer or an arithmetic/work limit returns
+no partial list. Maximal site groups are identified geometrically;
+this is not an elementarity test for their induced representations.
+The complete Wyckoff sweep passes in serial release, two-rank MPI
+and bounds-checked debug builds. The regular focused driver passes
+49 assertions in each of the serial and MPI configurations, combining
+the two native unit programs with the Gaussian little-group directory.
+These assertion counts are not numbers of independently converged materials.
+
 These algebra sweeps do not implement magnetic-space-group detection,
 a magnetic noncollinear ground state, canonical irrep labels, a complete
 Brillouin-zone connectivity graph or a full elementary-band catalogue.

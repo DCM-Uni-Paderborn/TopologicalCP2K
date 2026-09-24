@@ -24,7 +24,7 @@ Affiliations and submission declarations remain subject to author approval.
 - sections/kubo.tex: Liouvillian response, divided differences, currents and property symmetry.
 - sections/band_topology.tex: native Wilson/Z2/Chern with retained neon/stanene figure.
 - sections/space_group.tex: inversion TQC, native projective irreps, antiunitary
-  corepresentations, explicit-segment compatibility, site-induced atomic bands
+  corepresentations, explicit-segment compatibility, generated Wyckoff families, site-induced atomic bands
   and phasons.
 - sections/localizers.tex: finite/periodic localizers, metric gap, LDL and Pfaffian.
 - sections/quadratic.tex: quadratic pseudospectrum and matrix-free iteration.
@@ -70,6 +70,10 @@ numerical data and must not be substituted for material benchmarks.
 The native little-group source now has actual GPW/GAPW/SOC integration
 tests and all-530-Hall-setting checks of projective characters,
 antiunitary corepresentations and explicit-segment compatibility.
+Native generation also covers 3,467 Wyckoff families and 5,648 specialization
+relations across all 530 Hall settings, with an independent tabulated-coordinate
+comparison. The generated sites are connected to the spinful site-induction
+tests; this does not yet establish representation elementarity.
 The separate supplied-magnetic-group sweep tests algebra, not magnetic SCF.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
