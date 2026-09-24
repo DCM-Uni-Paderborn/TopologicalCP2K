@@ -157,6 +157,13 @@ within 2.67e-14. The reference point-group axes are explicitly recorded,
 not assumed to be canonical Bilbao onsite axes. This is real-site induction
 validation, not complete canonical EBR naming or global band connectivity.
 See `validation/development/wyckoff-character-validation.md` and the SI.
+The production atomic-signature output also retains its onsite character,
+atom-cell and physical spin conventions. Independent replay of 16 Gaussian
+outputs per build reconstructs 31,537 induced character entries within
+3.58e-14, and matches all 697 local columns to explicitly oriented external
+point-group references. Serial and MPI drivers each pass 179/179 checks.
+This preserves reference-label provenance, not canonical EBR naming; see
+`validation/development/onsite-export-validation.md` and the SI.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
 multi-node scaling remain open. The working draft is not submission-ready.

@@ -1095,6 +1095,40 @@ canonical EBR naming. The archive, source/fixture hashes and replay
 scripts are recorded in
 \texttt{validation/development/wyckoff-character-validation.md}.
 
+\subsection{Recoverable onsite provenance in Gaussian output}
+The atomic-signature output retains the local character columns,
+their full site-group operation mapping, Cartesian axes, atom-cell
+shifts and physical spin lifts, together with the lifts of the
+complete space group. These data are copied from the construction
+used for the induced columns. No second choice of quaternion signs
+is made. The onsite product table is written as signed operation
+indices: its factors are exactly $\pm1$ at Gamma, which the writer
+checks before encoding. This reduces output volume without rounding
+characters or suppressing validation. Scalar characters do not use
+the recorded spin-1/2 matrices.
+
+An independent reader reconstructs the orbit sums using only these
+records, then compares them with the little-group decompositions of
+the exported atomic columns. For each of the optimized serial and
+two-rank MPI builds, 16 retained Gaussian test outputs cover 197 site
+tables, 697 onsite columns and 263 reciprocal queries, giving 31,537
+induced character entries. GPW, GAPW, post-SCF SOC, sheared cells,
+screw phases and automatic reciprocal sampling are included. The
+largest reconstruction error is $3.58\times10^{-14}$. All onsite
+columns also match the external point-group references, with
+largest combined lift/character residual $9.56\times10^{-6}$; the
+declared axes and column correspondences agree between builds.
+These are reference-frame identifications, not canonical Bilbao
+onsite or EBR labels. Deliberate changes to a character, lattice
+shift, full-group spin entry or product sign are rejected in all
+128 negative checks. Both regression drivers pass 179/179 checks;
+the high-cutoff Ne case uses a 64 MiB OpenMP thread stack to avoid
+a separately identified local grid-kernel stack overflow.
+No physical reference value or tolerance is changed. The native
+snapshot audit additionally passes all 2,120 Hall-setting/symmetry
+variants. The evidence and replay tools are retained in
+\texttt{validation/development/onsite-export-validation.md}.
+
 \subsection{Shared spin lifts in the Gaussian SOC analysis}
 The Gaussian sewing matrices must use the same SU(2) representatives
 as their factor table. This is tested with Ne in the primitive
