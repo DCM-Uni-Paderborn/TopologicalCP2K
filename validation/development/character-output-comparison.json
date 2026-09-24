@@ -1,0 +1,15 @@
+{
+  "groups": 230,
+  "variants": 2,
+  "cases": 2700,
+  "irreps": 8907,
+  "builds": [
+    "ssmp",
+    "psmp-rank-0",
+    "psmp-rank-1",
+    "instrumented"
+  ],
+  "records": 11607,
+  "largest_printed_residual": 1.2092e-05,
+  "sha256": "5032f7500f36f119fe9d9edb088b493eca7a771f691e984fef945ff0253a9a87"
+}

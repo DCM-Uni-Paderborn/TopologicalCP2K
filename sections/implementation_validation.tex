@@ -243,8 +243,25 @@ operation reversal preserve the named specialization graphs.
 At each individual Wyckoff position, the primitive-cell band-dimension
 multiset of the unreduced maximal-site generators agrees with the
 archived EBR table, covering 10,398 columns. Equal-dimensional onsite
-irreps are not distinguished by this dimension check; complete
-canonical character matching remains a separate requirement.
+irreps are not distinguished by this dimension check; canonical
+identification of the complete onsite EBR columns requires additional
+character and convention information.
+
+A separate character-level test compares all 2,700 scalar and spinful
+tables at the tabulated reciprocal points of the 230 space groups
+in \texttt{irreptables} 3.1.0~\cite{Iraola2022IrRep,IrrepTables310}.
+All 8,907 irreps match bijectively, with largest residual
+$1.21\times10^{-5}$ against the finite-precision reference data.
+The reference adapter explicitly uses the opposite tabulated Bloch
+wave-vector convention and the actual native spin lifts; it does not
+selectively conjugate characters or fit a phase independently for
+each irrep. The native algebra is checked at $10^{-9}$, independently
+of the $2\times10^{-4}$ tolerance for the rounded external tables.
+Optimized serial, both processes of a two-rank MPI run, and a focused
+instrumented executable give identical 11,607 normalized match and
+label records. This establishes named reference correspondences,
+not automatic standard labels in the Gaussian analysis or complete
+EBR identities and connectivity.
 
 \subsection{Convergence and material validation}
 Before submission, the material set should include matched crystalline

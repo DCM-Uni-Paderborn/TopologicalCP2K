@@ -154,6 +154,51 @@ grey extension of the spatial group. The underlying algebra also
 accepts supplied magnetic factor systems, but this is not a magnetic
 space-group search or self-consistent noncollinear SOC calculation.
 
+\subsection{Character correspondence and explicit lift conventions}
+Equal dimensions do not identify irreducible representations.
+To compare a generated table with named reference characters, let
+$p(g)$ be a supplied operation isomorphism and let $\eta_g$ relate
+the two representation lifts. With $z^{[a_g]}=z$ for a unitary
+operation and $z^{[a_g]}=\bar z$ for an antiunitary operation, consistency
+requires
+\begin{align}
+ \omega_{\mathrm{t}}(g,h)
+ &=\eta_g\eta_h^{[a_g]}\bar\eta_{gh}
+       \omega_{\mathrm{r}}(p(g),p(h)), \\
+ \chi_{\mathrm{t}}(g)&=\eta_g\chi_{\mathrm{r}}(p(g)),\qquad g\in H.
+ \label{eq:character-reference-map}
+\end{align}
+The operation map must preserve products and antiunitary flags.
+The phases must be supplied from the actual spatial, Bloch and spin
+conventions: solving a factor-system coboundary alone cannot fix
+names, since an additional one-dimensional character can preserve
+the factors while permuting equal-dimensional irreps. In particular,
+the spin lifts returned by the factor construction are reused;
+independently recomputing a lift near a $\pi$ rotation can choose
+the other SU(2) representative through rounding.
+
+Orthogonality alone is also insufficient to certify a reference
+table. Let $L_g$ denote the left regular action of the twisted
+unitary group algebra, $d_\alpha=\chi_\alpha(e)$, and
+$\nu_\alpha=|H|^{-1}\sum_{g\in H}|\chi_\alpha(g)|^2$.
+The native matcher constructs
+\begin{equation}
+ P_\alpha=\frac{d_\alpha}{\nu_\alpha|H|}
+               \sum_{g\in H}\overline{\chi_\alpha(g)}L_g
+ \label{eq:character-central-projector}
+\end{equation}
+and checks Hermiticity, idempotence and commutation with every $L_g$,
+in addition to character orthogonality and
+$\sum_\alpha d_\alpha^2/\nu_\alpha=|H|$.
+For ordinary unitary irreps $\nu_\alpha=1$; paired and doubled Wigner
+restrictions have norms 2 and 4, respectively. These tests certify
+the unitary restrictions, not their extension to antiunitary
+corepresentations, which is checked separately as described above.
+Only a unique bijection of the complete character columns is accepted.
+The reference interface does not by itself standardize an arbitrary
+input cell, name a complete EBR catalogue, or establish global band
+connectivity.
+
 \subsection{Nonsymmorphic band compatibility on explicit segments}
 For a directed connection from $\bk_a$ to $\bk_b+\bG$, define
 $\mathbf d=\bk_b+\bG-\bk_a$. A segment symmetry must satisfy

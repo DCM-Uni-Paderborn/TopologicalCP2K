@@ -113,6 +113,12 @@ phases. All 2,120 Hall-setting/symmetry combinations reproduce the published
 compatible ranks and finite quotient factors for the 230 space groups. These
 paths do not replace a full equivariant open-cell/connectivity construction.
 The separate supplied-magnetic-group sweep tests algebra, not magnetic SCF.
+The character-reference layer now matches 8,907 named irreps in 2,700
+scalar/spinful tables covering all 230 groups. Explicit Bloch and actual
+spin-lift conventions, central-projector checks, and full column bijections
+are tested in serial, on both MPI processes and in an instrumented build;
+the official local drivers each pass 173/173 assertions. This is reference
+correspondence, not automatic standard labels in the Gaussian input path.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
 multi-node scaling remain open. The working draft is not submission-ready.

@@ -874,6 +874,61 @@ multiplicities and nonfinite or unbounded coordinates. Reproduction
 scripts, source hashes and logs are retained in
 \texttt{validation/development/affine-reference-validation.md}.
 
+\subsection{Complete character correspondence with reference tables}
+The \texttt{irreptables} 3.1.0 package supplies independent single-
+and double-valued characters at the tabulated reciprocal points of
+all 230 space groups. The fixture reader uses the data files only,
+not IrRep's character-generation implementation. It records a SHA-256
+hash for each of the 460 source files. Centering is removed by an
+explicit primitive basis $P$, with
+$W'=P^{-1}WP$, $\tau'=P^{-1}\tau$ and
+$k_{\mathrm{native}}=-P^Tk_{\mathrm{table}}$.
+The sign converts the table's translation-character convention to
+the native $\exp(-2\pi i k\cdot T)$ convention; the original character
+columns and spin lifts are retained. Without this conversion,
+central-projector audits reject 25 boundary-point tables. With the
+declared conversion, all 2,700 tables pass the independent audit.
+This is a convention check, not evidence of an error in IrRep.
+
+Crystallographic coordinates printed to five decimal places are
+recovered as rational values with denominators at most 48 and changes
+strictly below $5.1\times10^{-6}$. Characters are not rationalized or
+rounded. A Cartesian intertwiner aligns the reference spin matrices
+with the integer rotations; unitary polar factors are used only to
+identify this coordinate frame, while comparisons retain the raw
+reference matrices. Native spin representatives are returned by the
+same factor-system construction that generated their signs. An
+independent recomputation after a different floating-point cell
+normalization is not used to infer those signs.
+
+Every character column is compared, including distinct irreps with
+the same dimension. All 8,907 columns match; the largest residual is
+$1.20921\times10^{-5}$. The native construction tolerance remains
+$10^{-9}$; the external comparison uses $2\times10^{-4}$ to accommodate
+the printed reference precision. The 11,607 normalized case and label
+records are identical in optimized SSMP, separately on both MPI
+processes, and in a focused GNU Fortran build with bounds checking,
+floating-point traps and undefined-behavior instrumentation. The
+instrumented executable links the existing CP2K library; this is not
+a fully independent no-SPGLIB build or a multi-node scaling test.
+
+The bounded native test covers ordinary and projective $C_3$, complex
+rephasings, label-permuting one-dimensional twists, interleaved
+antiunitary operations, and paired/doubled Wigner restrictions. An
+analytic body-centered three-screw boundary case also changes the
+Cartesian orientation, operation order and cell scale from $10^{-100}$
+to $10^{100}$. Inconsistent factor-gauge maps, repeated character columns, NaNs,
+unbounded values, and orthogonal dimension-preserving mixtures that
+are not representation characters are rejected. Full onsite EBR
+naming, arbitrary-cell standardization for named labels, and global
+connectivity are not implied by these reference correspondences.
+The official SSMP and two-rank MPI drivers each pass 173/173 assertions:
+eight native unit programs, 129 Gaussian little-group checks and 36
+existing topology/export/k-point assertions. No physical reference
+value was changed for this work.
+Scripts, provenance and numerical logs are retained in
+\texttt{validation/development/character-reference-validation.md}.
+
 \section{Bloch Kubo and Property-Symmetry Validation}
 \label{sec:si-kubo}
 The retained development report is
