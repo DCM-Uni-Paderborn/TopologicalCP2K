@@ -89,6 +89,14 @@ $2.71\times10^{-15}$.\\
 Primitive diamond/SOC &
 Both K290 and SPGLIB use three of eight representatives; the
 full-tensor relative difference is $2.21\times10^{-11}$.\\
+Periodic Ne/SOC localizer &
+A $3\times1\times2$ primitive mesh and the corresponding Gamma
+supercell give $\nu=0$; their generalized gaps differ by
+$4.28\times10^{-10}$ hartree.\\
+Spin-mixed model localizers &
+Dense and sparse Pfaffian paths distinguish $\nu=1$ and $\nu=0$;
+the nontrivial generalized gap is unchanged by a complex
+nonorthogonal basis transformation at printed precision.\\
 Bi$_2$ quadratic states &
 Dense and iterative gaps agree within $6\times10^{-15}$ hartree;
 four metric-subspace singular values differ from unity by less
@@ -106,6 +114,32 @@ current residuals are checked separately rather than inferred from
 the final scalar conductivity. Degenerate subspaces retain their
 transformed gauge. The representative count measures avoided
 diagonalizations, not total speedup.
+
+The periodic localizer comparison uses the same Born--von Karman
+torus represented in two ways, not a weighted sum of independent
+irreducible-k localizers. Both localizers have order 312, with gaps
+0.380994261391 and 0.380994261819 hartree. The Ne calculation is a
+trivial integration fixture, not a nontrivial material classification.
+For the spin-mixed model, the nontrivial and trivial gaps are
+0.79004778 and 1.1109451 in model energy units; sparse skew-factor
+solve-probe residuals are below $2.3\times10^{-14}$. These probes
+complement the independently computed gap and Pfaffian orientation;
+they are not by themselves a global factorization-error bound.
+
+The retained open-boundary Qi--Wu--Zhang model measurements also
+illustrate when sparse factorization becomes useful. For a
+$30\times30$ lattice, the complex localizer has order 3,600
+(7,200 after realification). A source-rank LAPACK reference requires
+23.24 s, compared with 1.37 s for four-rank MUMPS including metric
+validation and shifted gap factorizations. In contrast, for
+$10\times10$ the dense calculation is faster (0.034 versus 0.057 s).
+For the larger case, increasing MUMPS from one to four ranks reduces
+time from 2.40 to 1.37 s but raises its process-summed solver memory
+from 19 to 45 MB. These are single-run, single-node kernel timings,
+not a comparison with distributed dense diagonalization, whole-process
+memory measurements, or a demonstrated multi-node scaling law.
+The full timing matrix, near-gap rejection tests and molecular
+quadratic-state diagnostics are retained in the Supporting Information.
 
 The crystalline representation tests cover all 530 Hall settings of
 the 230 ordinary space groups, scalar and spinful factors, and their

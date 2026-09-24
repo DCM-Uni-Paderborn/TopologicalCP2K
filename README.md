@@ -68,6 +68,15 @@ scope limits than the current source; the manuscript's dated method and
 validation sections are authoritative for this draft. Raw implementation notes are not new
 numerical data and must not be substituted for material benchmarks.
 
+The quantitative localizer/quadratic evidence is now also represented directly
+in the manuscript and SI: nine dense/MUMPS model timings, finite-gap rejection
+checks, three spin-mixed Pfaffian comparisons, a periodic Ne/SOC torus comparison,
+and Bi2 GPW/GAPW dense/iterative state diagnostics. The compact raw-data archive
+and the NumPy reanalysis script are described in
+`validation/development/solver-test-validation.md`. The script regenerates
+checksummed numerical summaries without rerunning CP2K. Single-run solver costs
+are distinguished from material benchmarks and whole-process memory measurements.
+
 The native little-group source now has actual GPW/GAPW/SOC integration
 tests and all-530-Hall-setting checks of projective characters,
 antiunitary corepresentations and explicit-segment compatibility.

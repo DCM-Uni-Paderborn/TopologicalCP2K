@@ -1021,6 +1021,7 @@ Gamma input. These runtime qualifications must accompany the
 results, rather than be presented as production scalability.
 
 \section{Localizer and Quadratic Validation Records}
+\label{sec:si-solver-tests}
 The transferred developer notes in
 \texttt{validation/development/} document finite and periodic
 formulations, dense and sparse factorization, and their limitations.
@@ -1036,13 +1037,184 @@ Sparse gap brackets are compared with generalized dense spectra,
 not with pivot sizes. Realification duplicates the spectrum
 and is accounted for in every inertia comparison.
 
-For a larger molecular quadratic check, Bi$_2$ uses
-TZVP-MOLOPT-GGA-GTH-q5, GTH SOC, 68 spinor coefficients, four
-requested states and a 32-dimensional trial space.
-GPW and GAPW dense/iterative comparisons on four MPI ranks agree
-in gaps within $6\times10^{-15}$ hartree, with all four
-metric-subspace singular values within $10^{-10}$ of unity.
-This is separate from the smaller mandatory regression fixtures.
+The quantitative records below are retained calculations from
+24 September 2026, not new material runs performed during manuscript
+editing. Their raw logs, molecular inputs, state coefficients and
+model-test source snapshot are archived in
+\nolinkurl{validation/development/solver-test-records.tar.gz}.
+The accompanying \texttt{summarize\_solver\_tests.py} independently
+re-parses these records, checks the reported gap brackets and
+recomputes the molecular metric-subspace comparisons. It writes
+\texttt{solver-test-summary.json}, including SHA-256 checksums for
+all archived members. Model indices are asserted by the original
+unit driver; its performance lines do not print a separate index.
+
+\subsection{Sparse inertia: accuracy and indicative cost}
+The open square Qi--Wu--Zhang fixture has two orbitals per site,
+onsite block $-\sigma_z$, and positive-direction hopping blocks
+$(\sigma_z-i\sigma_x)/2$ and $(\sigma_z-i\sigma_y)/2$.
+The query is at the lattice center and zero energy, with
+$\kappa=0.25$ in model energy per lattice spacing.
+All nine configurations in Table~\ref{tab:si-localizer-cost} give
+index $-1$. The dense generalized gap lies within the sparse
+bracket to the driver's $10^{-9}$ comparison tolerance, both before
+and after the tested nonorthogonal congruence. The printed gap is
+0.81017072 for side length 10 and 0.81017480 for lengths 20 and 30.
+These are model energy units, not first-principles hartree energies.
+
+\begin{table}[htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rrrrrrr}
+\toprule
+Side & Real order & Ranks & Dense (s) & MUMPS (s) & Fill ratio & Memory (MB)\\
+\midrule
+10 & 800 & 1 & 0.03321 & 0.05853 & 15.0 & 1\\
+10 & 800 & 2 & 0.03326 & 0.05922 & 15.2 & 2\\
+10 & 800 & 4 & 0.03427 & 0.05682 & 15.1 & 4\\
+20 & 3200 & 1 & 1.89561 & 0.51263 & 21.9 & 6\\
+20 & 3200 & 2 & 1.88879 & 0.48799 & 22.3 & 9\\
+20 & 3200 & 4 & 1.89937 & 0.33720 & 22.5 & 17\\
+30 & 7200 & 1 & 22.94493 & 2.40084 & 36.0 & 19\\
+30 & 7200 & 2 & 23.11979 & 2.20658 & 37.2 & 32\\
+30 & 7200 & 4 & 23.23512 & 1.36989 & 36.4 & 45\\
+\bottomrule
+\end{tabular}
+\caption{Single final runs of the open-model localizer kernel.
+Real order is twice the complex localizer order. Dense means
+source-rank generalized diagonalization plus the LDL cross-check;
+MUMPS includes symbolic analysis, metric checks and all gap shifts.
+Fixture and coordinate-list construction are excluded. Fill ratio
+is the maximum factor-entry count divided by input entries;
+memory is MUMPS's process-summed solver allocation, not application RSS.}
+\label{tab:si-localizer-cost}
+\end{table}
+
+The recorded host is an Apple M4 Max with 14 cores and 36 GiB,
+using GNU Fortran 16.1, OpenMPI 5.0.9, OpenBLAS 0.3.33 and
+MUMPS 5.9.1 with PORD ordering. Both BLAS and OpenMP use one
+thread in these kernel measurements. The larger four-rank run
+recovers from insufficient factor workspace by increasing the
+workspace estimate, without changing matrix entries or pivot
+tolerances. The increasing fill ratio and summed memory make
+clear that sparse does not imply linear storage or ideal MPI speedup.
+The test retains dense oracle matrices, so its process RSS would
+not measure the production sparse path alone. No error bars or
+statistical performance claim follow from these single final runs.
+
+The near-zero cases check a different property: a small but resolved
+gap must be distinguished from an unresolved or singular localizer.
+With the index acceptance threshold $10^{-8}$, a dense gap of
+$10^{-6}$ is enclosed by
+$[9.9994941\times10^{-7},\,1.0000076\times10^{-6}]$ and accepted.
+A gap of $10^{-10}$ is bracketed by
+$[5.8207661\times10^{-11},\,1.1641532\times10^{-10}]$ but receives
+no index; the exactly singular case also receives no index.
+For $H=\left(\begin{smallmatrix}1&20\\20&399\end{smallmatrix}\right)$,
+$S=2I$, and $L=\operatorname{diag}(H,-H)$, the generalized gap is
+$1.2499922\times10^{-3}$, before and after a nonorthogonal basis
+change. The sparse interval is
+$[1.2499921,\,1.2499922]\times10^{-3}$ at printed precision.
+This example tests the spectral pencil, not an estimate from LDL
+pivot magnitudes. All intervals are finite-precision numerical
+brackets, not interval-arithmetic certificates.
+
+\subsection{Sparse Pfaffian signs with a spin-mixed model}
+Time-reversed copies of the side-10 model are coupled by an onsite
+spin-mixing amplitude $0.1+0.05i$ with the antisymmetric orbital
+structure required by physical time reversal. The complex localizer
+has order 800. The nontrivial case, a mass-shifted trivial case,
+and a complex nonorthogonal transformation of the nontrivial case
+give the results in Table~\ref{tab:si-pfaffian-model}.
+Both dense and sparse paths use the same trivial-reference
+orientation. MUMPS checks the metric and gap independently of
+the Tacho skew factorization.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{L{0.37\linewidth}rrr}
+\toprule
+Case & $\nu$ & Gap (model units) & Solve-probe residual\\
+\midrule
+Spin-mixed nontrivial pair & 1 & 0.79004778 & $2.28\times10^{-14}$\\
+Trivial pair & 0 & 1.1109451 & $2.54\times10^{-16}$\\
+Nonorthogonal nontrivial pair & 1 & 0.79004778 & $3.88\times10^{-15}$\\
+\bottomrule
+\end{tabular}
+\caption{Dense/MUMPS/Tacho model comparison. Gap values agree at
+printed precision; the solve probes diagnose the sparse skew
+factors but are not rigorous global backward-error bounds.}
+\label{tab:si-pfaffian-model}
+\end{table}
+
+Separate polynomial/permutation tests cover 338 dense/sparse
+Pfaffian comparisons of orders 2--24, scales from $10^{-120}$ to
+$10^{120}$, disconnected blocks, and odd simultaneous row/column
+permutations. Deliberately singular cases emit zero-pivot diagnostics
+and are checked as rejected outcomes, not counted as successful
+topological classifications. Broken time reversal and invalid
+metrics are likewise rejected. The factorization itself remains
+on one rank; these tests do not demonstrate MPI-distributed
+Pfaffian factors or large SOC-material scaling.
+
+\subsection{Periodic AO localizer: mesh versus supercell}
+Ne is placed at $(3,3,3)$ \AA\ in a $6\times6\times6$ \AA\ cell
+periodic in XZ. The PBE/GPW calculation uses
+DZVP-MOLOPT-GGA-GTH-q8 from \texttt{BASIS\_MOLOPT\_UZH},
+GTH-PBE-q8 SOC parameters, a single 2000 Ry grid, and an SCF
+tolerance of $10^{-10}$. A full Gamma-centered $3\times1\times2$
+SCF/property mesh is compared with a six-cell Gamma supercell
+and property mesh $1\times1\times1$.
+The query is $(2.25,3,4.125)$ \AA, $E=-0.1$ hartree and
+$\eta=0.5$ hartree. Both spinor localizers have order 312 and
+give $\nu=0$.
+
+The generalized gap is 0.380994261391133 hartree for the primitive
+mesh and 0.380994261819095 hartree for the supercell, a difference
+of $4.28\times10^{-10}$ hartree.
+The corresponding total energies are
+$-34.923548219306682$ and $-209.541289276241173$ hartree;
+normalizing the latter to one primitive cell leaves a difference
+of $6.60\times10^{-9}$ hartree. This checks the full-torus
+Fourier construction with separately converged SCF potentials.
+It is neither an irreducible-property-mesh test nor a nontrivial
+topological material result. The high cutoff reduces grid error
+for this comparison; it does not establish a complete basis,
+size or $\eta$ convergence study.
+
+\subsection{Molecular quadratic states and degenerate subspaces}
+Bi$_2$ is aligned along x with bond length 2.8 \AA\ in an isolated
+8 \AA\ box. The PBE calculation uses TZVP-MOLOPT-GGA-GTH-q5,
+GTH SOC, a 150 Ry cutoff, and SCF tolerance $10^{-9}$.
+At the molecular center, $E=-0.1$ hartree and
+$\kappa=0.1$ hartree/bohr, four states are requested in a
+68-dimensional spinor AO space. The iterative trial space is
+bounded at 32 vectors, with a $10^{-9}$ eigenpair-residual
+threshold. The GPW and GAPW pseudopotential inputs each compare
+dense and iterative solvers on four MPI ranks and two OpenMP threads.
+
+The two Kramers pairs have quadratic gaps 0.319693242355779
+and 0.320631445276286 hartree (the latter rounded across the pair).
+In both methods, the largest dense/iterative gap difference is
+$6.0\times10^{-15}$ hartree. The iterative solve takes 145 Ritz
+iterations and its largest reported eigenpair residual is
+$8.22\times10^{-10}$ hartree$^2$, compared with
+$2.82\times10^{-15}$ hartree$^2$ for the dense solution.
+Thus agreement of the eigenvalues alone would overstate the
+accuracy of the iterative eigenvectors.
+
+Reanalysis of the stored coefficients verifies $C^\dagger SC=I$
+to $1.1\times10^{-14}$ and all four singular values of
+$C_{\rm dense}^\dagger S C_{\rm iterative}$ to within
+$10^{-10}$ of unity. This compares the complete subspaces,
+not arbitrary individual phases or rotations within a Kramers pair.
+The reported decomposition
+$\lambda=\delta E^2+\kappa^2\sum_j\delta x_j^2$ is consistent
+to $2.9\times10^{-15}$ hartree$^2$.
+These residuals refer to projected AO positions, not independently
+integrated continuum position variances. The small finite-cutoff
+calculation validates the solver and SOC operator integration;
+it is not a basis-converged molecular localization prediction.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
