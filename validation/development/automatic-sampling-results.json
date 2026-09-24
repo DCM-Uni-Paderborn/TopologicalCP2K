@@ -1,0 +1,68 @@
+[
+  {
+    "case": "automatic-helium",
+    "points": 56,
+    "edges": 82,
+    "eigenvalue_error_ev": 3.019806626980426e-14,
+    "character_error": 4.440892098500626e-15,
+    "exact_compatibility_and_atomic_witnesses": true
+  },
+  {
+    "case": "automatic-gapw",
+    "points": 56,
+    "edges": 82,
+    "eigenvalue_error_ev": 1.2967404927621828e-13,
+    "character_error": 3.1086244689504383e-15,
+    "exact_compatibility_and_atomic_witnesses": true
+  },
+  {
+    "case": "automatic-soc",
+    "points": 56,
+    "edges": 82,
+    "eigenvalue_error_ev": 2.0961010704922955e-13,
+    "character_error": 2.1316282072803006e-14,
+    "exact_compatibility_and_atomic_witnesses": true
+  },
+  {
+    "case": "automatic-shear",
+    "points": 56,
+    "edges": 82,
+    "eigenvalue_error_ev": 3.019806626980426e-14,
+    "character_error": 3.9968028886505635e-15,
+    "exact_compatibility_and_atomic_witnesses": true
+  },
+  {
+    "case": "budget",
+    "expected_rejection": "exceeds LITTLE_GROUP_MAX_POINTS"
+  },
+  {
+    "case": "path-count",
+    "expected_rejection": "Invalid automatic little-group sampling limits"
+  },
+  {
+    "case": "wilson",
+    "expected_rejection": "SYMMETRY segments are not Wilson loops"
+  },
+  {
+    "case": "gap",
+    "expected_rejection": "Band symmetry needs isolated selected bands"
+  },
+  {
+    "case": "refined",
+    "summary": [
+      "TQC| Automatic fixed families: 15",
+      "TQC| Automatic property points: 138",
+      "TQC| Automatic directed segments: 164",
+      "TOPOLOGY| Minimum sampled subspace gap [eV]:   2.0080907740E+01"
+    ]
+  },
+  {
+    "case": "unitary",
+    "summary": [
+      "TQC| Automatic fixed families: 15",
+      "TQC| Automatic property points: 56",
+      "TQC| Automatic directed segments: 82",
+      "TOPOLOGY| Minimum sampled subspace gap [eV]:   2.0080907740E+01"
+    ]
+  }
+]

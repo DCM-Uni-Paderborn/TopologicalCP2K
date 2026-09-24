@@ -169,8 +169,8 @@ generated reference matrices, reordered operations and irreps and
 integer coset shifts preserve the recovered signature after checking
 the independently regenerated factors. Corrupted factors and unmatched
 operations are rejected. The focused serial and two-rank MPI drivers
-each pass 74 assertions, combining five native unit programs with the
-69 Gaussian assertions.
+each pass 106 assertions, combining five native unit programs with
+101 Gaussian assertions, including automatic reciprocal sampling.
 
 The reciprocal-geometry backend independently checks all 530 Hall
 settings and their grey extensions. It generates 18,700 fixed-family
@@ -183,6 +183,17 @@ incidence/cycle comparisons, including antiunitary restrictions when
 present. Serial, two-rank MPI and instrumented-kernel runs agree.
 These are geometric and representation tests, not additional DFT
 materials or a proof of complete global band connectivity.
+
+The automatic Gaussian path is tested for He/GPW, all-electron
+He/GAPW, Ne/GTH-SOC and an equivalent sheared He cell. Each generates
+15 fixed families, 56 points and 82 compatible directed segments.
+Replaying these points and shifts through explicit NNKP input gives
+selected eigenvalues within $2.1\times10^{-13}$ eV and band characters
+within $2.2\times10^{-14}$; all original segment restrictions and atomic
+integer witnesses agree exactly. Refining to 138 points and 164
+segments retains compatibility. A deliberately selected single screw
+branch instead fails the band-isolation guard at a generated crossing.
+Invalid sample budgets and Wilson-mode combinations are also rejected.
 
 \subsection{Convergence and material validation}
 Before submission, the material set should include matched crystalline

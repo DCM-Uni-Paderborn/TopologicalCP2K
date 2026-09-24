@@ -314,9 +314,28 @@ reciprocal shifts for primitive cycles. Symmetry-related child images
 are evaluated as additional points rather than matched through
 assumed irrep labels.
 
-This backend is validated with the atomic-reference and segment
-restriction kernels. It does not yet replace the explicit property
-points in the Gaussian analysis. Removing higher-symmetry subsets
+The input mode \texttt{KPOINTS\_SOURCE SYMMETRY} connects this geometry
+directly to the Gaussian post-SCF analysis. It diagonalizes the frozen
+Hamiltonian at the generated points and enables both little-group and
+segment-compatibility checks, without changing the SCF density or mesh.
+Uniform interior sampling is controlled by
+\texttt{LITTLE\_GROUP\_PATH\_POINTS}, including the endpoints.
+If successive lifted samples are $\bk_j+G_j$, the stored subedge
+uses $G_{j+1}-G_j$, not just the target offset. Thus wrapping and
+deduplicating the sampled points preserve the full directed path and
+its reciprocal winding, including nonsymmorphic monodromy.
+
+At every retained sample, the selected bands must be separated from
+computed excluded bands and pass the metric, subspace, Hamiltonian
+and sewing-law tests. Optional \texttt{REQUIRE\_GLOBAL\_GAP} additionally
+requires a positive sampled indirect gap for a lowest-band prefix.
+The name does not imply a rigorous gap certificate between samples;
+sampling convergence and independent BZ-wide isolation remain necessary.
+The output retains the geometry, eigenvalues, representations and
+directed restrictions. These paths are not a Wannier90 neighbour mesh
+or Wilson surface, so no overlap file is synthesized for them.
+
+Removing higher-symmetry subsets
 can disconnect a fixed torus, so connected closures are not a complete
 decomposition into open cells. Their incidence graph and primitive
 cycles do not by themselves establish complete equivariant band
@@ -398,8 +417,8 @@ input mode or replace spectral isolation and compatibility checks.
 \subsection{Connecting atomic references to Gaussian bands}
 The optional \texttt{ATOMIC\_SIGNATURES} analysis connects the native
 atomic reference and integer kernels to the validated Gaussian-band
-representations. It uses the explicit NNKP, Wilson or TRIM points of
-the existing post-SCF path and implies the little-group analysis.
+representations. It uses explicit NNKP, Wilson or TRIM points, or the
+generated SYMMETRY points, and implies the little-group analysis.
 Each selected band space must be separated from computed excluded
 bands at the sampled point. Metric covariance, subspace closure,
 Hamiltonian commutation and the projective sewing law are checked
@@ -433,7 +452,8 @@ The nonnegative search budget is controlled by
 \texttt{ATOMIC\_SIGNATURE\_MAX\_NODES}; exhaustion is reported as
 unresolved. Invalid data or failed witness verification abort instead
 of producing a physical classification. Segment compatibility can be
-requested separately for NNKP/Wilson connections. The comparison
+requested separately for NNKP/Wilson connections and is automatic for
+SYMMETRY paths. The comparison
 does not automatically identify complete reciprocal strata, standard
 EBR labels or the topology of an isolated Bloch bundle.
 

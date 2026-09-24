@@ -99,6 +99,7 @@ This completes the fixed-closure/incidence/cycle geometric backend, not a full
 general TQC classifier. Open strata may disconnect when higher-symmetry sets
 are removed; their equivariant cell complex and full global band connectivity
 still require construction. Primitive-cell equivalence, EBR elementarity and
-standard labels remain separate. The actual `ATOMIC_SIGNATURES` Gaussian path
-still uses explicit NNKP/Wilson/TRIM samples; automatic sampling and spectral
-isolation checks along the resulting geometry are not yet connected to it.
+standard labels remain separate. At this geometric-stage checkpoint, the
+`ATOMIC_SIGNATURES` Gaussian path still used explicit NNKP/Wilson/TRIM samples.
+The subsequent connection to automatic sampling and sampled spectral-isolation
+checks is documented in `automatic-sampling-validation.md`.

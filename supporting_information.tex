@@ -628,9 +628,49 @@ against a full no-SPGLIB rebuild. The updated focused driver passes
 74/74 serial and 74/74 MPI assertions: five native programs and the
 unchanged 69 Gaussian assertions. Logs and reproduction details are
 in \texttt{validation/development/reciprocal-strata-validation.md}.
-The new sampling backend is not yet the Gaussian input path; fixed
-closures and their incidence/cycle graph are not a complete
-equivariant open-cell complex or a global connectivity classifier.
+These are the geometric-stage results; fixed closures and their
+incidence/cycle graph are not a complete equivariant open-cell complex
+or a global connectivity classifier.
+
+\subsection{Automatic Gaussian symmetry sampling}
+The subsequent \texttt{KPOINTS\_SOURCE SYMMETRY} integration generates
+and refines those paths directly at the frozen SCF Hamiltonian. Four
+Gaussian fixtures cover scalar He/GPW with UZH MOLOPT/GTH, all-electron
+He/GAPW with UZH TZVPP functions, Ne/GTH-SOC with its complete scalar
+AO space in the second variation, and a unimodularly sheared He cell
+with consistently transformed coordinates. They each yield 15 fixed
+families, 56 sampled points and 82 directed segments, all compatible.
+Each has signed and nonnegative atomic-signature witnesses. The focused
+driver now passes 106/106 assertions serially and with two MPI ranks:
+five native programs and 101 Gaussian assertions. The 32 added
+assertions do not alter the previous energy or symmetry references.
+
+An independent file-level replay reconstructs NNKP inputs from the
+recorded fractional points and reciprocal-image edges. The rectangular
+NNKP neighbour format needs extra, nonduplicate padding connections;
+comparisons of segment data use the original directed edges only.
+Across the four cases, selected eigenvalues differ by at most
+$2.1\times10^{-13}$ eV and band characters by at most
+$2.2\times10^{-14}$. Endpoint-to-line restrictions, the full atomic
+signature matrix and its integer witnesses agree exactly. The native
+path creates no \texttt{.mmn} file, whereas the replay exercises the
+existing overlap exporter. This comparison tests the new sampling
+integration against the established explicit-point path, not an
+independent electronic-structure implementation.
+
+Increasing the number of points per original segment from three to
+five gives 138 points and 164 compatible segments for He/GPW. Removing
+time reversal retains valid unitary restrictions and reports zero
+antiunitary segments. Negative tests reject a too-small point budget,
+an invalid subdivision count and a conflicting Wilson-loop request.
+Selecting one of the two He screw branches fails the isolation check
+at a generated degeneracy instead of yielding an atomic conclusion.
+Analytic subdivision tests independently check lifted endpoints,
+uniform increments and total winding for positive, negative and
+multiple boundary crossings, including budget failure without mutation.
+The full 1,060-group geometry sweep is repeated with path subdivision.
+Records and the replay procedure are retained in
+\texttt{validation/development/automatic-sampling-validation.md}.
 
 These algebra sweeps do not implement magnetic-space-group detection,
 a magnetic noncollinear ground state, canonical irrep labels, a complete
