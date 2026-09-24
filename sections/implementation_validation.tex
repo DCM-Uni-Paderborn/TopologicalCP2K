@@ -113,7 +113,7 @@ grey extensions. They validate 6,360 unitary projective character
 tables, 5,324 antiunitary corepresentation tables, and 12,720 directed
 segment comparisons; 4,462 segments retain antiunitary symmetry.
 Release and bounds-checked debug runs agree. The Gaussian
-little-group directory passes 47 numerical assertions in both serial
+little-group directory passes 69 numerical assertions in both serial
 and two-rank MPI runs, including GPW, GAPW, post-SCF SOC, screw
 monodromy and refined Wilson links. These counts describe algebra and
 small integration tests, not 230 separate converged material studies.
@@ -157,6 +157,20 @@ at four/eight TRIM agree with the separate analytic Fourier criterion;
 coefficient enumeration. Arithmetic and search limits are tested as
 unresolved outcomes. This evidence concerns exact signature equations,
 not material topology or general EBR elementarity.
+
+The Gaussian-band integration supplies signed and nonnegative
+atomic witnesses for the small He/Ne GPW, GAPW and SOC examples,
+including sheared cells and screw sectors. The single screw branch
+fails integer membership, consistently with its independent
+reciprocal-loop monodromy obstruction. A zero-budget TRIM test reports
+signed membership and unresolved nonnegative membership rather than
+mistaking an unfinished search for an obstruction. On all 2,120
+generated reference matrices, reordered operations and irreps and
+integer coset shifts preserve the recovered signature after checking
+the independently regenerated factors. Corrupted factors and unmatched
+operations are rejected. The focused serial and two-rank MPI drivers
+each pass 73 assertions, combining four native unit programs with the
+69 Gaussian assertions.
 
 \subsection{Convergence and material validation}
 Before submission, the material set should include matched crystalline

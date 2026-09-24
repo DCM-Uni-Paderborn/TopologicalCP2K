@@ -82,6 +82,10 @@ checked-integer kernel now factors these matrices and tests signed/nonnegative
 membership, including independently checked inversion and small-matrix cases.
 It supplies exact decisions or explicit unresolved resource-limit outcomes,
 not complete reciprocal-stratum sampling or a general material classifier.
+The `ATOMIC_SIGNATURES` keyword connects the reference and integer layers to
+physically validated Gaussian-band characters. Unit tests exercise coset-phase,
+operation and irrep-order changes; small GPW/GAPW/SOC calculations exercise
+the physical integration, including nonmembership and an unresolved search.
 The separate supplied-magnetic-group sweep tests algebra, not magnetic SCF.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and

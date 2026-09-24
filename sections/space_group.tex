@@ -354,6 +354,48 @@ membership likewise does not prove triviality of a Bloch bundle.
 The integer routines do not add an automatic general-classification
 input mode or replace spectral isolation and compatibility checks.
 
+\subsection{Connecting atomic references to Gaussian bands}
+The optional \texttt{ATOMIC\_SIGNATURES} analysis connects the native
+atomic reference and integer kernels to the validated Gaussian-band
+representations. It uses the explicit NNKP, Wilson or TRIM points of
+the existing post-SCF path and implies the little-group analysis.
+Each selected band space must be separated from computed excluded
+bands at the sampled point. Metric covariance, subspace closure,
+Hamiltonian commutation and the projective sewing law are checked
+before comparison. This supports scalar GPW/GAPW and the existing
+post-SCF GTH-SOC treatment; physical time reversal requires a restricted
+SCF. It does not establish a gap between sampled points.
+
+The band and reference operation lists are matched bijectively by
+their fractional rotations, antiunitary flags and translations modulo
+the input lattice, not by their numerical list indices. If the
+reference representative is $g'=\{I|L_g\}g$, its character changes by
+\begin{equation}
+ p_g=\exp(-2\pi\ii\bk\cdot L_g),\qquad
+ \chi'(g')=p_g\chi(g).
+\end{equation}
+The corresponding factor transformation must also agree,
+\begin{equation}
+ \omega'(g,h)=\frac{p_g\,{}^{a_g}p_h}{p_{gh}}\,\omega(g,h),
+\end{equation}
+with conjugation when $g$ is antiunitary. After this exact convention
+conversion, characters are decomposed into the reference row basis.
+Reordered local irrep labels do not affect the result. Different band
+ranks, missing operations or inconsistent factors are rejected rather
+than repaired by fitted gauges.
+
+The output retains the reference operations, characters and
+corepresentation restrictions, the integer matrix and target, and
+the site/local-representation identity of each column. Available
+signed and nonnegative witnesses accompany the membership decisions.
+The nonnegative search budget is controlled by
+\texttt{ATOMIC\_SIGNATURE\_MAX\_NODES}; exhaustion is reported as
+unresolved. Invalid data or failed witness verification abort instead
+of producing a physical classification. Segment compatibility can be
+requested separately for NNKP/Wilson connections. The comparison
+does not automatically identify complete reciprocal strata, standard
+EBR labels or the topology of an isolated Bloch bundle.
+
 \subsection{Band representations and limits of indicators}
 Elementary band representations (EBRs) provide the indecomposable
 building blocks of atomic band representations. Restricting them to
@@ -374,10 +416,11 @@ An atomic-compatible signature is not proof of a trivial Bloch bundle.
 A signed-only decomposition is not, without additional information,
 a complete diagnosis of fragile topology.
 
-The implemented EBR-signature classifier still uses the inversion
-subgroup and its analytic atomic signatures. The general native
-little-group/corepresentation, explicit-segment, Wyckoff-family and site-induction
-machinery supplies additional representation data, not a complete
+The inversion-subgroup classifier retains its separate analytic
+signatures and named indicators. The general native
+little-group/corepresentation, explicit-segment, Wyckoff-family and
+site-induction machinery now also tests actual band signatures against
+the generated atomic columns, but does not supply a complete
 all-space-group classification. Conventional-to-primitive matching,
 standard labels, complete connectivity and a validated catalogue with
 elementarity checks are still required. Algebra tests over all ordinary

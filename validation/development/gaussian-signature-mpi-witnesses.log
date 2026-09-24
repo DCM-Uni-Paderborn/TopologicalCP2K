@@ -1,0 +1,12 @@
+helium-atomic-budget.little_group size (8, 64, 125) result (1, -1, 0) verified witnesses 1
+helium-gapw.little_group size (4, 9, 11) result (1, 1, 12) verified witnesses 2
+helium-little.little_group size (1, 8, 125) result (1, 1, 5) verified witnesses 2
+helium-monodromy.little_group size (1, 2, 11) result (0, 0, 0) verified witnesses 0
+helium-screw.little_group size (4, 9, 11) result (1, 1, 12) verified witnesses 2
+helium-shear.little_group size (1, 8, 125) result (1, 1, 5) verified witnesses 2
+helium-wilson.little_group size (12, 75, 72) result (1, 1, 39) verified witnesses 2
+neon-generic.little_group size (1, 1, 33) result (1, 1, 3) verified witnesses 2
+neon-little-soc.little_group size (1, 6, 33) result (1, 1, 6) verified witnesses 2
+neon-little.little_group size (1, 10, 72) result (1, 1, 9) verified witnesses 2
+neon-screw.little_group size (4, 5, 10) result (1, 1, 2) verified witnesses 2
+Verified exported matrices/witnesses: 11 19
