@@ -15,6 +15,31 @@ import numpy as np
 from replay_stanene_controls import digest, verify
 
 
+def compare_interval(expected, actual, tolerance=1e-10):
+    for name in ("case", "interval", "inputs", "methods", "script_sha256", "reference_scan_sha256",
+                 "anchor_kappa", "anchor_z2"):
+        if actual[name] != expected[name]:
+            raise ValueError("Interval replay metadata mismatch: " + name)
+    for name in ("resolved", "unresolved", "roundoff_margin_hartree"):
+        if actual["bound"][name] != expected["bound"][name]:
+            raise ValueError("Interval replay coverage mismatch: " + name)
+    if not actual["bound"]["resolved"] or actual["anchor_z2"] is None:
+        raise ValueError("Interval is not numerically resolved")
+    differences = [abs(expected[name] - actual[name]) for name in
+                   ("lipschitz_bohr", "minimum_gap_lower_bound_hartree")]
+    for kind in ("covered", "evaluations"):
+        for old, new in zip(expected["bound"][kind], actual["bound"][kind], strict=True):
+            for name in ("lower", "upper", "midpoint"):
+                if old[name] != new[name]:
+                    raise ValueError("Different interval partition")
+            differences.extend([abs(old["gap"] - new["gap"]), abs(old["lower_bound"] - new["lower_bound"])])
+    if not np.isfinite(differences).all() or max(differences) > tolerance:
+        raise ValueError("Interval replay differs beyond tolerance")
+    return dict(evaluations=len(actual["bound"]["evaluations"]),
+                covered_intervals=len(actual["bound"]["covered"]),
+                maximum_absolute_difference=max(differences), anchor_z2=actual["anchor_z2"])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("case_archive", type=Path)
@@ -22,6 +47,8 @@ def main():
     parser.add_argument("report", type=Path)
     parser.add_argument("scan_method", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--interval-report", type=Path)
+    parser.add_argument("--interval-method", type=Path)
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
@@ -30,6 +57,16 @@ def main():
         raise ValueError("Different scan implementation")
     if expected["native_comparison_performed"]:
         raise ValueError("This replay only verifies independent neutral scans")
+    if bool(args.interval_report) != bool(args.interval_method):
+        raise ValueError("The interval report and method must be supplied together")
+    interval_expected = None
+    interval_comparison = None
+    if args.interval_report:
+        interval_expected = json.loads(args.interval_report.read_text())
+        if (digest(args.interval_method) != interval_expected["script_sha256"] or
+                digest(args.report) != interval_expected["reference_scan_sha256"] or
+                interval_expected["inputs"] != expected["inputs"]):
+            raise ValueError("Interval report does not match the retained scan/method")
     if Path(expected["case"]).name != expected["case"]:
         raise ValueError("Invalid case label")
     archives = {str(p.resolve()): digest(p) for p in (args.case_archive, args.methods_archive)}
@@ -75,11 +112,24 @@ def main():
             weight_error = max(weight_error, float(np.max(abs(np.array(old["atom_weights"]) - new["atom_weights"]))))
         if gap_error > 1e-10 or weight_error > 1e-10:
             raise ValueError("Independent replay differs beyond tolerance")
+        if interval_expected is not None:
+            method = root / "interval.py"
+            shutil.copyfile(args.interval_method, method)
+            interval_output = root / "interval.json"
+            command = [sys.executable, str(method), str(methods), str(work), str(args.report.resolve()),
+                       str(interval_output), "--interval", *map(str, interval_expected["interval"])]
+            with (root / "interval.log").open("w") as stream:
+                subprocess.run(command, env=dict(os.environ, OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1"),
+                               stdout=stream, stderr=subprocess.STDOUT, check=True)
+            interval_comparison = compare_interval(interval_expected, json.loads(interval_output.read_text()))
+            interval_comparison["report_sha256"] = digest(args.interval_report)
     result = dict(archives=archives, report_sha256=digest(args.report),
                   script_sha256=digest(Path(__file__)), queries=len(expected["queries"]),
                   verified_archive_files=sum(len(m["files"]) for m in manifests),
                   maximum_gap_error_hartree=gap_error, maximum_frontier_weight_error=weight_error,
                   native_comparison_performed=False)
+    if interval_comparison is not None:
+        result["interval_comparison"] = interval_comparison
     with args.output.open("x") as stream:
         json.dump(result, stream, indent=2)
         stream.write("\n")

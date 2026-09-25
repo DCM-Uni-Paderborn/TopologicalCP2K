@@ -1,0 +1,20 @@
+{
+  "archives": {
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-finite-validation/flake3-soc-storage-fixed.tar.gz": "e71806b3c3ca59a621ae8163fe471378ad3505e2aebb5ca29f132367931b945b",
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-neutral-validation/methods-results.tar.gz": "4b67d33fb1b04e0e665cfb85758b34f2522e38315f2b60420f17e1983a2e4d93"
+  },
+  "report_sha256": "ee3d0741fd8291b334ba0671c7db3909e6cbbc5465139a1eb8c304895c291fa1",
+  "script_sha256": "e7faf6c7ec1d32cb7bc4591cd7cccafebe47dfb5d1f395e4db879f2cb385b736",
+  "queries": 45,
+  "verified_archive_files": 205,
+  "maximum_gap_error_hartree": 0.0,
+  "maximum_frontier_weight_error": 0.0,
+  "native_comparison_performed": false,
+  "interval_comparison": {
+    "evaluations": 21,
+    "covered_intervals": 11,
+    "maximum_absolute_difference": 0.0,
+    "anchor_z2": 1,
+    "report_sha256": "166ed104ab08586454239ce71ac8c254b60cff9d33e767128ca0360e8f456f79"
+  }
+}

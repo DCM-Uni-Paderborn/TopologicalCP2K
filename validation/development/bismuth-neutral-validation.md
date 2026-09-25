@@ -19,6 +19,11 @@ The new immutable `bismuth-neutral-validation` bundle contains:
   relevant native sources, 16 method tests, neutral/scale scans, interval
   bounds, 300 K archive replay and the native factorization-only comparison.
 - `cold-replay.json`: independent replay from the new case/method archives.
+- `cold-interval-replay.json` and `warm-interval-replay.json`: repeat both
+  neutral scans and all adaptive interval evaluations from archived operators.
+  All scalar comparisons are unchanged, including 21 evaluations and 11
+  covered intervals per temperature. The additional replay checks reject
+  changed indices, missing coverage, altered gaps and nonfinite bounds.
 
 Case archives contain the actual per-run runner and analysis methods, inputs,
 native outputs, complete spinor states and integrated AO moment cache. The
@@ -85,7 +90,9 @@ python validation/development/replay_bismuth_neutral_window.py \
   validation/development/bismuth-neutral-validation/methods-results.tar.gz \
   /tmp/bi-neutral-methods/additional/flake3-dzvp30-frontier.json \
   /tmp/bi-neutral-methods/scripts/scan_bismuth_neutral_window.py \
-  /tmp/bi-neutral-replay.json
+  /tmp/bi-neutral-replay.json \
+  --interval-report /tmp/bi-neutral-methods/additional/flake3-dzvp30-interval.json \
+  --interval-method /tmp/bi-neutral-methods/scripts/certify_bismuth_scale_window.py
 ```
 
 The output path must not already exist. The retained replay verifies 191

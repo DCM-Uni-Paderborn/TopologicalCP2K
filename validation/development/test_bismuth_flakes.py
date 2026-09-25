@@ -19,6 +19,7 @@ from archive_bismuth_validation import digest, retain_case
 from diagnose_bismuth_operators import matrix, soc_components
 from certify_bismuth_scale_window import cover_gap
 from run_bismuth_flakes import geometry, inputs, nnkp, process_tree_rss
+from replay_bismuth_neutral_window import compare_interval
 from scan_bismuth_neutral_window import frontier_localization, window
 from verify_soc_print_export import headerless
 
@@ -39,6 +40,29 @@ def s_basis(shift=0.):
 
 
 class FlakeChecks(unittest.TestCase):
+    def test_interval_replay(self):
+        expected = dict(case="test", interval=[.1, .2], inputs={}, methods={}, script_sha256="method",
+                        reference_scan_sha256="scan", anchor_kappa=.15, anchor_z2=1,
+                        lipschitz_bohr=2., minimum_gap_lower_bound_hartree=.1,
+                        bound=cover_gap(.1, .2, 2., lambda x: .3))
+        actual = json.loads(json.dumps(expected))
+        self.assertEqual(compare_interval(expected, actual)["maximum_absolute_difference"], 0.)
+        actual["anchor_z2"] = 0
+        with self.assertRaises(ValueError):
+            compare_interval(expected, actual)
+        actual = json.loads(json.dumps(expected))
+        actual["bound"]["covered"][0]["gap"] += 1e-3
+        with self.assertRaises(ValueError):
+            compare_interval(expected, actual)
+        actual = json.loads(json.dumps(expected))
+        actual["bound"]["resolved"] = False
+        with self.assertRaises(ValueError):
+            compare_interval(expected, actual)
+        actual = json.loads(json.dumps(expected))
+        actual["bound"]["covered"][0]["lower_bound"] = float("nan")
+        with self.assertRaises(ValueError):
+            compare_interval(expected, actual)
+
     def test_lipschitz_gap_cover(self):
         covered = cover_gap(.1, 1., 2., lambda x: .1)
         self.assertTrue(covered["resolved"])

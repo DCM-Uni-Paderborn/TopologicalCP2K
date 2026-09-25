@@ -1,0 +1,22 @@
+test_analytic_s_moments_and_origin (test_bismuth_flakes.FlakeChecks.test_analytic_s_moments_and_origin) ... ok
+test_ao_matrix_reader (test_bismuth_flakes.FlakeChecks.test_ao_matrix_reader) ... ok
+test_covariant_metric_gap (test_bismuth_flakes.FlakeChecks.test_covariant_metric_gap) ... ok
+test_degenerate_gauge_and_translation (test_bismuth_flakes.FlakeChecks.test_degenerate_gauge_and_translation) ... ok
+test_frontier_subspace_weights (test_bismuth_flakes.FlakeChecks.test_frontier_subspace_weights) ... ok
+test_geometry (test_bismuth_flakes.FlakeChecks.test_geometry) ... ok
+test_headerless_matrix (test_bismuth_flakes.FlakeChecks.test_headerless_matrix) ... ok
+test_input_boundaries (test_bismuth_flakes.FlakeChecks.test_input_boundaries) ... ok
+test_interval_replay (test_bismuth_flakes.FlakeChecks.test_interval_replay) ... ok
+test_lipschitz_gap_cover (test_bismuth_flakes.FlakeChecks.test_lipschitz_gap_cover) ... ok
+test_native_comparison (test_bismuth_flakes.FlakeChecks.test_native_comparison) ... ok
+test_neutral_window (test_bismuth_flakes.FlakeChecks.test_neutral_window) ... ok
+test_p_d_moments_against_quadrature (test_bismuth_flakes.FlakeChecks.test_p_d_moments_against_quadrature) ... ok
+test_process_tree_memory (test_bismuth_flakes.FlakeChecks.test_process_tree_memory) ... ok
+test_retained_case_after_pruning (test_bismuth_flakes.FlakeChecks.test_retained_case_after_pruning) ... ok
+test_soc_spinor_components (test_bismuth_flakes.FlakeChecks.test_soc_spinor_components) ... ok
+test_trimmed_termination (test_bismuth_flakes.FlakeChecks.test_trimmed_termination) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.018s
+
+OK
