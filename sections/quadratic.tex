@@ -52,7 +52,61 @@ Reusable MUMPS factors avoid forming $S^{-1}$, but the present
 trial vectors and multiple-right-hand-side communication are not
 fully distributed. Output includes separated residuals,
 expectations, and optional complex AO coefficients.
-The current analysis covers isolated GPW/GAPW systems and post-SCF
-GTH SOC. Periodic quadratic formulations and band unfolding remain
-separate extensions. A small quadratic gap is a localization
-diagnostic, not a Chern or $\mathbb Z_2$ index.
+The finite analysis covers isolated GPW/GAPW systems and post-SCF
+GTH SOC. A small quadratic gap is a localization diagnostic,
+not a Chern or $\mathbb Z_2$ index.
+
+\subsection{Periodic joint localization on an AO torus}
+The periodic formulation replaces the unbounded position by paired
+trigonometric coordinates on a Born--von Karman torus. For cell
+matrix $h$ and a full Gamma-centered $N_1\times N_2\times N_3$
+property mesh, define, for each periodic lattice direction $j$,
+\begin{equation}
+ \begin{split}
+ g_j&=\frac{2\pi}{N_j}(h^{-1})_{j,:},\qquad r_j=|g_j|^{-1},\\
+ C_j&=\langle\cos(g_j\cdot r)\rangle_{\rm AO},\qquad
+ D_j=\langle\sin(g_j\cdot r)\rangle_{\rm AO}.
+ \end{split}
+ \label{eq:quadratic-torus}
+\end{equation}
+These covariant matrices are assembled from the same ordered
+Berry integrals and real-cell images as the periodic localizer.
+For query $x$, replace each Cartesian observable in
+Eq.~\eqref{eq:quadratic} by the two shifted operators
+$C_j-\cos(g_j\cdot x)S$ and $D_j-\sin(g_j\cdot x)S$, both
+weighted by $\kappa r_j$. With their dimensionless residuals
+$\delta C_j$ and $\delta D_j$, the resulting problem satisfies
+\begin{equation}
+ \lambda=\delta E^2+\kappa^2\sum_{j\ \mathrm{periodic}}
+ \delta\ell_j^2,\qquad
+ \delta\ell_j=r_j\sqrt{\delta C_j^2+\delta D_j^2}.
+ \label{eq:quadratic-chord}
+\end{equation}
+The length-valued chord residual is invariant under shifting the
+query by a torus lattice vector. For skew cells this is a specified
+reciprocal-coordinate metric, not an isotropic Cartesian variance;
+changing the primitive-lattice basis can change that metric.
+Finite AO projection also means that $C_j+iD_j$ need not be exactly
+unitary. We do not replace it by a polar-unitarized operator.
+
+The \texttt{FORMULATION PERIODIC} path uses the complete torus AO
+space at the frozen SCF potential, independently of SCF symmetry
+weights or reconstructed occupied MOs. It therefore accepts a
+symmetry-reduced SCF calculation without claiming an irreducible
+property eigensolver. One, two or three periodic directions are
+supported; open directions are not localized by this formulation.
+Output reports chord residuals and mean cosines/sines rather than
+ambiguous Cartesian mean positions. Dense and DBCSR/MUMPS solvers
+and the restricted post-SCF GTH-SOC construction share this tuple
+of Hermitian operators. Translation-operator band unfolding is a
+different joint-eigenvector problem and is not implemented here.
+
+Small GPW/GAPW He and GTH-SOC Ne checks give serial-dense versus
+two-rank-iterative gaps agreeing within $6\times10^{-15}$ hartree;
+the maximum iterative eigenpair residual is
+$6.7\times10^{-11}$ hartree$^2$. The He primitive-mesh and separately
+converged Gamma-supercell gaps differ by less than $10^{-9}$ hartree.
+Query wrapping, rigid cell rotation and equivalent SCF mesh schemes
+provide additional consistency checks. Settings and limitations
+are given in the Supporting Information; these are numerical
+integration tests, not converged material localization predictions.

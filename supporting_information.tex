@@ -1561,6 +1561,115 @@ integrated continuum position variances. The small finite-cutoff
 calculation validates the solver and SOC operator integration;
 it is not a basis-converged molecular localization prediction.
 
+\subsection{Periodic quadratic coordinates and solver comparisons}
+\label{sec:si-periodic-quadratic}
+The additional checks on 25 September 2026 use the paired
+trigonometric AO operators defined in the main text.
+The raw inputs, output logs, quadratic-state coefficients,
+source snapshot, and comparison script are retained in
+\nolinkurl{validation/development/periodic-quadratic-records.tar.gz}.
+The accompanying \texttt{periodic-quadratic-summary.json} records
+the individual values and comparison bounds. The archive is small
+because it excludes restart wavefunctions and regenerable builds.
+
+Unless specified otherwise, one He or Ne atom is placed at
+$(2.25,2.25,2.25)$ \AA\ in a cubic 4.5 \AA\ cell. The scalar SCF
+uses LDA/PADE, a single 300 Ry grid, relative cutoff 40 Ry, and
+SCF tolerance $10^{-10}$. Basis functions are
+DZVP-MOLOPT-GGA-GTH-q2 for He and q8 for Ne from
+\texttt{BASIS\_MOLOPT\_UZH}; the GTH-PBE potentials, including
+Ne SOC parameters, come from \texttt{GTH\_SOC\_POTENTIALS}.
+These deliberately fixed small integration fixtures are not
+basis-converged predictions or recommended material settings.
+Both scalar and property meshes are Gamma-centered.
+The query is $(1.875,2.0,2.625)$ \AA, $E=-0.1$ hartree, and
+$\kappa=0.1$ hartree/bohr. Two low quadratic states are requested,
+with iterative subspace limit 24, iteration limit 500, and
+eigenpair tolerance $10^{-10}$ hartree$^2$ at these eigenvalues.
+
+\begin{table}[htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcrrr}
+\toprule
+Fixture & Periodicity & Mesh & Lowest gap & Maximum gap difference\\
+ & & & (hartree) & (hartree)\\
+\midrule
+He, GPW & Y & $1\times2\times1$ & 0.358631854242405 & $1.0\times10^{-15}$\\
+He, GAPW & XY & $2\times1\times1$ & 0.351912947825943 & $<10^{-15}$\\
+He, GPW & XYZ & $2\times2\times1$ & 0.385841580050524 & $<10^{-15}$\\
+Ne, GPW/SOC & XZ & $2\times1\times1$ & 0.406734402392864 & $5.0\times10^{-15}$\\
+\bottomrule
+\end{tabular}
+\caption{Periodic quadratic dense/iterative comparisons. The gap
+difference is the maximum over the two requested states, comparing
+serial LAPACK with two-rank MPI/DBCSR/MUMPS. Each process uses two
+OpenMP threads and one OpenBLAS thread. Values use the recorded
+printed precision; vanishing differences do not imply exact arithmetic.}
+\label{tab:si-periodic-quadratic}
+\end{table}
+
+Including the reduced-mesh, wrapped-query and implicit-Gamma
+supercell variants gives 14 compared gaps, all within
+$5.0\times10^{-15}$ hartree. The largest dense/iterative difference
+in the energy residual is $1.94\times10^{-13}$ hartree. The
+iterative Ne/SOC eigenpair residual reaches
+$6.67\times10^{-11}$ hartree$^2$; it is reported separately from
+eigenvalue agreement and is not a bound on an individual
+eigenvector within a degenerate pair. No claim of gauge-matched
+periodic AO coefficients is inferred from these gap comparisons.
+Re-parsing all successful cases, including the additional cell and
+mesh variants, recovers the energy/chord decomposition of the
+squared gap within $4.49\times10^{-15}$ hartree$^2$.
+
+For He, switching full-mesh SCF to atomic symmetry reduction or
+shifting the query by torus vectors to
+$(10.875,-7.0,7.125)$ \AA\ changes the gaps by at most
+$1.1\times10^{-15}$ hartree. The analysis still assembles the full
+torus; only the preceding SCF is symmetry reduced. Equivalent
+MONKHORST-PACK, unshifted MACDONALD and explicitly listed GENERAL
+SCF meshes also agree within $1.1\times10^{-15}$ hartree.
+
+An independently converged $2\times2\times1$ He supercell, with
+property mesh $1\times1\times1$, gives gaps
+0.385841580972906 and 0.391994927003925 hartree through the
+implicit-Gamma path. The largest difference from the primitive
+mesh is $9.30\times10^{-10}$ hartree. The primitive SCF energy is
+$-2.832198277992086$ hartree; the supercell energy
+$-11.328793115636264$ hartree differs by $9.17\times10^{-10}$
+hartree after division by four. An explicit complex Gamma
+\texttt{KPOINTS} calculation agrees with the implicit-Gamma gaps
+within $2.2\times10^{-12}$ hartree. The latter comparison checks
+the two input paths, not exact equality of separately converged
+SCF potentials or convergence in basis, mesh and cutoff.
+
+Axis-permuted He chains cover X, Y and Z; GAPW slab variants
+cover XY and YZ, with Ne/SOC exercising XZ. A skew cell with rows
+$(4.5,0,0)$, $(0.6,4.4,0)$ and $(0.3,0.2,4.6)$ \AA\ is
+compared with the rigidly rotated cell, atom and query using
+\[
+ R=\begin{pmatrix}0.6&-0.8&0\\0.8&0.6&0\\0&0&1\end{pmatrix}.
+\]
+The resulting gaps 0.392476754147977 and 0.412631258413744 hartree
+are preserved within $1.1\times10^{-15}$ hartree. This checks
+input-frame handling, not invariance under changing the primitive
+basis of the reciprocal-coordinate localization metric.
+Separate invalid inputs are rejected for a mesh along an open
+direction, a mesh supplied with the finite formulation, an
+oversized AO torus, and inconsistent CELL/POISSON periodicity.
+
+The low-level seven-observable tests independently check exact
+diagonal spectra, complex hopping, nonsingular AO basis changes,
+paired sine/cosine origin rotations and query wrapping. These
+algebraic tests supplement, rather than replace, the Gaussian
+operator comparisons. They also pass with bounds checking,
+undefined-behavior instrumentation and floating-point traps in
+the numerical kernel. The complete affected quadratic/localizer
+regression directories pass 52/52 serial and 87/87 two-rank MPI
+assertions, retaining the existing finite-system references.
+Neither the small torus tests nor the local
+two-rank runs establish large-system or multi-node scaling.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

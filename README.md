@@ -28,7 +28,7 @@ Affiliations and submission declarations remain subject to author approval.
   atomic signature matrices and exact signed/nonnegative integer decomposition
   and phasons.
 - sections/localizers.tex: finite/periodic localizers, metric gap, LDL and Pfaffian.
-- sections/quadratic.tex: quadratic pseudospectrum and matrix-free iteration.
+- sections/quadratic.tex: finite/periodic quadratic pseudospectrum and matrix-free iteration.
 - sections/applications.tex: TopoHSE-DB and the submitted Brocai et al.
   discovery study as application examples; small CP2K and companion Si/Al
   calculations as tests and demonstrations, with separate provenance.
@@ -54,9 +54,9 @@ installation providing `latexmk` on PATH. The generated PDFs are retained in the
 repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
-The latest checked local build directories are outside the Dropbox project under
-/Users/tkuehne/paper-revisions/topology-progress-20260924/.
-That directory also retains the pre-update manuscript and a compressed audit
+The latest checked local build directory is outside the Dropbox project at
+/Users/tkuehne/paper-revisions/topology-progress-20260925/periodic-quadratic/.
+The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
 ## Evidence and boundaries
@@ -182,9 +182,20 @@ Hall-setting audit and both 179/179 regression drivers pass. The SI adds
 the quotient-lattice derivation and representative GPW/GAPW/SOC class
 counts; full records and a verified extraction/replay are described in
 `validation/development/fourier-character-validation.md`.
+Periodic quadratic analysis now shares the full AO torus and ordered Berry
+integrals with the localizer. Dense and two-rank iterative comparisons cover
+He GPW/GAPW, Ne GTH-SOC, reduced SCF, query wrapping and a Gamma supercell.
+Additional checks cover rigid skew-cell rotation, all periodic-axis choices,
+equivalent MP/MACDONALD/GENERAL SCF meshes, and invalid input rejection.
+The shared localizer/quadratic drivers pass 52/52 serial and 87/87 MPI assertions.
+Raw data and a replayable comparison script are recorded in
+`validation/development/periodic-quadratic-validation.md`. This is a
+trigonometric position/energy diagnostic, not band unfolding or an
+irreducible property solver. The manuscript and SI separate finite-basis
+residuals, eigenpair accuracy and actual material-convergence requirements.
 The source tree still has no full general EBR catalogue. Hall response,
-three-dimensional AII localizers, periodic quadratic analysis and
-multi-node scaling remain open. The working draft is not submission-ready.
+three-dimensional AII localizers, band unfolding and multi-node scaling
+remain open. The working draft is not submission-ready.
 
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.
