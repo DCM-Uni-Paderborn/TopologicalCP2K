@@ -1,0 +1,61 @@
+GPW-PBE {'nao': 12, 'gamma_band_error_hartree': 1.5436341094243744e-10}
+GPW-TPSS {'nao': 12, 'gamma_band_error_hartree': 1.81072323801601e-10}
+GAPW-TPSS {'nao': 12, 'gamma_band_error_hartree': 1.6231649357933975e-10}
+GAPW_XC-PBE {'nao': 12, 'gamma_band_error_hartree': 1.8241808064090037e-10}
+GAPW_XC-TPSS {'nao': 12, 'gamma_band_error_hartree': 1.4348965765575983e-10}
+GPW-PBE {'nao': 12, 'gamma_band_error_hartree': 1.543656313884867e-10}
+GPW-TPSS {'nao': 12, 'gamma_band_error_hartree': 1.8107024213342982e-10}
+GAPW-TPSS {'nao': 12, 'gamma_band_error_hartree': 1.6231804789157422e-10}
+GAPW_XC-PBE {'nao': 12, 'gamma_band_error_hartree': 1.8242030108694962e-10}
+GAPW_XC-TPSS {'nao': 12, 'gamma_band_error_hartree': 1.4348935928332196e-10}
+GPW-PBE {'nao': 12, 'gamma_band_error_hartree': 1.543635219647399e-10}
+GPW-TPSS {'nao': 12, 'gamma_band_error_hartree': 0.0041678604142232345}
+GAPW-TPSS {'nao': 12, 'gamma_band_error_hartree': 0.008539653123816215}
+GAPW_XC-PBE {'nao': 12, 'gamma_band_error_hartree': 0.010453852658822926}
+GAPW_XC-TPSS {'nao': 12, 'gamma_band_error_hartree': 0.015558162708954992}
+completed primitive
+{
+  "native_band_eigenvalue_error": 1.1632494967273033e-10,
+  "ritz_residual": 9.92406779865782e-11,
+  "relative_hermiticity_error": 4.93749303837953e-14,
+  "largest_leakage_norm": 9.30575560812687e-08
+}
+completed pristine
+completed displaced-0.1-supercell
+completed displaced-0.1-ghost
+{
+  "pristine": {
+    "eigenvalues": 1.4134665660137102e-12,
+    "ritz": 9.823703538392654e-11,
+    "norm": 7.205604373213379e-14,
+    "means": 6.491691527834206e-14,
+    "leakage": 6.179229529483325e-14,
+    "energy_residual_squared": 1.0547118733938987e-14,
+    "translation_full_squared": 1.6753265441593612e-13,
+    "translation_projected_squared": 1.2290168882600483e-13,
+    "commutator_norm": 6.939222921047552e-11,
+    "compression_leakage_norm": 7.475480392241713e-12
+  },
+  "primitive_supercell_gap": 5.894007504281262e-12,
+  "primitive_band_difference": 1.8307932947436711e-10,
+  "bloch_quadratic_error": 4.661160346586257e-12,
+  "displaced-0.1": {
+    "eigenvalues": 3.727660541352762e-14,
+    "ritz": 9.769574389755008e-11,
+    "norm": 1.4178102377173758e-13,
+    "means": 5.973580235042116e-14,
+    "leakage": 8.76940664182313e-14,
+    "energy_residual_squared": 8.382183835919932e-15,
+    "translation_full_squared": 2.3381296898605797e-13,
+    "translation_projected_squared": 1.2589929099249275e-13,
+    "commutator_norm": 0.35120503656487223,
+    "compression_leakage_norm": 0.1467700003433793,
+    "maximum_gap_change_hartree": 0.013253238891138901,
+    "state_leakage_minimum": 0.003649177096083,
+    "state_leakage_maximum": 0.0682452589875736
+  }
+}
+{
+  "verified_files": 155,
+  "replay": "passed"
+}

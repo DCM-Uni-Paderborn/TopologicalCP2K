@@ -230,9 +230,31 @@ $5\times10^{-14}$, without modifying the torus transformation or
 relaxing its checks. The SI retains the failed controls as well
 as the successful band comparison.
 
+Displacing one Si atom by $0.1$~\AA\ breaks the primitive
+translation in the same six-atom cell. Separate shifted-ghost
+overlap integrals then replace the exact permutation reference.
+The 105 low eigenvalues agree with the independently assembled
+quadratic operator within $3.8\times10^{-14}$ hartree$^2$.
+The selected states now have nonzero translation leakage,
+$0.00365$--$0.06825$, and gaps change by up to
+$0.0133$ hartree. This checks the noncommuting, incompletely
+represented translation case rather than assigning Bloch labels
+to a distorted crystal.
+
+The frozen potential must also retain every density field used
+by the chosen functional. A separate He$_2$/TZVP control compares
+all twelve post-SCF Gamma band energies with an independent
+generalized diagonalization of the original SCF Hamiltonian and
+overlap. Preserving the kinetic-energy density for meta-GGAs and
+the separate GAPW\_XC density reduces discrepancies of up to
+$1.56\times10^{-2}$ hartree to below $1.9\times10^{-10}$ hartree,
+the precision of the printed band energies. The SI distinguishes
+this shared frozen-potential check from validation of each
+property adapter.
+
 These calculations validate the periodic translation adapter,
 not a converged material-unfolding spectrum. The quadratic gap is
 a joint energy/translation diagnostic, not a band spectral weight
 or a topological invariant. Physical translation choices, basis
 completeness, momentum resolution and defective-supercell
-comparisons remain separate scientific convergence questions.
+size convergence remain separate scientific questions.

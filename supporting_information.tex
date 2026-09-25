@@ -2099,11 +2099,109 @@ Focused quadratic/localizer unit and regression checks pass
 also rejects a nonfinite entry owned by one rank in a four-rank
 column distribution.
 
-\begin{samepage}
 The raw records and checksum manifest are retained in
 \nolinkurl{validation/development/silicon-translation-records.tar.gz}.
 The replay reconstructs the Bloch-band and Gamma-matrix references.
-These tests do not establish defect unfolding or physical convergence.
+These pristine controls do not establish physical convergence.
+
+\paragraph{Displaced Si and a noncommuting translation.}
+Starting from the six-atom Gamma supercell above, only the second
+atom is moved by $0.1$~\AA\ along the Cartesian $x$ direction.
+All basis, functional, screening, SCF, energy/momentum-query and
+iterative settings are unchanged. The displacement breaks the
+primitive translation, so replacing $T$ by $SP$ is no longer
+valid. A separate Gamma overlap calculation adds translated ghost
+copies of all six atom-centered bases at $\bm r_A-\bm a$.
+The original/ghost off-diagonal overlap block gives $T$ without
+calling the quadratic translation adapter. Connectivity generation
+is disabled because some ghost centers coincide with real centers;
+the ghost calculation is used only for overlap integrals, not
+for its electronic state.
+
+The reference uses the original distorted-cell SCF $H$ and $S$:
+\begin{equation}
+ Q=(H-ES)S^{-1}(H-ES)
+       +\kappa_T^2(2S-z^*T-zT^\dagger).
+\end{equation}
+The independently diagonalized lowest 105 eigenvalues agree
+with the native two-rank iterative results within
+$3.73\times10^{-14}$ hartree$^2$; the largest independently
+recomputed Ritz residual is $9.77\times10^{-11}$ hartree$^2$.
+The maximum $C^\dagger SC-I$ entry is $1.42\times10^{-13}$,
+complex translation means agree within $6.0\times10^{-14}$,
+and squared leakage norms within $8.8\times10^{-14}$.
+Unlike pristine Si, the metric-orthonormal Hamiltonian and
+compressed translation have a commutator norm of
+$0.3512$ hartree, and
+$\|S^{-1/2}(S-T^\dagger S^{-1}T)S^{-1/2}\|_2=0.14677$.
+Across the selected states, leakage norms range from
+$0.003649$ to $0.068246$ and the largest gap change relative to
+the pristine cell is $0.013254$ hartree. These nonzero values
+test the continuum projection complement and sensitivity to the
+distortion. They are not converged defect spectral weights or
+a topological classification.
+
+\subsection{Preserving the frozen Gamma potential}
+\label{sec:si-frozen-density}
+The conversion from a Gamma-only SCF environment to image-resolved
+operators must not retain parts of the new environment's atomic
+guess. In addition to $n(\bm r)$ and its reciprocal-space grid,
+meta-GGAs require the converged kinetic-energy density $\tau$;
+GAPW\_XC uses a separate soft XC density. The initializer now
+copies these fields, their validity information and density
+totals, together with the previously transferred hard/soft
+onsite coefficients. Allocated density gradients are transferred
+when valid; collocated XC gradients are not claimed to be enabled
+by this change.
+
+The independent control uses He at $(2,2,2)$ and $(2.9,2.1,2.2)$~\AA
+in a cubic 5~\AA\ periodic cell, TZVP-MOLOPT-GGA-GTH-q2 and
+GTH-PBE-q2 from the UZH files, a 300~Ry single grid,
+\texttt{EPS\_SCF}$=10^{-11}$ and tight orbital/projector screening.
+The original Gamma SCF prints its $12\times12$ Hamiltonian and
+overlap. A separate NumPy diagonalization of
+$S^{-1/2}HS^{-1/2}$ is compared with all twelve Gamma energies
+from the subsequent \texttt{BAND\_STRUCTURE} calculation.
+The latter exercises the conversion; the reference does not.
+
+\begin{table}[htbp]
+\centering
+\caption{Maximum post-SCF Gamma eigenvalue error relative to
+the original SCF matrices, in hartree. ``After'' is the larger
+error of serial and two-rank MPI runs. The native band output
+has eight decimal places in eV, corresponding to a rounding
+uncertainty of approximately $1.84\times10^{-10}$ hartree.}
+\label{tab:frozen-density}
+\begin{tabular}{lrr}
+\toprule
+Method/functional & Before & After\\
+\midrule
+GPW/PBE & $1.55\times10^{-10}$ & $1.55\times10^{-10}$\\
+GPW/TPSS & $4.17\times10^{-3}$ & $1.82\times10^{-10}$\\
+GAPW/TPSS & $8.54\times10^{-3}$ & $1.63\times10^{-10}$\\
+GAPW\_XC/PBE & $1.05\times10^{-2}$ & $1.83\times10^{-10}$\\
+GAPW\_XC/TPSS & $1.56\times10^{-2}$ & $1.44\times10^{-10}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This is a shared band/frozen-potential regression, not evidence
+for hybrid exchange, implicit-solvent transfer or every
+meta-GGA property. In particular, the quadratic adapter still
+restricts its method selection to GPW/GAPW: the GAPW\_XC rows
+do not remove that guard. No Hamiltonian averaging, empirical
+energy shift or relaxed tolerance is used.
+
+\begin{samepage}
+The paired Gamma-only/explicit-Gamma regressions pass for GPW/TPSS,
+GAPW/TPSS and GAPW\_XC/TPSS, with a further GAPW\_XC/PBE check.
+The focused quadratic and density-transfer suite passes 35/35
+serial and 58/58 two-rank MPI assertions after formatting and
+rebuilding. Raw displaced-Si and density-transfer controls,
+source snapshots, scripts and checksums are retained in
+\nolinkurl{validation/development/silicon-defect-frozen-density-records.tar.gz};
+the companion replay independently reconstructs the matrix
+references and recomputes the reported errors.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
