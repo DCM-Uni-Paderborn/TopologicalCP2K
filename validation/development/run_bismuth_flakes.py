@@ -22,6 +22,20 @@ def digest(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def process_tree_rss(text, root_pid):
+    """Sum resident KiB over a ps snapshot of the launched process and children."""
+    records = {int(pid): (int(parent), int(rss)) for pid, parent, rss in
+               (line.split() for line in text.splitlines() if line.strip())}
+    descendants = {root_pid}
+    while True:
+        expanded = descendants | {pid for pid, (parent, _) in records.items() if parent in descendants}
+        if expanded == descendants:
+            break
+        descendants = expanded
+    sizes = [records[pid][1] for pid in descendants if pid in records]
+    return sum(sizes), max(sizes, default=0), len(sizes)
+
+
 def geometry(size, vacuum):
     a, buckling = 4.33, 1.74
     height = math.sqrt(3) * a / 2
@@ -273,13 +287,28 @@ def main():
         stamp["restart_sha256"] = digest(work / "initial.wfn")
     started = time.monotonic()
     interrupted_reason = None
+    memory = dict(sampling_interval_seconds=1, samples=0, failed_samples=0,
+                  sampled_peak_process_tree_rss_kib=0, sampled_peak_single_process_rss_kib=0,
+                  scope="RSS sum over the launcher and its descendants; shared pages may be counted repeatedly; "
+                        "sampled maximum, not exact peak or unique physical memory")
     with (work / "stdout.log").open("x") as stream:
         run = subprocess.Popen(command, cwd=work, env=env, stdout=stream, stderr=subprocess.STDOUT)
         with (work / "process.json").open("x") as state:
             json.dump(dict(runner_pid=os.getpid(), child_pid=run.pid, command=command), state, indent=2)
         while run.poll() is None:
+            observation = subprocess.run(["ps", "-axo", "pid=,ppid=,rss="], capture_output=True, text=True)
+            if observation.returncode == 0:
+                total, largest, count = process_tree_rss(observation.stdout, run.pid)
+                if count:
+                    memory["samples"] += 1
+                    memory["sampled_peak_process_tree_rss_kib"] = max(
+                        total, memory["sampled_peak_process_tree_rss_kib"])
+                    memory["sampled_peak_single_process_rss_kib"] = max(
+                        largest, memory["sampled_peak_single_process_rss_kib"])
+            else:
+                memory["failed_samples"] += 1
             try:
-                run.wait(timeout=15)
+                run.wait(timeout=memory["sampling_interval_seconds"])
             except subprocess.TimeoutExpired:
                 if shutil.disk_usage(root).free < 512 * 1024**2:
                     interrupted_reason = "Less than 512 MiB free during execution"
@@ -289,6 +318,7 @@ def main():
     record = dict(options={k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
                   provenance=stamp, command=command, returncode=run.returncode,
                   elapsed_seconds=time.monotonic() - started,
+                  memory=memory,
                   interrupted_reason=interrupted_reason,
                   completed="PROGRAM ENDED AT" in text,
                   scf_converged="*** SCF run converged" in text,

@@ -17,7 +17,8 @@ from scipy.linalg import block_diag, eigh, eigvalsh
 from analyze_bismuth_flakes import moments, native_comparison, operators, queries
 from archive_bismuth_validation import digest, retain_case
 from diagnose_bismuth_operators import matrix, soc_components
-from run_bismuth_flakes import geometry, inputs, nnkp
+from run_bismuth_flakes import geometry, inputs, nnkp, process_tree_rss
+from scan_bismuth_neutral_window import frontier_localization, window
 from verify_soc_print_export import headerless
 
 sys.path.insert(0, str(Path(os.environ["CP2K_ROOT"]) / "build-serial"))
@@ -37,6 +38,51 @@ def s_basis(shift=0.):
 
 
 class FlakeChecks(unittest.TestCase):
+    def test_frontier_subspace_weights(self):
+        positions = np.array([[0., 0., 0.], [3., 0., 0.],
+                              [-1.5, 1.5*np.sqrt(3), 0.], [-1.5, -1.5*np.sqrt(3), 0.]]) / .52917720859
+        rng = np.random.default_rng(1934)
+        frame = np.linalg.qr(rng.normal(size=(24, 24)) + 1j*rng.normal(size=(24, 24)))[0]
+        snapshot = SimpleNamespace(positions=positions, atom_sizes=[3]*4,
+            coefficients=frame.reshape(1, 2, 12, 24), energies=np.repeat(np.arange(12.), 2)[None, :])
+        first = frontier_localization(snapshot, np.eye(12))
+        self.assertEqual(first["coordination"], [3, 1, 1, 1])
+        self.assertEqual(first["edge_atoms_one_based"], [2, 3, 4])
+        self.assertEqual(first["frontier"][0]["bands_one_based"], [19, 20])
+        for start in (18, 20):
+            rotation = np.linalg.qr(rng.normal(size=(2, 2)) + 1j*rng.normal(size=(2, 2)))[0]
+            frame[:, start:start+2] = frame[:, start:start+2] @ rotation
+        changed = frontier_localization(snapshot, np.eye(12))
+        for original, rotated in zip(first["frontier"], changed["frontier"]):
+            np.testing.assert_allclose(original["atom_weights"], rotated["atom_weights"], atol=1e-14)
+            self.assertAlmostEqual(sum(rotated["atom_weights"]), 1.)
+
+    def test_process_tree_memory(self):
+        snapshot = "100 1 10\n101 100 20\n102 101 30\n103 100 40\n999 1 5000\n"
+        self.assertEqual(process_tree_rss(snapshot, 100), (100, 40, 4))
+        self.assertEqual(process_tree_rss(snapshot, 101), (50, 30, 2))
+        self.assertEqual(process_tree_rss(snapshot, 200), (0, 0, 0))
+        self.assertEqual(process_tree_rss("", 100), (0, 0, 0))
+
+    def test_neutral_window(self):
+        snapshot = SimpleNamespace(energies=np.arange(12.)[None, :],
+                                   positions=np.array([[0., 1., 2.], [4., 3., 6.]]))
+        energies, points, record = window(snapshot, [-.25, 0., .25], [0., 1.5])
+        np.testing.assert_allclose(energies, [9.25, 9.5, 9.75])
+        np.testing.assert_allclose(points, [[2., 2., 4.], [5., 2., 4.]])
+        self.assertEqual(record["gap_hartree"], 1.)
+        snapshot.positions += 3
+        snapshot.energies += 2
+        shifted_e, shifted_p, _ = window(snapshot, [-.25, 0., .25], [0., 1.5])
+        np.testing.assert_allclose(shifted_e, energies + 2)
+        np.testing.assert_allclose(shifted_p, np.asarray(points) + 3)
+        for fractions in ([], [.5], [float("nan")]):
+            with self.assertRaises(ValueError):
+                window(snapshot, fractions, [0.])
+        snapshot.energies[0, 10] = snapshot.energies[0, 9]
+        with self.assertRaises(ValueError):
+            window(snapshot, [0.], [0.])
+
     def test_headerless_matrix(self):
         text = "MATRIX\n1.0 2.0\n4.0 5.0\n7.0 8.0\n\n3.0\n6.0\n9.0\n"
         np.testing.assert_allclose(headerless(text, "MATRIX", 3), np.arange(1., 10.).reshape(3, 3))
