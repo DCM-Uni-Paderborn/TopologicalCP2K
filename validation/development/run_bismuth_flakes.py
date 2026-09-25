@@ -201,6 +201,13 @@ def inputs(args):
   &END
 {properties}&END
 """
+    if getattr(args, "ao_matrices", False):
+        if not analysis:
+            raise ValueError("AO diagnostics require a spectrum export")
+        text = text.replace("\n    &PRINT\n", "\n    &PRINT\n      &AO_MATRICES ON\n"
+                            "        OVERLAP T\n        KOHN_SHAM_MATRIX T\n"
+                            "        POSITION T\n        SOC T\n        NDIGITS 16\n        FILENAME ao\n"
+                            "      &END\n", 1)
     result = {"input.inp": text}
     if getattr(args, "checkpoint", False):
         result["input.inp"] = result["input.inp"].replace("&RESTART OFF", "&RESTART ON\n"
@@ -232,6 +239,7 @@ def main():
     parser.add_argument("--checkpoint", action="store_true")
     parser.add_argument("--restart", type=Path)
     parser.add_argument("--export-spectrum", action="store_true")
+    parser.add_argument("--ao-matrices", action="store_true")
     args = parser.parse_args()
     root, work = args.root.resolve(), args.output.resolve()
     if shutil.disk_usage(root).free < 2 * 1024**3:
@@ -257,6 +265,10 @@ def main():
                           ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "DYLD_LIBRARY_PATH")})
     library = root / ("build-mpi/src/libcp2k.2026.2.dylib" if args.ranks else "build-serial/src/libcp2k.2026.2.dylib")
     stamp["library_sha256"] = digest(library)
+    source_diff = subprocess.check_output(["git", "diff", "HEAD", "--", "src", "CMakeLists.txt"], cwd=root)
+    if source_diff:
+        (work / "source.patch").write_bytes(source_diff)
+        stamp["source_diff_sha256"] = digest(work / "source.patch")
     if args.restart:
         stamp["restart_sha256"] = digest(work / "initial.wfn")
     started = time.monotonic()

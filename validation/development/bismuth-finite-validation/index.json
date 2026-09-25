@@ -1,0 +1,41 @@
+{
+  "cases": [
+    "periodic-dzvp400",
+    "dimer-soc-print-fixed",
+    "dimer-soc-one-rank",
+    "dimer-soc-storage-fixed",
+    "flake3-soc-storage-fixed"
+  ],
+  "archives": [
+    {
+      "file": "periodic-dzvp400.tar.gz",
+      "bytes": 17673741,
+      "sha256": "de967de2fa216458f25f3dea6e8bf8ac4f1e6deab9b8de1572bec51c92c903b9"
+    },
+    {
+      "file": "dimer-soc-print-fixed.tar.gz",
+      "bytes": 195505,
+      "sha256": "8620aa947386d89c707f4eae4d340c2c97fc004a9d2495d3b75e08c301e5b862"
+    },
+    {
+      "file": "dimer-soc-one-rank.tar.gz",
+      "bytes": 183126,
+      "sha256": "a466a3d28efcd76937f36b685243b9480eae0543ab5a7f3ec500a0b6fccec662"
+    },
+    {
+      "file": "dimer-soc-storage-fixed.tar.gz",
+      "bytes": 183817,
+      "sha256": "45756dc18d9418bdaa8e8073201d19645d288a05df1f5e2d13d575f4d7ce376d"
+    },
+    {
+      "file": "flake3-soc-storage-fixed.tar.gz",
+      "bytes": 17161232,
+      "sha256": "e71806b3c3ca59a621ae8163fe471378ad3505e2aebb5ca29f132367931b945b"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 1009634,
+      "sha256": "60de256692415e34246384c8e718584742bfe4c8493beec85eb2d50aca868bb4"
+    }
+  ]
+}

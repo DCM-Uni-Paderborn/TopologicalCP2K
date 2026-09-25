@@ -3040,6 +3040,73 @@ replaced by its later version. This result establishes convergence
 of the Wilson sampling for this fixed Hamiltonian, not complete-basis
 convergence or a topological classification of an edge-relaxed flake.
 
+\subsection{Finite Bi patch and one-image SOC storage}
+The finite counterpart is a bare, unrelaxed $3\times3$ patch of the
+two-atom Bi geometry, with 18 atoms and no edge passivation. A total
+padding of 20 \AA\ is added to each Cartesian extent, with matching
+\texttt{PERIODIC NONE} settings and the MT Poisson solver. The
+restricted PBE calculation uses the same UZH DZVP and GTH-SOC data,
+400/40 Ry cutoffs, a $10^{-9}$ SCF threshold and 300 K Fermi--Dirac
+smearing. All 234 scalar AOs and 468 post-SCF spinors are retained.
+The complex localizer has order 936, or 1872 after realification.
+
+The reference independently integrates the Gaussian AO overlap and
+first moments from the exported primitive contractions, and
+reconstructs the full covariant spinor Hamiltonian from the complete
+eigenframe. Its overlap ratio is 0.00453546, the frame metric
+residual is $1.18\times10^{-13}$, and the time-reversal residual is
+$4.45\times10^{-15}$. The three directly printed finite AO SOC
+components agree with those extracted from this Hamiltonian to
+$7.91\times10^{-16}$ hartree, with largest metric-normalized
+error $3.97\times10^{-15}$ hartree.
+
+This comparison first failed for the two-rank export although the
+native dense and sparse localizers agreed. A two-atom reproducer
+showed correct onsite SOC blocks but missing interatomic blocks;
+the one-rank calculation agreed with the direct finite operator.
+The cause was selecting matrix storage from the number of cell
+images rather than the actual k-point mode. Even with only one
+image, the real-to-reciprocal transform requires triangular storage
+on the neighbour-list owners. Desymmetrizing beforehand redistributed
+the blocks and made local lookups miss them. The corrected two-rank
+reproducer matches all finite AO SOC components to
+$2.91\times10^{-16}$ hartree. Independent diagonalization of printed
+$H,S,V_x,V_y,V_z$ also reproduces the separate GPW/GAPW regression
+example's occupied eigenvalues to $3.2\times10^{-14}$ eV and its
+gap of 1.057726627969 eV, including a four-rank check. Both row-labelled
+and \texttt{OMIT\_HEADERS} matrix printing are exercised. The broader
+localizer/topology suites pass 86 MPI and 57 serial numerical checks.
+
+The retained flake scan uses absolute energies
+$-0.1588789410086769$, $-0.1552040084684156$, and
+$-0.1515290759281543$ hartree; scales
+$\kappa=0.001,0.003,0.01$ hartree/bohr; and positions at the
+centroid and at Cartesian $x$ offsets of 6 and 12 \AA.
+These fixed diagnostic energies are not defined by the corrected
+neutral gap midpoint. All 27 native and independent indices agree:
+five are nontrivial and 22 trivial. The independently evaluated
+localizer gaps span $5.06009\times10^{-4}$ to 0.117384 hartree.
+Their maximum distance outside the native shifted-inertia brackets
+is $2.72\times10^{-12}$ hartree, at an unchanged comparison
+tolerance of $2\times10^{-8}$ hartree. The largest reported
+Pfaffian solve residual is $1.35\times10^{-13}$; numerical Pfaffian
+buffers occupy 13.829 MiB. This buffer figure is not total process
+memory and does not establish distributed Pfaffian scaling.
+
+The restarted calculation, 27 native queries and complete export
+take 269.35 s on two MPI ranks with two OpenMP threads per rank;
+the independent dense analysis takes 4.53 s. These durations cover
+different work and are not a solver speedup comparison. The
+corrected finite neutral electronic gap is only
+$2.84260\times10^{-4}$ hartree, smaller than the smearing scale.
+Consequently, neither a finite nontrivial query nor the agreement
+of algorithms certifies a bulk insulating phase. Size, edge,
+basis and temperature convergence remain necessary.
+The full corrected flake record, the deliberately retained failing
+two-rank dimer diagnostic, its one-rank control, the corrected
+two-rank counterpart, source patches and numerical verification
+methods are archived in the same Bi validation directory.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

@@ -3,9 +3,11 @@
 from contextlib import redirect_stdout
 import io
 from itertools import product
+import json
 import os
 from pathlib import Path
 import sys
+import tempfile
 from types import SimpleNamespace
 import unittest
 
@@ -13,7 +15,10 @@ import numpy as np
 from scipy.linalg import block_diag, eigh, eigvalsh
 
 from analyze_bismuth_flakes import moments, native_comparison, operators, queries
+from archive_bismuth_validation import digest, retain_case
+from diagnose_bismuth_operators import matrix, soc_components
 from run_bismuth_flakes import geometry, inputs, nnkp
+from verify_soc_print_export import headerless
 
 sys.path.insert(0, str(Path(os.environ["CP2K_ROOT"]) / "build-serial"))
 from gaussian_states import Shell, primitive_integrals
@@ -32,6 +37,62 @@ def s_basis(shift=0.):
 
 
 class FlakeChecks(unittest.TestCase):
+    def test_headerless_matrix(self):
+        text = "MATRIX\n1.0 2.0\n4.0 5.0\n7.0 8.0\n\n3.0\n6.0\n9.0\n"
+        np.testing.assert_allclose(headerless(text, "MATRIX", 3), np.arange(1., 10.).reshape(3, 3))
+        with self.assertRaises(ValueError):
+            headerless(text.replace("9.0", ""), "MATRIX", 3)
+
+    def test_ao_matrix_reader(self):
+        text = "\nOVERLAP MATRIX\n\n1 2\n1 1 Bi 2s 1.0 0.2\n2 1 Bi 3s 0.2 1.0\n"
+        np.testing.assert_allclose(matrix(text, "OVERLAP MATRIX", 2), [[1., .2], [.2, 1.]])
+        with self.assertRaises(ValueError):
+            matrix(text.replace("2 1 Bi 3s 0.2 1.0", ""), "OVERLAP MATRIX", 2)
+        with self.assertRaises(ValueError):
+            matrix(text, "KOHN-SHAM MATRIX", 2)
+        skew = "\nSOC\n\n1 2\n1 1 Bi 2s 0.0 0.2\n2 1 Bi 3s -0.2 0.0\n"
+        np.testing.assert_allclose(matrix(skew, "SOC", 2, antisymmetric=True), [[0., .2], [-.2, 0.]])
+        with self.assertRaises(ValueError):
+            matrix(skew, "SOC", 2)
+
+    def test_soc_spinor_components(self):
+        rng = np.random.default_rng(503)
+        scalar = rng.normal(size=(5, 5))
+        scalar += scalar.T
+        v = rng.normal(size=(3, 5, 5))
+        v -= v.transpose(0, 2, 1)
+        h = np.block([[scalar+1j*v[2], 1j*v[0]-v[1]],
+                      [1j*v[0]+v[1], scalar-1j*v[2]]])
+        actual_h, actual_v = soc_components(h)
+        np.testing.assert_allclose(actual_h, scalar)
+        np.testing.assert_allclose(actual_v, v)
+        with self.assertRaises(ValueError):
+            soc_components(h+np.diag([1.]*5+[-1.]*5))
+
+    def test_retained_case_after_pruning(self):
+        with tempfile.TemporaryDirectory(prefix="bismuth-archive-test-") as temporary:
+            root = Path(temporary)
+            work = root / "periodic-test"
+            work.mkdir()
+            (work / "runner.py").write_text("# retained test driver\n")
+            (work / "input.inp").write_text("test input\n")
+            (work / "output.out").write_text(
+                "*** SCF run converged\nWilson surface sampling converged.\n"
+                "Converged Z2 invariant: 1\nSampled indirect gap [eV]: 0.4\nPROGRAM ENDED AT\n")
+            run = dict(completed=True, scf_converged=True, returncode=0,
+                       options=dict(mode="wilson"),
+                       provenance=dict(runner_sha256=digest(work / "runner.py")),
+                       files={p.name: digest(p) for p in work.iterdir()})
+            (work / "run.json").write_text(json.dumps(run))
+            archive = root / "periodic-test.tar.gz"
+            first = retain_case(work, archive)
+            (work / "input.inp").unlink()
+            self.assertEqual(retain_case(work, archive), first)
+            self.assertFalse((work / "input.inp").exists())
+            (work / "runner.py").write_text("# modified driver\n")
+            with self.assertRaises(ValueError):
+                retain_case(work, archive)
+
     def test_native_comparison(self):
         text = """SPECTRAL_LOCALIZER| Position [bohr]: 0 1 2
 SPECTRAL_LOCALIZER| Energy [hartree]: -0.1
@@ -77,12 +138,25 @@ SPECTRAL_LOCALIZER| Z2 index: 1
         self.assertEqual(files["input.inp"].count("PERIODIC NONE"), 2)
         self.assertNotIn("&KPOINTS", files["input.inp"])
         self.assertIn("1 1 0 0 0", files["gamma.nnkp"])
-        case.update(mode="localizer", export_spectrum=True, energy=[-.1], kappa=[.003],
+        case.update(mode="localizer", export_spectrum=True, ao_matrices=True, energy=[-.1], kappa=[.003],
                     offset=[0.], solver="TACHO", checkpoint=True, restart=Path("start.wfn"))
         files = inputs(SimpleNamespace(**case))
         for expected in ("&SPECTRAL_LOCALIZER", "&WANNIER90", "SCF_GUESS RESTART", "QS_SCF 5"):
             self.assertIn(expected, files["input.inp"])
         self.assertIn("gamma.nnkp", files)
+        self.assertIn("        SOC T\n        NDIGITS 16", files["input.inp"])
+        stack, matrix_paths = [], []
+        for line in files["input.inp"].splitlines():
+            token = line.strip().split()
+            if not token:
+                continue
+            if token[0] == "&END":
+                stack.pop()
+            elif token[0].startswith("&"):
+                stack.append(token[0][1:])
+                if stack[-1] == "AO_MATRICES":
+                    matrix_paths.append(tuple(stack))
+        self.assertEqual(matrix_paths, [("FORCE_EVAL", "DFT", "PRINT", "AO_MATRICES")])
         for key, value in (("vacuum", float("nan")), ("kappa", [-.1])):
             with self.assertRaises(ValueError):
                 inputs(SimpleNamespace(**dict(case, **{key: value})))

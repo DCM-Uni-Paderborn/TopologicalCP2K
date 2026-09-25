@@ -241,6 +241,21 @@ This provides an independent periodic reference for finite-flake
 tests, not a size-converged finite localizer result or a reproduction
 of the reference article's different electronic Hamiltonian.
 
+A separate finite-system check uses an unrelaxed 18-atom patch of
+this geometry, with 234 scalar AOs and all 468 spinor states. Across
+27 position--energy--scale queries, the native sparse localizer and
+an independently reconstructed dense reference agree on every
+$\mathbb Z_2$ index. The largest distance of the independent gap
+from the native inertia bracket is $2.8\times10^{-12}$ hartree.
+Direct comparison of the three AO SOC components exposed and
+corrected a one-image MPI storage error in the post-SCF export:
+desymmetrization had moved offsite blocks away from the ranks
+owning their neighbour-list entries. After the correction, the
+finite and exported components agree within $8\times10^{-16}$
+hartree. These checks validate the operator mapping and numerical
+analysis; the bare, thermally smeared flake is not an edge-relaxed,
+size-converged bulk-topology prediction.
+
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a
 $30\times30$ lattice, the complex localizer has order 3,600
