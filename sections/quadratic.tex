@@ -181,8 +181,40 @@ The SI supplies settings, decomposition checks, and additional
 four-rank all-electron and GTH-SOC comparisons.
 
 The \texttt{FORMULATION TRANSLATION} input accepts Cartesian
-translation vectors and wave-vector queries for a finite system.
-It is not a periodic DFT unfolding implementation or a material
-benchmark: translation lengths, basis completeness, finite-size
-effects, boundary treatment and primitive/supercell agreement must
-be examined for that application. No boundary weighting is applied.
+translation vectors and wave-vector queries. The isolated-system
+path imposes no boundary weighting; finite-size and basis effects
+must therefore be assessed separately.
+
+\subsection{Periodic Gaussian translation checks}
+The same continuum normal Gram can be evaluated in a periodized
+Gaussian basis on a Born--von--Karman torus. The analysis mesh
+specifies all real-cell copies; image-resolved Hamiltonians and
+overlaps are lifted at the converged SCF potential. Translations
+are evaluated by summing displaced Gaussian overlaps over torus
+images, with reciprocal-plane bounds that also cover skew cells.
+SCF symmetry reduction does not reduce this property space.
+For an exact lattice translation represented by a cyclic AO
+permutation $P$, $T=SP$ and the leakage in
+Eq.~\eqref{eq:translation-leakage} vanishes. Arbitrary translations
+generally leave the finite AO span and retain nonzero leakage.
+
+Independent periodic ghost-basis calculations test He/TZVP on
+cubic and skew cells, using GPW and GAPW. The lowest three
+quadratic eigenvalues agree with a separately assembled normal
+Gram within $8\times10^{-16}$ hartree$^2$; independently converged
+primitive $3\times1\times1$ meshes and explicit three-cell Gamma
+supercells agree in their quadratic gaps within
+$10^{-10}$ hartree. This comparison requires preserving the
+converged hard and soft onsite GAPW densities when rebuilding
+the frozen image-resolved potential. The complete 18-state
+lattice-translation spectrum and the sign of its complex phases
+are also checked. The SI gives these references, rotation and
+wrapping controls, and dense/iterative one- and two-dimensionally
+periodic tests, including post-SCF GTH SOC.
+
+These calculations validate the periodic translation adapter,
+not a converged material-unfolding spectrum. The quadratic gap is
+a joint energy/translation diagnostic, not a band spectral weight
+or a topological invariant. Physical translation choices, basis
+completeness, momentum resolution and defective-supercell
+comparisons remain separate scientific convergence questions.

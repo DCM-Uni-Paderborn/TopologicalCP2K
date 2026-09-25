@@ -55,7 +55,7 @@ repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
 The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/paper-revisions/topology-progress-20260925/translation-quadratic/.
+/Users/tkuehne/paper-revisions/topology-progress-20260925/torus-translation/.
 The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
@@ -211,7 +211,13 @@ inputs supplement these checks. The rebuilt regression subset passes 57/57 seria
 and 96/96 MPI assertions without changing earlier references. Main text and SI
 distinguish the full translation residual from the projected energy residual.
 Reproducible records are in `validation/development/gaussian-translation-validation.md`.
-This remains finite-system analysis, not validated periodic material unfolding.
+The periodic extension is documented separately in
+`validation/development/torus-translation-validation.md`. It tests periodized
+Gaussian translations against independent ghost-overlap matrices and explicit
+Gamma supercells, including a corrected GAPW frozen-density handover. Primitive
+3x1x1 meshes and supercells agree within 1e-10 hartree; the complete 18-state
+lattice-translation spectrum also checks complex phases. These are implementation
+checks, not converged material band-unfolding spectra.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.

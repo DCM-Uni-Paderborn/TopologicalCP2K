@@ -1,0 +1,129 @@
+{
+  "nao": 18,
+  "spectrum_error": 2.1510571102112408e-16,
+  "true_residual": 8.166057282475798e-16,
+  "mean_error": 8.899114524108741e-16,
+  "primitive_supercell_gap": 2.1757012858003577e-11
+}
+{
+  "nao": 18,
+  "spectrum_error": 1.249000902703301e-16,
+  "true_residual": 3.428093256958936e-11,
+  "mean_error": 1.1957467920563633e-15,
+  "primitive_supercell_gap": 2.1757012858003577e-11
+}
+{
+  "nao": 18,
+  "spectrum_error": 1.6653345369377348e-16,
+  "true_residual": 1.1953155710761716e-15,
+  "mean_error": 1.4697356992414397e-15,
+  "primitive_supercell_gap": 9.646800025464586e-11
+}
+{
+  "nao": 18,
+  "spectrum_error": 7.771561172376096e-16,
+  "true_residual": 1.1412595734175024e-15,
+  "mean_error": 9.995861419348e-16,
+  "primitive_supercell_gap": 1.9066997980488054e-11
+}
+{
+  "nao": 18,
+  "spectrum_error": 3.469446951953614e-16,
+  "true_residual": 8.619898695801837e-11,
+  "mean_error": 1.1157603309187458e-15,
+  "primitive_supercell_gap": 1.906499957904373e-11
+}
+{
+  "full_spectrum_error": 4.0213832264157645e-11,
+  "identity_spectrum_error": 4.0213388174947795e-11,
+  "lattice_mean_root_error": 2.9976021682110276e-15,
+  "maximum_lattice_leakage": 4.2146848510894e-08,
+  "wrapping_gap_difference": 2.0261570199409107e-15,
+  "rotated_gap_difference": 2.239400331838226e-11,
+  "reduced_gap_difference": 2.9976021664879227e-15,
+  "reverse_gap_difference": 2.9976021664879227e-15
+}
+{
+  "build-serial/periodic-translation-reference": {
+    "nao": 18,
+    "spectrum_error": 2.1510571102112408e-16,
+    "true_residual": 8.166057282475798e-16,
+    "mean_error": 8.899114524108741e-16,
+    "primitive_supercell_gap": 2.1757012858003577e-11
+  },
+  "build-mpi/periodic-translation-reference": {
+    "nao": 18,
+    "spectrum_error": 1.249000902703301e-16,
+    "true_residual": 3.428093256958936e-11,
+    "mean_error": 1.1957467920563633e-15,
+    "primitive_supercell_gap": 2.1757012858003577e-11
+  },
+  "build-serial/periodic-translation-skew": {
+    "nao": 18,
+    "spectrum_error": 1.6653345369377348e-16,
+    "true_residual": 1.1953155710761716e-15,
+    "mean_error": 1.4697356992414397e-15,
+    "primitive_supercell_gap": 9.646800025464586e-11
+  },
+  "build-serial/periodic-translation-gapw-checked": {
+    "nao": 18,
+    "spectrum_error": 7.771561172376096e-16,
+    "true_residual": 1.1412595734175024e-15,
+    "mean_error": 9.995861419348e-16,
+    "primitive_supercell_gap": 1.9066997980488054e-11
+  },
+  "build-mpi/periodic-translation-gapw-checked": {
+    "nao": 18,
+    "spectrum_error": 3.469446951953614e-16,
+    "true_residual": 8.619898695801837e-11,
+    "mean_error": 1.1157603309187458e-15,
+    "primitive_supercell_gap": 1.906499957904373e-11
+  },
+  "pre_fix_gapw_failure": {
+    "nao": 18,
+    "spectrum_error": 2.6668683088981737e-05,
+    "true_residual": 0.00017024646499738105,
+    "mean_error": 1.2063302474774457e-15,
+    "primitive_supercell_gap": 4.899528691898469e-05
+  },
+  "covariance": {
+    "full_spectrum_error": 4.0213832264157645e-11,
+    "identity_spectrum_error": 4.0213388174947795e-11,
+    "lattice_mean_root_error": 2.9976021682110276e-15,
+    "maximum_lattice_leakage": 4.2146848510894e-08,
+    "wrapping_gap_difference": 2.0261570199409107e-15,
+    "rotated_gap_difference": 2.239400331838226e-11,
+    "reduced_gap_difference": 2.9976021664879227e-15,
+    "reverse_gap_difference": 2.9976021664879227e-15
+  },
+  "build-serial-regtests": "Summary: correct: 163 / 163; 7min",
+  "build-mpi-regtests": "Summary: correct: 210 / 210; 8min",
+  "regression_comparisons": {
+    "gpw": {
+      "gap_difference": 1.9984014443252818e-15,
+      "iterative_residual": 1.10370200799568e-15
+    },
+    "gapw": {
+      "gap_difference": 9.992007221626409e-16,
+      "iterative_residual": 9.16802097816337e-16
+    },
+    "gapw-supercell": {
+      "gap_difference": 9.992007221626409e-16,
+      "iterative_residual": 7.70787271398565e-16
+    },
+    "lattice": {
+      "gap_difference": 1.9984014443252818e-15,
+      "iterative_residual": 8.00453271184618e-16
+    },
+    "soc": {
+      "gap_difference": 2.7977620220553945e-14,
+      "iterative_residual": 9.11461662752236e-11
+    },
+    "chain": {
+      "gap_difference": 9.992007221626409e-16,
+      "iterative_residual": 7.24505736868932e-16
+    }
+  },
+  "source_commit": "9ea80e7629a35fabf07b3a61e869102ae9803aa1",
+  "files_verified": 635
+}

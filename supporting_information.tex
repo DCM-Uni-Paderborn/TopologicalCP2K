@@ -1870,6 +1870,127 @@ the raw archive. These tests establish finite AO translation
 analysis, not periodic material unfolding, boundary suppression,
 basis convergence or multi-node scaling.
 
+\subsection{Periodized translations and independent Gamma supercells}
+\label{sec:si-torus-translation}
+The periodic translation construction uses the full
+Born--von--Karman AO space. For cell-copy indices $i,j$ and
+torus lattice matrix $h_N=h\operatorname{diag}(N_1,N_2,N_3)$,
+the block element is the sum of ordinary Gaussian overlaps with
+ket displacement
+$\bm R_B+\bm R_j-\bm R_A-\bm R_i+h_N\bm n-\bm a$.
+Only periodic axes are summed. Reciprocal-plane distances bound
+all potentially overlapping images, also in a skew cell.
+The full continuum normal Gram and leakage decomposition from
+the previous subsection remain applicable. The Hamiltonian and
+overlap use the same frozen-potential full-cell image lifting as
+the periodic localizer; no irreducible-SCF weights enter.
+
+The independent reference again obtains $T$ from ordinary
+overlap matrices of a separate shifted ghost-basis calculation.
+Here it uses a three-cell Gamma supercell, whereas the primitive
+calculation has a Gamma-centered $3\times1\times1$ mesh. Both
+SCFs are converged independently. The original Gamma Hamiltonian
+and overlap, not the ghost-system Hamiltonian, enter the NumPy
+generalized normal Gram. Additional overlap images printed during
+the Gamma-to-k-point setup must not be mistaken for the original
+Gamma overlap matrix.
+
+He occupies the fractional position $(1/2,1/2,1/2)$ of the
+primitive cell. The cubic cell has side 4.5~\AA; the skew cell
+has column vectors $(4.5,0,0)$, $(0.7,4.8,0)$ and
+$(0.3,0.4,5.1)$~\AA. TZVP-MOLOPT-GGA-GTH-q2 and GTH-PBE-q2
+are taken from the UZH files. These tests use PADE LDA, a
+300~Ry cutoff, one grid, 40~Ry relative cutoff,
+$\epsilon_{\rm SCF}=10^{-11}$ and
+$\epsilon_{\rm default}=10^{-12}$. The query parameters are
+$E=-0.1$ hartree, $\kappa_T=0.3$ hartree,
+$\bm a=(0.7,-0.3,0.4)$~\AA{} and
+$\bm k=(0.21,0.10,-0.31)$ bohr$^{-1}$.
+The torus has 18 scalar AOs. Three quadratic eigenpairs are
+requested; iterative runs allow 14 trial vectors, 2,000 steps
+and a $10^{-10}$ eigenpair-residual tolerance.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Periodic Gaussian translation checks. $\Delta\lambda$
+is the largest error against the independent ghost-overlap normal
+Gram (hartree$^2$), $r$ is the independently recomputed true
+generalized-eigenpair residual (hartree$^2$), and $\Delta g$ is
+the largest gap difference between primitive and separately
+converged Gamma-supercell calculations (hartree). Values are
+rounded upward. These are correctness checks, not scaling data.}
+\label{tab:torus-translation}
+\begin{tabular}{llrrr}
+\toprule
+Cell/method & Solver & $\Delta\lambda$ & $r$ & $\Delta g$\\
+\midrule
+Cubic GPW & Dense & $2.2\times10^{-16}$ & $8.2\times10^{-16}$ & $2.2\times10^{-11}$\\
+Cubic GPW & Iter., 2 ranks & $1.3\times10^{-16}$ & $3.5\times10^{-11}$ & $2.2\times10^{-11}$\\
+Skew GPW & Dense & $1.7\times10^{-16}$ & $1.2\times10^{-15}$ & $9.7\times10^{-11}$\\
+Skew GAPW & Dense & $7.8\times10^{-16}$ & $1.2\times10^{-15}$ & $2.0\times10^{-11}$\\
+Skew GAPW & Iter., 4 ranks & $3.5\times10^{-16}$ & $8.7\times10^{-11}$ & $2.0\times10^{-11}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All complex translation expectations agree with independent
+AO-matrix contractions within $1.5\times10^{-15}$. The GAPW
+comparison exposed a frozen-density handover error: keeping
+only the smooth real/reciprocal-space density left the new
+environment's onsite hard/soft coefficients at their atomic
+initialization. Its quadratic spectrum differed from the
+original Gamma-Hamiltonian reference by
+$2.67\times10^{-5}$ hartree$^2$ and had a true residual of
+$1.71\times10^{-4}$ hartree$^2$. Transferring the converged
+onsite coefficients before rebuilding the potential gives
+Table~\ref{tab:torus-translation}, without loosening tolerances
+or changing the independent reference.
+
+For an exact translation by the first primitive lattice vector,
+$T=SP$ is constructed independently using the cyclic cell
+permutation $P$. The complete 18-state quadratic spectrum
+agrees within $4.1\times10^{-11}$ hartree$^2$; this comparison
+includes the small difference between the independent SCFs.
+The expectations are cube roots of unity to within
+$3.0\times10^{-15}$, explicitly checking the sign of the
+imaginary part, not just the energy. Zero-translation states
+give the independently evaluated $(\epsilon_n-E)^2$ spectrum
+within the same bound. The largest spurious lattice-translation
+leakage norm is $4.3\times10^{-8}$, corresponding to squared-norm
+cancellation at double precision.
+
+At a commensurate query, adding a torus lattice vector to
+$\bm a$ changes the gaps by at most $2.1\times10^{-15}$ hartree.
+Rigidly rotating cell, wave vector and translation changes them
+by less than $2.3\times10^{-11}$ hartree. A symmetry-reduced SCF
+and opposite-momentum queries each agree with their respective
+full-SCF or opposite-query references within
+$3.0\times10^{-15}$ hartree. These wrapping statements require
+commensurability: $T_{\bm a+h_N\bm n}=T_{\bm a}$ but
+$e^{i\bm k\cdot(\bm a+h_N\bm n)}$ need not equal
+$e^{i\bm k\cdot\bm a}$ for an arbitrary continuous query.
+
+Additional matched dense/iterative regressions include a
+one-dimensionally periodic He chain and two-dimensionally
+periodic Ne with post-SCF GTH SOC. The latter uses
+TZVP-MOLOPT-GGA-GTH-q8, the SOC potential file, a $2\times1\times1$
+mesh and 68 spinor coefficients. The translations retain their
+open-direction components. Across the six new fixtures, all
+18 requested gaps agree between serial dense and two-rank
+iterative runs within $2.8\times10^{-14}$ hartree; the largest
+iterative residual is $9.2\times10^{-11}$ hartree$^2$.
+After formatting and rebuilding, the broader quadratic,
+localizer, Kubo and Wannier90 subset passes 163/163 serial and
+210/210 MPI assertions. These are comparisons of the same
+physical operator, not an assumption that every translation
+preserves the AO span. Source snapshots, original AO output,
+states, inputs, diagnostics and a checksum manifest are retained in
+\nolinkurl{validation/development/torus-translation-records.tar.gz}.
+The companion NumPy replay recomputes the independent checks
+from these records. Defective-material unfolding, spectral-weight
+interpretation, physical convergence and multi-node scaling are
+not established by this validation.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
