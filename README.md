@@ -264,8 +264,19 @@ index, including the trivial small-torus counterexamples, and agrees with all
 queries and reject 432 singular queries; 834 component-factor reconstructions
 have relative errors below 1.04e-13. A standalone public-Tacho-interface build,
 sanitizer checks, resource-boundary test and immutable-data replay are recorded
-in `validation/development/pfaffian-delayed/`. This remains a serial numerical
-extension, not a newly installed native or MPI-distributed CP2K solver.
+in `validation/development/pfaffian-delayed/`. Subsequent native integration is
+recorded separately in `validation/development/pfaffian-native/`. It adds a
+4 GiB default numerical-buffer limit and collective error handling. A Bismuth
+SOC failure exposed one-sided roundoff in symbolic patterns; a consistent
+real-skew projection, bounded relative to the independent physical gap,
+repairs it without changing reference values. The native C++ implementation
+passes 1,236 synthetic queries with runtime instrumentation, and the complete
+localizer directories pass 74 checks with four MPI ranks plus 45 in the build
+without optional sparse libraries. The native library also reproduces all 33
+archived complete-band material queries at unchanged tolerance, with maximum
+solve residual 4.07e-11; this does not rerun the large-system SCF calculations.
+Numerical Pfaffian factors remain serial;
+these are not multi-node scaling results.
 
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.

@@ -196,9 +196,17 @@ unresolved cases in the floating-pivot-corrected scan, with maximum
 independent-solve residual $2.06\times10^{-11}$ at the unchanged
 $10^{-10}$ threshold. All 15 available dense references agree.
 Separate synthetic tests check Pfaffian signs, singular rejection,
-permutations and reconstructed factors. This extension is not yet
-installed in the native CP2K path; its source, validation and memory
-limitations are retained separately in the Supporting Information.
+permutations and reconstructed factors. Subsequent native integration
+adds an explicit numerical-buffer limit and collective error propagation.
+A Bismuth SOC integration failure exposed one-sided roundoff in the
+skew matrix's sparsity pattern; a consistent real-skew projection,
+bounded relative to the independently determined gap, removes this
+failure without changing reference values. The finite and periodic
+localizer directories pass 74 checks with four MPI ranks, and 45
+checks without the optional sparse libraries. Source snapshots,
+prototype and native results, and memory limitations are retained
+separately in the Supporting Information. Numerical Pfaffian factors
+are still stored on a single MPI rank.
 Thus the expanded evidence supports consistency over
 more sampled sizes and scales, but neither quantitative gap
 convergence nor the finite-range theorem's full hypotheses.

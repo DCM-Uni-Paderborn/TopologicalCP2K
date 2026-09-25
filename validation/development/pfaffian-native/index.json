@@ -1,0 +1,22 @@
+{
+  "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+  "source_sha256": {
+    "src/tacho_c_api.cpp": "68932dedf20e8ed206ab1058055fa6fb28b0d00cb56563bf24e0013f9f0f468f",
+    "src/localizer_sparse_pfaffian.F": "08fe2f2ff2cb4f4d4b1062588572ce0ecf0935646e9de7fa988e894424f63d0b",
+    "src/qs_spectral_localizer.F": "412f37dc20d786b78279a9132a07e9c63bc41e936145ea997ceedead3e299e66",
+    "src/input_cp2k_properties_dft.F": "24971c819e42a1325bf066dc44f6760694c0f2f0dde588cfa7d364df8347c465",
+    "src/spectral_localizer_sparse_unittest.F": "c0c881d3c3c4ff418455ab157ac405d4cc4c49a0c3a74403cfee84685f817cad",
+    "docs/technologies/tacho.md": "130f5113d156be8d4356d730b6e2e9ea854d88735eb8d959fe69386d7fc2e497",
+    "tests/QS/regtest-spectral-localizer/neon-common.inc": "9f1aebcf8cb8cc8d8822d964427c6b808771f5b2babb674821d6250d587c2a1b"
+  },
+  "previous_index_sha256": "1a94ae949f5e1c3b28aaf38bec8ec088bb0f627c84c31b3f3bca64e4a74bc870",
+  "material_library_sha256": "510e9544a540b04c1a16da3fe9a205c96f071d99d88349a91528e4af768ef9bb",
+  "final_library_sha256": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+  "checked_library_sha256": "9cb544b825684dae2d536dc072a44963bccac2a3c086352d510400a8c925952a",
+  "notes": "Native serial delayed-skew factors with 4 GiB default numerical-buffer limit. MPI assembly and MUMPS gap bracketing remain separate. Full 33-query complete-band rerun; its gaps are independent Ritz estimates, not rigorous MUMPS bounds. The material library precedes the last unit-driver rebuild, which may change build-info bytes but not numerical sources. The first integration regtest failed on bismuth because tolerated one-sided roundoff made the symbolic graph asymmetric. Its log and exact reduced-chain reproducer are retained. The final implementation uses the real-skew projection with a spectral-norm upper bound on the discarded part relative to the independent physical gap. No reference values changed. Sanitizers cover the C++ adapter/extension, not prebuilt dependencies. Timings are not controlled scaling benchmarks; numerical-buffer limits exclude sparse and dependency storage.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 706599,
+    "sha256": "b8d380dd7b02fa1cc519f3d0afdfb16a7c8e37fe18afdecd919cc01c5f4ec897"
+  }
+}

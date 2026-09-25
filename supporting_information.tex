@@ -2776,7 +2776,8 @@ the upper-block entries $d_j$, multiplied by the parity of the complete
 elimination permutation. Stored panels also provide forward, block-diagonal
 and backward solves for the four independent right-hand sides.
 
-The implementation is an uninstalled, serial skew-specific extension,
+At this prototype checkpoint the implementation is an uninstalled,
+serial skew-specific extension,
 not a change to the general indefinite solver or a distributed Pfaffian
 factorization. Its final research adapter uses the public Tacho
 \texttt{GraphTools\_Metis} and \texttt{SymbolicTools} interfaces;
@@ -2847,9 +2848,76 @@ array limit. This cap excludes maps, right-hand sides and other workspaces.
 The numerical extension, public-interface build, sanitizer checks, complete
 material rerun and independent archive replay are retained in
 \nolinkurl{validation/development/pfaffian-delayed/}. Earlier unresolved
-results are preserved rather than overwritten. Native integration,
-a configurable whole-workflow resource policy and MPI-distributed factors
-remain separate requirements.
+results are preserved rather than overwritten. The following subsection
+records native integration separately; a whole-workflow resource policy
+and MPI-distributed factors remain separate requirements.
+
+\subsubsection{Native integration and structural-roundoff controls}
+The delayed-skew numerical extension is subsequently integrated into
+CP2K's existing narrow C interface, using the public Tacho symbolic
+analysis and BLAS interfaces. It does not copy the dependency's
+fixed-front numerical implementation or introduce a general-purpose
+indefinite solver. The input keyword \texttt{PFAFFIAN\_MEMORY}
+limits requested double-precision factor, pivot, frontal, Schur-update
+and solve buffers in MiB, with default 4096. The matching, sparse input,
+symbolic ordering, integer metadata, allocator overhead, DBCSR and
+MUMPS are outside this limit. The reported peak covers only these
+numerical buffers, not whole-process memory. Scalar panel counts are
+reported separately. Disconnected components are processed sequentially,
+so their peaks form a maximum while their panel counts are summed.
+Tests exercise an exactly sufficient budget, a one-byte reduction,
+collective exhaustion and inconsistent positive limits across MPI ranks.
+
+The first complete integration run exposed a Bismuth SOC failure that
+the exactly skew model matrices did not reveal. Tolerated floating-point
+roundoff can give a nonzero entry on only one side of the skew matrix;
+passing that asymmetric graph to symbolic analysis can omit a required
+frontal entry. The native implementation consistently uses
+\[
+ A_{\mathrm{s}}=\tfrac12\bigl(\operatorname{Re} A-
+                         (\operatorname{Re} A)^T\bigr)
+\]
+and the symmetric union of the sparse patterns, without an entry-drop
+threshold. The discarded part $E=A-A_{\mathrm{s}}$, including its
+imaginary part, obeys
+\[
+ \|E\|_2\leq\sqrt{\|E\|_1\|E\|_\infty}
+       \leq\max(\|E\|_1,\|E\|_\infty).
+\]
+This computed upper bound must pass both the structural tolerance and
+the existing gap-relative bound in the positive AO metric. It is not
+legitimate to restore physical time reversal when this test fails.
+A 32-site skew-chain reproducer tests all 930 possible one-sided
+off-pattern couplings of magnitude $10^{-15}$. Before correction,
+435 placements fail; afterwards all signs agree with the exact chain
+Pfaffian. Transposed, odd-permuted and extreme-scale variants enter the
+native unit test, and larger skew defects remain rejected.
+The Bismuth SOC gap is $0.0681101299687$ hartree, consistent with
+the unchanged dense reference, with solve residual
+$1.40\times10^{-15}$.
+
+The native C++ source also passes the 1,236-query synthetic suite under
+undefined-behaviour instrumentation and standard-library assertions:
+804 nonsingular queries have the expected signs and 432 singular queries
+are rejected. Prebuilt dependencies are not instrumented. The finite
+and periodic CP2K localizer directories pass 74 checks with four MPI
+ranks and two OpenMP threads; a build without the optional sparse
+libraries passes all 45 dense checks. These are integration tests, not
+a distributed Pfaffian scaling measurement. The first failed run,
+its reduced reproducer, corrected outputs and source provenance are
+retained in \nolinkurl{validation/development/pfaffian-native/}.
+
+Finally, the native shared library repeats all 33 complete-band material
+queries from the unchanged exports and the basis-specific archived
+energies. Every query is resolved in the first external ordering,
+with unchanged parity and maximum independent-solve residual
+$4.07\times10^{-11}$ at the $10^{-10}$ threshold. The native path uses
+the default public ordering options, so factor counts and residuals
+need not equal the prototype's. The 15 available dense references
+are retained in the independently verified reference archive.
+This is a validation of the native factorization using the complete-band
+representation, not a new native large-torus SCF calculation or
+a replacement of the Ritz gap estimates by inertia brackets.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
