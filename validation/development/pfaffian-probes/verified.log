@@ -1,0 +1,235 @@
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+/Users/tkuehne/work/topology-native-validation/adapter-env/lib/python3.12/site-packages/numpy/linalg/_linalg.py:2349: RuntimeWarning: divide by zero encountered in slogdet
+  sign, logdet = _umath_linalg.slogdet(a, signature=signature)
+/Users/tkuehne/work/topology-native-validation/adapter-env/lib/python3.12/site-packages/numpy/linalg/_linalg.py:2349: RuntimeWarning: overflow encountered in slogdet
+  sign, logdet = _umath_linalg.slogdet(a, signature=signature)
+/Users/tkuehne/work/topology-native-validation/adapter-env/lib/python3.12/site-packages/numpy/linalg/_linalg.py:2349: RuntimeWarning: invalid value encountered in slogdet
+  sign, logdet = _umath_linalg.slogdet(a, signature=signature)
+{"pfaffian_status": 1, "sign": 0, "residual": 1.9167874378391239, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.5581996789953627, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 18.04672028335472, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 13.046330299183767, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 4.9884188660388205, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 7.132598441764147, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.633953515033036, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.0313954680577375, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.7194943525355717, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.50705848918613, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.0832813911822012, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.1255277145376117, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.1140774376250626, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.2284403475278924, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 16.749309250254697, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 14.374838383663878, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.3716770572983277, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.98285395982617, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.9878369923342436, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.7247028678370986, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.739420668520387, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 4.2468459430084575, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 27.70949366781993, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 21.015804133013603, "fill": 45}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 4.144161413288593, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.725504415471644, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.26182699219618, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.4504518274129232, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.8845008076257562, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.0575632416488, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 119.04143786830026, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 181.12632466102775, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 54.0497946618836, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 40.87511691469105, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 63.427834427825665, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 54.91052759021991, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.8482682891712537, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.6968753864525773, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.6768701418035432, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.8914334773976267, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.9964733178220286, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.8312215680151821, "fill": 92}
+{"pfaffian_status": 1, "sign": 0, "residual": 29.671063105859833, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 22.952338755210143, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 33.280765089630655, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 27.568409019745488, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 15.162013067753639, "fill": 93}
+{"pfaffian_status": 1, "sign": 0, "residual": 9.866015024999284, "fill": 93}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+>> Error in file /Users/tkuehne/cp2k-spectral-localizer/build-sparse-deps/Trilinos/packages/shylu/shylu_node/tacho/src/impl/Tacho_SkLDL_Internal.hpp, line 142, error 1 
+   >> zero pivot during Skewed LDLt.
+{"pfaffian_status": -4, "sign": 0, "residual": 0.0, "fill": 0}
+{"pfaffian_status": 1, "sign": 0, "residual": 5.537906659631045, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 5.537906659631045, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.181465435124192, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.181465435124192, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 136.45368877594365, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 136.45368877594365, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.616522768032368, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 0.616522768032368, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.803690965139566, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.691392956840025, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 71.92627784817243, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 71.92627784817243, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.9507183683222973, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 3.870804620201282, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.312642239604782, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.4468296142390242, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 6.624858700279529, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 6.0178367303923, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.4416150119851239, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.3938349204307976, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.4831378262807582, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 1.3567487224206498, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 2.286538175956412, "fill": 141}
+{"pfaffian_status": 1, "sign": 0, "residual": 4.733934487026711, "fill": 141}
+{"queries": 600, "resolved": 450, "singular_queries": 132, "nonsingular_unresolved": 18, "wrong_accepted_signs": 0, "singular_accepted": 0}
+{
+  "verified_files": 748,
+  "production": {
+    "queries": 600,
+    "resolved": 450,
+    "singular_queries": 132,
+    "nonsingular_unresolved": 18,
+    "wrong_accepted_signs": 0,
+    "singular_accepted": 0
+  },
+  "prototype": {
+    "queries": 600,
+    "resolved": 468,
+    "singular_queries": 132,
+    "nonsingular_unresolved": 0,
+    "wrong_accepted_signs": 0,
+    "singular_accepted": 0
+  },
+  "native_material_queries": 3,
+  "native_regtest_checks": 74,
+  "recomputed": true
+}

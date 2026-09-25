@@ -1,0 +1,22 @@
+{
+  "verified_files": 748,
+  "production": {
+    "queries": 600,
+    "resolved": 450,
+    "singular_queries": 132,
+    "nonsingular_unresolved": 18,
+    "wrong_accepted_signs": 0,
+    "singular_accepted": 0
+  },
+  "prototype": {
+    "queries": 600,
+    "resolved": 468,
+    "singular_queries": 132,
+    "nonsingular_unresolved": 0,
+    "wrong_accepted_signs": 0,
+    "singular_accepted": 0
+  },
+  "native_material_queries": 3,
+  "native_regtest_checks": 74,
+  "recomputed": true
+}

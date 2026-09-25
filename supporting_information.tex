@@ -2705,6 +2705,56 @@ separate material rechecks are retained in
 \nolinkurl{validation/development/pfaffian-pivot/}, without
 overwriting the original unresolved results.
 
+\subsubsection{Independent right-hand sides and symbolic-retry research}
+Probing a factorization only with $b=Ax$ restricts its test
+right-hand sides to the range of $A$ and can therefore conceal
+nullspace errors. The native adapter now solves four deterministic
+right-hand sides independent of $A$ and retains the same
+$10^{-10}$ relative-residual threshold. A rank-22 skew matrix of
+order 24, constructed as $LDL^T$ with unit lower-triangular $L$
+and one zero $2\times2$ block in $D$, supplies an analytic
+regression without zero matrix rows. Its entries are dyadic
+rationals, so the unscaled construction has exact nullity two.
+Odd permutations and scales $1,10^{-120},10^{120}$ must all be
+rejected. The analytic rank is used here rather than the sign
+of a roundoff-sized last pivot in dense elimination.
+
+A separate deterministic set contains 600 size/scale/permutation
+queries at orders 8--96, including 132 numerically singular
+queries. The former range-restricted probes accept 72 of those
+singular queries; the independent probes reject all 132.
+For the remaining 468 queries, both versions resolve the same
+450 signs correctly and leave 18 unresolved. This is a test of
+the factorization acceptance criterion, not evidence that the
+former full localizer path returned a topological index for these
+singular matrices: that path also requires an independently
+resolved spectral gap. Native unit tests pass with two and four
+MPI ranks; the localizer directories pass 45 dense and 29
+MUMPS/Tacho checks. Three $N=3$ stanene controls retain their
+independent dense-reference gaps and parities. This subset is
+not a repetition of the complete 33-query material study above.
+
+A separate, uninstalled prototype combines all-row local pivot
+searches with symbolic retries that move problematic matched
+pairs into later coupled groups. It restarts the unchanged sparse
+matrix instead of perturbing pivots or dropping entries.
+Together with the independent probes it resolves all 468
+non-singular queries in the synthetic set and rejects all 132
+singular queries. For DZVP stanene $N=6$ and
+$\eta/\Delta=0.5$, it recovers $\nu=1$ with solve residual
+$1.52\times10^{-12}$ and unchanged gap 0.036234 hartree,
+consistent with the retained dense reference. The accepted
+factorization follows 17 symbolic retries and stores 10,951,808
+scalar panel entries; its largest diagonal supernode still has
+order 2,950 out of 3,744. These are panel counts, not total
+process-memory measurements. A preceding $N=12$ experiment was
+interrupted after more than 100 retries without an accepted
+result. Thus restart-based coarsening demonstrates a possible
+recovery mechanism but does not establish a scalable delayed-pivot
+solver and is not enabled in CP2K. The checks, source snapshots
+and unsuccessful trace are retained separately in
+\nolinkurl{validation/development/pfaffian-probes/}.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

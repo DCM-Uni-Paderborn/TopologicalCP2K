@@ -1,0 +1,12 @@
+{
+  "source_commit": "5218a42573226ada09e8fdedb60505d0485eb22e",
+  "previous_index_sha256": "e62442cf43a2d8e636d6c1cafe5abc532b3a1a2e73ab5ec67d97e059316c7c76",
+  "production_library_sha256": "900cb3e23431c9880976aba642e090818e97f4d4c8119823e8962223c1919eb1",
+  "prototype_library_sha256": "524398a428c2bd5b60cba6f50dae67180d1b1c9822ac4b9aee4a8be3dc2d5bef",
+  "notes": "Only independent right-hand sides and their tests enter CP2K. The adaptive header/adapter is an isolated serial research build, not installed in CP2K. Its N=6 and synthetic results use the same independent probes. The retained interrupted N=12 trace used the preceding A*x-probe prototype: it was terminated after more than 100 symbolic retries, without an accepted result. It is a negative diagnostic, not a completed test or a timing benchmark. No operator entries, gap tolerance or 1e-10 acceptance threshold are relaxed. Native MPI tests ran before the final comment-only source annotation and checkpoint commit. Source and binary hashes are retained; the binary commit banner alone is not used as provenance.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 1055892,
+    "sha256": "6d5f299cc104b387d90df23509926e8e1c69859f2748d1d1385f4da6c59d6e42"
+  }
+}

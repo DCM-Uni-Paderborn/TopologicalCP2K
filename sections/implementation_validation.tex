@@ -184,6 +184,11 @@ integer. A separately retained correction to floating-point pivot
 comparisons resolves a small-torus failure and is covered by an
 exact-Pfaffian regression. It does not supply delayed pivoting
 between elimination blocks or establish general solver robustness.
+An additional safety check uses independent solve right-hand
+sides rather than vectors of the form $b=Ax$, which can hide
+nullspace errors. Analytically rank-deficient controls and their
+scale/permutation variants verify the resulting rejection; this
+does not replace the separate spectral-gap calculation.
 Thus the expanded evidence supports consistency over
 more sampled sizes and scales, but neither quantitative gap
 convergence nor the finite-range theorem's full hypotheses.
