@@ -1,0 +1,24 @@
+{
+  "source_commit": "5218a42573226ada09e8fdedb60505d0485eb22e",
+  "previous_index_sha256": "66e1f1e753febaa18f6e44a5349f86c0765aa994cedc2109a07d8297a6038aed",
+  "material_index_sha256": "cc33add1d082399ce0cb9379c84a44deb603d49c16f2307becf3246135601fe2",
+  "libraries": {
+    "pfaffian_delayed": "82da89ef4ffc5983d0b1a722e5e20c878ba5ffe42f859c7c878e07be94108655",
+    "pfaffian_delayed_verify": "027b59f22a28b26099d4f44d42cb9b5a0d7dd8c3016ff14e1583990d6c541d72",
+    "pfaffian_delayed_blocked": "f5fe665c22e39a679631a47cb281352636dffa6f1ef74835608a5d86ec859c67",
+    "pfaffian_delayed_scalar": "b2279c3bf4d63b8d549bc566e3836992a84439639755387ce4fb3f81fc3e6553",
+    "pfaffian_delayed_public": "5336b91563929f89a9f02a0bdbdf3b47e91cb14fdacab7a55f739015c8c2c9be",
+    "pfaffian_delayed_checked": "8869d64ed49ad559822d2f13125a97038446db3008bd7f5620199379de94f495"
+  },
+  "source_sha256": {
+    "tacho_delayed.cpp": "897c846fb5290d81b2fa96a34449a15029466b9fd0e8ee461e2aeed390691346",
+    "headers/Tacho_SkLDL_Delayed_Research.hpp": "2ae3dfa4b00726a1eff9b3bef651620a32385769bac18fd4cdeb8cccf1d2f72d",
+    "headers/Tacho_SkLDL_Symbolic_Research.hpp": "6517b4d63547684936100f2828deb1977d9d6d2668219a768807949dce60e886"
+  },
+  "notes": "Separate serial skew-specific numerical extension, not installed in CP2K. The final public and checked targets use only public Tacho symbolic interfaces; the preceding targets used private read-only driver accessors. The blocked and unblocked algorithms are retained separately. Full factor reconstruction in earlier binaries was limited to order 192, extended to 512 for public/checked targets. Four independent RHS, absolute pivot cutoff and 1e-10 worst-RHS residual threshold remain unchanged. No operator perturbations or missing-sign substitutions. Gaps are independent near-zero Ritz estimates with eigen residuals, not rigorous inertia brackets. Panel counts are scalar entries, not condensed blocks. peak_entries excludes small work arrays, maps and RHS storage; whole-process time -l measurements are separate. These single-host, possibly overlapping research timings are not controlled scalability benchmarks. The extra standalone TZVP mesh12 control uses -0.1592 hartree; the complete 33-query rerun uses the archived basis-specific energies, including -0.16050731 for TZVP.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 1268493,
+    "sha256": "8a3b851bc3063edee03d16e8eca2e4a970e9263a81fb2812789da5222acde62c"
+  }
+}

@@ -2755,6 +2755,102 @@ solver and is not enabled in CP2K. The checks, source snapshots
 and unsuccessful trace are retained separately in
 \nolinkurl{validation/development/pfaffian-probes/}.
 
+\subsubsection{Delayed skew pivots without symbolic restarts}
+A subsequent, separate numerical extension passes rejected pivot variables
+and their Schur contributions to the parent front of the Tacho elimination
+tree. Original matrix entries are assembled exactly once, at the front
+owning their earlier symbolic endpoint. A child update contains both its
+separator and any delayed variables. A candidate pivot is tested against
+both complete updated columns, including the separator, with relative
+threshold 0.01 and the unchanged absolute cutoff on the normalized matrix.
+At the root a rook search replaces further delays. No matrix entries are
+dropped and no pivot perturbation or reference-sign substitution is used.
+
+For an accepted skew block
+$D_j=\left(\begin{smallmatrix}0&d_j\\-d_j&0\end{smallmatrix}\right)$,
+the multipliers are $L_{21}=A_{21}D_j^{-1}$ and the trailing update is
+$A_{22}-L_{21}D_jL_{21}^T$.
+A blocked implementation accumulates 64 accepted columns before applying
+this update with BLAS level 3. The sign is the product of the signs of
+the upper-block entries $d_j$, multiplied by the parity of the complete
+elimination permutation. Stored panels also provide forward, block-diagonal
+and backward solves for the four independent right-hand sides.
+
+The implementation is an uninstalled, serial skew-specific extension,
+not a change to the general indefinite solver or a distributed Pfaffian
+factorization. Its final research adapter uses the public Tacho
+\texttt{GraphTools\_Metis} and \texttt{SymbolicTools} interfaces;
+private driver accessors were used only in preceding experiments.
+For accepted test components of order at most 512, an additional dense
+check reconstructs $LDL^T$ in the actual elimination order. This checks
+the factors; it is not a dense fallback for the index.
+
+The 600-query synthetic suite now resolves all 468 nonsingular queries
+and rejects all 132 singular queries. An additional deterministic set
+contains 636 queries, with orders 2--258, four random permutations per
+matrix, three overall scales, banded, separator, dense and disconnected
+patterns, and analytically singular dyadic congruences. All 336 nonsingular
+queries are resolved correctly and all 300 singular queries are rejected.
+These tests run with undefined-behaviour instrumentation of the adapter
+and new numerical extension and C++ standard-library assertions; no
+instrumentation error is reported. The separately compiled dependencies
+are not covered by that instrumentation.
+Across these two sets, 834 accepted nontrivial component factors are
+explicitly reconstructed, with maximum relative Frobenius residual
+$1.04\times10^{-13}$. Rebuilding the adapter from its standalone CMake
+entry point and replaying both sets reproduces the same signs and
+singular rejections.
+
+The complete 33-query stanene study is then repeated from the unchanged,
+hash-verified exports, with the archived basis-specific query energies.
+All 33 queries are resolved in the first external ordering; the five
+previously unresolved queries in the floating-pivot-corrected scan are
+listed in Table~\ref{tab:si-delayed-skew}. All 28 previously resolved
+parities are retained, and all 15 available independent dense references
+agree, with maximum gap difference $4.24\times10^{-15}$ hartree.
+The gaps remain independent near-zero Ritz estimates checked against
+the original matrix, not rigorous shifted-inertia brackets.
+The small-torus trivial indices are retained as well: the improved
+factorization does not force a nontrivial classification.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Torus/basis & $\eta/\Delta$ & Gap (hartree) & $\nu$ & Solve residual\\
+\midrule
+$6\times6$, DZVP & 0.50 & 0.03623405 & 1 & $1.14\times10^{-12}$\\
+$12\times12$, DZVP & 0.50 & 0.01628035 & 1 & $2.06\times10^{-11}$\\
+$12\times12$, DZVP & 0.75 & 0.29126552 & 1 & $2.18\times10^{-13}$\\
+$18\times18$, DZVP & 0.75 & 0.31987626 & 1 & $2.88\times10^{-13}$\\
+$12\times12$, TZVP & 0.75 & 0.29304631 & 1 & $5.82\times10^{-13}$\\
+\bottomrule
+\end{tabular}
+\caption{Previously unresolved queries recovered by the separate delayed-skew
+prototype. The operator and the $10^{-10}$ acceptance threshold are unchanged.
+The residual is the worst relative two-norm residual of four independent
+right-hand sides, not an estimate inferred from pivot magnitudes.}
+\label{tab:si-delayed-skew}
+\end{table}
+
+For $N=12$, $\eta/\Delta=0.5$, the order-14,976 problem uses
+84 fronts (largest 4,582), 46,049,224 scalar panel entries and 15,804
+transfers between ancestors, not distinct delayed variables.
+For $N=18$, $\eta/\Delta=0.75$, the order is 33,696,
+the largest front is 5,408 and the panel count is 77,431,958.
+The four-query $N=18$ process peaks at 10.52 GB, including Python
+complete-band and sparse-matrix containers. This is not factor storage
+alone or a distributed-memory scaling result. A boundary test rejects
+a 676-million-entry front before allocation against the 650-million-entry
+array limit. This cap excludes maps, right-hand sides and other workspaces.
+
+The numerical extension, public-interface build, sanitizer checks, complete
+material rerun and independent archive replay are retained in
+\nolinkurl{validation/development/pfaffian-delayed/}. Earlier unresolved
+results are preserved rather than overwritten. Native integration,
+a configurable whole-workflow resource policy and MPI-distributed factors
+remain separate requirements.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

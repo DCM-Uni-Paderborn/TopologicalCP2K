@@ -189,6 +189,16 @@ sides rather than vectors of the form $b=Ax$, which can hide
 nullspace errors. Analytically rank-deficient controls and their
 scale/permutation variants verify the resulting rejection; this
 does not replace the separate spectral-gap calculation.
+A subsequent serial research extension passes unstable skew pivots and
+their Schur contributions to parent fronts without restarting symbolic
+analysis. It resolves all 33 retained stanene queries, including the five
+unresolved cases in the floating-pivot-corrected scan, with maximum
+independent-solve residual $2.06\times10^{-11}$ at the unchanged
+$10^{-10}$ threshold. All 15 available dense references agree.
+Separate synthetic tests check Pfaffian signs, singular rejection,
+permutations and reconstructed factors. This extension is not yet
+installed in the native CP2K path; its source, validation and memory
+limitations are retained separately in the Supporting Information.
 Thus the expanded evidence supports consistency over
 more sampled sizes and scales, but neither quantitative gap
 convergence nor the finite-range theorem's full hypotheses.

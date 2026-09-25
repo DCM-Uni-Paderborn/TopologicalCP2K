@@ -257,6 +257,16 @@ by expected integers. SI S7.14 and `validation/development/stanene-convergence/`
 contain the larger-volume controls, source snapshots and hash-checked replay.
 The sparse reference is not claimed as a new native production representation.
 
+A separate delayed-skew prototype subsequently resolves all 33 queries without
+symbolic restarts or relaxed tolerances. It retains every previously accepted
+index, including the trivial small-torus counterexamples, and agrees with all
+15 dense references. Two independent synthetic suites resolve 804 nonsingular
+queries and reject 432 singular queries; 834 component-factor reconstructions
+have relative errors below 1.04e-13. A standalone public-Tacho-interface build,
+sanitizer checks, resource-boundary test and immutable-data replay are recorded
+in `validation/development/pfaffian-delayed/`. This remains a serial numerical
+extension, not a newly installed native or MPI-distributed CP2K solver.
+
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.
 No journal submission or CP2K implementation push is implied by a manuscript update.
