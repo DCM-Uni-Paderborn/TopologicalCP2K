@@ -126,20 +126,22 @@ solve-probe residuals are below $2.3\times10^{-14}$. These probes
 complement the independently computed gap and Pfaffian orientation;
 they are not by themselves a global factorization-error bound.
 
-A separate two-dimensional stanene calculation tests the distinction
-between solver agreement and a bulk-material classification. Fresh
-post-SCF GTH-SOC Wilson surfaces give $\nu=1$, with sampled indirect
-gaps of 0.07369 and 0.07657 eV for DZVP/200 Ry and TZVP/400 Ry,
-respectively. At a selected $3\times3$ torus query, dense and
-sparse-Pfaffian localizers also give $\nu=1$, and the dense generalized
-gap lies inside the independent MUMPS bracket. However, the full
-parameter scan does not show a size-stable localizer plateau: at
-$\eta=0.03$ hartree the DZVP index is one for torus sides 3--5 but
-zero for side 6, whose gap is $1.14\times10^{-6}$ hartree.
-These are numerical finite-torus results, not a converged localizer
-classification of stanene. The Supporting Information retains the
-positive and negative queries, the larger-basis control and a replay
-of the raw Wilson overlap matrices.
+A separate two-dimensional stanene calculation tests operator
+consistency as well as the distinction between a resolved finite
+matrix and a bulk-material classification. Post-SCF GTH-SOC Wilson
+surfaces give $\nu=1$, with sampled indirect gaps of 0.07369 and
+0.07657 eV for DZVP/200 Ry and TZVP/400 Ry, respectively.
+Reconstructing the full $3\times3$-torus localizer from all Bloch
+spinors and complex neighbour overlaps reproduces its direct AO
+construction to $1.85\times10^{-12}$ hartree. This cross-path test
+identified and removed a redundant SOC atom-block sign in the torus
+assembly; agreement between dense and sparse solvers alone did not
+detect it. The corrected $\eta=0.03$ hartree query has $\nu=0$ and
+gap $6.26487\times10^{-4}$ hartree, while the $4\times4$ query has
+$\nu=1$. Thus these tests do not establish a size-converged stanene
+localizer classification. The Supporting Information reports the
+corrected queries, the full-matrix comparison and the provenance of
+the superseded development data separately.
 
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a

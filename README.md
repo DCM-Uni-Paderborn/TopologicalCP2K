@@ -222,6 +222,13 @@ The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.
 
+The stanene localizer data were subsequently corrected after a complete
+Bloch-matrix comparison exposed a redundant SOC atom-block sign. The
+current results and replay are in `validation/development/stanene-soc-validation.md`;
+older localizer scans are explicitly superseded, while their Wilson
+references remain valid. The corrected matrices agree within 1.85e-12 Ha,
+but size/basis/scale dependence still prevents a material-localizer claim.
+
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.
 No journal submission or CP2K implementation push is implied by a manuscript update.

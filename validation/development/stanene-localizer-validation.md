@@ -1,12 +1,18 @@
 # Stanene: Band Reference and Finite-Torus Controls
 
+**The localizer results below are superseded.** A subsequent full-band
+matrix comparison exposed a redundant atom-block sign in the SOC torus
+assembly. The archived Wilson results are unchanged, but the original
+localizer scans must not be used as current material-validation results.
+See `stanene-soc-validation.md` and its separate corrected archive/replay.
+The original archives and summaries remain byte-for-byte unchanged.
+
 Fresh calculations from 25 September 2026. These use true XY periodicity
 for both cell and Poisson equations, not the earlier XYZ slab data.
-The manuscript/SI intentionally report the counterexamples as well as
-the nontrivial queries. No CP2K source or numerical acceptance threshold
-was changed to obtain an expected index.
+The original development scan retained counterexamples as well as
+nontrivial queries. Numerical acceptance thresholds were not relaxed.
 
-## Retained Results
+## Original Results (Localizer Superseded)
 
 - DZVP/200 Ry and TZVP/400 Ry use the UZH q4 bases and GTH-PBE-q4 SOC,
   restricted PBE SCF, an 8x8x1 full mesh, EPS_SCF=1e-9 and all scalar AOs.

@@ -1,0 +1,264 @@
+{
+  "verified_files": 91,
+  "reconstructed": {
+    "before": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.47208625403618487,
+        "minimum_coordinate_singular_value": 0.7265767309540095,
+        "coordinate_commutator_norm": 0.31692338861484626,
+        "fourier_frame_unitarity": 5.10702591327572e-15,
+        "hamiltonian_norm_hartree": 4.079948634214308,
+        "sampled_energy_gap_hartree": 0.0013481774108173583,
+        "occupied_spinors": 72,
+        "native_gap": 0.00019134797865209304,
+        "native_offdiagonal_difference": 1.312519799495583e-15,
+        "native_diagonal_difference": 0.030990681111341702,
+        "native_scalar_difference": 3.8751224451919504e-12
+      },
+      "queries": [
+        {
+          "eta": 0.03,
+          "flatten": 0.0,
+          "flatten_scale": 1.0,
+          "polar_coordinates": false,
+          "gap": 0.0006264872477678403,
+          "nu": 0,
+          "aii_residual": 4.725922344434031e-15
+        }
+      ]
+    },
+    "corrected": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.47208625403618487,
+        "minimum_coordinate_singular_value": 0.7265767309540095,
+        "coordinate_commutator_norm": 0.31692338861484626,
+        "fourier_frame_unitarity": 5.10702591327572e-15,
+        "hamiltonian_norm_hartree": 4.079948634214308,
+        "sampled_energy_gap_hartree": 0.0013481774108173583,
+        "occupied_spinors": 72,
+        "native_gap": 0.000626487247806004,
+        "native_offdiagonal_difference": 1.312519799495583e-15,
+        "native_diagonal_difference": 1.8436363550178197e-12,
+        "native_scalar_difference": 1.825317674868767e-12
+      },
+      "queries": [
+        {
+          "eta": 0.03,
+          "flatten": 0.0,
+          "flatten_scale": 1.0,
+          "polar_coordinates": false,
+          "gap": 0.0006264872477678403,
+          "nu": 0,
+          "aii_residual": 4.725922344434031e-15
+        }
+      ]
+    },
+    "small_regression": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.7264352761288415,
+        "minimum_coordinate_singular_value": 0.5230341517254475,
+        "coordinate_commutator_norm": 0.5357341030712328,
+        "fourier_frame_unitarity": 3.1086244689504383e-15,
+        "hamiltonian_norm_hartree": 4.076754257412116,
+        "sampled_energy_gap_hartree": 0.0064430736953556,
+        "occupied_spinors": 32
+      },
+      "queries": [
+        {
+          "eta": 0.03,
+          "flatten": 0.0,
+          "flatten_scale": 1.0,
+          "polar_coordinates": false,
+          "gap": 0.0009663755757102709,
+          "nu": 0,
+          "aii_residual": 1.1261502255895117e-15
+        }
+      ]
+    }
+  },
+  "serial_mpi_gap_difference": 1.4046706506287698e-13,
+  "small_regression_gap_difference": 2.1857741311359646e-12,
+  "queries": [
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected2",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 5.217861875076778,
+      "scf_energy_hartree": -6.96337455999354,
+      "size": 2,
+      "solver": "DENSE",
+      "order": 416,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap": 0.000966375577896045,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected3",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 9.411630124901421,
+      "scf_energy_hartree": -6.95241031111526,
+      "size": 3,
+      "solver": "DENSE",
+      "order": 936,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap": 0.000626487247806777,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected3-tacho",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 11.945679791038856,
+      "scf_energy_hartree": -6.95241031111662,
+      "size": 3,
+      "solver": "TACHO",
+      "order": 936,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap_bounds": [
+        0.000626487224363621,
+        0.00062648730969297
+      ],
+      "solve_residual": 2.10674352558649e-14,
+      "gap": 0.000626487224363621,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected4",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 33.24036654108204,
+      "scf_energy_hartree": -6.95241031111824,
+      "size": 4,
+      "solver": "DENSE",
+      "order": 1664,
+      "energy": -0.1592,
+      "eta": 0.025,
+      "gap": 0.000203222706495092,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected4",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 33.24036654108204,
+      "scf_energy_hartree": -6.95241031111824,
+      "size": 4,
+      "solver": "DENSE",
+      "order": 1664,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap": 6.10517737192983e-05,
+      "nu": 1,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected4",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 33.24036654108204,
+      "scf_energy_hartree": -6.95241031111824,
+      "size": 4,
+      "solver": "DENSE",
+      "order": 1664,
+      "energy": -0.1592,
+      "eta": 0.035,
+      "gap": 0.00133969560545448,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected4-tzvp",
+      "basis": "TZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 400,
+      "ranks": 2,
+      "elapsed_seconds": 31.0070542920148,
+      "scf_energy_hartree": -6.95340593710985,
+      "size": 4,
+      "solver": "DENSE",
+      "order": 2176,
+      "energy": -0.16050731,
+      "eta": 0.03,
+      "gap": 6.7832601146777e-05,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected5",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 34.66312354197726,
+      "scf_energy_hartree": -6.95241031111595,
+      "size": 5,
+      "solver": "DENSE",
+      "order": 2600,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap": 0.000751780240995159,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/corrected6",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 105.23914145794697,
+      "scf_energy_hartree": -6.95241031111562,
+      "size": 6,
+      "solver": "DENSE",
+      "order": 3744,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap": 0.0018102459978617,
+      "nu": 0,
+      "status": "corrected"
+    },
+    {
+      "case": "build-mpi/stanene-bloch-localizer/direct3",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 2,
+      "elapsed_seconds": 9.492954833083786,
+      "scf_energy_hartree": -6.95241031111642,
+      "size": 3,
+      "solver": "DENSE",
+      "order": 936,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap": 0.00019134797865144,
+      "nu": 1,
+      "status": "superseded"
+    },
+    {
+      "case": "build-serial/stanene-bloch-localizer/corrected3",
+      "basis": "DZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 200,
+      "ranks": 1,
+      "elapsed_seconds": 10.922862417064607,
+      "scf_energy_hartree": -6.95241031111623,
+      "size": 3,
+      "solver": "DENSE",
+      "order": 936,
+      "energy": -0.1592,
+      "eta": 0.03,
+      "gap": 0.000626487247947244,
+      "nu": 0,
+      "status": "corrected"
+    }
+  ]
+}
