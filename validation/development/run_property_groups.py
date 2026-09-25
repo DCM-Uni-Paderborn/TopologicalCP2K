@@ -16,6 +16,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("root", type=Path)
     parser.add_argument("destination", type=Path)
+    parser.add_argument("--require-soc-groups", action="store_true",
+                        help="Require SOC assembly to use the same groups as scalar representatives")
+    parser.add_argument("--include-stanene-loop", action="store_true",
+                        help="Also compare displaced multiatom SOC Wilson loops away from TRIM")
     args = parser.parse_args()
     root, destination = args.root.resolve(), args.destination.resolve()
     destination.mkdir(parents=True, exist_ok=False)
@@ -33,11 +37,17 @@ def main():
         name = f"{material}-{backend.lower()}-r{ranks}-g{group_size}"
         work = destination / name
         work.mkdir()
-        source = root / f"tests/QS/regtest-property-wilson/{material}-common.inc"
+        base_material = "stanene" if material == "stanene-loop" else material
+        source = root / f"tests/QS/regtest-property-wilson/{base_material}-common.inc"
         sources[str(source)] = digest(source)
         text = source.read_text().replace("${CASE}", "states")
         text = text.replace("${PROPERTY_SYMMETRY}", "F" if backend == "full" else "T")
         text = text.replace("${PROPERTY_BACKEND}", "K290" if backend == "full" else backend)
+        text = text.replace("${PROPERTY_ANALYSIS}", "WILSON" if material == "stanene-loop" else "TRIM")
+        if base_material == "stanene":
+            nnkp = root / "tests/QS/regtest-property-wilson/stanene-loop.nnkp"
+            sources[str(nnkp)] = digest(nnkp)
+            (work / nnkp.name).write_bytes(nnkp.read_bytes())
         if "${PROPERTY_GROUP_SIZE}" in text:
             text = text.replace("${PROPERTY_GROUP_SIZE}", str(group_size))
         else:
@@ -61,6 +71,7 @@ def main():
             accepted = result.returncode == 0 and "PROGRAM ENDED" in output and "[ABORT]" not in output
         groups = re.findall(r"Property scalar MPI groups:\s*(\d+)\s+ranks per group:\s*(\d+)", output)
         diagonalizations = re.findall(r"Property scalar diagonalizations:\s*(\d+)\s*/\s*(\d+)", output)
+        soc_groups = re.findall(r"Property SOC MPI groups:\s*(\d+)\s+ranks per group:\s*(\d+)", output)
         if not diagnostic and backend != "full":
             accepted &= bool(groups) and len(groups) == len(diagonalizations)
             for (count, size), (representatives, _) in zip(groups, diagonalizations):
@@ -70,9 +81,11 @@ def main():
                     expected_size = min(d for d in range(1, ranks + 1)
                                         if ranks % d == 0 and ranks // d <= representatives)
                 accepted &= size == expected_size and count * size == ranks and count <= representatives
+            if args.require_soc_groups and material != "helium":
+                accepted &= soc_groups == groups and "SOC snapshots unavailable" not in output
         record = dict(name=name, command=command, returncode=result.returncode, accepted=accepted,
                       elapsed=time.monotonic() - start, expected_diagnostic=diagnostic,
-                      groups=groups, diagonalizations=diagonalizations,
+                      groups=groups, soc_groups=soc_groups, diagonalizations=diagonalizations,
                       files={p.name: digest(p) for p in work.iterdir() if p.is_file()})
         (work / "run.json").write_text(json.dumps(record, indent=2) + "\n")
         records.append(record)
@@ -81,7 +94,10 @@ def main():
             raise RuntimeError(f"Failed calculation: {name}")
         return work / "states"
 
-    for material in ["helium", "neon", "stanene"]:
+    materials = ["helium", "neon", "stanene"]
+    if args.include_stanene_loop:
+        materials.insert(0, "stanene-loop")
+    for material in materials:
         reference = run(material, "full", 2, 0)
         for backend in ["K290", "SPGLIB"]:
             for ranks, group_size in [(2, 0), (2, -1), (4, -1), (4, 2)]:
@@ -105,6 +121,8 @@ def main():
     if any(digest(Path(path)) != value for path, value in sources.items()):
         raise ValueError("Input source changed during validation")
     report = dict(cases=records, comparisons=comparisons, accepted=True, sources=sources,
+                  require_soc_groups=args.require_soc_groups,
+                  include_stanene_loop=args.include_stanene_loop,
                   binary_sha256=binary_hash, library_sha256=libraries,
                   methods={str(Path(__file__)): digest(Path(__file__)), str(comparator): digest(comparator)},
                   environment={key: environment[key] for key in ["CP2K_DATA_DIR", "OPENBLAS_NUM_THREADS",

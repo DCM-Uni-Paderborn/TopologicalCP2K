@@ -3641,10 +3641,68 @@ include native inputs and outputs, source and shared-library
 provenance, grouping diagnostics, and the independent comparison
 programs. Archive replay repeats the 24 physical comparisons
 without a DFT rerun. This validates parallel correctness, not
-multi-node performance. In particular, SOC assembly, reconstruction
-checks, and directed links are not yet distributed across the
+multi-node performance. At this checkpoint, SOC assembly, reconstruction
+checks, and directed links were not distributed across the
 independent k-point groups. The earlier 37,056-point timings
 above belong to the preceding single-group implementation.
+
+\subsection{SOC orbit assembly in independent MPI groups}
+The next stage assigns complete SOC orbits to the same groups that
+own their scalar representatives. Each group Fourier-transforms
+bounded snapshots of the three imaginary real-space SOC operators,
+projects them into its reconstructed scalar frames, diagonalizes
+the representatives, and validates every partner against its own
+target SOC Hamiltonian. Conjugating mirrored blocks includes the
+imaginary-operator factor, rather than treating SOC as a real
+scalar operator. An ownership reduction checks that every requested
+target contributes exactly once to the collected spectra and
+spinors. This does not reduce the directed-link graph.
+
+In addition to the preceding He, Ne/SOC and stanene/TRIM cases,
+the comparison uses three explicitly specified eight-point stanene
+loops starting at fractional coordinates $(1/8,1/8,0)$,
+$(1/8,3/8,0)$ and $(1/8,5/8,0)$, with a reciprocal shift at
+each closure. Their 24 points reduce to six representatives.
+Four one-rank groups therefore have unequal orbit workloads.
+These non-TRIM, multiatom tests check complex phases and directed
+connections at fixed resolution; they are not an additional claim
+of Wilson-surface convergence or of a converged material invariant.
+
+The full matrix compares both backends using two and four MPI ranks,
+automatic grouping, a single group, and two ranks per group, with
+two OpenMP threads and one BLAS thread. All 32 comparisons pass.
+The largest complete-spectrum difference is
+$4.96\times10^{-13}$ hartree, the largest physical subspace
+residual $1.69\times10^{-13}$, and the largest directed-link
+covariance error $1.44\times10^{-13}$. Wilson centers agree to
+$3.26\times10^{-14}$ in reduced units. These comparisons use
+independently integrated Gaussian overlaps, not only the code's
+internal normalization checks. Group diagnostics confirm that the
+SOC stage uses the requested scalar grouping in every reduced run;
+none enters the collective snapshot fallback.
+
+Including four invalid group requests and four degenerate-window
+rejections, the matrix contains 44 native cases. The property
+directory passes all 29 checks with SSMP and four-rank PSMP,
+including the two new non-TRIM stanene loops. The existing
+\texttt{QS/regtest-kp-3} directory passes another 16 checks in each
+build, covering ordinary scalar uses of the shared Fourier-operator
+service as well as forces and legacy/general k-point inputs.
+No existing numerical
+reference, operator tolerance or Wilson convergence tolerance was
+changed for these results. This establishes local parallel and
+gauge correctness; it is not a measurement of multi-node scaling.
+
+The archive in
+\nolinkurl{validation/development/property-soc-groups/}
+retains the native inputs and outputs, operator sources, build
+configuration, executable and shared-library checksums, and
+comparison methods. Archive-only replay verifies all 463 member
+files and repeats the 32 physical comparisons with the same
+maximal discrepancies. It does not rerun the DFT calculations.
+Scalar target-frame validation and directed-link construction
+remain collective stages; their independent distribution is not
+established by this checkpoint.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged

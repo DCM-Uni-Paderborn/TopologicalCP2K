@@ -1,4 +1,4 @@
-"""Verify archived MPI group evidence and repeat its 24 physical frame/link comparisons."""
+"""Verify archived MPI group evidence and repeat its physical frame/link comparisons."""
 
 import argparse
 import hashlib
@@ -45,16 +45,17 @@ def main():
                 target = root / path
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(data)
-        record = json.loads((root / "build-mpi/property-groups-validation/result.json").read_text())
+        folder = f"build-mpi/{index.get('prefix', 'property-groups')}-validation"
+        record = json.loads((root / folder / "result.json").read_text())
         for i, case in enumerate(record["comparisons"]):
             def seed(key):
-                return root / "build-mpi/property-groups-validation" / Path(case[key]).parent.name / "states"
+                return root / folder / Path(case[key]).parent.name / "states"
             result = root / f"comparison-{i}.json"
             subprocess.run([sys.executable, str(root / "methods/compare_property_wilson.py"), str(root),
                             str(seed("reference")), str(seed("candidate")), str(result)], check=True,
                            env=dict(os.environ, OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1"), timeout=180)
             comparisons.append(json.loads(result.read_text()))
-    accepted = len(comparisons) == 24 and all(c["accepted"] for c in comparisons)
+    accepted = len(comparisons) == index["comparisons"] and all(c["accepted"] for c in comparisons)
     args.output.write_text(json.dumps(dict(accepted=accepted, verified_members=len(manifest["files"]),
                                           comparisons=comparisons), indent=2) + "\n")
     if not accepted:

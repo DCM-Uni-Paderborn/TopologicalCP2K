@@ -1,0 +1,22 @@
+{
+  "source_commit": "ccbc0a04e988b3762a3438b54c4e3a64a69b1d77",
+  "comparisons": 32,
+  "native_cases": 44,
+  "regtest_checks_per_build": 29,
+  "shared_operator_checks_per_build": 16,
+  "prefix": "property-soc-groups",
+  "shared_libraries": {
+    "build-serial": {
+      "build-serial/src/libcp2k.2026.2.dylib": "27cc7926ce93e02ffab93f5ae2bccf22da8e2fb486bb4f946ae704137117703c"
+    },
+    "build-mpi": {
+      "build-mpi/src/libcp2k.2026.2.dylib": "328522bc6c9898090c6996fc3dbf9627fed6b15d56ed4fac5ad3055da3c670f2"
+    }
+  },
+  "scope": "Scalar representatives and SOC orbit assembly/validation distributed; ordered links remain collective.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 6435018,
+    "sha256": "eb8c3565a9f63a3d08c9471fd0d54c895233685375547609b200329b253d5b18"
+  }
+}

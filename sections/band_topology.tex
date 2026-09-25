@@ -220,8 +220,20 @@ MPI groups, with possibly unequal numbers of representatives per group.
 ($-1$, the default), one group using all ranks ($0$), or a positive
 group size. Each group first assembles its own representative frame;
 inter-group communication then transfers that frame and its eigenvalues
-for reconstruction on the full property graph. SOC assembly, target-frame
-checks and link construction still use the complete MPI environment.
+for reconstruction on the full property graph. The SOC stage distributes
+complete orbits over the same groups: bounded snapshots of the three
+real-space SOC components are Fourier-transformed into group-local
+matrix tiles, projected into the reconstructed scalar basis, and
+diagonalized only at the representatives. Each group checks its partners
+against their target SOC Hamiltonians before the spectra and selected
+spinors are collected. The factor $i$ of the imaginary real-space SOC
+operator is included before conjugating mirrored Fourier blocks.
+Only one complete representative spinor frame is retained per group
+at a time. If a bounded operator snapshot is unavailable, an explicitly
+reported collective assembly path preserves the same orbit reduction
+and physical checks, without full-mesh rediagonalization. Scalar
+target-frame checks and directed links still use the complete MPI
+environment; multi-node scaling is not established by the local tests.
 
 Tests compare the physical subspaces and the link law
 $M^{\rm rec}_{ij}=G_i^\dagger M^{\rm full}_{ij}G_j$, where
