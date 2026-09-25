@@ -213,8 +213,15 @@ a separate physical requirement.
 It is independent of SCF mesh reduction and presently requires a
 restricted scalar SCF. All cross-k AO integrals and reciprocal-boundary
 links are still evaluated explicitly. This is eigenproblem reduction,
-not yet a reduction of link construction or a separate distribution of
-property representatives over k-point MPI groups.
+not yet a reduction of link construction. Independent scalar
+representative eigenproblems are distributed over equal-sized k-point
+MPI groups, with possibly unequal numbers of representatives per group.
+\texttt{SYMMETRY\_PARALLEL\_GROUP\_SIZE} selects automatic grouping
+($-1$, the default), one group using all ranks ($0$), or a positive
+group size. Each group first assembles its own representative frame;
+inter-group communication then transfers that frame and its eigenvalues
+for reconstruction on the full property graph. SOC assembly, target-frame
+checks and link construction still use the complete MPI environment.
 
 Tests compare the physical subspaces and the link law
 $M^{\rm rec}_{ij}=G_i^\dagger M^{\rm full}_{ij}G_j$, where

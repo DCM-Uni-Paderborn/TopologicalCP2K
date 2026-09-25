@@ -1,0 +1,20 @@
+{
+  "source_commit": "6d47c5b32a4177144596ebb2de2a335fffa93696",
+  "comparisons": 24,
+  "native_cases": 35,
+  "regtest_checks_per_build": 27,
+  "shared_libraries": {
+    "build-serial": {
+      "build-serial/src/libcp2k.2026.2.dylib": "3e667620a346ba914aa389daf49b0fbed0f83479c200b7537ded2f1c3de8473e"
+    },
+    "build-mpi": {
+      "build-mpi/src/libcp2k.2026.2.dylib": "e92ecc553e3c562e04f250e171257c4b108c5774e742db9f8d44877ca25d9c7b"
+    }
+  },
+  "scope": "Scalar representative diagonalization groups only; SOC assembly and ordered links remain collective.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 3996625,
+    "sha256": "b1971d142524ef4535e18072f0672679cd40397301c8c06afb0c08a4a22c43cc"
+  }
+}

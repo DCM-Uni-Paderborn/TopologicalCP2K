@@ -3608,6 +3608,44 @@ DFT calculations. Final shared-library checksums are recorded along
 with executable checksums; the earlier exploratory runs retain their
 original, executable-only provenance.
 
+\subsection{Independent scalar MPI groups}
+A subsequent validation distributes the independent scalar
+diagonalizations over CP2K's existing k-point MPI groups.
+The tested group sizes are automatic, all ranks in one group,
+and two ranks per group, with two and four total MPI ranks and
+two OpenMP threads per rank. Both K290 and SPGLIB are compared
+with full diagonalization for He, Ne/SOC and stanene/SOC.
+The He case deliberately distributes three representatives over
+two two-rank groups. The final Ne mesh distributes 15
+representatives over four one-rank groups. These unequal workloads
+test local indexing and transfer from the owning group, rather
+than only the evenly divisible case. Native checks require exactly
+one owning group for each representative.
+
+All 24 physical frame/link comparisons pass. Across the matrix,
+the maximum complete-spectrum error is $7.23\times10^{-13}$ hartree,
+the maximum physical subspace residual $1.69\times10^{-13}$,
+and the maximum directed-link covariance residual
+$1.94\times10^{-14}$. The largest Wilson-center difference is
+$8.89\times10^{-16}$ in reduced units. Four invalid group requests
+are rejected, and four additional four-rank runs reject a scalar
+SOC window ending inside a degenerate group, for both backends
+and both one- and two-rank groups. The latter checks that the
+additional boundary eigenvalue is communicated consistently.
+There are 35 native cases in total, including these expected
+failures. The regular 13-input property directory also passes
+27 checks in SSMP and 27 with four-rank PSMP.
+
+The records in \nolinkurl{validation/development/property-groups/}
+include native inputs and outputs, source and shared-library
+provenance, grouping diagnostics, and the independent comparison
+programs. Archive replay repeats the 24 physical comparisons
+without a DFT rerun. This validates parallel correctness, not
+multi-node performance. In particular, SOC assembly, reconstruction
+checks, and directed links are not yet distributed across the
+independent k-point groups. The earlier 37,056-point timings
+above belong to the preceding single-group implementation.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
