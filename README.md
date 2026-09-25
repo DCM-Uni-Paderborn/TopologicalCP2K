@@ -235,6 +235,14 @@ only the two singly coordinated corners. The neutral gap grows from 7.735 to
 localizers match at all 45 queries. A rejected wide kappa interval is retained
 alongside the narrower, numerically bounded common nontrivial window. This
 is a controlled termination test, not size convergence or edge relaxation.
+The `bismuth-size-basis-validation.md` record adds a 16-atom TZVP calculation
+and a separate 30-atom DZVP flake. Physical cross-basis overlaps check
+occupied and frontier subspaces without identifying unrelated AO gauges.
+The gap changes from 219.6 to 231.7 meV with basis, but drops to 72.14 meV
+in the larger DZVP patch. Numerically bounded scale intervals can have
+opposite indices at different sizes; a finer scan also finds a nontrivial
+region missed by the coarse scale grid. All these differences are retained
+as convergence evidence, not replaced by fitted reference values.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.

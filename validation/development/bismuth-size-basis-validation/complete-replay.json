@@ -1,0 +1,99 @@
+{
+  "verified_archives": 6,
+  "verified_members": 270,
+  "archives": [
+    {
+      "file": "flake3-trim-dzvp300-spectrum.tar.gz",
+      "bytes": 7807836,
+      "sha256": "9cfdea83f19d3695230d3025ec0b23a5371bd04b4bce014f05695efefab0b7d8"
+    },
+    {
+      "file": "flake3-trim-tzvp300-spectrum.tar.gz",
+      "bytes": 13863296,
+      "sha256": "ca0b186667c6b7ac851ad2d124ce843cad9a2abcc9d6329fb42fdcc43c0b0f8b"
+    },
+    {
+      "file": "flake3-trim-tzvp300-native.tar.gz",
+      "bytes": 13572940,
+      "sha256": "0ae308ece2b7247cd5e0c0dfb1fcd09952daa1a5b284a595cbbfecbc71396f65"
+    },
+    {
+      "file": "flake4-trim-dzvp300-spectrum.tar.gz",
+      "bytes": 27933795,
+      "sha256": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3"
+    },
+    {
+      "file": "flake4-trim-dzvp300-native.tar.gz",
+      "bytes": 28123625,
+      "sha256": "1ca26737ddbb0ae708691b8bda694d28d1ed9fda3eccdd1c1031884206c3d53b"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 1079149,
+      "sha256": "644d215017bdc9bcd234bbdf521e8ec8739cea1da7a5f339a86afe24797cb75c"
+    }
+  ],
+  "replays": {
+    "tzvp": {
+      "archives": {
+        "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-size-basis-validation/flake3-trim-tzvp300-spectrum.tar.gz": "ca0b186667c6b7ac851ad2d124ce843cad9a2abcc9d6329fb42fdcc43c0b0f8b",
+        "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-size-basis-validation/methods-results.tar.gz": "644d215017bdc9bcd234bbdf521e8ec8739cea1da7a5f339a86afe24797cb75c"
+      },
+      "report_sha256": "2e4e1f50885a745d3c8d8874b6dbd13c0cc2573d6fbd44016848fd5d438132e8",
+      "script_sha256": "e7faf6c7ec1d32cb7bc4591cd7cccafebe47dfb5d1f395e4db879f2cb385b736",
+      "queries": 45,
+      "verified_archive_files": 206,
+      "maximum_gap_error_hartree": 0.0,
+      "maximum_frontier_weight_error": 0.0,
+      "native_comparison_performed": false,
+      "interval_comparison": {
+        "evaluations": 13,
+        "covered_intervals": 7,
+        "maximum_absolute_difference": 0.0,
+        "anchor_z2": 1,
+        "report_sha256": "ec5ecd4ad2225f177ef4debe3430ee7382c0588c892944b772968bdbb8735a14"
+      }
+    },
+    "size": {
+      "archives": {
+        "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-size-basis-validation/flake4-trim-dzvp300-spectrum.tar.gz": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3",
+        "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-size-basis-validation/methods-results.tar.gz": "644d215017bdc9bcd234bbdf521e8ec8739cea1da7a5f339a86afe24797cb75c"
+      },
+      "report_sha256": "89dbb2b6d50a1bb48c3be9593ff06c5d308e927a673a3f8e384e314048fe49cb",
+      "script_sha256": "e7faf6c7ec1d32cb7bc4591cd7cccafebe47dfb5d1f395e4db879f2cb385b736",
+      "queries": 45,
+      "verified_archive_files": 205,
+      "maximum_gap_error_hartree": 0.0,
+      "maximum_frontier_weight_error": 0.0,
+      "native_comparison_performed": false,
+      "interval_comparison": {
+        "evaluations": 15,
+        "covered_intervals": 8,
+        "maximum_absolute_difference": 0.0,
+        "anchor_z2": 1,
+        "report_sha256": "7b64f6078e93b51283a46a7a5894ee3b58a82f878056ba152366540506a783cc"
+      }
+    },
+    "physical_cross_basis": {
+      "exactly_reproduced": true,
+      "report_sha256": "a78f807f174ce31589e8a0e101070b7c4300496df821f37990c7480049d93542"
+    },
+    "flake4-trim-dzvp300-interval": {
+      "evaluations": 9,
+      "covered_intervals": 5,
+      "maximum_absolute_difference": 0.0,
+      "anchor_z2": 0
+    },
+    "flake4-trim-dzvp300-low-interval": {
+      "evaluations": 17,
+      "covered_intervals": 9,
+      "maximum_absolute_difference": 0.0,
+      "anchor_z2": 1
+    },
+    "flake3-trim-tzvp300-interval": {
+      "rejection_reproduced": true,
+      "evaluations": 271,
+      "unresolved_intervals": 7
+    }
+  }
+}

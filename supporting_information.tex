@@ -3300,16 +3300,165 @@ successful and rejected interval bounds are retained separately
 in \path{bismuth-termination-validation/} under the development
 validation directory.
 
+\subsection{A physical cross-basis comparison of the finite Bi states}
+The 16-atom termination is also calculated with UZH TZVP at the
+same positions, cell, 300 K scalar smearing, grid cutoffs and
+post-SCF SOC potential. The converged DZVP restart supplies only
+an initial scalar guess; all 272 scalar AOs and 544 spinor states
+are recomputed. The SCF converges in 119 steps, and the full run
+takes 1628.81 s. Its 1588 one-second memory samples have no
+failures and give a process-tree RSS maximum of 16.4 GiB.
+The electronic gap becomes $0.008515556694$ hartree
+(231.7 meV), 5.51\% above DZVP. The occupied and empty frontier
+boundary weights are 80.66\% and 77.19\%, compared with 82.62\%
+and 79.70\% in DZVP. Such Lowdin weights themselves depend on
+the AO basis and are not the basis-convergence metric used below.
+
+To compare actual states across bases, the reference independently
+integrates the rectangular physical overlap
+$S_{ab}^{\rm DT}=\langle\phi_a^{\rm D}|\phi_b^{\rm T}\rangle$
+from the exported Gaussian contractions. No coefficient padding,
+matching of individual degenerate eigenvectors or identification
+of separate Lowdin coordinate frames is used. For any selected
+spinor subspaces, the singular values of
+\begin{equation}
+ M=C_{\rm D}^{\dagger}\operatorname{diag}(S^{\rm DT},S^{\rm DT})C_{\rm T}
+\end{equation}
+are their principal-angle cosines. Each frame is first checked in
+its own physical metric. Complete occupied manifolds and complete
+frontier Kramers pairs are compared. For equal ranks,
+$\|P_{\rm D}-P_{\rm T}\|=\sqrt{1-\sigma_{\min}(M)^2}$ and
+$\|P_{\rm D}-P_{\rm T}\|_F^2=2r-2\sum_j\sigma_j(M)^2$.
+Tests verify invariance under independent unitary frame rotations
+and nonsingular AO basis changes, including complex matrices,
+and reject non-normalized or nonfinite inputs.
+
+The DZVP AO space is embedded in TZVP using
+$E=(S^{\rm TT})^{-1}S^{\rm TD}$. In the DZVP orthonormal metric,
+the residual of $S^{\rm DD}-E^\dagger S^{\rm TT}E$ is
+$2.86\times10^{-14}$; all three corresponding position-operator
+residuals are below $1.17\times10^{-12}$ bohr. This checks the
+physical nested basis and its operators, not just matrix dimensions.
+The self-consistent Hamiltonians, however, are different: their
+projected difference has norm $0.0053733$ hartree. This is a
+basis-dependent change of the SCF potential, not an export error.
+
+For the 80-dimensional occupied spaces, the smallest overlap
+singular value is 0.99449263, the projector distance is 0.10480657,
+and the mean retained weight is 99.6866\%. The corresponding
+projector distances for the occupied and empty frontier doublets
+are 0.09276768 and 0.06853998. A same-export DZVP control
+reproduces its Hamiltonian within $4.51\times10^{-14}$ hartree;
+principal-angle sines near $4\times10^{-8}$ in that control
+reflect the square-root sensitivity of $1-\sigma^2$ to roundoff.
+
+Of the same 45 normalized position--energy--scale queries, two
+are nontrivial in TZVP instead of three in DZVP. At the centroid
+and $\kappa=0.003$ hartree/bohr, the lower-quarter neutral-gap
+query becomes trivial while the midpoint and upper-quarter
+queries remain nontrivial. The neutral midpoint itself changes
+with basis, so these energies are defined relative to each
+calculation's own gap, not held at a common absolute value.
+The attempted bound on $[0.00275,0.0035]$ fails after 271
+evaluations near $0.002851703$ hartree/bohr and is retained as a
+negative result. The smaller interval $[0.003,0.0035]$ is
+resolved with $\nu=1$, norm constant 16.04838 bohr and minimum
+lower bound $1.12998\times10^{-4}$ hartree. This interval is
+contained in all previously resolved windows, but the shift of
+its lower boundary and the cross-basis subspace distances prevent
+a claim of complete-basis convergence.
+
+A four-step native TZVP restart evaluates the same 45 queries
+and exports its own complete spectrum. All indices match the
+independent reconstruction, including the lower-quarter query
+that differs from DZVP. The maximum gap distance outside the
+native bracket is $5.21\times10^{-10}$ hartree, at the unchanged
+$2\times10^{-8}$ tolerance, and the largest Pfaffian solve
+residual is $1.08\times10^{-13}$. The full native run takes
+486.42 s, compared with 9.49 s for its independent dense analysis;
+these include different work and do not measure a solver speedup.
+Its 478 successful one-second samples give a process-tree RSS
+maximum of 20.4 GiB. The fresh-export electronic gap changes
+by only $4.02\times10^{-11}$ hartree from the spectrum run.
+
+\subsection{A separate finite-size control}
+Increasing the patch from three to four primitive cells in each
+in-plane direction and removing the two singly coordinated corners
+gives 30 atoms, 150 electrons, 390 UZH DZVP AOs and 780 spinors.
+The 300 K smearing, 400/40 Ry grids, 20 \AA\ vacuum and SOC
+potential are unchanged. The bounding cell grows with the bare,
+unrelaxed flake. The atomic-guess SCF converges in 132 steps;
+SCF and export take 2601.85 s on the same one-rank, two-thread
+setup. The 2530 successful one-second samples give a process-tree
+RSS maximum of 19.4 GiB, with the qualifications above.
+
+The neutral SOC gap is $0.002650895533$ hartree (72.14 meV),
+compared with 219.6 meV for the smaller DZVP patch, and
+$g_{\rm el}/(k_BT)=2.7903$. Fourteen of 30 atoms are boundary
+atoms, whereas the complete occupied and empty frontier doublets
+carry 80.82\% and 71.04\% of their Lowdin weight on the boundary.
+The declining electronic gap and strong boundary weights prevent
+an interpretation as a converged bulk band gap.
+
+The original 45-query scan has three nontrivial results, all
+at the centroid and $\kappa=0.0003$ hartree/bohr. This equals
+the smaller DZVP patch's count but at a tenfold smaller scale;
+equal counts obscure the physical change. A 20-scale scan at
+the neutral midpoint and centroid finds nontrivial samples at
+0.00025--0.0004 and 0.0015--0.00275 hartree/bohr, separated by
+trivial samples. The coarse grid missed the latter region.
+
+Numerical gap covers confirm two nontrivial intervals rather
+than interpolating these sampled indices. On
+$[0.00025,0.0004]$ hartree/bohr, 17 midpoint evaluations cover
+nine subintervals with minimum lower bound
+$1.82336\times10^{-5}$ hartree. On $[0.0015,0.0025]$,
+15 evaluations cover eight intervals with minimum lower bound
+$7.67239\times10^{-5}$ hartree. Both use the same norm
+constant, 22.28339 bohr, and $10^{-10}$ hartree numerical margin.
+In contrast, the interval $[0.003,0.0035]$, which is nontrivial
+in both 16-atom bases, is entirely trivial for the 30-atom
+Hamiltonian: nine evaluations cover five intervals with minimum
+lower bound $8.73676\times10^{-5}$ hartree and anchor $\nu=0$.
+This is a resolved opposite index, not a failed or unresolved
+numerical factorization. These finite-size changes must remain
+visible when evaluating possible material convergence.
+
+A separate Tacho C-interface check of all 20 reconstructed
+fine-scan skew matrices matches every Pfaffian index, with maximum
+solve residual $2.11\times10^{-12}$. This tests factorization,
+not native AO assembly, and does not replace the following check.
+
+The separate five-step native restart evaluates all 45 original
+queries and exports a fresh complete spectrum. Every native
+index matches its independently reconstructed counterpart, with
+maximum distance outside the native gap bracket
+$1.31\times10^{-10}$ hartree and largest Pfaffian solve
+residual $2.02\times10^{-13}$. The comparison tolerance remains
+$2\times10^{-8}$ hartree. The full native run takes 1169.99 s;
+the separate dense reconstruction and analysis take 24.31 s.
+The 1147 successful one-second samples give a process-tree RSS
+maximum of 18.2 GiB, not a factorization-only memory measurement.
+The spectrum-run and native-run electronic gaps differ by
+$3.62\times10^{-11}$ hartree.
+
+Cases, original methods, positive and negative bounds, cross-basis
+comparisons and tests are retained under \path{validation/development/}
+in \path{bismuth-size-basis-validation/}, without replacing the
+earlier termination and temperature records.
+Archive-only replay verifies 270 members in six archives and
+reproduces both 45-query scans, the physical cross-basis comparison
+and all reported accepted or rejected interval bounds without
+numerical change. This replay is separate from the native runs.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
 scaling, or general 230-space-group TQC.
-Further material records must extend the present basis, cutoff and
-sampling controls to additional SOC systems and converged flakes,
-with spatial/energy/scale scans, independent band references and
-timed runs with whole-process memory. The DZVP/TZVP comparison is
-not a complete-basis extrapolation.
-Development diagnostics and planned work must not be merged into
-tables of completed material results.
+Further SOC systems and converged flakes require basis/cutoff
+controls, spatial/energy/scale scans, independent band references,
+timings and whole-process memory. DZVP/TZVP is not a complete-basis
+extrapolation, and development diagnostics or plans must not be
+reported as completed material validation.
 
 \end{document}

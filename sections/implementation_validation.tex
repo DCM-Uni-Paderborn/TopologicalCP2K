@@ -278,6 +278,31 @@ scale interval contains a localizer gap closing and is explicitly
 rejected. This comparison demonstrates sensitivity to termination,
 not edge relaxation or convergence with system size.
 
+Increasing the same 16-atom calculation from UZH DZVP to TZVP
+changes its gap from 219.6 to 231.7 meV. Physical cross-basis
+overlaps, rather than direct AO-coefficient differences, give a
+largest occupied-subspace principal-angle sine of 0.1048; the
+mean retained occupied weight is 99.687\%. One of the 45 sampled
+localizer indices changes, and the central scale-window boundary
+moves. Both bases retain $\nu=1$ on the smaller common interval
+$[0.003,0.0035]$ hartree/bohr at their own neutral midpoints.
+Thus gauge-independent subspace comparison and localizer stability
+provide complementary controls, without implying complete-basis
+convergence of this bare finite model.
+
+\begingroup\clubpenalty=10000
+The separate 30-atom DZVP control reinforces this distinction.
+Its neutral gap is 72.14 meV and its frontier states remain
+strongly boundary weighted. At the centroid and its own neutral
+midpoint, the entire interval $[0.003,0.0035]$ has $\nu=0$,
+whereas the 16-atom calculations have $\nu=1$. The larger patch
+instead has resolved nontrivial intervals at smaller scales.
+A finer scan also finds a second nontrivial region missed by the
+original coarse grid. Consequently, neither one chosen scale
+nor agreement on a finite set of queries establishes a
+size-converged material classification.\par
+\endgroup
+
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a
 $30\times30$ lattice, the complex localizer has order 3,600

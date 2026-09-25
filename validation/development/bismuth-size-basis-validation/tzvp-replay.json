@@ -1,0 +1,20 @@
+{
+  "archives": {
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-size-basis-validation/flake3-trim-tzvp300-spectrum.tar.gz": "ca0b186667c6b7ac851ad2d124ce843cad9a2abcc9d6329fb42fdcc43c0b0f8b",
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-size-basis-validation/methods-results.tar.gz": "644d215017bdc9bcd234bbdf521e8ec8739cea1da7a5f339a86afe24797cb75c"
+  },
+  "report_sha256": "2e4e1f50885a745d3c8d8874b6dbd13c0cc2573d6fbd44016848fd5d438132e8",
+  "script_sha256": "e7faf6c7ec1d32cb7bc4591cd7cccafebe47dfb5d1f395e4db879f2cb385b736",
+  "queries": 45,
+  "verified_archive_files": 206,
+  "maximum_gap_error_hartree": 0.0,
+  "maximum_frontier_weight_error": 0.0,
+  "native_comparison_performed": false,
+  "interval_comparison": {
+    "evaluations": 13,
+    "covered_intervals": 7,
+    "maximum_absolute_difference": 0.0,
+    "anchor_z2": 1,
+    "report_sha256": "ec5ecd4ad2225f177ef4debe3430ee7382c0588c892944b772968bdbb8735a14"
+  }
+}

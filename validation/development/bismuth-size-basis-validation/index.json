@@ -1,0 +1,41 @@
+{
+  "cases": [
+    "flake3-trim-dzvp300-spectrum",
+    "flake3-trim-tzvp300-spectrum",
+    "flake3-trim-tzvp300-native",
+    "flake4-trim-dzvp300-spectrum",
+    "flake4-trim-dzvp300-native"
+  ],
+  "archives": [
+    {
+      "file": "flake3-trim-dzvp300-spectrum.tar.gz",
+      "bytes": 7807836,
+      "sha256": "9cfdea83f19d3695230d3025ec0b23a5371bd04b4bce014f05695efefab0b7d8"
+    },
+    {
+      "file": "flake3-trim-tzvp300-spectrum.tar.gz",
+      "bytes": 13863296,
+      "sha256": "ca0b186667c6b7ac851ad2d124ce843cad9a2abcc9d6329fb42fdcc43c0b0f8b"
+    },
+    {
+      "file": "flake3-trim-tzvp300-native.tar.gz",
+      "bytes": 13572940,
+      "sha256": "0ae308ece2b7247cd5e0c0dfb1fcd09952daa1a5b284a595cbbfecbc71396f65"
+    },
+    {
+      "file": "flake4-trim-dzvp300-spectrum.tar.gz",
+      "bytes": 27933795,
+      "sha256": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3"
+    },
+    {
+      "file": "flake4-trim-dzvp300-native.tar.gz",
+      "bytes": 28123625,
+      "sha256": "1ca26737ddbb0ae708691b8bda694d28d1ed9fda3eccdd1c1031884206c3d53b"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 1079149,
+      "sha256": "644d215017bdc9bcd234bbdf521e8ec8739cea1da7a5f339a86afe24797cb75c"
+    }
+  ]
+}
