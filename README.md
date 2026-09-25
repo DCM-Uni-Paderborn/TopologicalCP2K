@@ -200,9 +200,18 @@ chain demonstrates why independent Hermitian real/imaginary squares are not
 equivalent. The new distributed unit test passes with dense and MUMPS metric
 solves; the affected regression drivers now pass 53/53 serial and 88/88 MPI.
 Records, source fixtures and reproduction instructions are in
-`validation/development/translation-quadratic-validation.md`. This is numerical
-infrastructure, not Gaussian band unfolding: translated AO overlaps and the
-continuum projection complement remain to be implemented and validated.
+`validation/development/translation-quadratic-validation.md`. These are numerical
+kernel tests, not Gaussian band unfolding.
+The subsequent finite Gaussian adapter now evaluates shifted AO overlaps and
+retains the continuum projection complement. Independent ghost-basis references
+check He/H2/Ne GPW/GAPW spectra, complex means and leakage, with a maximum squared-gap
+discrepancy of 6.1e-12 hartree squared. Analytic compressed-unitary tests, identity
+translations, opposite momenta, four-rank all-electron/SOC comparisons and invalid
+inputs supplement these checks. The rebuilt regression subset passes 57/57 serial
+and 96/96 MPI assertions without changing earlier references. Main text and SI
+distinguish the full translation residual from the projected energy residual.
+Reproducible records are in `validation/development/gaussian-translation-validation.md`.
+This remains finite-system analysis, not validated periodic material unfolding.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.

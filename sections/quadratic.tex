@@ -141,12 +141,48 @@ and distributed adjoint tests are detailed in the Supporting
 Information. These are model-kernel checks, not DFT unfolding
 results or parallel scaling measurements.
 
-A Gaussian DFT unfolding input path is not yet provided. In
-particular, with a continuum unitary translation $U$,
-$T=\Phi^\dagger U\Phi$ and $S=\Phi^\dagger\Phi$, the projected
-translation residual underestimates the continuum residual by
-$c^\dagger(S-T^\dagger S^{-1}T)c\geq0$.
-Translated Gaussian overlaps and this projection complement
-must be validated before assigning continuum momentum meaning
-to the computed approximate states; polar-unitarizing $T$
-would not supply that validation.
+\subsection{Finite Gaussian Hamiltonian/translation analysis}
+For isolated GPW/GAPW systems, the Gaussian adapter evaluates
+$T_{\bm a}=\Phi^\dagger U(\bm a)\Phi$ analytically, using
+$U(\bm a)\psi(\bm r)=\psi(\bm r+\bm a)$ and shifted ket centers
+$\bm R_B-\bm a$. Pairs are screened at their translated separation,
+not restricted to the unshifted SCF overlap list. With
+$S=\Phi^\dagger\Phi$ and $z_{\bm a}=e^{i\bm k\cdot\bm a}$,
+the exact continuum translation normal Gram is
+\begin{equation}
+ N_{\bm a,z}=(1+|z|^2)S-\overline zT_{\bm a}-zT_{\bm a}^\dagger.
+ \label{eq:translation-continuum-gram}
+\end{equation}
+Replacing the translation term in
+Eq.~\eqref{eq:quadratic-translation} by
+$\kappa_T^2\sum_{\bm a}N_{\bm a,z_{\bm a}}$ retains the part of
+the translated wavefunction outside the AO span. For each normalized
+state, the full and projected residuals obey
+\begin{equation}
+ \delta U_{\bm a}^2=\delta U_{\bm a,\mathrm{AO}}^2+\ell_{\bm a}^2,
+ \qquad
+ \ell_{\bm a}^2=c^\dagger(S-T_{\bm a}^\dagger S^{-1}T_{\bm a})c\geq0.
+ \label{eq:translation-leakage}
+\end{equation}
+The output reports all three terms; no polar unitarization is used.
+The energy residual still concerns the projected AO Hamiltonian,
+not an independently integrated continuum $H^2$.
+
+Independent shifted ghost-basis calculations verify the spectra,
+complex expectations and leakage decomposition for He, H$_2$ and
+Ne/GAPW, with up to 17 AOs and TZVP MOLOPT functions. A normalized
+single-Gaussian reference additionally has an analytic translation
+overlap. The largest quadratic-eigenvalue discrepancy is
+$6.1\times10^{-12}$ hartree$^2$ across serial dense and two-rank
+iterative tests. Translation leakage is substantial in these
+deliberately small spaces, reaching 0.87 for the single Gaussian;
+it cannot be discarded on the basis of solver convergence.
+The SI supplies settings, decomposition checks, and additional
+four-rank all-electron and GTH-SOC comparisons.
+
+The \texttt{FORMULATION TRANSLATION} input accepts Cartesian
+translation vectors and wave-vector queries for a finite system.
+It is not a periodic DFT unfolding implementation or a material
+benchmark: translation lengths, basis completeness, finite-size
+effects, boundary treatment and primitive/supercell agreement must
+be examined for that application. No boundary weighting is applied.

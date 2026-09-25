@@ -1754,20 +1754,121 @@ and 88/88 two-rank MPI assertions, with two OpenMP threads per
 process and one BLAS thread. Earlier finite and periodic
 Gaussian regression references remain unchanged.
 
-For a future Gaussian translation adapter, an additional
-projection check is required. Let $\psi=\Phi c$ be normalized,
-$S=\Phi^\dagger\Phi$, and $T=\Phi^\dagger U\Phi$ for unitary
-continuum translation $U$. The continuum residual obeys
-\[
- \|(U-z)\psi\|^2
- =c^\dagger[(1+|z|^2)S-zT^\dagger-\overline zT]c.
-\]
-Subtracting the projected normal-product residual gives
-$c^\dagger(S-T^\dagger S^{-1}T)c$, the norm squared of the
-translated state outside the AO span. The model tests above
-do not validate translated Gaussian overlap integrals or this
-continuum projection complement. No DFT unfolding result is
-inferred from them.
+The model tests above do not, by themselves, validate translated
+Gaussian integrals or the continuum projection complement. The
+additional finite-Gaussian checks are reported separately below.
+
+\subsection{Gaussian translations and continuum projection leakage}
+\label{sec:si-gaussian-translation}
+The \texttt{FORMULATION TRANSLATION} adapter evaluates
+$T_{\mu\nu}(\bm a)=\langle\phi_\mu|U(\bm a)|\phi_\nu\rangle$
+with $U(\bm a)\psi(\bm r)=\psi(\bm r+\bm a)$.
+To test this independently of its pair assembly, a second CP2K
+calculation adds ghost atoms with the same bases at
+$\bm R_B-\bm a$. The cross block of this enlarged system's
+ordinary overlap matrix supplies a separate $T$ reference.
+Printed $H$ and $S$, this ghost-overlap block, and the exported
+complex quadratic states determine an independent generalized
+normal Gram and all observable checks. The reference uses NumPy
+metric solves and Hermitian diagonalization, not the new adapter.
+It shares CP2K's existing Gaussian-integral routines, so a separate
+analytic primitive-Gaussian case also checks their convention.
+
+The four fixtures use a 7~\AA{} isolated box, PBE, a 150~Ry
+cutoff, 30~Ry relative cutoff, $\epsilon_{\rm SCF}=10^{-10}$,
+and $\epsilon_{\rm default}=10^{-12}$. Single atoms are at
+$(3,3,3)$~\AA; H$_2$ has its second atom at
+$(3.74,3,3)$~\AA. The query is
+$E=-0.1$ hartree, $\kappa_T=0.3$ hartree,
+$\bm a=(0.63,-0.37,0.21)$~\AA{} and
+$\bm k=(0.31,-0.22,0.18)$ bohr$^{-1}$, with no extra $2\pi$
+in $e^{i\bm k\cdot\bm a}$. The smallest fixture has one
+normalized $s$ Gaussian with exponent $\alpha=0.7$ bohr$^{-2}$,
+for which $T=\exp(-\alpha|\bm a|^2/2)$.
+The remaining systems use TZVP-MOLOPT-GGA-GTH bases and GTH-PBE
+potentials from the UZH files: $q=2$ for He, $q=1$ for H, and
+$q=8$ for Ne. Ne uses GAPW, the others GPW.
+One quadratic state is requested for the single Gaussian and
+three for the other cases. Iteration uses up to 14 trial vectors,
+2,000 iterations and a $10^{-10}$ relative eigenpair-residual
+tolerance.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Finite Gaussian translation verification. The two error
+columns are maximum absolute discrepancies in quadratic eigenvalues
+against the independently assembled ghost-overlap reference, in
+hartree$^2$. $\ell$ is the dimensionless norm outside the AO span,
+not a solver error. Dense runs are serial; iterative runs use two
+MPI ranks and reusable MUMPS metric factors.}
+\label{tab:gaussian-translation}
+\begin{tabular}{lrrrr}
+\toprule
+Fixture & AOs & Dense error & Iterative error & Max.\ $\ell$\\
+\midrule
+He, one Gaussian & 1 & $2.3\times10^{-16}$ & $2.3\times10^{-16}$ & 0.87416\\
+He, TZVP & 6 & $6.1\times10^{-12}$ & $5.0\times10^{-12}$ & 0.56932\\
+H$_2$, TZVP & 12 & $2.9\times10^{-13}$ & $3.0\times10^{-13}$ & 0.56991\\
+Ne, TZVP/GAPW & 17 & $9.0\times10^{-13}$ & $9.1\times10^{-13}$ & 0.47708\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Across these eight base calculations the largest independently
+evaluated generalized-eigenpair residual is
+$1.13\times10^{-11}$ hartree$^2$.
+The maximum element error in $C^\dagger SC-I$ is
+$3.2\times10^{-15}$, in complex translation expectations
+$1.6\times10^{-15}$, and in the squared full/projected/leakage
+decomposition $1.1\times10^{-14}$. Repeating each calculation
+with $-\bm k$ changes the gaps by at most
+$2.0\times10^{-14}$ hartree. Zero-translation controls have
+full residuals at or below $2.11\times10^{-8}$, corresponding
+to cancellation at approximately machine precision in the
+squared norm. Converged Ritz vectors are explicitly renormalized
+using a fresh $S$ application, and their true operator residuals
+are rechecked; accumulated cached metric images are not used
+to certify the final norms.
+
+A compressed-unitary model independently verifies the continuum
+complement. Compressing a three-state cyclic translation to two
+basis functions gives $T_{12}=1$ with all other entries zero.
+With $H=\operatorname{diag}(0.2,-0.4)$, $E=0.1$,
+$z=e^{0.73i}$ and $\kappa_T=0.7$ in model units, the two
+quadratic eigenvalues agree with the analytic $2\times2$
+formula within $10^{-15}$. The discarded norm is exactly
+$\ell^2=|c_1|^2$. Complex nonorthogonal basis changes preserve
+it. An expanding matrix $T=2I$, which cannot be a compression
+of a unitary, is rejected rather than assigned negative leakage.
+
+Additional dense/four-rank iterative comparisons cover
+all-electron H$_2$/GAPW with SVP-MOLOPT-GGA-ae and post-SCF
+GTH-SOC Ne with DZVP-MOLOPT-GGA-GTH-q8. Gaps differ by at most
+$7.5\times10^{-14}$ and $1.62\times10^{-10}$ hartree,
+respectively, including their independently converged SCF
+potentials. Iterative eigenpair residuals stay below
+$9.2\times10^{-11}$ hartree$^2$; opposite momenta give the same
+gap spectra within $6.0\times10^{-15}$ hartree. These SOC tests
+use a restricted SCF followed by GTH SOC, not self-consistent
+noncollinear DFT. Five negative inputs check missing vectors,
+incompatible position/scale keywords, the wrong formulation and
+an inappropriate analysis mesh.
+
+The new GPW/GAPW regression fixtures use two translations and two
+wave-vector queries; dense and iterative paths share the same
+gap and leakage references. No earlier regression reference is
+changed. Focused numerical-kernel tests pass bounds checks,
+undefined-behavior checks and floating-point traps. After formatting
+and rebuilding, the quadratic/localizer regression subset passes
+57/57 serial and 96/96 two-rank MPI assertions, including the
+available MUMPS and Tacho paths. Source snapshots,
+inputs, AO matrices, complex states, logs and checksum manifest are
+retained in
+\nolinkurl{validation/development/gaussian-translation-records.tar.gz}.
+The companion replay scripts recompute the above comparisons from
+the raw archive. These tests establish finite AO translation
+analysis, not periodic material unfolding, boundary suppression,
+basis convergence or multi-node scaling.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
