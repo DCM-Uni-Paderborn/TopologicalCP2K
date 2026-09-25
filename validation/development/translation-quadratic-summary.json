@@ -1,0 +1,251 @@
+{
+  "source_commit": "9476e9d0556f2a235bf59ed3ef5288ff3d25557f",
+  "verified_files": 252,
+  "bounds": {
+    "gram_metric_complex_mean_split_maxima": [
+      3.552714e-15,
+      5.329071e-15,
+      2.248202e-14,
+      0.08604947
+    ],
+    "folded_spectrum_maximum_error": 1.598721e-14,
+    "dbcsr_forward_adjoint_metric_spectrum_ritz_maxima": [
+      4.440892e-16,
+      2.482534e-16,
+      4.577567e-16,
+      8.770762e-15,
+      9.833999e-11
+    ]
+  },
+  "regressions": {
+    "build-mpi/translation-quadratic-final-regtests.log": 88,
+    "build-serial/translation-quadratic-final-regtests.log": 53
+  },
+  "native_records": [
+    {
+      "log": "build-mpi/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-14/UNIT/quadratic_pseudospectrum_unittest/quadratic_pseudospectrum_unittest.out",
+      "values": [
+        3.552714e-15,
+        5.329071e-15,
+        2.248202e-14,
+        0.08604947
+      ]
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-14/UNIT/quadratic_pseudospectrum_unittest/quadratic_pseudospectrum_unittest.out",
+      "values": [
+        3.552714e-15,
+        5.329071e-15,
+        2.248202e-14,
+        0.08604947
+      ]
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-unit.log",
+      "values": [
+        3.552714e-15,
+        5.329071e-15,
+        2.248202e-14,
+        0.08604947
+      ]
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-unit.log",
+      "values": [
+        3.552714e-15,
+        5.329071e-15,
+        2.248202e-14,
+        0.08604947
+      ]
+    },
+    {
+      "log": "build-serial/translation-quadratic-debug-verified.log",
+      "values": [
+        3.552714e-15,
+        5.329071e-15,
+        1.236703e-14,
+        0.08604947
+      ]
+    },
+    {
+      "log": "build-serial/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-13/UNIT/quadratic_pseudospectrum_unittest/quadratic_pseudospectrum_unittest.out",
+      "values": [
+        2.664535e-15,
+        5.329071e-15,
+        1.859626e-14,
+        0.08604947
+      ]
+    },
+    {
+      "log": "build-serial/translation-quadratic-final-unit.log",
+      "values": [
+        2.664535e-15,
+        5.329071e-15,
+        1.859626e-14,
+        0.08604947
+      ]
+    }
+  ],
+  "bloch_records": [
+    {
+      "log": "build-mpi/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-14/UNIT/quadratic_pseudospectrum_unittest/quadratic_pseudospectrum_unittest.out",
+      "eigenvalues_per_scan": 1170,
+      "maximum_error": 1.598721e-14
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-14/UNIT/quadratic_pseudospectrum_unittest/quadratic_pseudospectrum_unittest.out",
+      "eigenvalues_per_scan": 1170,
+      "maximum_error": 1.598721e-14
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-unit.log",
+      "eigenvalues_per_scan": 1170,
+      "maximum_error": 1.598721e-14
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-unit.log",
+      "eigenvalues_per_scan": 1170,
+      "maximum_error": 1.598721e-14
+    },
+    {
+      "log": "build-serial/translation-quadratic-debug-verified.log",
+      "eigenvalues_per_scan": 1170,
+      "maximum_error": 1.598721e-14
+    },
+    {
+      "log": "build-serial/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-13/UNIT/quadratic_pseudospectrum_unittest/quadratic_pseudospectrum_unittest.out",
+      "eigenvalues_per_scan": 1170,
+      "maximum_error": 1.598721e-14
+    },
+    {
+      "log": "build-serial/translation-quadratic-final-unit.log",
+      "eigenvalues_per_scan": 1170,
+      "maximum_error": 1.598721e-14
+    }
+  ],
+  "distributed_records": [
+    {
+      "log": "build-mpi/translation-dbcsr-four-columns.log",
+      "metric_mode": 0,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        3.376612e-16,
+        4.996004e-15,
+        9.678788e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-dbcsr-four-columns.log",
+      "metric_mode": 1,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        4.577567e-16,
+        7.438494e-15,
+        9.681087e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-dbcsr-four-rows.log",
+      "metric_mode": 0,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        3.376612e-16,
+        8.770762e-15,
+        9.718433e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-dbcsr-four-rows.log",
+      "metric_mode": 1,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        4.577567e-16,
+        4.218847e-15,
+        7.515994e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-dbcsr-one-rank.log",
+      "metric_mode": 0,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        3.376612e-16,
+        5.995204e-15,
+        8.85665e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-dbcsr-one-rank.log",
+      "metric_mode": 1,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        4.577567e-16,
+        1.44329e-15,
+        9.833999e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-dbcsr-two-columns.log",
+      "metric_mode": 0,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        3.376612e-16,
+        8.881784e-16,
+        9.434055e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-dbcsr-two-columns.log",
+      "metric_mode": 1,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        4.577567e-16,
+        2.109424e-15,
+        9.353645e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-14/UNIT/quadratic_dbcsr_unittest/quadratic_dbcsr_unittest.out",
+      "metric_mode": 0,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        3.376612e-16,
+        5.995204e-15,
+        8.85665e-11
+      ]
+    },
+    {
+      "log": "build-mpi/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-14/UNIT/quadratic_dbcsr_unittest/quadratic_dbcsr_unittest.out",
+      "metric_mode": 1,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        4.577567e-16,
+        1.44329e-15,
+        9.833999e-11
+      ]
+    },
+    {
+      "log": "build-serial/translation-quadratic-final-regtests/TEST-2026-09-25_03-20-13/UNIT/quadratic_dbcsr_unittest/quadratic_dbcsr_unittest.out",
+      "metric_mode": 0,
+      "values": [
+        4.440892e-16,
+        2.482534e-16,
+        3.376612e-16,
+        4.662937e-15,
+        9.026993e-11
+      ]
+    }
+  ],
+  "units": "model units with t=1; eigenvalues and Ritz residuals in t^2",
+  "scope": "numerical translation kernel, not Gaussian DFT unfolding"
+}

@@ -99,7 +99,7 @@ Output reports chord residuals and mean cosines/sines rather than
 ambiguous Cartesian mean positions. Dense and DBCSR/MUMPS solvers
 and the restricted post-SCF GTH-SOC construction share this tuple
 of Hermitian operators. Translation-operator band unfolding is a
-different joint-eigenvector problem and is not implemented here.
+different joint-eigenvector problem, discussed separately below.
 
 Small GPW/GAPW He and GTH-SOC Ne checks give serial-dense versus
 two-rank-iterative gaps agreeing within $6\times10^{-15}$ hartree;
@@ -110,3 +110,43 @@ Query wrapping, rigid cell rotation and equivalent SCF mesh schemes
 provide additional consistency checks. Settings and limitations
 are given in the Supporting Information; these are numerical
 integration tests, not converged material localization predictions.
+
+\subsection{Complex translation queries: numerical validation}
+Joint Hamiltonian/translation residuals provide a route to
+momentum-resolved approximate states \cite{Bairnsfather2026}.
+The numerical kernel also accepts complex queries and nonnormal
+covariant operators. For a translation matrix $T$ and
+$z=\exp(i\bm k\cdot\bm a)$, the generalized eigenproblem
+$Q_{E,z}c=\lambda Sc$ uses
+\begin{equation}
+ \begin{split}
+ Q_{E,z}&=(H-ES)S^{-1}(H-ES)\\
+ &\quad+\kappa_T^2(T-zS)^\dagger S^{-1}(T-zS),
+ \end{split}
+ \label{eq:quadratic-translation}
+\end{equation}
+where $\kappa_T$ has units of energy. DBCSR applies the forward
+and adjoint operators; reusable metric factors supply the solves.
+The adjoint is essential: for $T=C+iD$ in an orthonormal basis,
+the translation normal product contains $i[C,D]$. Independent
+Hermitian squares of $C$ and $D$ omit this term for nonnormal $T$.
+
+An 18-site trimerized chain reproduces all 1,170 eigenvalues
+from independently assembled Bloch blocks over 65 queries
+within $1.6\times10^{-14}t^2$, with $t$ the model energy scale.
+An open-chain counterexample distinguishes the correct normal
+product from the Hermitian-square approximation by
+$8.60\times10^{-2}t^2$. Complex basis-change, restarted-iteration
+and distributed adjoint tests are detailed in the Supporting
+Information. These are model-kernel checks, not DFT unfolding
+results or parallel scaling measurements.
+
+A Gaussian DFT unfolding input path is not yet provided. In
+particular, with a continuum unitary translation $U$,
+$T=\Phi^\dagger U\Phi$ and $S=\Phi^\dagger\Phi$, the projected
+translation residual underestimates the continuum residual by
+$c^\dagger(S-T^\dagger S^{-1}T)c\geq0$.
+Translated Gaussian overlaps and this projection complement
+must be validated before assigning continuum momentum meaning
+to the computed approximate states; polar-unitarizing $T$
+would not supply that validation.

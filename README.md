@@ -55,7 +55,7 @@ repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
 The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/paper-revisions/topology-progress-20260925/periodic-quadratic/.
+/Users/tkuehne/paper-revisions/topology-progress-20260925/translation-quadratic/.
 The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
@@ -193,8 +193,18 @@ Raw data and a replayable comparison script are recorded in
 trigonometric position/energy diagnostic, not band unfolding or an
 irreducible property solver. The manuscript and SI separate finite-basis
 residuals, eigenpair accuracy and actual material-convergence requirements.
+The complex-query extension now also checks nonnormal translations, explicit
+adjoint products and complex expectations. An 18-site trimerized model reproduces
+1,170 Bloch-block eigenvalues to 1.60e-14 in squared model energy units. An open
+chain demonstrates why independent Hermitian real/imaginary squares are not
+equivalent. The new distributed unit test passes with dense and MUMPS metric
+solves; the affected regression drivers now pass 53/53 serial and 88/88 MPI.
+Records, source fixtures and reproduction instructions are in
+`validation/development/translation-quadratic-validation.md`. This is numerical
+infrastructure, not Gaussian band unfolding: translated AO overlaps and the
+continuum projection complement remain to be implemented and validated.
 The source tree still has no full general EBR catalogue. Hall response,
-three-dimensional AII localizers, band unfolding and multi-node scaling
+three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.
 
 The pre-split manuscript sources are backed up at

@@ -1670,6 +1670,105 @@ assertions, retaining the existing finite-system references.
 Neither the small torus tests nor the local
 two-rank runs establish large-system or multi-node scaling.
 
+\subsection{Complex translation queries and distributed adjoints}
+\label{sec:si-translation-quadratic}
+These additional checks concern the low-level quadratic solver,
+not Gaussian band unfolding. The complete source fixtures and
+raw logs are retained in
+\nolinkurl{validation/development/translation-quadratic-records.tar.gz};
+its checksummed manifest and the accompanying summary script
+preserve the distinction between spectra, operator errors and
+eigenpair residuals. All model numbers use a lattice spacing
+of one and an energy scale $t=1$, not atomic units.
+
+The first fixture is a periodic 18-site nearest-neighbor chain.
+With indices modulo 18, $T_{i,i+1}=1$ and
+$H=-t(T+T^\dagger)$. At $k=2\pi(5/18)$,
+$E/t=-2\cos k+0.031$ and $\kappa_T/t=1.3$,
+the lowest quadratic eigenvalue is $(0.031t)^2$.
+The numerical state has $\langle T\rangle=e^{ik}$ and a
+vanishing translation residual within $10^{-12}$.
+This checks the translation phase itself, not only its real part.
+
+A second periodic fixture has six three-site cells, hopping
+amplitudes $-0.8t,-0.8t,-1.2t$ and
+$\kappa_T/t=0.7$. For each supercell phase
+$q=2\pi m/6$, $m=0,\ldots,5$, an independent three-dimensional
+Bloch block sets $T_{12}=T_{23}=1$, $T_{31}=e^{iq}$ and
+$H_{12}=H_{23}=-0.8t$, $H_{31}=-1.2te^{iq}$, with Hermitian
+completion of $H$. The five energies
+$E/t=-2.2,-1,0,0.7,2$ and 13 momenta
+$k=-\pi+2\pi j/13$, $j=0,\ldots,12$, define 65 queries.
+The complete 18-dimensional spectrum at every query is
+compared with the sorted union of all six Bloch-block spectra.
+All 1,170 eigenvalues agree within $1.60\times10^{-14}t^2$.
+This comparison checks the cell-folding construction rather
+than selected minima of an unfolding plot.
+
+For the open-chain test, the wraparound translation is removed,
+the trimerized hoppings are retained only between neighboring
+sites, and site 4 has onsite energy $0.17t$.
+The query is $E/t=0.33$, $z=e^{0.73i}$ and
+$\kappa_T/t=1.3$. A separately assembled normal-product
+reference uses LU metric solves and a generalized Hermitian
+eigensolver. Its full spectrum agrees with the quadratic solver
+within $3.56\times10^{-15}t^2$. Writing $T=C+iD$ and instead
+adding the two Hermitian residual squares drops $i[C,D]$;
+the largest ordered-eigenvalue discrepancy is
+$8.604947\times10^{-2}t^2$. This is a deliberate negative control,
+not numerical noise or an adjustable reference value.
+
+A nonsingular complex upper-bidiagonal basis change sets
+$F_{\ell\ell}=1+0.02\ell$ for $\ell<18$, $F_{18,18}=1$, and
+$F_{\ell,\ell+1}=0.21-0.12\mathrm{i}$. In the transformed problem,
+$S=F^\dagger F$ and $A'=F^\dagger A F$.
+Spectra change by at most $5.33\times10^{-15}t^2$ and
+complex expectations, expressed in model units, by
+$2.25\times10^{-14}$. Complex shifts of each operator and its
+query leave the residual spectrum invariant. Restarted iteration
+with ten trial vectors obtains the two lowest states; their
+projector agrees with the dense reference within $10^{-8}$
+in maximum element norm. The test compares the subspace,
+not arbitrary individual eigenvector phases.
+
+The distributed fixture uses six AO blocks of size three,
+a complex nonorthogonal metric and a nonnormal complex
+translation-like operator. Serial and one-, two- and four-rank
+MPI runs cover both row- and column-oriented process grids.
+Forward and adjoint products against dense references differ
+by at most $4.45\times10^{-16}$ in the scaled model units;
+the largest metric-solve residual is $4.58\times10^{-16}$.
+Dense-factor and MUMPS-factor iterations agree with the two
+reference eigenvalues within $8.78\times10^{-15}t^2$, while
+their eigenpair residuals reach $9.84\times10^{-11}t^2$.
+Supplying the forward operator in place of its adjoint is
+deliberately tested and rejected. These tiny MPI fixtures
+check communication and conjugation, not speedup or memory scaling.
+
+Focused instrumented tests also pass bounds checking,
+undefined-behavior checks and floating-point traps in the
+numerical kernel. Traps are temporarily disabled only around
+external LAPACK calls. Following the complex-query extension,
+the affected quadratic/localizer directories pass 53/53 serial
+and 88/88 two-rank MPI assertions, with two OpenMP threads per
+process and one BLAS thread. Earlier finite and periodic
+Gaussian regression references remain unchanged.
+
+For a future Gaussian translation adapter, an additional
+projection check is required. Let $\psi=\Phi c$ be normalized,
+$S=\Phi^\dagger\Phi$, and $T=\Phi^\dagger U\Phi$ for unitary
+continuum translation $U$. The continuum residual obeys
+\[
+ \|(U-z)\psi\|^2
+ =c^\dagger[(1+|z|^2)S-zT^\dagger-\overline zT]c.
+\]
+Subtracting the projected normal-product residual gives
+$c^\dagger(S-T^\dagger S^{-1}T)c$, the norm squared of the
+translated state outside the AO span. The model tests above
+do not validate translated Gaussian overlap integrals or this
+continuum projection complement. No DFT unfolding result is
+inferred from them.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
