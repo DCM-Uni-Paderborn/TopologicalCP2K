@@ -56,7 +56,8 @@ def nnkp(cell):
 
 
 def inputs(args):
-    if args.size < 0 or args.vacuum <= 0 or args.temperature < 0 or args.cutoff <= 0 or args.scf_mesh < 1:
+    finite = all(math.isfinite(x) for x in (args.size, args.vacuum, args.temperature, args.cutoff, args.scf_mesh))
+    if not finite or args.size < 0 or args.vacuum <= 0 or args.temperature < 0 or args.cutoff <= 0 or args.scf_mesh < 1:
         raise ValueError("Invalid geometry or numerical setting")
     cell, atoms = geometry(args.size, args.vacuum)
     nao = len(atoms) * {"DZVP": 13, "TZVP": 17, "TZV2P": 29}[args.basis]
@@ -114,6 +115,9 @@ def inputs(args):
     if args.mode == "localizer":
         if not args.energy:
             raise ValueError("Localizer queries require explicit absolute energies")
+        if (not all(math.isfinite(x) for x in (*args.energy, *args.kappa, *args.offset))
+                or not args.kappa or min(args.kappa) <= 0 or not args.offset):
+            raise ValueError("Nonfinite query or nonpositive localizer scale")
         center = [sum(p[d] for p in atoms) / len(atoms) for d in range(3)]
         positions = ["      POSITION [angstrom] " + " ".join(
             f"{center[d] + (x if d == 0 else 0):.16g}" for d in range(3))

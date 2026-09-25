@@ -229,6 +229,18 @@ convergence nor the finite-range theorem's full hypotheses.
 The Supporting Information distinguishes this reference
 representation from the native real-cell solver.
 
+A second SOC material reference uses a fixed Bi(111) bilayer geometry
+with $a=4.33$ \AA\ and buckling $1.74$ \AA\ from
+Ref.~\cite{Li2021Bismuth}. The restricted PBE potential and complete
+26-state scalar DZVP space define a post-SCF GTH-SOC Hamiltonian.
+Its occupied ten-spinor Wilson surface converges to $\nu=1$ after
+three refinements, with a final sampled indirect electronic gap of
+0.403202 eV. The scalar SCF mesh is $8\times8\times1$, whereas
+the final Wilson surface contains 97 loops with 96 points per loop.
+This provides an independent periodic reference for finite-flake
+tests, not a size-converged finite localizer result or a reproduction
+of the reference article's different electronic Hamiltonian.
+
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a
 $30\times30$ lattice, the complex localizer has order 3,600

@@ -3007,6 +3007,39 @@ archive-verification and numerical-replay script, are retained in
 The table and pairwise differences are regenerated directly from
 the retained reports rather than transcribed from run summaries.
 
+\subsection{Bi(111) periodic reference for finite-flake validation}
+\label{sec:si-bismuth-finite}
+The fixed Bi(111) geometry uses an in-plane lattice constant of
+4.33 \AA\ and a vertical sublattice separation of 1.74 \AA,
+following Li et al., \emph{New J. Phys.} \textbf{23}, 063042 (2021),
+\href{https://doi.org/10.1088/1367-2630/ac04c9}{doi:10.1088/1367-2630/ac04c9}.
+The primitive cell has two Bi atoms, a 20 \AA\ open-axis height,
+and identical \texttt{PERIODIC XY} settings for the cell and Poisson
+solver. Restricted PBE, the UZH DZVP-MOLOPT-GGA-GTH-q5 basis,
+GTH-SOC pseudopotentials, a 400 Ry cutoff and 40 Ry relative cutoff
+define this test. Its complex full-grid $8\times8\times1$ scalar
+SCF calculation converges in 75 iterations to
+$-11.059654777634860$ hartree. All 26 scalar AOs enter the
+post-SCF SOC second variation; the selected Wilson space contains
+the lowest ten spinors, corresponding to ten valence electrons.
+
+Starting with 13 Wilson loops of 12 points each, the adaptive
+calculation retains $\nu=1$ through three refinements and meets
+the $10^{-3}$ WCC-change tolerance. The final surface contains
+97 loops with 96 points per loop, with maximum reported WCC
+change $5.5218\times10^{-4}$ and transverse step 0.019109.
+The sampled indirect electronic gaps are 0.405115, 0.403917,
+0.403222 and 0.403202 eV on successive surfaces. The complete
+SCF-plus-Wilson run takes 75.93 s with two MPI ranks and two
+OpenMP threads per rank on the local validation machine. This
+is a single-run duration, not a scaling result.
+The inputs, full outputs, eigenvalues and overlap links are retained
+in \nolinkurl{validation/development/bismuth-finite-validation/}.
+The original per-run driver is archived rather than retrospectively
+replaced by its later version. This result establishes convergence
+of the Wilson sampling for this fixed Hamiltonian, not complete-basis
+convergence or a topological classification of an edge-relaxed flake.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

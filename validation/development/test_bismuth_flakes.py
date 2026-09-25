@@ -10,9 +10,9 @@ from types import SimpleNamespace
 import unittest
 
 import numpy as np
-from scipy.linalg import block_diag, eigh
+from scipy.linalg import block_diag, eigh, eigvalsh
 
-from analyze_bismuth_flakes import moments, operators, queries
+from analyze_bismuth_flakes import moments, native_comparison, operators, queries
 from run_bismuth_flakes import geometry, inputs, nnkp
 
 sys.path.insert(0, str(Path(os.environ["CP2K_ROOT"]) / "build-serial"))
@@ -32,6 +32,26 @@ def s_basis(shift=0.):
 
 
 class FlakeChecks(unittest.TestCase):
+    def test_native_comparison(self):
+        text = """SPECTRAL_LOCALIZER| Position [bohr]: 0 1 2
+SPECTRAL_LOCALIZER| Energy [hartree]: -0.1
+SPECTRAL_LOCALIZER| Kappa [hartree/bohr]: 0.01
+SPECTRAL_LOCALIZER| Gap bracket [hartree]: 0.02999999 0.03000001
+SPECTRAL_LOCALIZER| Gap [hartree]: 0.02999999
+SPECTRAL_LOCALIZER| Z2 index: 1
+"""
+        query = dict(position_bohr=[0., 1., 2.], energy_hartree=-.1,
+                     kappa_hartree_bohr=.01, gap_hartree=.03, z2=1)
+        self.assertTrue(native_comparison(text, [query])["accepted"])
+        for key, value in (("gap_hartree", .031), ("z2", 0)):
+            self.assertFalse(native_comparison(text, [dict(query, **{key: value})])["accepted"])
+        with self.assertRaises(ValueError):
+            native_comparison(text, [dict(query, energy_hartree=-.2)])
+        with self.assertRaises(ValueError):
+            native_comparison(text, [])
+        dense = "\n".join(line for line in text.splitlines() if "Gap bracket" not in line)
+        self.assertTrue(native_comparison(dense, [query])["accepted"])
+
     def test_geometry(self):
         for size in (0, 1, 3, 5):
             cell, atoms = geometry(size, 20.)
@@ -63,6 +83,9 @@ class FlakeChecks(unittest.TestCase):
         for expected in ("&SPECTRAL_LOCALIZER", "&WANNIER90", "SCF_GUESS RESTART", "QS_SCF 5"):
             self.assertIn(expected, files["input.inp"])
         self.assertIn("gamma.nnkp", files)
+        for key, value in (("vacuum", float("nan")), ("kappa", [-.1])):
+            with self.assertRaises(ValueError):
+                inputs(SimpleNamespace(**dict(case, **{key: value})))
         lines = nnkp(geometry(0, 20)[0]).splitlines()
         real = np.array([line.split() for line in lines[1:4]], float)
         reciprocal = np.array([line.split() for line in lines[6:9]], float)
@@ -124,6 +147,26 @@ class FlakeChecks(unittest.TestCase):
                                  [2*np.ones(3)], aii_skew, skew_sign)[0]
         self.assertEqual(original["z2"], translated["z2"])
         self.assertAlmostEqual(original["gap_hartree"], translated["gap_hartree"], places=14)
+
+    def test_covariant_metric_gap(self):
+        integrated = moments(s_basis(), primitive_integrals)
+        w, v = eigh(integrated[0])
+        root = block_diag(*[(v*np.sqrt(w))@v.T.conj()]*2)
+        inverse = np.linalg.inv(root)
+        a = np.array([[.2, .03+.04j], [.03-.04j, -.1]])
+        b = np.array([[0, .01-.02j], [-.01+.02j, 0]])
+        h = np.block([[a, b], [-b.conj(), a.conj()]])
+        overlap = block_diag(integrated[0], integrated[0])
+        x, y = [block_diag(r, r) for r in integrated[1:3]]
+        mass = root@h@root - .06*overlap
+        cross = .02*(x-.3*overlap-1j*(y+.4*overlap))
+        covariant = np.block([[mass, cross], [cross.conj().T, -mass]])
+        metric = block_diag(overlap, overlap)
+        inverse = block_diag(inverse, inverse)
+        orthonormal = inverse@covariant@inverse
+        np.testing.assert_allclose(eigvalsh(covariant, metric), eigvalsh(orthonormal), atol=1e-14)
+        skew, _ = aii_skew(orthonormal)
+        self.assertIn(skew_sign(skew), (-1, 1))
 
 
 if __name__ == "__main__":

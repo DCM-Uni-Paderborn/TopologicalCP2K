@@ -112,13 +112,54 @@ def queries(h, positions, energies, kappas, points, aii_skew, skew_sign):
     return result
 
 
+def native_comparison(text, reference, tolerance=2e-8):
+    """Compare like-for-like queries, including the metric-aware sparse gap bracket."""
+    fields = {"Position [bohr]": "position_bohr", "Energy [hartree]": "energy_hartree",
+              "Kappa [hartree/bohr]": "kappa_hartree_bohr", "Gap [hartree]": "gap_hartree",
+              "Gap bracket [hartree]": "gap_bracket", "Z2 index": "z2",
+              "Pfaffian solve residual": "solve_residual"}
+    native = []
+    for line in text.splitlines():
+        if "SPECTRAL_LOCALIZER| " not in line:
+            continue
+        content = line.split("SPECTRAL_LOCALIZER| ", 1)[1].strip()
+        if ":" not in content:
+            continue
+        key, value = content.split(":", 1)
+        if key == "Position [bohr]":
+            native.append({"z2": None})
+        if key in fields:
+            if not native:
+                raise ValueError("Localizer result without a position")
+            values = [float(x) for x in value.split()]
+            native[-1][fields[key]] = values if key in ("Position [bohr]", "Gap bracket [hartree]") else values[0]
+    if len(native) != len(reference):
+        raise ValueError("Different numbers of native and independent queries")
+    result = []
+    for index, (actual, expected) in enumerate(zip(native, reference)):
+        for key in ("position_bohr", "energy_hartree", "kappa_hartree_bohr"):
+            if not np.allclose(actual[key], expected[key], atol=1e-11, rtol=0):
+                raise ValueError(f"Different native/reference {key} at query {index}")
+        lower, upper = actual.get("gap_bracket", [actual["gap_hartree"]]*2)
+        gap = expected["gap_hartree"]
+        discrepancy = max(0., lower-gap, gap-upper)
+        valid = lower <= upper and discrepancy <= tolerance and actual["z2"] == expected["z2"]
+        result.append(dict(query=index, native=actual, independent_gap_hartree=gap,
+                           distance_from_bracket_hartree=discrepancy,
+                           independent_z2=expected["z2"], accepted=bool(valid)))
+    return dict(tolerance_hartree=tolerance, accepted=all(row["accepted"] for row in result),
+                queries=result)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("root", type=Path)
     parser.add_argument("work", type=Path)
-    parser.add_argument("--energy-offset-ev", nargs="+", type=float, default=[0.])
-    parser.add_argument("--kappa", nargs="+", type=float, default=[.001, .003, .01])
-    parser.add_argument("--offset", nargs="+", type=float, default=[0.])
+    energy_options = parser.add_mutually_exclusive_group()
+    energy_options.add_argument("--energy-offset-ev", nargs="+", type=float)
+    energy_options.add_argument("--energy", nargs="+", type=float, help="Absolute energy in hartree")
+    parser.add_argument("--kappa", nargs="+", type=float)
+    parser.add_argument("--offset", nargs="+", type=float)
     parser.add_argument("--output", default="independent-localizers.json")
     args = parser.parse_args()
     sys.path.insert(0, str(args.root / "build-serial"))
@@ -126,20 +167,34 @@ def main():
     from check_bloch_localizer import aii_skew, skew_sign
 
     work = args.work.resolve()
+    run = json.loads((work / "run.json").read_text())
+    if not run["completed"] or not run["scf_converged"] or run["returncode"] != 0:
+        raise ValueError("Only completed, converged CP2K calculations can be analyzed")
     snapshot_file = work / "bismuth.topology"
+    with snapshot_file.open("rb") as stream:
+        snapshot_hash = hashlib.file_digest(stream, "sha256").hexdigest()
+    if snapshot_hash != run["files"]["bismuth.topology"]:
+        raise ValueError("The exported spectrum has changed since the CP2K run")
     snapshot = read_snapshot(snapshot_file)
     nelectron = 5 * len(snapshot.positions)
     if nelectron % 2 or snapshot.energies.shape[1] <= nelectron:
         raise ValueError("Missing conduction states or odd number of electrons")
     valence, conduction = snapshot.energies[0, nelectron-1:nelectron+1]
     neutral_midpoint = (valence + conduction) / 2
-    energies = neutral_midpoint + np.asarray(args.energy_offset_ev) / HARTREE_EV
+    native = run["options"]["mode"] == "localizer"
+    energies = args.energy
+    if energies is None and args.energy_offset_ev is None and native:
+        energies = run["options"]["energy"]
+    if energies is None:
+        energies = neutral_midpoint + np.asarray(args.energy_offset_ev or [0.]) / HARTREE_EV
+    kappas = args.kappa or run["options"].get("kappa") or [.001, .003, .01]
+    offsets = args.offset or run["options"].get("offset") or [0.]
+    if not np.isfinite([*energies, *kappas, *offsets]).all() or min(kappas) <= 0:
+        raise ValueError("Nonfinite query or nonpositive localizer scale")
     center = np.mean(snapshot.positions, axis=0)
-    points = [center + np.array([x / BOHR_ANGSTROM, 0., 0.]) for x in args.offset]
+    points = [center + np.array([x / BOHR_ANGSTROM, 0., 0.]) for x in offsets]
     start = time.monotonic()
     cache = work / "independent-ao-moments.npz"
-    with snapshot_file.open("rb") as stream:
-        snapshot_hash = hashlib.file_digest(stream, "sha256").hexdigest()
     method_hash = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     integral_hash = hashlib.sha256((args.root / "build-serial/gaussian_states.py").read_bytes()).hexdigest()
     if cache.exists():
@@ -160,11 +215,25 @@ def main():
                   natoms=len(snapshot.positions), nao=int(sum(snapshot.atom_sizes)),
                   occupied_spinors=nelectron, spectral_gap_hartree=float(conduction-valence),
                   neutral_midpoint_hartree=float(neutral_midpoint), diagnostics=diagnostics,
-                  queries=queries(h, positions, energies, args.kappa, points, aii_skew, skew_sign),
+                  queries=queries(h, positions, energies, kappas, points, aii_skew, skew_sign),
                   elapsed_seconds=time.monotonic()-start)
+    if native:
+        output = work / "output.out"
+        if hashlib.sha256(output.read_bytes()).hexdigest() != run["files"][output.name]:
+            raise ValueError("The native output changed after the CP2K run")
+        report["native_comparison"] = native_comparison(output.read_text(), report["queries"])
+    method_copy = work / "analysis-method.py"
+    if method_copy.exists():
+        if hashlib.sha256(method_copy.read_bytes()).hexdigest() != method_hash:
+            raise ValueError("A different analysis method is already retained here")
+    else:
+        with method_copy.open("xb") as stream:
+            stream.write(Path(__file__).read_bytes())
     with (work / args.output).open("x") as stream:
         json.dump(report, stream, indent=2, allow_nan=False)
         stream.write("\n")
+    if native and not report["native_comparison"]["accepted"]:
+        raise SystemExit("Native and independently reconstructed localizers disagree; see report")
 
 
 if __name__ == "__main__":
