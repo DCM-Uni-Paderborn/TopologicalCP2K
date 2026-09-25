@@ -172,6 +172,16 @@ multiple candidates at the sampled points. Explicit type-I tables supply
 the previously absent opposite-valley references. This is not unique onsite
 labelling or a connectivity proof; see
 `validation/development/ebr-character-validation.md` and the SI.
+A full invariant-torus Fourier comparison now shows that all 378 of those
+multi-candidate sets have equal unitary character functions, not merely
+equal sampled characters. Denser k sampling alone cannot resolve them.
+Conversely, analytic inversion centers and the Gaussian He tests show
+that the new diagnostic does resolve genuine sampling aliases. It does
+not merge atomic columns or infer Bloch-bundle equivalence. The all-530
+Hall-setting audit and both 179/179 regression drivers pass. The SI adds
+the quotient-lattice derivation and representative GPW/GAPW/SOC class
+counts; full records and a verified extraction/replay are described in
+`validation/development/fourier-character-validation.md`.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, periodic quadratic analysis and
 multi-node scaling remain open. The working draft is not submission-ready.

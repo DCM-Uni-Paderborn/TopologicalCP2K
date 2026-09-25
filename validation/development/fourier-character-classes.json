@@ -1,0 +1,198 @@
+{
+  "serial": {
+    "automatic-gapw.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 11,
+      "residual": 0.0
+    },
+    "automatic-helium.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 11,
+      "residual": 0.0
+    },
+    "automatic-shear.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 11,
+      "residual": 0.0
+    },
+    "automatic-soc.little_group": {
+      "columns": 10,
+      "classes": 10,
+      "sampled_classes": 10,
+      "residual": 0.0
+    },
+    "helium-atomic-budget.little_group": {
+      "columns": 125,
+      "classes": 125,
+      "sampled_classes": 125,
+      "residual": 0.0
+    },
+    "helium-gapw.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 5,
+      "residual": 0.0
+    },
+    "helium-little.little_group": {
+      "columns": 125,
+      "classes": 125,
+      "sampled_classes": 18,
+      "residual": 0.0
+    },
+    "helium-monodromy.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 2,
+      "residual": 0.0
+    },
+    "helium-screw.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 5,
+      "residual": 0.0
+    },
+    "helium-shear.little_group": {
+      "columns": 125,
+      "classes": 125,
+      "sampled_classes": 18,
+      "residual": 0.0
+    },
+    "helium-wilson.little_group": {
+      "columns": 72,
+      "classes": 72,
+      "sampled_classes": 72,
+      "residual": 0.0
+    },
+    "neon-generic.little_group": {
+      "columns": 33,
+      "classes": 29,
+      "sampled_classes": 8,
+      "residual": 1.8539821925226545e-17
+    },
+    "neon-little-soc.little_group": {
+      "columns": 33,
+      "classes": 29,
+      "sampled_classes": 17,
+      "residual": 1.8539821925226545e-17
+    },
+    "neon-little.little_group": {
+      "columns": 72,
+      "classes": 72,
+      "sampled_classes": 35,
+      "residual": 0.0
+    },
+    "neon-screw.little_group": {
+      "columns": 10,
+      "classes": 10,
+      "sampled_classes": 4,
+      "residual": 0.0
+    },
+    "neon-spin-lift.little_group": {
+      "columns": 26,
+      "classes": 23,
+      "sampled_classes": 23,
+      "residual": 1.8539821925226545e-17
+    }
+  },
+  "mpi": {
+    "automatic-gapw.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 11,
+      "residual": 0.0
+    },
+    "automatic-helium.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 11,
+      "residual": 0.0
+    },
+    "automatic-shear.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 11,
+      "residual": 0.0
+    },
+    "automatic-soc.little_group": {
+      "columns": 10,
+      "classes": 10,
+      "sampled_classes": 10,
+      "residual": 0.0
+    },
+    "helium-atomic-budget.little_group": {
+      "columns": 125,
+      "classes": 125,
+      "sampled_classes": 125,
+      "residual": 0.0
+    },
+    "helium-gapw.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 5,
+      "residual": 0.0
+    },
+    "helium-little.little_group": {
+      "columns": 125,
+      "classes": 125,
+      "sampled_classes": 18,
+      "residual": 0.0
+    },
+    "helium-monodromy.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 2,
+      "residual": 0.0
+    },
+    "helium-screw.little_group": {
+      "columns": 11,
+      "classes": 11,
+      "sampled_classes": 5,
+      "residual": 0.0
+    },
+    "helium-shear.little_group": {
+      "columns": 125,
+      "classes": 125,
+      "sampled_classes": 18,
+      "residual": 0.0
+    },
+    "helium-wilson.little_group": {
+      "columns": 72,
+      "classes": 72,
+      "sampled_classes": 72,
+      "residual": 0.0
+    },
+    "neon-generic.little_group": {
+      "columns": 33,
+      "classes": 29,
+      "sampled_classes": 8,
+      "residual": 1.8539821925226545e-17
+    },
+    "neon-little-soc.little_group": {
+      "columns": 33,
+      "classes": 29,
+      "sampled_classes": 17,
+      "residual": 1.8539821925226545e-17
+    },
+    "neon-little.little_group": {
+      "columns": 72,
+      "classes": 72,
+      "sampled_classes": 35,
+      "residual": 0.0
+    },
+    "neon-screw.little_group": {
+      "columns": 10,
+      "classes": 10,
+      "sampled_classes": 4,
+      "residual": 0.0
+    },
+    "neon-spin-lift.little_group": {
+      "columns": 26,
+      "classes": 23,
+      "sampled_classes": 23,
+      "residual": 1.8539821925226545e-17
+    }
+  }
+}

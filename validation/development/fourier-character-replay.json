@@ -1,0 +1,14 @@
+{
+  "files_verified": 232,
+  "all_hashes_match": true,
+  "native_exit": 0,
+  "audit": {
+    "rank": 0,
+    "ambiguous_references": 378,
+    "references_with_distinct_character_functions": 0,
+    "references_with_equal_character_functions": 378,
+    "bands": 3248,
+    "queries": 213238,
+    "residual": 3.973993651728112e-15
+  }
+}

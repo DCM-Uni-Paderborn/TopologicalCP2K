@@ -1,0 +1,68 @@
+{
+  "results": [
+    {
+      "log": "build-serial/fourier-character-ebr.log",
+      "ranks": [
+        {
+          "rank": 0,
+          "groups": 230,
+          "site_spin_cases": 1599,
+          "columns": 5641,
+          "unique": 5263,
+          "ambiguous": 378,
+          "conventions": 2,
+          "native_columns": 5704,
+          "largest_residual": 1.0471976e-05
+        }
+      ]
+    },
+    {
+      "log": "build-mpi/fourier-character-ebr.log",
+      "ranks": [
+        {
+          "rank": 0,
+          "groups": 230,
+          "site_spin_cases": 1599,
+          "columns": 5641,
+          "unique": 5263,
+          "ambiguous": 378,
+          "conventions": 2,
+          "native_columns": 5704,
+          "largest_residual": 1.0471976e-05
+        },
+        {
+          "rank": 1,
+          "groups": 230,
+          "site_spin_cases": 1599,
+          "columns": 5641,
+          "unique": 5263,
+          "ambiguous": 378,
+          "conventions": 2,
+          "native_columns": 5704,
+          "largest_residual": 1.0471976e-05
+        }
+      ]
+    },
+    {
+      "log": "build-serial/fourier-character-instrumented.log",
+      "ranks": [
+        {
+          "rank": 0,
+          "groups": 230,
+          "site_spin_cases": 1599,
+          "columns": 5641,
+          "unique": 5263,
+          "ambiguous": 378,
+          "conventions": 2,
+          "native_columns": 5704,
+          "largest_residual": 1.0471976e-05
+        }
+      ]
+    }
+  ],
+  "queries_per_convention": 9667,
+  "character_entries_per_convention": 297529,
+  "supplemental_tables": 40,
+  "supplemental_points": 62,
+  "largest_shared_table_residual": 3.0044025837014233e-16
+}

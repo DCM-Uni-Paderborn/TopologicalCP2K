@@ -1179,6 +1179,101 @@ Scripts, input and source hashes, full output and replay instructions
 are retained in
 \texttt{validation/development/ebr-character-validation.md}.
 
+\subsection{Character functions beyond finite reciprocal samples}
+Equal characters at selected reciprocal points need not imply equal
+character functions. We distinguish these cases without replacing
+the sampled integer signature matrix or its real-space induction
+witnesses. For a unitary operation with integer direct-space rotation
+$W$, the invariant reciprocal torus is
+\begin{equation}
+ K_W=\{\mathbf k\bmod\mathbb Z^3:
+          (W^T-I)\mathbf k\in\mathbb Z^3\}.
+\end{equation}
+Its character lattice is $\mathbb Z^3/(W-I)\mathbb Z^3$.
+Indeed, two integer shifts differing by $(W-I)\mathbf n$ give
+identical Bloch phases on $K_W$. For the checked Smith factorization
+$U(W-I)V=D$, each finite induction term
+$c_j\exp(-2\pi i\mathbf k\cdot\mathbf L_j)$ is therefore collected
+under the key $U\mathbf L_j$, modulo each nonzero Smith divisor.
+Rows with zero divisor retain an unrestricted integer key.
+The coefficients $c_j$ include the local character, the spin-lift
+factor and, where required, conjugation by an antiunitary orbit
+representative. Antiunitary operators themselves have no
+basis-independent trace and are not assigned character functions.
+
+These quotient characters are linearly independent on the complete
+compact group $K_W$. Equality of the collected coefficients thus
+tests equality of the finite character functions, including all
+disconnected torsion components, rather than fitting more k points.
+Integer operations are checked for overflow; complex coefficients
+are compared at $10^{-9}$ after scaling by band dimension in this
+audit. The production diagnostic uses the supplied character
+tolerance and rejects nontransitive tolerance neighborhoods.
+It reports local unitary-character classes but does not merge
+atomic columns, change membership decisions or infer an intertwiner
+between Bloch bundles.
+
+As an analytic counterexample to Gamma-only matching, equal-parity
+orbitals at inversion centers $(0,0,0)$ and $(1/2,0,0)$ have the
+same Gamma characters but different characters on other components
+of the inversion-fixed torus. The Fourier comparison distinguishes
+both parity pairs. With only Gamma supplied to the atomic catalogue,
+all sixteen centered inversion columns and the generic-orbit column
+remain distinct, also with Kramers pairing.
+
+For the 378 multi-candidate references in the preceding
+230-space-group EBR audit, however, every candidate set has equal
+collected unitary-character coefficients in both tested coordinate
+conventions. Optimized serial and both MPI processes agree.
+These ambiguities are therefore not removed by denser sampling;
+canonical onsite conventions and bundle-level information remain
+separate requirements. Independent evaluation of the collected
+Fourier sums against raw Bloch induction checks 213,238 operation/
+reciprocal-point queries per optimized executable or MPI process,
+with a largest dimension-scaled discrepancy below
+$4.1\times10^{-15}$. This count includes the bounded native
+database and analytic controls, not additional material calculations
+or an MPI scaling measurement. Full logs and replay instructions are
+retained with the evidence below. A separate all-setting sweep
+checks 536,410 Fourier evaluations for all 530 Hall settings,
+ordinary/grey and scalar/spinful groups at three sites, with a
+largest discrepancy below $3.8\times10^{-16}$. The updated atomic
+catalogue constructs 2,120 matrices with 31,079 columns in both
+optimized builds, while retaining its signed and nonnegative
+induction witnesses. The 179 relevant native, Gaussian, topology
+and k-point regression checks pass in each build. Independent
+reconstruction from 16 Gaussian detail files per build retains
+the earlier 31,537 character-entry comparison and rejects 128
+deliberately corrupted records across both builds.
+The focused instrumented run additionally checks 205,614 Fourier
+evaluations; it includes the induction and checked integer kernels
+but not the native SPGLIB database sweep or a fully instrumented
+Gaussian calculation. Data, source hashes and replay instructions
+are retained in
+\texttt{validation/development/fourier-character-validation.md}.
+
+The Gaussian exports also illustrate why the two diagnostics must
+remain separate. The counts below refer to generated atomic
+reference columns, not numbers of occupied bands or Wannier
+functions. Both optimized builds give the same counts; the largest
+accepted coefficient residual in these exports is
+$1.86\times10^{-17}$.
+\begin{center}
+\begin{tabular}{lrrr}
+\hline
+Test input & Columns & Sampled classes & Full-torus classes \\
+\hline
+\texttt{helium.inp} (GPW) & 125 & 18 & 125 \\
+\texttt{helium-gapw.inp} & 11 & 5 & 11 \\
+\texttt{neon-soc.inp} & 33 & 17 & 29 \\
+\texttt{neon-spin-lift.inp} & 26 & 23 & 23 \\
+\hline
+\end{tabular}
+\end{center}
+Here full-torus classes still mean equality of unitary characters
+only. Their identifiers are local to each constructed catalogue;
+all original columns and the sampled membership results are retained.
+
 \subsection{Shared spin lifts in the Gaussian SOC analysis}
 The Gaussian sewing matrices must use the same SU(2) representatives
 as their factor table. This is tested with Ne in the primitive
