@@ -126,6 +126,21 @@ solve-probe residuals are below $2.3\times10^{-14}$. These probes
 complement the independently computed gap and Pfaffian orientation;
 they are not by themselves a global factorization-error bound.
 
+A separate two-dimensional stanene calculation tests the distinction
+between solver agreement and a bulk-material classification. Fresh
+post-SCF GTH-SOC Wilson surfaces give $\nu=1$, with sampled indirect
+gaps of 0.07369 and 0.07657 eV for DZVP/200 Ry and TZVP/400 Ry,
+respectively. At a selected $3\times3$ torus query, dense and
+sparse-Pfaffian localizers also give $\nu=1$, and the dense generalized
+gap lies inside the independent MUMPS bracket. However, the full
+parameter scan does not show a size-stable localizer plateau: at
+$\eta=0.03$ hartree the DZVP index is one for torus sides 3--5 but
+zero for side 6, whose gap is $1.14\times10^{-6}$ hartree.
+These are numerical finite-torus results, not a converged localizer
+classification of stanene. The Supporting Information retains the
+positive and negative queries, the larger-basis control and a replay
+of the raw Wilson overlap matrices.
+
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a
 $30\times30$ lattice, the complex localizer has order 3,600

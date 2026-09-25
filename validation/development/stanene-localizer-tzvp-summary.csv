@@ -1,0 +1,4 @@
+case,basis,cutoff,ranks,size,order,solver,energy,eta,nu,gap
+build-mpi/stanene-localizer-validation/torus4-tzvp400,TZVP-MOLOPT-GGA-GTH-q4,400,2,4,2176,DENSE,-0.16050731,0.025,0,0.000594733607142841
+build-mpi/stanene-localizer-validation/torus4-tzvp400,TZVP-MOLOPT-GGA-GTH-q4,400,2,4,2176,DENSE,-0.16050731,0.03,1,0.000326694701527213
+build-mpi/stanene-localizer-validation/torus4-tzvp400,TZVP-MOLOPT-GGA-GTH-q4,400,2,4,2176,DENSE,-0.16050731,0.035,0,0.00150529139421152

@@ -2202,6 +2202,104 @@ source snapshots, scripts and checksums are retained in
 \nolinkurl{validation/development/silicon-defect-frozen-density-records.tar.gz};
 the companion replay independently reconstructs the matrix
 references and recomputes the reported errors.
+\end{samepage}
+
+\subsection{Stanene: a nontrivial band reference and finite-torus limits}
+\label{sec:si-stanene-localizer}
+Fresh calculations on 25 September use the two-atom stanene geometry
+of Section~S2, but explicitly set both cell and Poisson periodicity
+to XY, with the analytic two-dimensional Poisson solver and 20 \AA\
+of nonperiodic cell height. This is a new boundary-condition control,
+not a relabelling of the earlier three-dimensionally repeated slab.
+The restricted PBE SCF uses a full $8\times8\times1$ Monkhorst--Pack
+mesh, complex wavefunctions, threshold $10^{-9}$, and post-SCF
+GTH-PBE-q4 SOC. Two numerical settings are compared:
+DZVP-MOLOPT-GGA-GTH-q4 with 200 Ry and
+TZVP-MOLOPT-GGA-GTH-q4 with 400 Ry, both from
+\texttt{BASIS\_MOLOPT\_UZH}, with relative cutoff 40 Ry.
+All 26 or 34 scalar AOs are retained for the SOC diagonalization.
+Changing basis and cutoff together is a strengthened control,
+not separate extrapolations in either parameter.
+
+For the eight occupied spinors, both Wilson surfaces converge to
+$\nu=1$ on 193 loops with 192 points per loop. The sampled indirect
+gaps are 0.07369133 and 0.07656851 eV. The corresponding sampled
+valence/conduction edges are $(-4.36873808,-4.29504675)$ eV and
+$(-4.40591061,-4.32934210)$ eV. The smallest link singular values
+exceed 0.95. An independent NumPy replay forms every polar-unitary
+link from the archived complex overlap matrices, multiplies the
+closed loops including reciprocal-boundary sewing, and recomputes
+their spectra and largest-gap crossing parity. Both parities are one;
+the circular WCC differences from the native spectra are below
+$10^{-13}$. Agreement on these identical matrices checks loop
+algebra, not an independent density-functional approximation or
+proof against an unsampled band crossing.
+
+The localizer uses the full AO torus at the same converged scalar
+potential, without occupied-band projection or spectral flattening.
+The query position is the Cartesian origin. Absolute query energies
+are $-0.1592$ hartree for DZVP and $-0.16050731$ hartree for TZVP,
+both inside the respective sampled SOC gaps. A torus of side $N$
+contains $N^2$ primitive cells; its spinor localizer has order
+$104N^2$ or $136N^2$, respectively.
+Table~\ref{tab:si-stanene-localizer} retains the common-scale size
+comparison and the neighbouring-scale counterexamples.
+All 35 localizer queries, including the broader scale scan and
+serial/sparse repeats, are retained in the archive and summary CSVs.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Basis/cutoff & $N$ & $\eta$ (hartree) & $\nu$ & Gap (hartree)\\
+\midrule
+DZVP/200 Ry & 3 & 0.030 & 1 & $1.91348\times10^{-4}$\\
+DZVP/200 Ry & 4 & 0.025 & 0 & $7.40383\times10^{-4}$\\
+DZVP/200 Ry & 4 & 0.030 & 1 & $2.14861\times10^{-4}$\\
+DZVP/200 Ry & 4 & 0.035 & 0 & $1.30113\times10^{-3}$\\
+DZVP/200 Ry & 5 & 0.030 & 1 & $7.55077\times10^{-4}$\\
+DZVP/200 Ry & 6 & 0.025 & 1 & $4.16861\times10^{-4}$\\
+DZVP/200 Ry & 6 & 0.030 & 0 & $1.14403\times10^{-6}$\\
+DZVP/200 Ry & 6 & 0.035 & 1 & $2.21639\times10^{-3}$\\
+TZVP/400 Ry & 4 & 0.025 & 0 & $5.94734\times10^{-4}$\\
+TZVP/400 Ry & 4 & 0.030 & 1 & $3.26695\times10^{-4}$\\
+TZVP/400 Ry & 4 & 0.035 & 0 & $1.50529\times10^{-3}$\\
+\bottomrule
+\end{tabular}
+\caption{Resolved finite-matrix Pfaffian indices and generalized
+localizer gaps from dense two-rank MPI calculations. These data
+do not establish a size- and scale-converged bulk index.}
+\label{tab:si-stanene-localizer}
+\end{table}
+
+At the DZVP $N=3$, $\eta=0.03$ query, the dense gap is
+$1.913479789648\times10^{-4}$ hartree. Independent MUMPS shifted
+factorizations bracket it by
+$[1.913479071217,1.913479924510]\times10^{-4}$ hartree, and the
+Tacho Pfaffian also gives one, with solve-probe residual
+$1.26\times10^{-14}$. The serial dense gap differs by
+$2.86\times10^{-13}$ hartree. Each MPI calculation uses two ranks
+and two OpenMP threads per rank, with one BLAS thread.
+The sparse gap test performs 69 factorizations and reports 97 MB
+of process-summed solver memory; this is not whole-process memory
+or a performance comparison with the dense run.
+
+Thus a matching nontrivial finite-matrix value and a well-resolved
+factorization do not suffice for material validation. The $N=6$
+counterexample and the neighbouring-scale changes prevent a claim
+of a robust localizer plateau. The projected Gaussian trigonometric
+operators need not be exact commuting unitaries, and the tested
+energy/volume parameters have not been shown to satisfy sufficient
+periodic-localizer bounds. Neither selecting only favourable queries
+nor changing a reference index resolves those issues.
+
+Inputs, complete final Wilson overlaps, raw outputs, solver source
+snapshots and checksums are retained in
+\nolinkurl{validation/development/stanene-localizer-dzvp.tar.gz} and
+\nolinkurl{validation/development/stanene-localizer-tzvp.tar.gz}.
+The accompanying replay verifies all member checksums, recomputes
+the Wilson products and parity, retains every localizer query, and
+checks the dense/sparse gap bracket and serial/MPI comparison.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
@@ -2213,5 +2311,4 @@ independent band references, and timed runs with whole-process memory.
 Development diagnostics and planned work must not be merged into
 tables of completed material results.
 
-\end{samepage}
 \end{document}

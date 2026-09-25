@@ -1,0 +1,69 @@
+{
+  "reference": {
+    "case": "build-mpi/stanene-localizer-validation/reference-tzvp400",
+    "basis": "TZVP-MOLOPT-GGA-GTH-q4",
+    "cutoff": 400,
+    "ranks": 2,
+    "elapsed_seconds": 276.27605774998665,
+    "scf_energy_hartree": -6.95340593710837,
+    "loop_points": 192,
+    "loops": 193,
+    "bands": 8,
+    "numpy_z2": 1,
+    "maximum_wcc_circle_error": 7.549516567451064e-15,
+    "minimum_link_singular_value": 0.9554564202740621,
+    "maximum_link_singular_value_error": 5.329070518200751e-15,
+    "valence_max_ev": -4.4059106138,
+    "conduction_min_ev": -4.3293420992,
+    "sampled_indirect_gap_ev": 0.076568514545
+  },
+  "comparisons": {},
+  "localizers": [
+    {
+      "case": "build-mpi/stanene-localizer-validation/torus4-tzvp400",
+      "basis": "TZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 400,
+      "ranks": 2,
+      "elapsed_seconds": 75.29158949991688,
+      "scf_energy_hartree": -6.95340593710147,
+      "size": 4,
+      "solver": "DENSE",
+      "order": 2176,
+      "energy": -0.16050731,
+      "eta": 0.025,
+      "gap": 0.000594733607142841,
+      "nu": 0
+    },
+    {
+      "case": "build-mpi/stanene-localizer-validation/torus4-tzvp400",
+      "basis": "TZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 400,
+      "ranks": 2,
+      "elapsed_seconds": 75.29158949991688,
+      "scf_energy_hartree": -6.95340593710147,
+      "size": 4,
+      "solver": "DENSE",
+      "order": 2176,
+      "energy": -0.16050731,
+      "eta": 0.03,
+      "gap": 0.000326694701527213,
+      "nu": 1
+    },
+    {
+      "case": "build-mpi/stanene-localizer-validation/torus4-tzvp400",
+      "basis": "TZVP-MOLOPT-GGA-GTH-q4",
+      "cutoff": 400,
+      "ranks": 2,
+      "elapsed_seconds": 75.29158949991688,
+      "scf_energy_hartree": -6.95340593710147,
+      "size": 4,
+      "solver": "DENSE",
+      "order": 2176,
+      "energy": -0.16050731,
+      "eta": 0.035,
+      "gap": 0.00150529139421152,
+      "nu": 0
+    }
+  ],
+  "interpretation": "Finite AO diagnostics; matching individual indices is not bulk, ETA or basis convergence."
+}
