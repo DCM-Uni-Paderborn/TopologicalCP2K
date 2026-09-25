@@ -1,0 +1,23 @@
+{
+  "cases": [
+    "flake3-trim-dzvp300-spectrum",
+    "flake3-trim-dzvp300-native"
+  ],
+  "archives": [
+    {
+      "file": "flake3-trim-dzvp300-spectrum.tar.gz",
+      "bytes": 7807836,
+      "sha256": "e1c2ee3618be26b8451d967d047a50b8dcb1566fcb47f82b15a8cb78daf60029"
+    },
+    {
+      "file": "flake3-trim-dzvp300-native.tar.gz",
+      "bytes": 7541695,
+      "sha256": "e5744961bb57f01a0ad24e30d06ac3af407eea6a8eedc5228a68ffeb9fb39751"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 1044873,
+      "sha256": "595a2a6f862e1df48c9aa6deb33e527b3764787cabf5b20c22a4410f2c1ab7f5"
+    }
+  ]
+}

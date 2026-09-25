@@ -1,0 +1,20 @@
+{
+  "archives": {
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-termination-validation/flake3-trim-dzvp300-spectrum.tar.gz": "e1c2ee3618be26b8451d967d047a50b8dcb1566fcb47f82b15a8cb78daf60029",
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-termination-validation/methods-results.tar.gz": "595a2a6f862e1df48c9aa6deb33e527b3764787cabf5b20c22a4410f2c1ab7f5"
+  },
+  "report_sha256": "1cb45c80fef73f404b82c6da365ad7d4ead68f6da6193d316e91450ec4f4b4c0",
+  "script_sha256": "e7faf6c7ec1d32cb7bc4591cd7cccafebe47dfb5d1f395e4db879f2cb385b736",
+  "queries": 45,
+  "verified_archive_files": 183,
+  "maximum_gap_error_hartree": 0.0,
+  "maximum_frontier_weight_error": 0.0,
+  "native_comparison_performed": false,
+  "interval_comparison": {
+    "evaluations": 13,
+    "covered_intervals": 7,
+    "maximum_absolute_difference": 0.0,
+    "anchor_z2": 1,
+    "report_sha256": "d9722148d431fdd3aa423530e9a9abb24301ab097196dcc9fa72b56f716ddd45"
+  }
+}

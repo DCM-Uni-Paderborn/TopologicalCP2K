@@ -109,8 +109,10 @@ working paper is not yet a frozen public source distribution.
 
 ## Remaining physical controls
 
-The bare flake is unrelaxed and not size- or basis-converged. Both gaps remain
+The bare 18-atom flake is unrelaxed and not size- or basis-converged. Both gaps remain
 smaller than kBT of the scalar reference, and frontier weights remain boundary
-enhanced. Removing degree-one corners, changing the flake size, enlarging the
-basis, testing vacuum/grid convergence and further checking occupations are
+enhanced. The completed degree-one-corner control is documented separately in
+`bismuth-termination-validation.md`; it changes the gap substantially but does
+not establish convergence. Changing the flake size, enlarging the basis,
+testing vacuum/grid convergence and further checking occupations remain
 separate controls, not consequences of the successful native comparison.

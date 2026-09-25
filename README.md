@@ -229,6 +229,12 @@ paths; the small electronic gaps and strong boundary weights do not establish
 a converged insulating bulk. See
 `validation/development/bismuth-neutral-validation.md` and the corresponding SI
 subsections for raw archives, reproduction instructions and remaining controls.
+The separate `bismuth-termination-validation.md` record now tests removal of
+only the two singly coordinated corners. The neutral gap grows from 7.735 to
+219.6 meV, but frontier boundary weight remains high. Native and independent
+localizers match at all 45 queries. A rejected wide kappa interval is retained
+alongside the narrower, numerically bounded common nontrivial window. This
+is a controlled termination test, not size convergence or edge relaxation.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.

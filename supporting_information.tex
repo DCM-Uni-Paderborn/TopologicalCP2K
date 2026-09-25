@@ -3238,6 +3238,68 @@ weights, gap-cover tiling and rejection of unresolved or nonfinite
 gaps. These controls are numerical validation, not substitutes for
 physical convergence of the flake.
 
+\subsection{A controlled change of finite termination}
+The original parallelogram patch has two atoms with only one
+neighbour within 3.3 \AA. A separate neutral calculation removes
+these two atoms while preserving the simulation cell and the
+coordinates of all 16 remaining atoms. No passivation, structural
+relaxation or artificial change to the Hamiltonian matrix is used.
+The same PBE, UZH DZVP, 400/40 Ry grids and 300 K scalar smearing
+now describe 80 electrons, 208 scalar AOs and all 416 spinors.
+The calculation converges in 131 SCF iterations from the atomic
+guess. Its post-SCF SOC gap is $0.008071023745$ hartree
+(219.6 meV), with $g_{\rm el}/(k_BT)=8.4954$, compared with
+7.735 meV for the 18-atom termination at the same temperature.
+The occupied and empty frontier doublets have boundary weights
+82.62\% and 79.70\%, respectively. Ten of 16 atoms are boundary
+atoms (62.5\%); strong frontier boundary weight therefore persists
+even though the electronic gap is much larger.
+
+The neutral-window scan has three nontrivial and 42 trivial
+queries, with the nontrivial cases at the centroid and
+$\kappa=0.003$ hartree/bohr. The off-centre sampling is rescaled
+to the new patch half-width, so query counts alone are not a
+like-for-like comparison between terminations. At the centroid
+and neutral midpoint, the 16-atom localizer instead changes its
+index between $\kappa=0.0025$ and $0.00275$ hartree/bohr.
+The attempted gap cover over $[0.0025,0.0035]$ therefore correctly
+fails: it retains an unresolved region near
+$0.0026215985$ hartree/bohr after 249 midpoint evaluations.
+This negative result is archived, not replaced by a successful
+narrower scan. Varying $\kappa$ changes the localizer, not the
+fixed electronic Hamiltonian or its electronic gap.
+
+For $[0.00275,0.0035]$ hartree/bohr, 13 midpoint evaluations
+cover seven subintervals with $\nu=1$, a norm constant of
+15.22720 bohr and a minimum numerical lower bound of
+$4.64539\times10^{-5}$ hartree. This interval is also contained
+in the resolved intervals of both 18-atom temperature controls.
+Thus all three finite Hamiltonians have a common central scale
+window, although this does not remove their geometry and basis
+dependence or establish a thermodynamic limit.
+
+A five-step native restart evaluates the same 45 queries and
+exports a fresh complete spectrum for independent reconstruction.
+All 45 indices agree, with maximum distance outside the native
+gap brackets $3.48\times10^{-10}$ hartree and largest Pfaffian
+solve residual $2.36\times10^{-13}$. The comparison tolerance
+remains $2\times10^{-8}$ hartree. This native SCF/query/export
+run takes 301.50 s; the independent dense analysis takes 4.99 s.
+Its sampled process-tree RSS maximum is 18.5 GiB over 296
+successful one-second observations. These timings cover different
+tasks and must not be interpreted as a factorization speedup.
+
+The 131-step scalar SCF and complete export take 1794.77 s on
+one MPI process and two OpenMP threads. The 1751 one-second RSS
+observations have no failures and give a maximum process-tree
+sum of 16.5 GiB, with the same memory-accounting caveats as above.
+The workstation is an Apple M4 Max with 36 GiB RAM; the retained
+host record also gives OS and numerical-library versions.
+Raw termination inputs, outputs, methods, complete exports,
+successful and rejected interval bounds are retained separately
+in \path{bismuth-termination-validation/} under the development
+validation directory.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
