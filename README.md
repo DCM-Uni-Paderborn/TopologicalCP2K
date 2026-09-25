@@ -55,7 +55,7 @@ repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
 The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/paper-revisions/topology-progress-20260925/native-flattening/.
+/Users/tkuehne/paper-revisions/topology-progress-20260925/large-bloch-tori/.
 The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
@@ -243,6 +243,19 @@ The final regression subset passes 45/45 serial and 74/74 MPI assertions.
 See SI S7.13 and `validation/development/native-flattening-validation.md` for
 the source snapshot, native logs and hash-checked independent comparisons.
 This numerical agreement does not remove material size/scale dependence.
+
+The periodic flattening now uses complete primitive Bloch eigensystems after
+verifying translation covariance, rather than iterating a whole-torus matrix
+sign. A separate sparse complete-band reference extends the analysis to
+12x12, 15x15 and 18x18 tori, plus a 12x12 TZVP and a finer-SCF-mesh control.
+At the sampled eta/Delta values 1, 1.25 and 1.5, all three larger DZVP tori
+give index one; their localizer gaps are still size dependent. Fifteen smaller
+sparse/dense reference comparisons agree within 4.3e-15 Ha. Five other sparse
+queries retain unresolved Pfaffian factorizations despite nonzero spectral-gap
+estimates. Their failures and all ordering retries are preserved, not replaced
+by expected integers. SI S7.14 and `validation/development/stanene-convergence/`
+contain the larger-volume controls, source snapshots and hash-checked replay.
+The sparse reference is not claimed as a new native production representation.
 
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.

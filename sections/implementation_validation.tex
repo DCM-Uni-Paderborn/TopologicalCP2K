@@ -166,6 +166,26 @@ comparison and finite GPW/GAPW/all-electron checks are detailed in
 the Supporting Information. This verifies the implementation, not
 the convergence of the material classification.
 
+A complementary sparse complete-band representation extends the
+flattened stanene control to $12\times12$, $15\times15$ and
+$18\times18$ tori, without replacing the coordinate links by
+unitaries. At the sampled scales $\eta/\Delta=1,1.25,1.5$ all
+three sizes give $\nu=1$. The corresponding $\eta/\Delta=1$
+gaps are 0.229914, 0.252124 and 0.268152 hartree.
+At $N=12$, TZVP/400 Ry changes this gap to 0.231852 hartree;
+refining the scalar SCF mesh from $8\times8$ to $12\times12$
+with DZVP/200 Ry gives 0.229840 hartree. Both controls retain
+$\nu=1$. The representation reproduces 15 previously dense
+reference gaps within $4.3\times10^{-15}$ hartree, with every
+resolved sparse parity agreeing. Some other scale queries fail
+the sparse-factor checks despite a resolved spectral gap; these
+are reported as unresolved rather than assigned the expected
+integer. Thus the expanded evidence supports consistency over
+more sampled sizes and scales, but neither quantitative gap
+convergence nor the finite-range theorem's full hypotheses.
+The Supporting Information distinguishes this reference
+representation from the native real-cell solver.
+
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a
 $30\times30$ lattice, the complex localizer has order 3,600

@@ -1,0 +1,1426 @@
+{
+  "verified_files": 195,
+  "cases": [
+    {
+      "label": "mesh3",
+      "directory": "build-mpi/stanene-bloch-localizer/mesh3",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 3,
+      "energy": -0.1592,
+      "new_export": false,
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.47208625403618487,
+        "minimum_coordinate_singular_value": 0.7265767309540095,
+        "coordinate_commutator_norm": 0.31692338861484626,
+        "localizer_order": 936,
+        "sampled_energy_gap_hartree": 0.0013481774108173583,
+        "occupied_spinors": 72,
+        "valence_max": -0.16054817741081737,
+        "conduction_min": -0.15784007056716595
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 0.5,
+          "flatten_scale": 1.0,
+          "gap": 0.016623770566560687,
+          "nu": null,
+          "nearzero": [
+            0.016623770566560687,
+            0.016623770566560687,
+            0.06854556441917575,
+            0.06854556441917575,
+            0.06970202941308856,
+            0.06970202941308856,
+            0.08011383833869787,
+            0.08011383833869787
+          ],
+          "aii_residual": 3.5853481641923146e-14,
+          "eigen_residual": 5.740436138384003e-13,
+          "factor_residual": 0.0,
+          "pfaffian_fill": 0,
+          "nnz": 700216,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            },
+            {
+              "ordering": "reversed",
+              "resolved": false,
+              "residual": 2.0496160331872217e-09,
+              "fill": 109697
+            },
+            {
+              "ordering": "cyclic",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            }
+          ],
+          "dense_gap_error": 2.8102520310824275e-16,
+          "dense_nu": 1,
+          "elapsed_seconds": 1.0030166669748724
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.38476157777180275,
+          "nu": 0,
+          "nearzero": [
+            0.38476157777180275,
+            0.38476157777180275,
+            0.6305988840099983,
+            0.6305988840099983,
+            0.6766870400520865,
+            0.6766870400520865,
+            0.6786675396164513,
+            0.6786675396164513
+          ],
+          "aii_residual": 3.5853481641923146e-14,
+          "eigen_residual": 2.420748361509363e-11,
+          "factor_residual": 2.1610016841937906e-13,
+          "pfaffian_fill": 104337,
+          "nnz": 700216,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.1610016841937906e-13,
+              "fill": 104337
+            }
+          ],
+          "dense_gap_error": 1.6653345369377348e-15,
+          "dense_nu": 0,
+          "elapsed_seconds": 0.4684547910001129
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.61872930989645,
+          "nu": 0,
+          "nearzero": [
+            0.61872930989645,
+            0.61872930989645,
+            0.771558588416734,
+            0.771558588416734,
+            0.7719592326984679,
+            0.7719592326984679,
+            0.7812094513157901,
+            0.7812094513157901
+          ],
+          "aii_residual": 3.5853481641923146e-14,
+          "eigen_residual": 2.1983272516957546e-12,
+          "factor_residual": 5.905152789993385e-14,
+          "pfaffian_fill": 104337,
+          "nnz": 700216,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 5.905152789993385e-14,
+              "fill": 104337
+            }
+          ],
+          "dense_gap_error": 7.771561172376096e-16,
+          "dense_nu": 0,
+          "elapsed_seconds": 0.4873518330277875
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "f2706087f5445e2c75a505e23a3eb3bb7fb1ebb12a49f473f1df8866909b7ed4",
+        "stanene.mmn": "c937cbc845a6b018ad4972ab8a7f9a33d4b78762cfe18dc9f0866c8bf9f1d280"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh6",
+      "directory": "build-mpi/stanene-flattening/mesh6",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 6,
+      "energy": -0.1592,
+      "new_export": false,
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.166715834286442,
+        "minimum_coordinate_singular_value": 0.912843998563587,
+        "coordinate_commutator_norm": 0.09100178715444426,
+        "localizer_order": 3744,
+        "sampled_energy_gap_hartree": 0.0013481774093260235,
+        "occupied_spinors": 288,
+        "valence_max": -0.16054817740932603,
+        "conduction_min": -0.1578400705653089
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 0.5,
+          "flatten_scale": 1.0,
+          "gap": 0.03623404693181014,
+          "nu": null,
+          "nearzero": [
+            0.03623404693181014,
+            0.03623404693181014,
+            0.0651239536450355,
+            0.0651239536450355,
+            0.14933096516609098,
+            0.14933096516609098,
+            0.15045982913649264,
+            0.15045982913649264
+          ],
+          "aii_residual": 8.776584060204984e-14,
+          "eigen_residual": 1.0079797611532979e-11,
+          "factor_residual": 0.0,
+          "pfaffian_fill": 0,
+          "nnz": 3489736,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            },
+            {
+              "ordering": "reversed",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            },
+            {
+              "ordering": "cyclic",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            }
+          ],
+          "elapsed_seconds": 10.156043458962813
+        },
+        {
+          "energy": -0.1592,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.20426304733549477,
+          "nu": 1,
+          "nearzero": [
+            0.20426304733549477,
+            0.20426304733549477,
+            0.29191899820083267,
+            0.29191899820083267,
+            0.4778876058661517,
+            0.4778876058661517,
+            0.4809597263095714,
+            0.4809597263095714
+          ],
+          "aii_residual": 8.776584060204984e-14,
+          "eigen_residual": 4.792604283583392e-12,
+          "factor_residual": 1.613214459494397e-11,
+          "pfaffian_fill": 1260996,
+          "nnz": 3489768,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.613214459494397e-11,
+              "fill": 1260996
+            }
+          ],
+          "elapsed_seconds": 3.073513792012818
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.06292475853148044,
+          "nu": 1,
+          "nearzero": [
+            0.06292475853148044,
+            0.06292475853148044,
+            0.3356331153966701,
+            0.3356331153966701,
+            0.5482205270341065,
+            0.5482205270341065,
+            0.5795691391318226,
+            0.5795691391318226
+          ],
+          "aii_residual": 8.776584060204984e-14,
+          "eigen_residual": 7.63462295048458e-12,
+          "factor_residual": 8.764241006135398e-13,
+          "pfaffian_fill": 1260996,
+          "nnz": 3489736,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 8.764241006135398e-13,
+              "fill": 1260996
+            }
+          ],
+          "elapsed_seconds": 2.9244527920382097
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.07925778444327496,
+          "nu": 0,
+          "nearzero": [
+            0.07925778444327496,
+            0.07925778444327496,
+            0.41027245203436497,
+            0.41027245203436497,
+            0.591983687462113,
+            0.591983687462113,
+            0.6189677019587366,
+            0.6189677019587366
+          ],
+          "aii_residual": 8.776584060204984e-14,
+          "eigen_residual": 2.3172886692663837e-11,
+          "factor_residual": 1.3848179855051407e-12,
+          "pfaffian_fill": 1260996,
+          "nnz": 3489736,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.3848179855051407e-12,
+              "fill": 1260996
+            }
+          ],
+          "elapsed_seconds": 2.9297639169963077
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "92d5b800a92732445bff0799eb386fc4bc8873a274dcf3705635404c30fc9fc3",
+        "stanene.mmn": "705b1fa977abe666084c79e8cb789bda05305d79c69f14c472406dc013f5005a"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh8",
+      "directory": "build-mpi/stanene-flattening/mesh8",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 8,
+      "energy": -0.1592,
+      "new_export": false,
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.1002414668280851,
+        "minimum_coordinate_singular_value": 0.9485560253205474,
+        "coordinate_commutator_norm": 0.05265150968294515,
+        "localizer_order": 6656,
+        "sampled_energy_gap_hartree": 0.003648564768442747,
+        "occupied_spinors": 512,
+        "valence_max": -0.16284856476844276,
+        "conduction_min": -0.14988358718173916
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.05918996709278877,
+          "nu": 1,
+          "nearzero": [
+            0.05918996709278877,
+            0.05918996709278877,
+            0.08592787712715992,
+            0.08592787712715992,
+            0.5091898795783334,
+            0.5091898795783334,
+            0.5231178546571904,
+            0.5231178546571904
+          ],
+          "aii_residual": 1.7305601396344628e-14,
+          "eigen_residual": 8.306214360716258e-12,
+          "factor_residual": 9.750541876473608e-12,
+          "pfaffian_fill": 1640276,
+          "nnz": 6506576,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 9.750541876473608e-12,
+              "fill": 1640276
+            }
+          ],
+          "elapsed_seconds": 10.462043082923628
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.024215944454798244,
+          "nu": 1,
+          "nearzero": [
+            0.024215944454798244,
+            0.024215944454798244,
+            0.11617904758351315,
+            0.11617904758351315,
+            0.5298803386487397,
+            0.5298803386487397,
+            0.5814672317716796,
+            0.5814672317716796
+          ],
+          "aii_residual": 1.7305601396344628e-14,
+          "eigen_residual": 3.836163951306174e-12,
+          "factor_residual": 3.7993765596915467e-13,
+          "pfaffian_fill": 1640276,
+          "nnz": 6506544,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 3.7993765596915467e-13,
+              "fill": 1640276
+            }
+          ],
+          "elapsed_seconds": 6.246476333937608
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.04101876467044038,
+          "nu": 0,
+          "nearzero": [
+            0.04101876467044038,
+            0.04101876467044038,
+            0.16812122596347173,
+            0.16812122596347173,
+            0.548778212321679,
+            0.548778212321679,
+            0.5930484994838131,
+            0.5930484994838131
+          ],
+          "aii_residual": 1.7305601396344628e-14,
+          "eigen_residual": 7.014075160354306e-12,
+          "factor_residual": 3.335841534013324e-13,
+          "pfaffian_fill": 1640276,
+          "nnz": 6506528,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 3.335841534013324e-13,
+              "fill": 1640276
+            }
+          ],
+          "elapsed_seconds": 6.440541084040888
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "aac15eaf3f0ed53b5f0a4da1562e889db6f5e92e295b83a5eef992616767d736",
+        "stanene.mmn": "f65a06e9cf7ab9bee6d3773468e251adc94ad43c89f57b5da2cfe1ebe18eb455"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh9",
+      "directory": "build-mpi/stanene-flattening/mesh9",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 9,
+      "energy": -0.1592,
+      "new_export": false,
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.0807354231939651,
+        "minimum_coordinate_singular_value": 0.9587828621778942,
+        "coordinate_commutator_norm": 0.041821749693226,
+        "localizer_order": 8424,
+        "sampled_energy_gap_hartree": 0.0013481774078196174,
+        "occupied_spinors": 648,
+        "valence_max": -0.16054817740781963,
+        "conduction_min": -0.15784007056323351
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.26304290407781594,
+          "nu": 1,
+          "nearzero": [
+            0.26304290407781594,
+            0.26304290407781594,
+            0.28935761421292,
+            0.28935761421292,
+            0.4802887398978297,
+            0.4802887398978297,
+            0.49828682845857003,
+            0.49828682845857003
+          ],
+          "aii_residual": 4.7563515626070085e-14,
+          "eigen_residual": 1.3046985788424941e-11,
+          "factor_residual": 1.272234996607971e-11,
+          "pfaffian_fill": 2412500,
+          "nnz": 8457640,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.272234996607971e-11,
+              "fill": 2412500
+            }
+          ],
+          "elapsed_seconds": 11.299919459037483
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.1869460767287632,
+          "nu": 1,
+          "nearzero": [
+            0.1869460767287632,
+            0.1869460767287632,
+            0.25688853882464674,
+            0.25688853882464674,
+            0.5276733969199022,
+            0.5276733969199022,
+            0.5903055693530046,
+            0.5903055693530046
+          ],
+          "aii_residual": 4.7563515626070085e-14,
+          "eigen_residual": 1.2952619097509748e-11,
+          "factor_residual": 1.8013550209368077e-12,
+          "pfaffian_fill": 2404596,
+          "nnz": 8457638,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.8013550209368077e-12,
+              "fill": 2404596
+            }
+          ],
+          "elapsed_seconds": 9.840280583011918
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.10241226562644887,
+          "nu": 1,
+          "nearzero": [
+            0.10241226562644887,
+            0.10241226562644887,
+            0.25981781302304086,
+            0.25981781302304086,
+            0.5397809278959231,
+            0.5397809278959231,
+            0.5943916016755171,
+            0.5943916016755171
+          ],
+          "aii_residual": 4.7563515626070085e-14,
+          "eigen_residual": 1.0548154827877078e-11,
+          "factor_residual": 2.2700484603998507e-13,
+          "pfaffian_fill": 2404596,
+          "nnz": 8457622,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.2700484603998507e-13,
+              "fill": 2404596
+            }
+          ],
+          "elapsed_seconds": 10.731910125003196
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "aacb15cf9b714b0595bc325056faa83164fb233a58527ddac251034ce29222fe",
+        "stanene.mmn": "334047e505482cdd5dbe721eb1df28fa37623ccfcf083f1a3e9b09f611d0a51f"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh6-tzvp",
+      "directory": "build-mpi/stanene-flattening/mesh6-tzvp",
+      "basis": "TZVP",
+      "cutoff": 400,
+      "scf_mesh": 8,
+      "size": 6,
+      "energy": -0.16050731,
+      "new_export": false,
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.2548045131019012,
+        "minimum_coordinate_singular_value": 0.863247060173447,
+        "coordinate_commutator_norm": 0.1665141093684436,
+        "localizer_order": 4896,
+        "sampled_energy_gap_hartree": 0.0014069084182107838,
+        "occupied_spinors": 288,
+        "valence_max": -0.16191424283841738,
+        "conduction_min": -0.1591004015817892
+      },
+      "queries": [
+        {
+          "energy": -0.16050731,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.2054414902842325,
+          "nu": 1,
+          "nearzero": [
+            0.2054414902842325,
+            0.2054414902842325,
+            0.2925239003026312,
+            0.2925239003026312,
+            0.4777727794838351,
+            0.4777727794838351,
+            0.48184112577619354,
+            0.48184112577619354
+          ],
+          "aii_residual": 9.168902616318864e-14,
+          "eigen_residual": 1.133171056730013e-12,
+          "factor_residual": 3.5512972428256982e-12,
+          "pfaffian_fill": 2156004,
+          "nnz": 5973520,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 3.5512972428256982e-12,
+              "fill": 2156004
+            }
+          ],
+          "elapsed_seconds": 6.252729790983722
+        },
+        {
+          "energy": -0.16050731,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.06420961369251409,
+          "nu": 1,
+          "nearzero": [
+            0.06420961369251409,
+            0.06420961369251409,
+            0.33607268934011253,
+            0.33607268934011253,
+            0.5479249946616147,
+            0.5479249946616147,
+            0.5804007496377857,
+            0.5804007496377857
+          ],
+          "aii_residual": 9.168902616318864e-14,
+          "eigen_residual": 2.9154582382295486e-12,
+          "factor_residual": 8.621504109420646e-12,
+          "pfaffian_fill": 2156004,
+          "nnz": 5973512,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 8.621504109420646e-12,
+              "fill": 2156004
+            }
+          ],
+          "elapsed_seconds": 6.453719125012867
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "b6c09d9374a2507dc87faa78a662b9727808c9fbd798a70e006f4fd3045ac10b",
+        "stanene.mmn": "6267ac37608c2e7833d209905023437bfc3b15aefe6235e7dc2db8eb3668651d"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh12",
+      "directory": "build-mpi/stanene-material-convergence/mesh12",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 12,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh12.tar.gz",
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.04692856229827669,
+        "minimum_coordinate_singular_value": 0.9762537773047146,
+        "coordinate_commutator_norm": 0.02363370718488178,
+        "localizer_order": 14976,
+        "sampled_energy_gap_hartree": 0.001348177409655843,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16054817740965585,
+        "conduction_min": -0.1578400705654761
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 0.5,
+          "flatten_scale": 1.0,
+          "gap": 0.01628034981595765,
+          "nu": null,
+          "nearzero": [
+            0.01628034981595765,
+            0.01628034981595765,
+            0.030669853195910937,
+            0.030669853195910937,
+            0.0775127085885488,
+            0.0775127085885488,
+            0.07768706044811316,
+            0.07768706044811316
+          ],
+          "aii_residual": 3.1634417307913054e-14,
+          "eigen_residual": 1.1291897382116231e-12,
+          "factor_residual": 0.0,
+          "pfaffian_fill": 0,
+          "nnz": 15125888,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            },
+            {
+              "ordering": "reversed",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            },
+            {
+              "ordering": "cyclic",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            }
+          ],
+          "elapsed_seconds": 108.83224545896519
+        },
+        {
+          "energy": -0.1592,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.29126552146855234,
+          "nu": null,
+          "nearzero": [
+            0.29126552146855234,
+            0.29126552146855234,
+            0.2954596551577979,
+            0.2954596551577979,
+            0.4883417754381348,
+            0.4883417754381348,
+            0.4986061578979373,
+            0.4986061578979373
+          ],
+          "aii_residual": 3.1634417307913054e-14,
+          "eigen_residual": 6.542443425926627e-12,
+          "factor_residual": 5.072101820656404e-09,
+          "pfaffian_fill": 5094201,
+          "nnz": 15125968,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": false,
+              "residual": 5.072101820656404e-09,
+              "fill": 5094201
+            },
+            {
+              "ordering": "reversed",
+              "resolved": false,
+              "residual": 1.4788981648793763e-09,
+              "fill": 5094201
+            },
+            {
+              "ordering": "cyclic",
+              "resolved": false,
+              "residual": 2.5715500985973894e-09,
+              "fill": 5094201
+            }
+          ],
+          "elapsed_seconds": 32.42374237498734
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.2299139026458888,
+          "nu": 1,
+          "nearzero": [
+            0.2299139026458888,
+            0.2299139026458888,
+            0.2501923568882834,
+            0.2501923568882834,
+            0.5293476483471944,
+            0.5293476483471944,
+            0.6199422584958751,
+            0.6199422584958751
+          ],
+          "aii_residual": 3.1634417307913054e-14,
+          "eigen_residual": 9.916009813420775e-12,
+          "factor_residual": 8.364392112593312e-12,
+          "pfaffian_fill": 5081825,
+          "nnz": 15125888,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 8.364392112593312e-12,
+              "fill": 5081825
+            }
+          ],
+          "elapsed_seconds": 16.824916083947755
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17193776265769076,
+          "nu": 1,
+          "nearzero": [
+            0.17193776265769076,
+            0.17193776265769076,
+            0.22503065616747214,
+            0.22503065616747214,
+            0.5321055976078735,
+            0.5321055976078735,
+            0.6119389490069506,
+            0.6119389490069506
+          ],
+          "aii_residual": 3.1634417307913054e-14,
+          "eigen_residual": 1.7439243036610645e-11,
+          "factor_residual": 6.492011820729758e-13,
+          "pfaffian_fill": 5081825,
+          "nnz": 15125824,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 6.492011820729758e-13,
+              "fill": 5081825
+            }
+          ],
+          "elapsed_seconds": 14.583018625038676
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.5,
+          "flatten_scale": 1.0,
+          "gap": 0.1133173945789212,
+          "nu": 1,
+          "nearzero": [
+            0.1133173945789212,
+            0.1133173945789212,
+            0.2215443343941107,
+            0.2215443343941107,
+            0.537326886447156,
+            0.537326886447156,
+            0.6076666374185772,
+            0.6076666374185772
+          ],
+          "aii_residual": 3.1634417307913054e-14,
+          "eigen_residual": 3.030975173539199e-11,
+          "factor_residual": 1.1625691679133794e-12,
+          "pfaffian_fill": 5081825,
+          "nnz": 15125968,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.1625691679133794e-12,
+              "fill": 5081825
+            }
+          ],
+          "elapsed_seconds": 13.468633332988247
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "c5f86d17602605c07fc537c4b705aeef2d448f2cd7eab10ac028acdf4506e845",
+        "stanene.mmn": "3d9a7fc1200bd72ba73a71ae6736be2976c73de9c59a4dab408109001bb9b8cd"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh15",
+      "directory": "build-mpi/stanene-material-convergence/mesh15",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 15,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh15.tar.gz",
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.030511350962166395,
+        "minimum_coordinate_singular_value": 0.9846261468383996,
+        "coordinate_commutator_norm": 0.015119534967929742,
+        "localizer_order": 23400,
+        "sampled_energy_gap_hartree": 0.0013481774054454887,
+        "occupied_spinors": 1800,
+        "valence_max": -0.1605481774054455,
+        "conduction_min": -0.15784007056159952
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.30656331994512964,
+          "nu": 1,
+          "nearzero": [
+            0.30656331994512964,
+            0.30656331994512964,
+            0.30819299367269815,
+            0.30819299367269815,
+            0.49188582146886795,
+            0.49188582146886795,
+            0.49845505845365357,
+            0.49845505845365357
+          ],
+          "aii_residual": 4.480313689492199e-14,
+          "eigen_residual": 1.1182881675016126e-11,
+          "factor_residual": 3.427780174076906e-11,
+          "pfaffian_fill": 8972373,
+          "nnz": 23972464,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": false,
+              "residual": 1.0608148048344356e-10,
+              "fill": 8972373
+            },
+            {
+              "ordering": "reversed",
+              "resolved": true,
+              "residual": 3.427780174076906e-11,
+              "fill": 8972373
+            }
+          ],
+          "elapsed_seconds": 49.22749375004787
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.25212430556441623,
+          "nu": 1,
+          "nearzero": [
+            0.25212430556441623,
+            0.25212430556441623,
+            0.25843836743217136,
+            0.25843836743217136,
+            0.5359938730280536,
+            0.5359938730280536,
+            0.6481561993953704,
+            0.6481561993953704
+          ],
+          "aii_residual": 4.480313689492199e-14,
+          "eigen_residual": 2.163319795618472e-11,
+          "factor_residual": 1.7275527383241671e-12,
+          "pfaffian_fill": 8962805,
+          "nnz": 23972384,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.7275527383241671e-12,
+              "fill": 8962805
+            }
+          ],
+          "elapsed_seconds": 27.764864040887915
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.204599685696539,
+          "nu": 1,
+          "nearzero": [
+            0.204599685696539,
+            0.204599685696539,
+            0.2234961590295139,
+            0.2234961590295139,
+            0.5354368511259545,
+            0.5354368511259545,
+            0.6364790748369605,
+            0.6364790748369605
+          ],
+          "aii_residual": 4.480313689492199e-14,
+          "eigen_residual": 5.045333195461712e-12,
+          "factor_residual": 5.51290577526482e-12,
+          "pfaffian_fill": 8962805,
+          "nnz": 23972448,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 5.51290577526482e-12,
+              "fill": 8962805
+            }
+          ],
+          "elapsed_seconds": 26.054125625058077
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.5,
+          "flatten_scale": 1.0,
+          "gap": 0.16084470665996004,
+          "nu": 1,
+          "nearzero": [
+            0.16084470665996004,
+            0.16084470665996004,
+            0.20433759414375488,
+            0.20433759414375488,
+            0.5351923656096467,
+            0.5351923656096467,
+            0.625420719320237,
+            0.625420719320237
+          ],
+          "aii_residual": 4.480313689492199e-14,
+          "eigen_residual": 1.2099288497273574e-11,
+          "factor_residual": 4.753483863129074e-13,
+          "pfaffian_fill": 8962805,
+          "nnz": 23972464,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 4.753483863129074e-13,
+              "fill": 8962805
+            }
+          ],
+          "elapsed_seconds": 24.35692208306864
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "e753747bf41c38fded806e7c270644ec024d3c51367bcf8e74bce82f3b4ddbdd",
+        "stanene.mmn": "a1502778b2a2cf06bc624a9dbaa39a7122532ee9624f6691d8bac3e99e7efb15"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh18",
+      "directory": "build-mpi/stanene-material-convergence/mesh18",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 18,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh18.tar.gz",
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.0213740677616836,
+        "minimum_coordinate_singular_value": 0.9892552411983049,
+        "coordinate_commutator_norm": 0.01048768795081682,
+        "localizer_order": 33696,
+        "sampled_energy_gap_hartree": 0.001348177413823981,
+        "occupied_spinors": 2592,
+        "valence_max": -0.160548177413824,
+        "conduction_min": -0.1578400705692266
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.31987625621322235,
+          "nu": null,
+          "nearzero": [
+            0.31987625621322235,
+            0.31987625621322235,
+            0.3201503794543956,
+            0.3201503794543956,
+            0.4944591227981656,
+            0.4944591227981656,
+            0.499910871510415,
+            0.499910871510415
+          ],
+          "aii_residual": 3.256878274016106e-14,
+          "eigen_residual": 6.367623904183871e-12,
+          "factor_residual": 0.0,
+          "pfaffian_fill": 0,
+          "nnz": 34519592,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            },
+            {
+              "ordering": "reversed",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            },
+            {
+              "ordering": "cyclic",
+              "resolved": false,
+              "residual": 0.0,
+              "fill": 0
+            }
+          ],
+          "elapsed_seconds": 106.3823674999876
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.26815234343541733,
+          "nu": 1,
+          "nearzero": [
+            0.26815234343541733,
+            0.26815234343541733,
+            0.27023148420662035,
+            0.27023148420662035,
+            0.5450311342563191,
+            0.5450311342563191,
+            0.6726155202589411,
+            0.6726155202589411
+          ],
+          "aii_residual": 3.256878274016106e-14,
+          "eigen_residual": 7.007516168288345e-12,
+          "factor_residual": 1.93599098438477e-12,
+          "pfaffian_fill": 14626182,
+          "nnz": 34519464,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.93599098438477e-12,
+              "fill": 14626182
+            }
+          ],
+          "elapsed_seconds": 50.97023966698907
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.22478444674512613,
+          "nu": 1,
+          "nearzero": [
+            0.22478444674512613,
+            0.22478444674512613,
+            0.23185916295321982,
+            0.23185916295321982,
+            0.5423149160372521,
+            0.5423149160372521,
+            0.659682095642884,
+            0.659682095642884
+          ],
+          "aii_residual": 3.256878274016106e-14,
+          "eigen_residual": 1.3262428719179594e-11,
+          "factor_residual": 2.456276203355451e-12,
+          "pfaffian_fill": 14626182,
+          "nnz": 34519464,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.456276203355451e-12,
+              "fill": 14626182
+            }
+          ],
+          "elapsed_seconds": 51.025155999930575
+        },
+        {
+          "energy": -0.1592,
+          "eta": 1.5,
+          "flatten_scale": 1.0,
+          "gap": 0.18775918935734423,
+          "nu": 1,
+          "nearzero": [
+            0.18775918935734423,
+            0.18775918935734423,
+            0.2058070573016383,
+            0.2058070573016383,
+            0.539442332054882,
+            0.539442332054882,
+            0.6459683470355129,
+            0.6459683470355129
+          ],
+          "aii_residual": 3.256878274016106e-14,
+          "eigen_residual": 2.2323654612017573e-12,
+          "factor_residual": 1.906232347679752e-12,
+          "pfaffian_fill": 14755972,
+          "nnz": 34519592,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": false,
+              "residual": 1.0040570826355814e-10,
+              "fill": 14626182
+            },
+            {
+              "ordering": "reversed",
+              "resolved": true,
+              "residual": 1.906232347679752e-12,
+              "fill": 14755972
+            }
+          ],
+          "elapsed_seconds": 62.06016020802781
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "9173f8c76b752e7f4a0952fe624c753522a3dd02ff3cf7967d93fad86aa3158f",
+        "stanene.mmn": "6939e0226be50c777ce01a0b7e2429ba568d6ff20ef8d33fff180471dcf6e3c5"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh12-tzvp",
+      "directory": "build-mpi/stanene-material-convergence/mesh12-tzvp",
+      "basis": "TZVP",
+      "cutoff": 400,
+      "scf_mesh": 8,
+      "size": 12,
+      "energy": -0.16050731,
+      "new_export": true,
+      "archive": "mesh12-tzvp.tar.gz",
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.08464091351888237,
+        "minimum_coordinate_singular_value": 0.9567440025843473,
+        "coordinate_commutator_norm": 0.04876184394985391,
+        "localizer_order": 19584,
+        "sampled_energy_gap_hartree": 0.0014069084139717025,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16191424284284348,
+        "conduction_min": -0.15910040158602828
+      },
+      "queries": [
+        {
+          "energy": -0.16050731,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.2930463085281681,
+          "nu": 1,
+          "nearzero": [
+            0.2930463085281681,
+            0.2930463085281681,
+            0.29721828941363954,
+            0.29721828941363954,
+            0.48853858234417374,
+            0.48853858234417374,
+            0.4990249718280661,
+            0.4990249718280661
+          ],
+          "aii_residual": 9.778175448157955e-14,
+          "eigen_residual": 1.3983226862038525e-11,
+          "factor_residual": 1.8419637470723765e-11,
+          "pfaffian_fill": 8457660,
+          "nnz": 25890056,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.8419637470723765e-11,
+              "fill": 8457660
+            }
+          ],
+          "elapsed_seconds": 38.1900173749309
+        },
+        {
+          "energy": -0.16050731,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.2318524823814623,
+          "nu": 1,
+          "nearzero": [
+            0.2318524823814623,
+            0.2318524823814623,
+            0.2521496841939113,
+            0.2521496841939113,
+            0.5283492899954463,
+            0.5283492899954463,
+            0.621669427898338,
+            0.621669427898338
+          ],
+          "aii_residual": 9.778175448157955e-14,
+          "eigen_residual": 1.1535943219008228e-11,
+          "factor_residual": 3.093430835961907e-12,
+          "pfaffian_fill": 8429792,
+          "nnz": 25889944,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 3.093430835961907e-12,
+              "fill": 8429792
+            }
+          ],
+          "elapsed_seconds": 32.45610825007316
+        },
+        {
+          "energy": -0.16050731,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17388158532366693,
+          "nu": 1,
+          "nearzero": [
+            0.17388158532366693,
+            0.17388158532366693,
+            0.2269512220075469,
+            0.2269512220075469,
+            0.5311239057414849,
+            0.5311239057414849,
+            0.613466147106157,
+            0.613466147106157
+          ],
+          "aii_residual": 9.778175448157955e-14,
+          "eigen_residual": 2.4961493841946687e-11,
+          "factor_residual": 1.3729132871780463e-12,
+          "pfaffian_fill": 8429792,
+          "nnz": 25889880,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.3729132871780463e-12,
+              "fill": 8429792
+            }
+          ],
+          "elapsed_seconds": 26.67374837503303
+        },
+        {
+          "energy": -0.16050731,
+          "eta": 1.5,
+          "flatten_scale": 1.0,
+          "gap": 0.11518173641308321,
+          "nu": 1,
+          "nearzero": [
+            0.11518173641308321,
+            0.11518173641308321,
+            0.223361257148183,
+            0.223361257148183,
+            0.5364056680915349,
+            0.5364056680915349,
+            0.6090234489137704,
+            0.6090234489137704
+          ],
+          "aii_residual": 9.778175448157955e-14,
+          "eigen_residual": 1.904646601285241e-11,
+          "factor_residual": 5.52886102081615e-13,
+          "pfaffian_fill": 8429792,
+          "nnz": 25890056,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 5.52886102081615e-13,
+              "fill": 8429792
+            }
+          ],
+          "elapsed_seconds": 26.51780399994459
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "bb1f26edc67fa7543b881e05a9f8dd5b1d523241a2a4475a3fe652a1491e492b",
+        "stanene.mmn": "63027ccb789488dfec836502cbf24bf273ac77790497444a20a8a206ce7939ca"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    },
+    {
+      "label": "mesh12-scf12",
+      "directory": "build-mpi/stanene-material-convergence/mesh12-scf12",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 12,
+      "size": 12,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh12-scf12.tar.gz",
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.046928562298273135,
+        "minimum_coordinate_singular_value": 0.9762537773047164,
+        "coordinate_commutator_norm": 0.023633707184882526,
+        "localizer_order": 14976,
+        "sampled_energy_gap_hartree": 0.0013097371074080322,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16050973710740804,
+        "conduction_min": -0.1578025680348958
+      },
+      "queries": [
+        {
+          "energy": -0.1592,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.2298401355686731,
+          "nu": 1,
+          "nearzero": [
+            0.2298401355686731,
+            0.2298401355686731,
+            0.25025460617766604,
+            0.25025460617766604,
+            0.5292463944320162,
+            0.5292463944320162,
+            0.6198874534722241,
+            0.6198874534722241
+          ],
+          "aii_residual": 5.542938121162874e-14,
+          "eigen_residual": 9.415480768044383e-12,
+          "factor_residual": 1.9375577165069396e-12,
+          "pfaffian_fill": 5146724,
+          "nnz": 15125944,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.9375577165069396e-12,
+              "fill": 5146724
+            }
+          ],
+          "elapsed_seconds": 16.04552645899821
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "77ba701bb02ca224230c7c4a5484baa62683588be7f887c03677718ccb55cf8c",
+        "stanene.mmn": "7c619fa82d30bebb181d60ad5178be64ac54d35ad7d1127e4e0c0b0c569c4c74"
+      },
+      "script_sha256": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+      "library_sha256": "f9977b30e7cda69f40c3a189ef424eb0ca5fbab2b3f0e63f680a75c626f65898"
+    }
+  ],
+  "unresolved_pfaffians": [
+    {
+      "label": "mesh3",
+      "eta": 0.5,
+      "gap": 0.016623770566560687
+    },
+    {
+      "label": "mesh6",
+      "eta": 0.5,
+      "gap": 0.03623404693181014
+    },
+    {
+      "label": "mesh12",
+      "eta": 0.5,
+      "gap": 0.01628034981595765
+    },
+    {
+      "label": "mesh12",
+      "eta": 0.75,
+      "gap": 0.29126552146855234
+    },
+    {
+      "label": "mesh18",
+      "eta": 0.75,
+      "gap": 0.31987625621322235
+    }
+  ],
+  "maximum_dense_reference_gap_difference": 4.232725281383409e-15,
+  "maximum_native_reference_gap_difference": 6.847994393766044e-13,
+  "maximum_recomputed_gap_difference": 0.0,
+  "recomputed_library_sha256": "0facb3224057f25f6ff135e06c61a9516a82cbf3e2c51765be19d246dd90fa8a",
+  "recomputed": [
+    "mesh3",
+    "mesh6"
+  ]
+}

@@ -214,8 +214,9 @@ are distinguished from a proof of the finite-range theorem's
 hypotheses and from the native unflattened calculation.
 
 The optional \texttt{SPECTRAL\_FLATTENING} path evaluates
-Eq.~\eqref{eq:covariant-flattening} with distributed DBCSR metric
-inversion and matrix-sign iterations. Before those iterations,
+Eq.~\eqref{eq:covariant-flattening} for finite systems with
+distributed DBCSR metric inversion and matrix-sign iterations.
+Before those iterations,
 the original positive metric and the distance of $E$ to the
 generalized spectrum of $(H,S)$ are checked by dense diagonalization
 or shifted MUMPS factorizations. An unresolved electronic gap is
@@ -226,6 +227,20 @@ $E$; the SCF Hamiltonian and Gaussian coordinate operators remain
 unchanged. The option is off by default. The distributed inverse
 and exact-sign approximation can increase fill-in, so this path
 does not imply linear scaling.
+
+For a translation-invariant periodic AO torus, the same sign can
+instead be evaluated in complete primitive Bloch blocks.
+The implementation verifies translation covariance of the entire
+Hamiltonian and metric before extracting a representative block row.
+It distributes full generalized Bloch eigensystems over MPI ranks,
+forms $F_E(k)=\Delta S(k)C(k)\operatorname{sign}(\epsilon_k-E)
+C(k)^\dagger S(k)$, and Fourier-transforms back to the original
+distributed spin/cell/atom order. The metric bounds and electronic
+gap refer to the union of all sampled Bloch spectra. No bands are
+discarded and no independent localizer is assigned to a single
+k-point. This avoids a whole-torus eigensystem or sign iteration
+for the flattening step; it does not remove the final localizer
+solve or its possible fill-in.
 
 \subsection{Connection to the quadratic pseudospectrum}
 For Hermitian operators $A_j$ and anticommuting Hermitian Clifford

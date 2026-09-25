@@ -1,0 +1,146 @@
+{
+  "source_commit": "8218374e792dbdf3a62dbe18c5ffddc261f77e17",
+  "cases": [
+    {
+      "label": "mesh3",
+      "directory": "build-mpi/stanene-bloch-localizer/mesh3",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 3,
+      "energy": -0.1592,
+      "new_export": false
+    },
+    {
+      "label": "mesh6",
+      "directory": "build-mpi/stanene-flattening/mesh6",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 6,
+      "energy": -0.1592,
+      "new_export": false
+    },
+    {
+      "label": "mesh8",
+      "directory": "build-mpi/stanene-flattening/mesh8",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 8,
+      "energy": -0.1592,
+      "new_export": false
+    },
+    {
+      "label": "mesh9",
+      "directory": "build-mpi/stanene-flattening/mesh9",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 9,
+      "energy": -0.1592,
+      "new_export": false
+    },
+    {
+      "label": "mesh6-tzvp",
+      "directory": "build-mpi/stanene-flattening/mesh6-tzvp",
+      "basis": "TZVP",
+      "cutoff": 400,
+      "scf_mesh": 8,
+      "size": 6,
+      "energy": -0.16050731,
+      "new_export": false
+    },
+    {
+      "label": "mesh12",
+      "directory": "build-mpi/stanene-material-convergence/mesh12",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 12,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh12.tar.gz"
+    },
+    {
+      "label": "mesh15",
+      "directory": "build-mpi/stanene-material-convergence/mesh15",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 15,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh15.tar.gz"
+    },
+    {
+      "label": "mesh18",
+      "directory": "build-mpi/stanene-material-convergence/mesh18",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8,
+      "size": 18,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh18.tar.gz"
+    },
+    {
+      "label": "mesh12-tzvp",
+      "directory": "build-mpi/stanene-material-convergence/mesh12-tzvp",
+      "basis": "TZVP",
+      "cutoff": 400,
+      "scf_mesh": 8,
+      "size": 12,
+      "energy": -0.16050731,
+      "new_export": true,
+      "archive": "mesh12-tzvp.tar.gz"
+    },
+    {
+      "label": "mesh12-scf12",
+      "directory": "build-mpi/stanene-material-convergence/mesh12-scf12",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 12,
+      "size": 12,
+      "energy": -0.1592,
+      "new_export": true,
+      "archive": "mesh12-scf12.tar.gz"
+    }
+  ],
+  "tacho_commit": "02ef047cb4e1e16959714ce50462bb09511d0e9a",
+  "notes": "Sparse complete-band reference, not a new production localizer basis. All unresolved Pfaffian attempts and the native mixed-BLAS failure are retained. The first local-BLAS native N=8 run was terminated after profiling to replace the cubic dense AII basis conversion by an exactly equivalent quadratic-cost conversion; only mesh8-final is a completed native N=8 test. It ran with the new conversion, before the additional finite-value output guard was added. Final unit and regression logs cover that guard. Reported sparse-library hashes predate the dense-conversion change; the sparse factorization implementation is unchanged.",
+  "archives": [
+    {
+      "file": "mesh12.tar.gz",
+      "bytes": 22710566,
+      "sha256": "ff6097c4120861cf1a5baa2dac6b5153d8c7f312288464c6dc98b7429bc6b724"
+    },
+    {
+      "file": "mesh15.tar.gz",
+      "bytes": 35527817,
+      "sha256": "14b5b709860fb54dbc01d59abd8d91e9c10523ed00c29e92c5fa59fe6d114ef9"
+    },
+    {
+      "file": "mesh18.tar.gz",
+      "bytes": 51179772,
+      "sha256": "842390eb94f9405c5baa4568d1bc7634110c440216c60a0fb64db5613b8fe977"
+    },
+    {
+      "file": "mesh12-tzvp.tar.gz",
+      "bytes": 38782219,
+      "sha256": "4351b6718ff2550d142a90462fd861575fdf9b40d5cd7615cc0c34e0351cacde"
+    },
+    {
+      "file": "mesh12-scf12.tar.gz",
+      "bytes": 22710646,
+      "sha256": "1f4959660b80add4fed6c14df2ad980937b16ef2c3148b8d07d894bdc3010147"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 631490,
+      "sha256": "44077d41ec384912a16f7cb808d611650ca77eb37c0e9548127ba836ff2b06fb"
+    }
+  ],
+  "previous_reference_archive": "../stanene-flattening.tar.gz",
+  "previous_reference_sha256": "4d372410f3eaec7d356078c64243665e6dca45f8e23cb0e6dc01fb37b65b9129"
+}

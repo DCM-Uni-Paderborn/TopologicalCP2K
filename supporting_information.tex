@@ -2539,6 +2539,129 @@ tested source snapshot separately. The larger size/scale scan in
 Table~\ref{tab:si-stanene-flattening} remains an independent
 eigensystem study, not a claim that every row was rerun natively.
 
+\subsection{Complete-Bloch flattening and larger sparse torus controls}
+\label{sec:si-stanene-large-torus}
+The periodic native flattening step now exploits exact translation
+covariance. Complete primitive Bloch eigensystems replace the
+whole-torus sign iteration, while the final native localizer
+remains in its distributed real-cell basis. Seven constructed
+complex pencils cover three mesh directions, one- and two-spin
+layouts, unequal atomic block sizes, a single-cell limit and
+internal degeneracy. They agree with exact matrices and the
+previous whole-torus route within $3.4\times10^{-15}$.
+Additional cases reject a broken translation, a gap closing, an
+indefinite overlap and a globally ill-conditioned metric even
+when individual Bloch metrics are well conditioned.
+Serial and two-/four-rank tests include different process grids.
+The native $N=3$ and $N=6$ stanene comparisons retain the
+previous independent indices, with gap differences below
+$6.9\times10^{-13}$ hartree. The original evidence in
+Sec.~\ref{sec:si-native-flattening} remains separately archived.
+
+Profiling the larger native dense calculation also identifies a
+removable cubic-cost basis conversion. The signed permutation
+$C$ permits the exact identity
+$Q^\dagger LQ=(L+CLC+i(CL-LC))/2$. Evaluating its four entries
+per output element removes the dense $Q$, an additional dense
+complex work array and their matrix multiplications. Thirteen
+constructed skew matrices of orders 4 through 52 reproduce both
+the explicit dense-unitary formula and the original matrices
+within $1.4\times10^{-15}$. Broken AII structure and invalid
+dimensions are rejected. This optimization does not change the
+physical time-reversal convention, factorization or gap test.
+The completed two-rank native DZVP $N=8$ calculation reproduces
+all three independent full-band queries within
+$5.8\times10^{-14}$ hartree: at $\eta/\Delta=0.75,1,1.25$,
+the gaps are $0.05918996709284$, $0.02421594445484$ and
+$0.04101876467039$ hartree, with indices $1,1,0$.
+Thus the small-torus scale-dependent counterexample is retained,
+not removed by the optimized conversion.
+
+For the larger volume study, a separate sparse reference keeps
+the complete band basis and the original complex neighbour
+overlaps. In this basis the flattened Hamiltonian is diagonal,
+and each periodic exponential connects adjacent mesh sectors.
+The polar factor of each \emph{complete MO frame} expresses an
+orthonormal AO frame; it does not unitarize a coordinate link.
+A sparse cosine/sine pairing $W$ of $k$ and $-k$ is then used
+instead of a dense Fourier transform $F$. Since $FW$ is real
+orthogonal, the resulting spin/mode ordering retains the same
+physical time-reversal involution and calibrated Pfaffian
+orientation as the real-space reference.
+
+Sparse shift-invert Arnoldi iteration gives the nearest conjugate
+imaginary eigenpairs of the real skew representation. Eight
+Ritz values and their residuals against the original matrix are
+retained for every query. These are residual-checked spectral
+estimates, not shifted-inertia gap brackets. The largest residual
+in the retained queries is below $10^{-8}$ hartree.
+Tacho independently evaluates the Pfaffian sign and must pass
+the same $10^{-10}$ solve-probe tolerance as before. At most
+two alternative row/column permutations are tried, with their
+Pfaffian permutation signs included; neither the operator nor
+the tolerance is changed. Every failed attempt is retained.
+Across 15 queries at $N=3,6,8,9$ (DZVP) and $N=6$ (TZVP),
+the sparse gaps agree with the preceding dense Fourier-frame
+reference within $4.3\times10^{-15}$ hartree. Every resolved
+sparse index agrees. The $N=3$ cases also compare directly with
+dense eigenvalues and the independent Hessenberg Pfaffian in
+the new basis.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Basis and torus & $\eta/\Delta=0.75$ & 1 & 1.25 & 1.5\\
+\midrule
+DZVP, $N=12$ & $0.291266^{\dagger}$ & 0.229914 & 0.171938 & 0.113317\\
+DZVP, $N=15$ & 0.306563 & 0.252124 & 0.204600 & 0.160845\\
+DZVP, $N=18$ & $0.319876^{\dagger}$ & 0.268152 & 0.224784 & 0.187759\\
+TZVP, $N=12$ & 0.293046 & 0.231852 & 0.173882 & 0.115182\\
+\bottomrule
+\end{tabular}
+\caption{Sparse-reference gaps of the complete-band flattened
+stanene localizer in hartree, with $\Delta=1$ hartree and the
+previous geometry and $8\times8$ scalar SCF mesh. DZVP uses
+200 Ry and $E=-0.1592$ hartree; TZVP uses 400 Ry and
+$E=-0.16050731$ hartree. All unmarked entries have resolved
+$\nu=1$. A dagger denotes an unresolved Pfaffian factorization,
+\emph{not} a vanishing spectral gap or an assigned parity.
+These four sampled scales do not prove constancy between samples.}
+\label{tab:si-stanene-large-torus}
+\end{table}
+
+The larger torus orders are 14,976, 23,400 and 33,696 for
+DZVP at $N=12,15,18$; the $N=12$ TZVP order is 19,584.
+With DZVP at $N=12$, increasing the independent scalar SCF
+mesh to $12\times12$ changes the $\eta/\Delta=1$ gap by
+$7.38\times10^{-5}$ hartree to 0.229840135569 hartree,
+without changing $\nu=1$. The sampled electronic indirect gap
+changes from 0.002708107 to 0.002707169 hartree; it is not the
+rescaled localizer gap. At fixed SCF settings the DZVP coordinate
+unitarity defect decreases from 0.046929 at $N=12$ to 0.021374
+at $N=18$, and the coordinate commutator norm decreases from
+0.023634 to 0.010488. TZVP at $N=12$ instead gives 0.084641
+and 0.048762. A larger basis is therefore not a monotonic
+improvement of these full-space operator-norm diagnostics.
+
+Unresolved queries are deliberately retained: besides the marked
+table entries, $\eta/\Delta=0.5$ is unresolved in the sparse
+Pfaffian path at $N=3,6,12$, despite residual-checked nonzero
+spectral gaps. The earlier dense $N=3,6$ references determine
+their parity independently. No dense-derived index is substituted
+into an unresolved sparse result. The present Tacho ordering and
+pivoting strategy consequently remains a numerical limitation.
+
+The larger-volume data are reference analyses of full CP2K
+exports, not a new sparse production representation in CP2K.
+Input files, complete exports, scripts, original and retried
+factor diagnostics, source snapshots and member checksums are
+retained in \nolinkurl{validation/development/stanene-convergence/}.
+Its replay checks the earlier dense archive as well as the new
+case archives and can repeat selected sparse calculations with
+a Tacho-enabled CP2K shared library. Runs overlap on one machine;
+their elapsed times are not multi-node scaling benchmarks.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
