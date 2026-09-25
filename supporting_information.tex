@@ -1991,6 +1991,120 @@ from these records. Defective-material unfolding, spectral-weight
 interpretation, physical convergence and multi-node scaling are
 not established by this validation.
 
+\subsection{Silicon Bloch-band reference and integral screening}
+\label{sec:si-silicon-translation}
+A bonded-crystal control uses diamond Si with conventional
+lattice constant $a=5.43$~\AA. The primitive lattice vectors are
+the columns of
+$h=(a/2)\left(\begin{smallmatrix}0&1&1\\1&0&1\\1&1&0\end{smallmatrix}\right)$,
+and the two sites are $(a/8,a/8,a/8)$ and
+$(3a/8,3a/8,3a/8)$. PBE/GPW calculations use
+TZVP-MOLOPT-GGA-GTH-q4 and GTH-PBE-q4 from the UZH files,
+a 400~Ry cutoff, one grid level, relative cutoff 40~Ry,
+\texttt{EPS\_SCF}$=10^{-10}$ and no smearing.
+The SCF mesh is Gamma-centered $3\times1\times1$, without
+symmetry reduction, and the complex full-AO analysis torus has
+102 scalar coefficients. These deliberately small sampling and
+cell choices are an algebraic validation, not a converged Si
+band-structure calculation.
+
+For $\bm a=h\bm e_1$, the exact translation permutes cell copies.
+At primitive Bloch labels $q=0,1/3,2/3$, all 34 generalized AO
+eigenvalues $\epsilon_n(q)$ are obtained independently through
+CP2K's ordinary \texttt{BAND\_STRUCTURE} output. The predicted
+quadratic eigenvalues at query $k$ are the sorted union of
+\begin{equation}
+ \lambda_n(q;E,k)=(\epsilon_n(q)-E)^2
+             +4\kappa_T^2\sin^2[\pi(q-k)].
+ \label{eq:si-silicon-bloch-quadratic}
+\end{equation}
+Here $\bm k=k\bm b_1$, $k=-1/2,-1/3,0,1/3,1/2$,
+$E=-0.5,-0.3,-0.1,0,0.1,0.3,0.5$ hartree and
+$\kappa_T=0.3$ hartree. The lowest three states for each of the
+35 queries give 105 comparisons per solver. Continuous query
+labels do not add Bloch states to the three-point analysis mesh.
+
+\begin{table}[htbp]
+\centering
+\caption{Si translation analysis versus the ordinary Bloch-band
+reference. Errors are maxima over all 105 low eigenvalues.
+$\Delta\lambda$ and the true generalized Ritz residual $r$
+are in hartree$^2$; $\eta_H$ is the componentwise max-entry
+relative Hermiticity defect. Native band energies are printed
+to eight decimal places in eV.}
+\label{tab:silicon-translation}
+\begin{tabular}{lrrr}
+\toprule
+Solver & $\Delta\lambda$ & $r$ & $\eta_H$\\
+\midrule
+Serial dense & $1.21\times10^{-10}$ & $7.2\times10^{-14}$ & $4.94\times10^{-14}$\\
+Iterative, 2 MPI ranks & $1.17\times10^{-10}$ & $9.93\times10^{-11}$ & $4.94\times10^{-14}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The iterative calculation uses two OpenMP threads per rank,
+\texttt{MAX\_SUBSPACE}$=40$, \texttt{MAX\_ITER}$=2000$ and
+\texttt{EPS\_EIGEN}$=10^{-10}$. Across all queries, the largest
+dense/iterative gap difference is $6.8\times10^{-12}$ hartree;
+the corresponding eigenvalue difference is
+$5.0\times10^{-12}$ hartree$^2$. The largest nominal lattice-
+translation leakage norm is $9.4\times10^{-8}$, corresponding
+to squared-norm cancellation below $9\times10^{-15}$.
+Individual expectations within a degenerate quadratic eigenspace
+can depend on the chosen basis; comparing a single state's
+translation phase across solvers is not a gauge-invariant test.
+
+An independent Gamma calculation places the six atoms at
+$\bm r_A+jh\bm e_1$, $j=0,1,2$, in the cell
+$h\operatorname{diag}(3,1,1)$. Its ordinary Gamma Hamiltonian
+and overlap, rather than the lifted image matrices, define
+\begin{equation}
+ Q_\Gamma=(H_\Gamma-ES_\Gamma)S_\Gamma^{-1}(H_\Gamma-ES_\Gamma)
+       +\kappa_T^2(2S_\Gamma-z^*S_\Gamma P-zP^\dagger S_\Gamma),
+ \qquad z=e^{2\pi i k},
+\end{equation}
+where $P$ cyclically shifts the three 34-AO cell blocks.
+A separate NumPy metric solve and generalized diagonalization
+give a maximum native-eigenvalue discrepancy of
+$1.42\times10^{-12}$ hartree$^2$ and a largest independently
+recomputed Ritz residual of $9.83\times10^{-11}$ hartree$^2$.
+The maximum $C^\dagger S_\Gamma C-I$ entry is
+$7.3\times10^{-14}$, and complex translation expectations agree
+with direct $S_\Gamma P$ contractions within $6.5\times10^{-14}$.
+Primitive and supercell gaps agree within
+$5.9\times10^{-12}$ hartree. Fourier-transforming the ordinary
+supercell matrices into the three Bloch blocks also recovers
+the printed primitive band energies within
+$1.84\times10^{-10}$ hartree. Inserting these independently
+diagonalized blocks into Eq.~\eqref{eq:si-silicon-bloch-quadratic}
+reproduces the supercell quadratic eigenvalues within
+$4.7\times10^{-12}$ hartree$^2$.
+
+Integral screening is controlled separately from SCF and Ritz
+convergence. With \texttt{EPS\_DEFAULT}$=10^{-12}$, the inherited
+nonlocal-projector threshold is still
+\texttt{EPS\_PPNL}$=10^{-8}$. The converged primitive Hamiltonian
+then has $\eta_H=4.114\times10^{-8}$, exceeding the unchanged
+$10^{-10}$ guard. Tightening \texttt{EPS\_GVG\_RSPACE} to
+$10^{-12}$, followed by \texttt{EPS\_PGF\_ORB}$=10^{-12}$,
+does not remove this defect. Keeping both tight values and
+setting \texttt{EPS\_PPNL}$=10^{-14}$ produces
+Table~\ref{tab:silicon-translation}. No matrix averaging,
+torus-phase change or relaxed acceptance threshold is used.
+The implementation now reports the relative defect on failure
+and the largest checked Hermiticity residual on success.
+Focused quadratic/localizer unit and regression checks pass
+30/30 serial and 54/54 two-rank MPI tests; the diagnostic
+also rejects a nonfinite entry owned by one rank in a four-rank
+column distribution.
+
+\begin{samepage}
+The raw records and checksum manifest are retained in
+\nolinkurl{validation/development/silicon-translation-records.tar.gz}.
+The replay reconstructs the Bloch-band and Gamma-matrix references.
+These tests do not establish defect unfolding or physical convergence.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
@@ -2000,4 +2114,6 @@ potentials, basis and cutoff studies, spatial/energy/scale scans,
 independent band references, and timed runs with whole-process memory.
 Development diagnostics and planned work must not be merged into
 tables of completed material results.
+
+\end{samepage}
 \end{document}

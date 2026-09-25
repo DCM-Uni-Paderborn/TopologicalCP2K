@@ -212,6 +212,24 @@ are also checked. The SI gives these references, rotation and
 wrapping controls, and dense/iterative one- and two-dimensionally
 periodic tests, including post-SCF GTH SOC.
 
+A diamond-Si control extends this comparison to a bonded crystal
+with 102 TZVP AOs on a three-cell torus. For a primitive lattice
+translation, the quadratic spectrum can be predicted directly
+from the ordinary CP2K Bloch band energies and translation
+phases. All 105 tested low eigenvalues agree with that reference
+within $1.3\times10^{-10}$ hartree$^2$, limited in part by the
+printed band precision. Serial dense and two-rank iterative gaps
+agree within $7\times10^{-12}$ hartree. An independently
+converged six-atom Gamma supercell agrees within
+$6\times10^{-12}$ hartree. These comparisons expose an
+important numerical requirement: SCF convergence alone does not
+certify Hermiticity of the image-resolved AO Hamiltonian.
+Tightening nonlocal-projector screening reduces the measured
+relative Hermiticity defect from $4.1\times10^{-8}$ to
+$5\times10^{-14}$, without modifying the torus transformation or
+relaxing its checks. The SI retains the failed controls as well
+as the successful band comparison.
+
 These calculations validate the periodic translation adapter,
 not a converged material-unfolding spectrum. The quadratic gap is
 a joint energy/translation diagnostic, not a band spectral weight
