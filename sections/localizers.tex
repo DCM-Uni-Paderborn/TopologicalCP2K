@@ -213,6 +213,20 @@ Consequently, the material tests in the Supporting Information
 are distinguished from a proof of the finite-range theorem's
 hypotheses and from the native unflattened calculation.
 
+The optional \texttt{SPECTRAL\_FLATTENING} path evaluates
+Eq.~\eqref{eq:covariant-flattening} with distributed DBCSR metric
+inversion and matrix-sign iterations. Before those iterations,
+the original positive metric and the distance of $E$ to the
+generalized spectrum of $(H,S)$ are checked by dense diagonalization
+or shifted MUMPS factorizations. An unresolved electronic gap is
+rejected rather than enlarged by flattening. This precondition is
+distinct from the gap of the final localizer. The transformed
+Hamiltonian is reused across position and scale queries at fixed
+$E$; the SCF Hamiltonian and Gaussian coordinate operators remain
+unchanged. The option is off by default. The distributed inverse
+and exact-sign approximation can increase fill-in, so this path
+does not imply linear scaling.
+
 \subsection{Connection to the quadratic pseudospectrum}
 For Hermitian operators $A_j$ and anticommuting Hermitian Clifford
 matrices $\gamma_j$, squaring $L=\sum_jA_j\otimes\gamma_j$ gives

@@ -155,10 +155,16 @@ localizer, not electronic band gaps. The small-torus and
 $\eta/\Delta=1.25$ counterexamples remain in the Supporting
 Information. Thus flattening improves the tested index consistency,
 but the nonmonotonic gaps and residual scale dependence do not
-establish asymptotic convergence. These results use an independent
-full-band eigensystem analysis; the separate DBCSR matrix-sign kernel
-has constructed-matrix tests but is not yet exposed as a production
-input option.
+establish asymptotic convergence. The independent full-band
+eigensystem analysis also provides a reference for the native DBCSR
+matrix-sign implementation. The native DZVP $3\times3$ and
+$6\times6$ comparisons, and a TZVP $6\times6$ control,
+reproduce the selected gaps within
+$6\times10^{-13}$ hartree and reproduce every tested index,
+including the small-torus counterexamples. A separate MUMPS/Tacho
+comparison and finite GPW/GAPW/all-electron checks are detailed in
+the Supporting Information. This verifies the implementation, not
+the convergence of the material classification.
 
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a

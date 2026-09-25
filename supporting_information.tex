@@ -2415,12 +2415,11 @@ A separate CP2K kernel evaluates the metric-covariant sign using
 distributed realification, the existing Hotelling metric inverse
 and Newton--Schulz matrix-sign iterations. It checks inverse,
 sign-square, complex-structure and Hermiticity residuals rather
-than averaging away errors. Its positive-metric and electronic-gap
-preconditions must be validated by a future caller. No production
-input option is introduced, and these material numbers were not
-generated with that kernel. It avoids dense AO gathering and
-$S^{-1/2}$, but forms a distributed inverse and does not by itself
-guarantee limited fill-in or linear scaling.
+than averaging away errors. These reference material numbers were
+not generated with that kernel; its subsequent native validation
+is reported separately below. The matrix-sign iterations avoid
+dense AO gathering and $S^{-1/2}$, but form a distributed inverse
+and do not by themselves guarantee limited fill-in or linear scaling.
 Six constructed $12\times12$ complex pencils cover an orthogonal
 metric, nonorthogonal congruences including a more ill-conditioned
 metric, Kramers-paired spin mixing, and wholly positive or negative
@@ -2438,6 +2437,107 @@ constructed-matrix test logs and member checksums are retained in
 The companion replay verifies all member hashes and can recompute
 any or all size/basis scans. Older unflattened evidence archives
 are unchanged.
+
+\subsection{Native metric-covariant flattening validation}
+\label{sec:si-native-flattening}
+The optional native input path applies the DBCSR sign kernel to
+the original AO Hamiltonian, including the full post-SCF GTH-SOC
+blocks when requested. Before iteration it checks the original
+electronic gap using the paired pencil
+$\operatorname{diag}(H-ES,-H+ES)$ with metric
+$\operatorname{diag}(S,S)$. The paired spectrum permits reuse of
+the metric-aware localizer solvers; its half-signature must vanish.
+The dense preflight diagonalizes this pencil. The sparse preflight
+uses shifted MUMPS factorizations and retains a conservative gap
+bracket without a dense fallback. The default electronic-gap
+threshold is $10^{-8}$ hartree and the matrix-sign residual
+threshold is $10^{-9}$. The four monitored residuals are the metric
+inverse and sign-square Frobenius residuals, and relative
+complex-structure and Hermiticity residuals.
+
+For the stanene comparison we retain exactly the full-band reference
+geometry, scalar potential, query energies, basis/cutoff choices
+and unmodified coordinate links of the preceding subsection.
+Native two-rank DBCSR calculations agree with the independently
+diagonalized full-band construction, not with fitted regression
+values. At $N=6$ with DZVP, the two native gaps are
+0.204263047335511 and 0.062924758531492 hartree for
+$\eta/\Delta=0.75$ and 1, respectively; both indices are one.
+The original electronic distance from $E$ to the sampled spectrum
+is 0.001348177411 hartree. It is neither the indirect band gap
+nor either rescaled localizer gap. The inverse residual is
+$1.67\times10^{-11}$ or smaller and the other three residuals
+are below $8.3\times10^{-14}$.
+The $N=6$ TZVP/400 Ry native control also gives two indices of one,
+with gaps 0.205441490284396 and 0.064209613692720 hartree.
+Its maximum gap difference from the independent reference is
+$2.1\times10^{-13}$ hartree. Its inverse residual is
+$5.93\times10^{-11}$ and the remaining residuals are below
+$8.1\times10^{-14}$.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{llrr}
+\toprule
+System & Native solver & Queries & Maximum gap difference/Ha\\
+\midrule
+Stanene DZVP, $N=3$ & Dense & 3 & $5.7\times10^{-13}$\\
+Stanene DZVP, $N=6$ & Dense & 2 & $2.0\times10^{-14}$\\
+Stanene TZVP, $N=6$ & Dense & 2 & $2.1\times10^{-13}$\\
+Stanene DZVP, $N=3$ & MUMPS/Tacho & 2 & $7.7\times10^{-11}$\\
+H$_2$, GPW & Dense & 8 & $2.84\times10^{-12}$\\
+H$_2$, GAPW & Dense & 8 & $2.89\times10^{-12}$\\
+H$_2$, all-electron GAPW & Dense & 8 & $1.79\times10^{-12}$\\
+H$_2$, GPW & MUMPS & 8 & $4.70\times10^{-11}$\\
+\bottomrule
+\end{tabular}
+\caption{Native flattening validation against independent spectral-sign
+references. Sparse entries bound the difference of either returned
+gap-bracket endpoint (stanene) or of the reported lower bound (H$_2$)
+from the reference. All stanene indices and zero molecular Chern
+indices agree. These are accuracy checks, not timings or
+material-convergence certificates.}
+\label{tab:si-native-flattening}
+\end{table}
+
+For $N=3$, the dense checks use $\eta/\Delta=0.5,1,1.25$;
+the sparse checks use 0.5 and 1. MUMPS brackets both original
+electronic and final localizer gaps, while Tacho evaluates the
+Pfaffian sign. This deliberately retains the small-volume
+$\nu=1$ to $\nu=0$ scale dependence instead of selecting only
+the nontrivial result. The independent reference lies inside
+both sparse localizer brackets, of widths below $9.2\times10^{-11}$
+hartree.
+
+The finite checks use the UZH molecular fixtures with two energies,
+two positions and two localization scales. Independent SciPy
+diagonalization of exported $H$, $S$, $X$ and $Y$ forms
+$F_E=SC\operatorname{sign}(\epsilon-E)C^\dagger S$ for
+$C^\dagger SC=I$ and $\Delta=1$ hartree. All 32 queries
+are retained, not only the final regression match.
+Output checks confirm two flattening operations per run, one per
+energy, rather than one for each of the eight localizers.
+Separate invalid-input runs reject an unresolved electronic gap,
+an insufficiently conditioned metric and a negative flattening
+scale before reporting an index. Constructed-matrix tests additionally
+reject an indefinite metric and a near-zero electronic mode; the
+successful six-pencil tests agree with exact spectral constructions
+within $6.1\times10^{-15}$ in serial and on two/four MPI ranks,
+including a column-distributed process grid with the sparse preflight.
+The final molecular/material regression directories pass 45/45
+serial and 74/74 two-rank MPI assertions. The larger MPI count
+includes the MUMPS and Tacho directories.
+
+Native inputs, outputs, source snapshots, basis/potential files,
+formatting and regression logs are retained in
+\nolinkurl{validation/development/native-flattening.tar.gz}.
+The companion replay checks both this archive and the preceding
+full-band reference archive, repeats the finite-AO spectral analysis,
+and compares every retained native material query. Native runtime
+banners can predate incremental builds; the archive records the
+tested source snapshot separately. The larger size/scale scan in
+Table~\ref{tab:si-stanene-flattening} remains an independent
+eigensystem study, not a claim that every row was rerun natively.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged

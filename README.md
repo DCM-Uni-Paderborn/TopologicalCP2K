@@ -55,7 +55,7 @@ repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
 The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/paper-revisions/topology-progress-20260925/torus-translation/.
+/Users/tkuehne/paper-revisions/topology-progress-20260925/native-flattening/.
 The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
@@ -235,7 +235,14 @@ torus has index one; small-size and eta/Delta=1.25 counterexamples remain
 explicit in SI Table S15. This is not an asymptotic gap extrapolation.
 The exact-sign material analysis and the separately tested DBCSR kernel
 are distinguished in `validation/development/stanene-flattening-validation.md`.
-The kernel is not exposed as a production input option.
+The subsequent opt-in native adapter is validated separately against those
+full-band references and finite GPW/GAPW/all-electron AO exports. It checks
+the original positive metric and electronic gap before matrix-sign iteration,
+and retains the distinction between electronic and rescaled localizer gaps.
+The final regression subset passes 45/45 serial and 74/74 MPI assertions.
+See SI S7.13 and `validation/development/native-flattening-validation.md` for
+the source snapshot, native logs and hash-checked independent comparisons.
+This numerical agreement does not remove material size/scale dependence.
 
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.
