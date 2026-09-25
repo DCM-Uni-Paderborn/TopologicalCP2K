@@ -256,6 +256,19 @@ hartree. These checks validate the operator mapping and numerical
 analysis; the bare, thermally smeared flake is not an edge-relaxed,
 size-converged bulk-topology prediction.
 
+A subsequent neutral-gap scan compares the same patch at scalar SCF
+smearing temperatures of 300 and 30 K. The electronic gap decreases
+from 7.74 to 2.18 meV, while both frontier Kramers doublets remain
+predominantly boundary weighted. At each neutral gap midpoint and
+the patch centroid, both Hamiltonians have $\nu=1$ throughout
+$0.0025\leq\kappa\leq0.0035$ hartree/bohr, using an adaptive
+numerical gap bound rather than interpolation of sampled indices.
+All 45 native 30 K queries also agree with the independent dense
+reference. These results establish a stable finite-model scale
+window, not convergence to an insulating thermodynamic limit;
+the construction, precision margins and memory measurements are
+specified in the Supporting Information.
+
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a
 $30\times30$ lattice, the complex localizer has order 3,600

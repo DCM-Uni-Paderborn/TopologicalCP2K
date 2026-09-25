@@ -55,7 +55,7 @@ repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
 The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/paper-revisions/topology-progress-20260925/separated-stanene-controls/.
+/Users/tkuehne/paper-revisions/topology-progress-20260925/bismuth-neutral-window/.
 The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
@@ -218,6 +218,17 @@ Gamma supercells, including a corrected GAPW frozen-density handover. Primitive
 3x1x1 meshes and supercells agree within 1e-10 hartree; the complete 18-state
 lattice-translation spectrum also checks complex phases. These are implementation
 checks, not converged material band-unfolding spectra.
+
+The finite Bi neutral-window record now adds a 300/30 K scalar-SCF comparison,
+complete-subspace frontier populations and a numerically bounded common
+nontrivial localizer-scale interval. A fresh native 30 K export passes all
+45 like-for-like index comparisons, and archive-only replay reproduces the
+independent scans. Whole-process sampled RSS is distinguished from sparse
+factorization buffers. These results validate the finite operator/numerical
+paths; the small electronic gaps and strong boundary weights do not establish
+a converged insulating bulk. See
+`validation/development/bismuth-neutral-validation.md` and the corresponding SI
+subsections for raw archives, reproduction instructions and remaining controls.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.

@@ -3107,6 +3107,137 @@ two-rank dimer diagnostic, its one-rank control, the corrected
 two-rank counterpart, source patches and numerical verification
 methods are archived in the same Bi validation directory.
 
+\subsection{Neutral-gap and frontier-state diagnostics}
+To compare finite patches without choosing unrelated absolute energies,
+a separate independent scan sets
+$E=E_{\mathrm{mid}}+f g_{\mathrm{el}}$, where $g_{\mathrm{el}}$ is
+the neutral post-SCF SOC gap and $f=-1/4,0,1/4$. Query positions
+are the centroid plus Cartesian $x$ displacements of $0$, $0.75$,
+and $1.5$ times the atomic half-width in that direction. These are
+geometric sampling positions, not an orbital-support boundary.
+The scales are $10^{-4}$, $3\times10^{-4}$, $10^{-3}$,
+$3\times10^{-3}$, and $10^{-2}$ hartree/bohr. The unchanged 18-atom,
+DZVP, 300 K snapshot gives eight nontrivial and 37 trivial queries.
+All nontrivial points occur at the centroid; even there the index
+is not constant over the sampled scales. This independent scan is
+distinct from the 27 like-for-like native comparisons above.
+Archive-only replay reproduces all 45 gaps, indices and frontier
+weights without numerical change. Passing the same reconstructed
+operators to the native Tacho C interface also reproduces all 45
+indices, with largest solve-probe residual $5.40\times10^{-12}$.
+This additional comparison checks factorization, not native AO
+assembly or a second SCF calculation.
+
+A complementary diagnostic resolves the frontier eigenspaces over
+atoms. For a complete degenerate group $\mathcal B$, the reported
+weight is
+\begin{equation}
+ w_A(\mathcal B)=\frac{1}{|\mathcal B|}
+ \sum_{n\in\mathcal B}\sum_{\sigma,\,\mu\in A}
+ |(S^{1/2}C_\sigma)_{\mu n}|^2.
+\end{equation}
+It is invariant under unitary rotations within $\mathcal B$, but
+retains the usual basis dependence of L\"owdin atom populations.
+A 3.3 \AA\ bond cutoff separates the 3.043 \AA\ nearest neighbours
+from the 4.33 \AA\ second neighbours. Ten of 18 atoms have fewer
+than three neighbours and are designated as boundary atoms.
+The occupied and unoccupied frontier Kramers doublets place
+72.29\% and 79.65\% of their respective weights on these atoms,
+compared with a boundary atom fraction of 55.56\%.
+The small finite gap, $g_{\mathrm{el}}/(k_BT)=0.2992$ at 300 K,
+therefore comes with substantial boundary weight. This is a
+diagnostic of this finite patch, not proof of topological edge
+transport or of a converged insulating bulk gap. Analytic tests
+check the subspace weights under degenerate rotations and in a
+nonorthogonal AO metric.
+Here $T$ controls the scalar-reference SCF smearing, not ionic
+motion or self-consistent spinor occupations; SOC is added after
+the restricted SCF calculation.
+
+Lowering the scalar SCF smearing to 30 K, with the same geometry,
+basis and cutoffs, requires 168 SCF steps from the retained 300 K
+checkpoint. The subsequent independent scan gives three nontrivial
+and 42 trivial queries: all three nontrivial cases lie at the
+centroid with $\kappa=0.003$ hartree/bohr, one at each selected
+energy. The neutral electronic gap decreases rather than opening
+upon cooling the scalar reference (Table~\ref{tab:bi-neutral}).
+The frontier boundary weights remain high. Thus this temperature
+comparison does not establish convergence or remove the need for
+edge and size controls.
+
+\begin{table}[htbp]
+\centering\small
+\caption{The same bare 18-atom Bi patch at two scalar SCF smearing
+temperatures. Frontier weights average each complete Kramers pair.
+The boundary contains 10 of 18 atoms in both calculations.}
+\label{tab:bi-neutral}
+\begin{tabular}{rrrrr}
+\toprule
+$T$ (K) & $g_{\rm el}$ (meV) & $g_{\rm el}/k_BT$ &
+Occupied edge (\%) & Empty edge (\%)\\
+\midrule
+300 & 7.735 & 0.2992 & 72.29 & 79.65\\
+30 & 2.178 & 0.8424 & 72.55 & 80.12\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+An additional native 30 K calculation restarts from this converged
+spectrum and converges in seven SCF steps. Its 45 queries use exactly
+the energies, positions and scales of the independent 30 K scan;
+the dense reference is reconstructed from the new run's own complete
+export. All indices agree, with maximum distance outside the native
+gap brackets of $6.56\times10^{-11}$ hartree at the unchanged
+$2\times10^{-8}$ hartree comparison tolerance. The largest native
+Pfaffian solve residual is $6.15\times10^{-12}$. The full restarted
+calculation, queries and export take 371.28 s on one MPI process
+and two OpenMP threads with one BLAS thread. One-second samples
+record a maximum process-tree RSS sum of 19.6 GiB over 365 samples
+with no failed observations. This is a sampled resident-memory
+sum, which may count shared pages repeatedly, not an exact peak,
+unique physical memory or Pfaffian-buffer size. The preceding
+168-step SCF/export took 2167.64 s and did not have RSS telemetry.
+
+\subsection{A continuous finite-model scale window}
+The index need not remain constant for arbitrarily small or large
+$\kappa$. At the centroid and each calculation's own neutral gap
+midpoint, a finer scan identifies a common nontrivial window near
+$0.003$ hartree/bohr. To check the unsampled intervals, write
+\begin{equation}
+ L(\kappa)=L(0)+\kappa D,\qquad
+ \|D\|=\|(X-xI)-i(Y-yI)\|=19.89764\ {\rm bohr}.
+\end{equation}
+Here $X,Y$ are the complete, metric-orthonormalized finite AO
+position matrices. The smallest absolute eigenvalue obeys
+$|g(\kappa)-g(\kappa')|\leq\|D\||\kappa-\kappa'|$.
+For a subinterval $[a,b]$ with midpoint $m$, the implementation
+therefore uses the lower bound
+\begin{equation}
+ g(\kappa)\geq g(m)-\|D\|(b-a)/2-\epsilon_{\rm num},
+ \qquad \epsilon_{\rm num}=10^{-10}\ {\rm hartree}.
+\end{equation}
+Recursive bisection covers
+$[0.0025,0.0035]$ hartree/bohr with 11 accepted subintervals
+and 21 midpoint evaluations for each temperature. The minimum
+covered bounds are $9.10\times10^{-5}$ hartree at 300 K and
+$7.95\times10^{-5}$ hartree at 30 K. Since the anchor at
+$\kappa=0.003$ has $\nu=1$, neither finite model can change
+its index within this numerically resolved interval. The explicit
+roundoff margin is not an interval-arithmetic proof, and the
+conclusion applies at the specified energy and position, not
+simultaneously to all sampled queries or to the infinite material.
+
+The original methods, native outputs, spectra and moments, neutral
+scans, factorization comparison and interval bounds are retained under
+\path{validation/development/} in the
+\path{bismuth-neutral-validation/} directory, together with links
+to the earlier 300 K evidence. Archive-only replay of
+the 30 K scan independently checks all 45 queries and frontier
+weights. Analytic tests include invariant degenerate-subspace
+weights, gap-cover tiling and rejection of unresolved or nonfinite
+gaps. These controls are numerical validation, not substitutes for
+physical convergence of the flake.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

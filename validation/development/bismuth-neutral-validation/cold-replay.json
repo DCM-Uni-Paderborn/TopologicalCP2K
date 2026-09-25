@@ -1,0 +1,13 @@
+{
+  "archives": {
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-neutral-validation/flake3-dzvp30-spectrum.tar.gz": "b37b016a27b9f012d50289747be5e13f9375a5e4bcb9a965c3527fba0b3ef350",
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-neutral-validation/methods-results.tar.gz": "4b67d33fb1b04e0e665cfb85758b34f2522e38315f2b60420f17e1983a2e4d93"
+  },
+  "report_sha256": "1c5a6d52444cf69c42a886fcc7f46e04d3eca4996626d1cd457af5efba1fd607",
+  "script_sha256": "886437968bc40be3b541757a1dd94d59326214c17e5bb409b73bce6557f2f477",
+  "queries": 45,
+  "verified_archive_files": 191,
+  "maximum_gap_error_hartree": 0.0,
+  "maximum_frontier_weight_error": 0.0,
+  "native_comparison_performed": false
+}

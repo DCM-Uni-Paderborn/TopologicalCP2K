@@ -82,6 +82,10 @@ def main():
     parser.add_argument("destination", type=Path)
     parser.add_argument("--cases", nargs="+", required=True)
     parser.add_argument("--stage", action="store_true")
+    parser.add_argument("--method-tests", type=Path,
+                        help="Retained method-test log for this validation bundle")
+    parser.add_argument("--extra-files", nargs="*", type=Path, default=[],
+                        help="Additional diagnostic reports/logs to retain without interpreting them as native tests")
     args = parser.parse_args()
     root, work, destination = args.root.resolve(), args.work.resolve(), args.destination.resolve()
     destination.mkdir(parents=True, exist_ok=True)
@@ -97,10 +101,13 @@ def main():
     shared = {"scripts/" + name: Path(__file__).with_name(name) for name in
               ("run_bismuth_flakes.py", "analyze_bismuth_flakes.py", "test_bismuth_flakes.py",
                "diagnose_bismuth_operators.py", "verify_soc_print_export.py",
+               "scan_bismuth_neutral_window.py", "replay_bismuth_neutral_window.py",
+               "check_bismuth_window_pfaffians.py", "certify_bismuth_scale_window.py",
                "archive_bismuth_validation.py", "archive_stanene_convergence.py",
                "archive_stanene_controls.py", "replay_stanene_controls.py", "run_stanene_controls.py")}
     for name in ("data/BASIS_MOLOPT_UZH", "data/GTH_SOC_POTENTIALS", "build-mpi/CMakeCache.txt",
                  "build-serial/gaussian_states.py", "build-serial/check_bloch_localizer.py",
+                 "build-serial/check_sparse_bloch_localizer.py",
                  "src/qs_finite_ao.F", "src/qs_spectral_localizer.F", "src/spectral_localizer.F",
                  "src/spectral_localizer_dbcsr.F", "src/localizer_sparse_pfaffian.F",
                  "src/tacho_c_api.cpp", "src/qs_wannier90.F", "src/qs_gamma2kp.F",
@@ -111,7 +118,12 @@ def main():
                  "build-serial/soc-storage-regtests.log", "build-mpi/soc-complete-prettify.log",
                  "build-mpi/soc-regtests-prettify.log"):
         shared[name] = root / name
-    shared["method-tests.log"] = work / "method-tests-soc-storage.log"
+    shared["method-tests.log"] = args.method_tests or work / "method-tests-soc-storage.log"
+    for file in args.extra_files:
+        name = "additional/" + file.name
+        if name in shared:
+            raise ValueError("Duplicate additional evidence filename: " + file.name)
+        shared[name] = file.resolve()
     for mode in ("gpw", "gapw", "mpi4"):
         folder = root / "build-mpi/soc-operator-validation" / mode
         for file in folder.iterdir():

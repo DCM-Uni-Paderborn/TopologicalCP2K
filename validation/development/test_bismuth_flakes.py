@@ -17,6 +17,7 @@ from scipy.linalg import block_diag, eigh, eigvalsh
 from analyze_bismuth_flakes import moments, native_comparison, operators, queries
 from archive_bismuth_validation import digest, retain_case
 from diagnose_bismuth_operators import matrix, soc_components
+from certify_bismuth_scale_window import cover_gap
 from run_bismuth_flakes import geometry, inputs, nnkp, process_tree_rss
 from scan_bismuth_neutral_window import frontier_localization, window
 from verify_soc_print_export import headerless
@@ -38,6 +39,37 @@ def s_basis(shift=0.):
 
 
 class FlakeChecks(unittest.TestCase):
+    def test_lipschitz_gap_cover(self):
+        covered = cover_gap(.1, 1., 2., lambda x: .1)
+        self.assertTrue(covered["resolved"])
+        intervals = covered["covered"]
+        self.assertEqual(intervals[0]["lower"], .1)
+        self.assertEqual(intervals[-1]["upper"], 1.)
+        for first, second in zip(intervals, intervals[1:]):
+            self.assertEqual(first["upper"], second["lower"])
+        self.assertTrue(all(row["lower_bound"] > 0 for row in intervals))
+        closing = cover_gap(.1, .9, 1., lambda x: abs(x-.5), max_nodes=127)
+        self.assertFalse(closing["resolved"])
+        self.assertTrue(closing["unresolved"])
+        with self.assertRaises(ValueError):
+            cover_gap(.1, .9, float("nan"), lambda x: 1.)
+
+    def test_trimmed_termination(self):
+        for size in (2, 3, 4):
+            cell, original = geometry(size, 20.)
+            trimmed_cell, trimmed = geometry(size, 20., trim=True)
+            self.assertEqual(cell, trimmed_cell)
+            self.assertEqual(len(trimmed), len(original) - 2)
+            self.assertTrue(all(p in original for p in trimmed))
+            np.testing.assert_allclose(np.mean(original, axis=0), np.mean(trimmed, axis=0), atol=1e-14)
+            distances = np.linalg.norm(np.asarray(trimmed)[:, None] - trimmed, axis=2)
+            coordination = np.sum((distances > 1e-8) & (distances < 3.3), axis=1)
+            self.assertGreaterEqual(min(coordination), 2)
+            self.assertLessEqual(max(coordination), 3)
+        for size in (0, 1):
+            with self.assertRaises(ValueError):
+                geometry(size, 20., trim=True)
+
     def test_frontier_subspace_weights(self):
         positions = np.array([[0., 0., 0.], [3., 0., 0.],
                               [-1.5, 1.5*np.sqrt(3), 0.], [-1.5, -1.5*np.sqrt(3), 0.]]) / .52917720859
@@ -49,13 +81,24 @@ class FlakeChecks(unittest.TestCase):
         self.assertEqual(first["coordination"], [3, 1, 1, 1])
         self.assertEqual(first["edge_atoms_one_based"], [2, 3, 4])
         self.assertEqual(first["frontier"][0]["bands_one_based"], [19, 20])
+        original_frame = frame.copy()
         for start in (18, 20):
             rotation = np.linalg.qr(rng.normal(size=(2, 2)) + 1j*rng.normal(size=(2, 2)))[0]
             frame[:, start:start+2] = frame[:, start:start+2] @ rotation
+        self.assertGreater(np.max(abs(frame - original_frame)), .1)
+        snapshot.coefficients = frame.reshape(1, 2, 12, 24)
         changed = frontier_localization(snapshot, np.eye(12))
         for original, rotated in zip(first["frontier"], changed["frontier"]):
             np.testing.assert_allclose(original["atom_weights"], rotated["atom_weights"], atol=1e-14)
             self.assertAlmostEqual(sum(rotated["atom_weights"]), 1.)
+        trial = rng.normal(size=(12, 12))
+        metric = trial @ trial.T + np.eye(12)
+        eigenvalues, vectors = eigh(metric)
+        inverse_root = (vectors / np.sqrt(eigenvalues)) @ vectors.T
+        snapshot.coefficients = (block_diag(inverse_root, inverse_root) @ frame).reshape(1, 2, 12, 24)
+        covariant = frontier_localization(snapshot, metric)
+        for original, restored in zip(first["frontier"], covariant["frontier"]):
+            np.testing.assert_allclose(original["atom_weights"], restored["atom_weights"], atol=1e-14)
 
     def test_process_tree_memory(self):
         snapshot = "100 1 10\n101 100 20\n102 101 30\n103 100 40\n999 1 5000\n"

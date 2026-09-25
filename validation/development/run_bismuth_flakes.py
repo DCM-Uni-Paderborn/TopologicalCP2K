@@ -36,7 +36,7 @@ def process_tree_rss(text, root_pid):
     return sum(sizes), max(sizes, default=0), len(sizes)
 
 
-def geometry(size, vacuum):
+def geometry(size, vacuum, trim=False):
     a, buckling = 4.33, 1.74
     height = math.sqrt(3) * a / 2
     if size == 0:
@@ -52,6 +52,18 @@ def geometry(size, vacuum):
         lengths = [hi[d] - lo[d] + vacuum for d in range(3)]
         cell = [[lengths[i] if i == j else 0 for j in range(3)] for i in range(3)]
         atoms = [[p[d] - lo[d] + vacuum / 2 for d in range(3)] for p in atoms]
+    if trim:
+        if size < 2:
+            raise ValueError("Trimming requires a finite patch with at least two cells per side")
+        # Preserve the cell and all surviving coordinates to isolate termination.
+        while True:
+            kept = [p for i, p in enumerate(atoms)
+                    if sum(i != j and math.dist(p, q) < 3.3 for j, q in enumerate(atoms)) >= 2]
+            if not kept:
+                raise ValueError("Trimming removes the whole patch")
+            if len(kept) == len(atoms):
+                break
+            atoms = kept
     return cell, atoms
 
 
@@ -73,7 +85,7 @@ def inputs(args):
     finite = all(math.isfinite(x) for x in (args.size, args.vacuum, args.temperature, args.cutoff, args.scf_mesh))
     if not finite or args.size < 0 or args.vacuum <= 0 or args.temperature < 0 or args.cutoff <= 0 or args.scf_mesh < 1:
         raise ValueError("Invalid geometry or numerical setting")
-    cell, atoms = geometry(args.size, args.vacuum)
+    cell, atoms = geometry(args.size, args.vacuum, getattr(args, "trim_undercoordinated", False))
     nao = len(atoms) * {"DZVP": 13, "TZVP": 17, "TZV2P": 29}[args.basis]
     if args.mode == "wilson" and args.size != 0:
         raise ValueError("The Wilson reference must be periodic")
@@ -254,6 +266,8 @@ def main():
     parser.add_argument("--restart", type=Path)
     parser.add_argument("--export-spectrum", action="store_true")
     parser.add_argument("--ao-matrices", action="store_true")
+    parser.add_argument("--trim-undercoordinated", action="store_true",
+                        help="Remove atoms with fewer than two neighbors within 3.3 Angstrom; keep cell and other positions")
     args = parser.parse_args()
     root, work = args.root.resolve(), args.output.resolve()
     if shutil.disk_usage(root).free < 2 * 1024**3:

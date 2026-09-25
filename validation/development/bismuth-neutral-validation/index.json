@@ -1,0 +1,29 @@
+{
+  "cases": [
+    "flake3-dzvp30-spectrum",
+    "flake3-dzvp30-native",
+    "dimer-memory-control"
+  ],
+  "archives": [
+    {
+      "file": "flake3-dzvp30-spectrum.tar.gz",
+      "bytes": 10720495,
+      "sha256": "b37b016a27b9f012d50289747be5e13f9375a5e4bcb9a965c3527fba0b3ef350"
+    },
+    {
+      "file": "flake3-dzvp30-native.tar.gz",
+      "bytes": 9978168,
+      "sha256": "ad1f92e9a4805ff3bbc79cd57782217f038ff1f2c361221edb53e2612b52e720"
+    },
+    {
+      "file": "dimer-memory-control.tar.gz",
+      "bytes": 141461,
+      "sha256": "b0c2ac636d1bde5b49703884e216b6e8d301b005b7070e91e9ecc5e70fe99151"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 1037280,
+      "sha256": "4b67d33fb1b04e0e665cfb85758b34f2522e38315f2b60420f17e1983a2e4d93"
+    }
+  ]
+}
