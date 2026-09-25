@@ -1,6 +1,7 @@
 """Verify a stanene archive and replay raw Wilson matrices and solver comparisons."""
 
 import argparse
+import csv
 import hashlib
 import json
 from pathlib import Path
@@ -28,6 +29,10 @@ def main():
                 assert hashlib.file_digest(stream, "sha256").hexdigest() == expected["sha256"], name
         subprocess.run([sys.executable, str(root/"build-serial/summarize_stanene_localizer.py"),
                         str(root), str(output), "--basis", manifest["basis"]], check=True)
+        with output.with_suffix(".csv").open(newline="") as stream:
+            rows = list(csv.reader(stream))
+        with output.with_suffix(".csv").open("w", newline="") as stream:
+            csv.writer(stream, lineterminator="\n").writerows(rows)
         print(json.dumps({"verified_files": len(manifest["files"]), "replay": "passed"}, indent=2))
 
 
