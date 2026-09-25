@@ -180,7 +180,11 @@ reference gaps within $4.3\times10^{-15}$ hartree, with every
 resolved sparse parity agreeing. Some other scale queries fail
 the sparse-factor checks despite a resolved spectral gap; these
 are reported as unresolved rather than assigned the expected
-integer. Thus the expanded evidence supports consistency over
+integer. A separately retained correction to floating-point pivot
+comparisons resolves a small-torus failure and is covered by an
+exact-Pfaffian regression. It does not supply delayed pivoting
+between elimination blocks or establish general solver robustness.
+Thus the expanded evidence supports consistency over
 more sampled sizes and scales, but neither quantitative gap
 convergence nor the finite-range theorem's full hypotheses.
 The Supporting Information distinguishes this reference

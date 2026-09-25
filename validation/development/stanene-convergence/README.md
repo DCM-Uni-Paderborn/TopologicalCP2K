@@ -1,5 +1,11 @@
 # Larger complete-band stanene localizer controls
 
+This archive retains the original dependency build and its unresolved outcomes.
+The subsequent floating-pivot correction and separate numerical rechecks are in
+`../pfaffian-pivot/`; they do not replace the reports or hashes recorded here.
+Use `replay_pfaffian_pivot.py` for the corrected-library rechecks. The original
+replay intentionally requires the original success/unresolved classification.
+
 These records distinguish three changes: native flattening in complete primitive
 Bloch blocks, a quadratic-cost native AII basis conversion, and an independent
 sparse full-band reference used to explore larger analysis tori. The last of

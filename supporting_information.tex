@@ -2624,9 +2624,10 @@ stanene localizer in hartree, with $\Delta=1$ hartree and the
 previous geometry and $8\times8$ scalar SCF mesh. DZVP uses
 200 Ry and $E=-0.1592$ hartree; TZVP uses 400 Ry and
 $E=-0.16050731$ hartree. All unmarked entries have resolved
-$\nu=1$. A dagger denotes an unresolved Pfaffian factorization,
+$\nu=1$ in the original dependency build. A dagger denotes an unresolved Pfaffian factorization,
 \emph{not} a vanishing spectral gap or an assigned parity.
-These four sampled scales do not prove constancy between samples.}
+The subsequent pivot-correction control below reports changed solver outcomes
+separately. These four sampled scales do not prove constancy between samples.}
 \label{tab:si-stanene-large-torus}
 \end{table}
 
@@ -2644,8 +2645,8 @@ at $N=18$, and the coordinate commutator norm decreases from
 and 0.048762. A larger basis is therefore not a monotonic
 improvement of these full-space operator-norm diagnostics.
 
-Unresolved queries are deliberately retained: besides the marked
-table entries, $\eta/\Delta=0.5$ is unresolved in the sparse
+Unresolved queries from the original dependency build are deliberately
+retained: besides the marked table entries, $\eta/\Delta=0.5$ is unresolved in the sparse
 Pfaffian path at $N=3,6,12$, despite residual-checked nonzero
 spectral gaps. The earlier dense $N=3,6$ references determine
 their parity independently. No dense-derived index is substituted
@@ -2661,6 +2662,48 @@ Its replay checks the earlier dense archive as well as the new
 case archives and can repeat selected sparse calculations with
 a Tacho-enabled CP2K shared library. Runs overlap on one machine;
 their elapsed times are not multi-node scaling benchmarks.
+
+\subsubsection{Independent pivot-correction control}
+A subsequent dependency-level test identifies an integer overload
+of the unqualified absolute-value function in the compiled
+skew-LDL pivot search. Subunit floating-point pivot candidates
+were therefore compared after truncation to integers. Replacing
+this call by the scalar type's magnitude function leaves the
+matching, candidate rows, pivot threshold, operator entries and
+$10^{-10}$ solve-residual criterion unchanged.
+An $8\times8$ skew matrix with integer entries and exactly
+$\operatorname{Pf}(A)=60$ supplies an independent regression:
+the affected library fails all six combinations of two
+permutations and scales $1,10^{-120},10^{120}$, whereas the
+corrected library gives the expected signs with residuals below
+$2\times10^{-15}$. The exact value follows from recursive
+Pfaffian expansion, not from the corrected factorization.
+The small stanene $N=3$, $\eta/\Delta=0.5$ case then gives
+$\nu=1$ in the original ordering, agreeing with the independent
+dense reference. Local singular elimination blocks can nevertheless
+require pivot partners outside the current supernode; this
+correction does not implement such delayed pivots.
+The broader rerun also retains a new unresolved result for
+TZVP $N=12$, $\eta/\Delta=0.75$: with the process-local
+BLAS, the corrected factorization exceeds $10^{-10}$ in all
+three tested orderings (the smallest residual is
+$1.03\times10^{-10}$). The uncorrected factorization with the
+same BLAS and the corrected factorization with Homebrew BLAS
+both resolve $\nu=1$, with residuals $8.02\times10^{-12}$ and
+$7.81\times10^{-11}$, respectively. This sensitivity is a
+remaining factorization limitation, not a changed physical
+operator or evidence for a topology transition. No tolerance is
+relaxed and no failed query is replaced by a reference integer.
+A separate exploratory all-row maximum-column pivot policy
+resolves this TZVP query with a residual of
+$2.25\times10^{-13}$, but does not resolve the tested DZVP
+$N=6$, $\eta/\Delta=0.5$ and $N=12$, $\eta/\Delta=0.75$
+queries. It is not substituted for the recorded production-policy
+results and has not completed the full validation matrix.
+The changed dependency, exact fixture, unchanged inputs and
+separate material rechecks are retained in
+\nolinkurl{validation/development/pfaffian-pivot/}, without
+overwriting the original unresolved results.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged

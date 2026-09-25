@@ -1,0 +1,11 @@
+{
+  "source_commit": "b5c9c64ff65ad84e06de00673118a7a7b6d3d85e",
+  "original_index_sha256": "cc33add1d082399ce0cb9379c84a44deb603d49c16f2307becf3246135601fe2",
+  "dependency_revision": "02ef047cb4e1e16959714ce50462bb09511d0e9a",
+  "notes": "Only typed magnitudes changed in the production dependency. Original CP2K matching, pivot rows, threshold and residual checks retained. The diagnostic header/candidate-matching experiments are not production code. CP2K binaries were built just before this source-only checkpoint commit; the archive source and dependency patch identify the actual tested implementation. The first batch deliberately failed its monotonic-success assertion on a newly unresolved TZVP case. The resume retains that failure, reuses only completed hash-checked reports, and finishes the missing cases with all regressions explicit. Native material scans use the process-local thread-safe BLAS path; separate old/patched BLAS controls retain the near-threshold runtime dependence.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 97410,
+    "sha256": "6b74e1d0f2fc82b3e7f9a5518d0364b2ce3d111eef3a359afb64f882be9293a3"
+  }
+}

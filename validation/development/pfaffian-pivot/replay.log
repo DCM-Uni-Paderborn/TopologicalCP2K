@@ -1,0 +1,47 @@
+{"energy": -0.1592, "eta": 0.5, "flatten_scale": 1.0, "gap": 0.016623770566560687, "nu": 1, "nearzero": [0.016623770566560687, 0.016623770566560687, 0.06854556441917575, 0.06854556441917575, 0.06970202941308856, 0.06970202941308856, 0.08011383833869787, 0.08011383833869787], "aii_residual": 3.5853481641923146e-14, "eigen_residual": 5.740436138384003e-13, "factor_residual": 1.8340747033335176e-12, "pfaffian_fill": 109746, "nnz": 700216, "factor_attempts": [{"ordering": "original", "resolved": true, "residual": 1.8340747033335176e-12, "fill": 109746}], "dense_gap_error": 2.8102520310824275e-16, "dense_nu": 1, "elapsed_seconds": 0.4772072499617934}
+{"energy": -0.1592, "eta": 1.0, "flatten_scale": 1.0, "gap": 0.38476157777180275, "nu": 0, "nearzero": [0.38476157777180275, 0.38476157777180275, 0.6305988840099983, 0.6305988840099983, 0.6766870400520865, 0.6766870400520865, 0.6786675396164513, 0.6786675396164513], "aii_residual": 3.5853481641923146e-14, "eigen_residual": 2.420748361509363e-11, "factor_residual": 4.3597844452261737e-13, "pfaffian_fill": 104337, "nnz": 700216, "factor_attempts": [{"ordering": "original", "resolved": true, "residual": 4.3597844452261737e-13, "fill": 104337}], "dense_gap_error": 1.6653345369377348e-15, "dense_nu": 0, "elapsed_seconds": 0.4600356250302866}
+{"energy": -0.1592, "eta": 1.25, "flatten_scale": 1.0, "gap": 0.61872930989645, "nu": 0, "nearzero": [0.61872930989645, 0.61872930989645, 0.771558588416734, 0.771558588416734, 0.7719592326984679, 0.7719592326984679, 0.7812094513157901, 0.7812094513157901], "aii_residual": 3.5853481641923146e-14, "eigen_residual": 2.1983272516957546e-12, "factor_residual": 2.893934585962698e-13, "pfaffian_fill": 104337, "nnz": 700216, "factor_attempts": [{"ordering": "original", "resolved": true, "residual": 2.893934585962698e-13, "fill": 104337}], "dense_gap_error": 7.771561172376096e-16, "dense_nu": 0, "elapsed_seconds": 0.4613132920349017}
+{
+  "verified_files": 53,
+  "queries": 33,
+  "recovered": [
+    [
+      "mesh3",
+      0.5,
+      1
+    ]
+  ],
+  "unresolved": [
+    [
+      "mesh6",
+      0.5
+    ],
+    [
+      "mesh12",
+      0.5
+    ],
+    [
+      "mesh12",
+      0.75
+    ],
+    [
+      "mesh18",
+      0.75
+    ],
+    [
+      "mesh12-tzvp",
+      0.75
+    ]
+  ],
+  "newly_unresolved": [
+    [
+      "mesh12-tzvp",
+      0.75,
+      1
+    ]
+  ],
+  "maximum_gap_change": 0.0,
+  "recomputed": [
+    "mesh3"
+  ]
+}

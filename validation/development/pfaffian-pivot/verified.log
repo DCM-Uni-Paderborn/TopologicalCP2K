@@ -1,0 +1,42 @@
+{
+  "verified_files": 53,
+  "queries": 33,
+  "recovered": [
+    [
+      "mesh3",
+      0.5,
+      1
+    ]
+  ],
+  "unresolved": [
+    [
+      "mesh6",
+      0.5
+    ],
+    [
+      "mesh12",
+      0.5
+    ],
+    [
+      "mesh12",
+      0.75
+    ],
+    [
+      "mesh18",
+      0.75
+    ],
+    [
+      "mesh12-tzvp",
+      0.75
+    ]
+  ],
+  "newly_unresolved": [
+    [
+      "mesh12-tzvp",
+      0.75,
+      1
+    ]
+  ],
+  "maximum_gap_change": 0.0,
+  "recomputed": []
+}
