@@ -2919,13 +2919,103 @@ This is a validation of the native factorization using the complete-band
 representation, not a new native large-torus SCF calculation or
 a replacement of the Ritz gap estimates by inertia brackets.
 
+\subsection{Separating basis, cutoff, SCF sampling and cell height}
+\label{sec:si-stanene-separated}
+The preceding DZVP/200 Ry and TZVP/400 Ry comparison changes two
+numerical parameters at once. A separate control series fixes the
+analysis torus at $12\times12$ while varying the Gaussian basis and
+density-grid cutoff independently. All scalar states enter the
+post-SCF SOC diagonalization, and all resulting spinors enter the
+full-band reference localizer. No empty-band truncation or
+unitarization of the coordinate links is introduced.
+The query energy is placed at the midpoint of each sampled global
+electronic gap. For the complete-band sign flattening this does not
+change the operator when the energy remains within the same gap.
+Three independent scales, $\eta/\Delta=0.75,1,1.25$, are tested with
+$\Delta=1$ hartree.
+
+Fresh DZVP/200 Ry and TZVP/400 Ry SCF calculations first reproduce
+the earlier reference controls. Within DZVP, changing the cutoff
+from 200 to 400 Ry changes the $\eta/\Delta=1$ localizer gap by
+$4.35\times10^{-7}$ hartree; increasing it further to 600 Ry changes
+the gap by $4.05\times10^{-7}$ hartree in the opposite direction.
+These small, nonmonotonic differences are retained rather than
+interpreted as an extrapolation law. At the common 400 Ry cutoff,
+the DZVP-to-TZVP change is $1.94\times10^{-3}$ hartree, which
+separates the basis effect from the much smaller cutoff effect.
+
+\input{validation/development/stanene-separated-controls/table}
+
+The further controls vary the scalar SCF integration mesh, the
+relative grid cutoff and the open-axis cell height independently.
+When the height changes, the Cartesian buckling remains
+$0.852$ \AA; only the corresponding fractional coordinates change.
+The square property mesh and its reciprocal-boundary neighbour
+list are independent of the scalar SCF integration mesh.
+Automated input checks verify the reciprocal lattice, every mesh
+step and boundary wrap, and the fixed Cartesian geometry.
+The reference analyses run in separate processes with one BLAS
+thread; the preceding CP2K exports use two MPI ranks and two
+OpenMP threads per rank. Peak resident memory of the analysis
+process is distinguished from the native numerical-buffer limit
+and from the earlier MPI export.
+
+With TZVP/600 Ry, changing the scalar SCF mesh from $8\times8$
+to $12\times12$ changes the $\eta/\Delta=1$ gap by
+$-7.34\times10^{-5}$ hartree; the subsequent $18\times18$
+control changes it by $6.91\times10^{-6}$ hartree. Increasing
+the relative cutoff from 40 to 60 Ry changes the gap by
+$1.20\times10^{-9}$ hartree. Increasing the open-axis height
+from 20 to 25 \AA\ changes it by $-2.24\times10^{-8}$ hartree.
+All 27 queries in these nine fixed-volume controls give $\nu=1$.
+The electronic gap changes from 76.5685 to 76.5410 and then
+76.5360 meV along the three TZVP/600 Ry SCF meshes; this is
+not the roughly 0.232-hartree gap of the flattened localizer.
+
+A separate Wilson surface for the TZVP/600 Ry, $12\times12$
+SCF potential converges to $\nu=1$ after four refinements,
+with a sampled electronic gap of 76.5410 meV. Its final surface
+contains 193 loops with 192 points per loop. The largest reported
+WCC change is $2.62\times10^{-4}$ at the final refinement.
+The two coarsest candidate parities are zero and are explicitly
+not accepted as converged invariants. This independent check
+underscores the difference between a gap-resolved Hamiltonian
+and adequately sampled Wilson transport.
+
+The independent DZVP/200 Ry, $8\times8$-SCF volume control
+extends the analysis torus to $21\times21$, giving a localizer
+of order 45,864. At $\eta/\Delta=0.75,1,1.25$, the gaps are
+0.331864624081, 0.282051686763 and 0.240476515333 hartree,
+respectively, and all three indices are one. In particular, the
+$\eta/\Delta=1$ gap remains 5.2\% above the $18\times18$
+value. This is evidence for consistency of the sampled index,
+not quantitative volume convergence of the gap. The coordinate
+unitarity defect and commutator norm decrease to 0.015787 and
+0.007697, respectively; neither is set to zero by modifying the
+coordinate operators.
+The largest analysis-process resident-memory high-water mark is
+9.05 GiB for this control. A dense complex matrix of this order
+alone would occupy 31.3 GiB before eigensolver workspaces.
+These measurements concern the complete-band reference representation,
+not MPI-distributed Pfaffian factors or a controlled timing benchmark.
+
+All 30 new complete-band queries resolve the Pfaffian in the first
+external ordering at the unchanged $10^{-10}$ solve-probe threshold.
+The new records, including full exports, method snapshots and an
+archive-verification and numerical-replay script, are retained in
+\nolinkurl{validation/development/stanene-separated-controls/}.
+The table and pairwise differences are regenerated directly from
+the retained reports rather than transcribed from run summaries.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
 scaling, or general 230-space-group TQC.
-The final archive should contain complete material inputs and
-potentials, basis and cutoff studies, spatial/energy/scale scans,
-independent band references, and timed runs with whole-process memory.
+Further material records must extend the present basis, cutoff and
+sampling controls to additional SOC systems and converged flakes,
+with spatial/energy/scale scans, independent band references and
+timed runs with whole-process memory. The DZVP/TZVP comparison is
+not a complete-basis extrapolation.
 Development diagnostics and planned work must not be merged into
 tables of completed material results.
 

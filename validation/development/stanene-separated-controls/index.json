@@ -1,0 +1,176 @@
+{
+  "archives": [
+    {
+      "file": "dzvp-200-scf8.tar.gz",
+      "bytes": 22713292,
+      "sha256": "ad9e1c2efe837dbff374db55a7e5b00f04a46cef7794b965c1c997e0cd79672e"
+    },
+    {
+      "file": "dzvp-400-scf8.tar.gz",
+      "bytes": 22724928,
+      "sha256": "cfc822e305980735b1aa6e30e83bf4f52c3830dcd4ab73df1de8b688322a73c8"
+    },
+    {
+      "file": "dzvp-600-scf8.tar.gz",
+      "bytes": 22718701,
+      "sha256": "36f63218bde9f8435dd5ac8ca1e2c9a75fb2185ea742f222128a14a3d867c82e"
+    },
+    {
+      "file": "tzvp-400-scf8.tar.gz",
+      "bytes": 38775019,
+      "sha256": "1e8a562bf39733d6ee6c5669a9b748b5a7bd99b2e5484a457b3275f7c6f76c92"
+    },
+    {
+      "file": "tzvp-600-scf8.tar.gz",
+      "bytes": 38778176,
+      "sha256": "95a425aa9b388d896589c9394534fd21d9caf8ecb10125e195bce3d6a3022343"
+    },
+    {
+      "file": "tzvp-600-scf12.tar.gz",
+      "bytes": 38779273,
+      "sha256": "7cc2e72f216f120bee0318a1a7dc40525be07790779c913ea435b2620456fe13"
+    },
+    {
+      "file": "tzvp-600-scf18.tar.gz",
+      "bytes": 38779466,
+      "sha256": "a4dd9c35f9f46fed3f6040698507d53f25bc0ef8353f03eb8a311dbab1b6e150"
+    },
+    {
+      "file": "tzvp-600-rel60.tar.gz",
+      "bytes": 38784613,
+      "sha256": "722a1664dde8e2b503c8245cbd6dbc0977a907ab3c9214cbdebe241f90278588"
+    },
+    {
+      "file": "tzvp-600-height25.tar.gz",
+      "bytes": 38792005,
+      "sha256": "ee1bfb010588493b4221c13999f564ec1cb6f8bac7d2448de3ba2cd17cb85110"
+    },
+    {
+      "file": "dzvp-200-torus21.tar.gz",
+      "bytes": 69683552,
+      "sha256": "4de50d520b7245a816bb9849b2dfeb1c51ac4d8e45d420d4576daf27387a4f3f"
+    },
+    {
+      "file": "tzvp-600-wilson.tar.gz",
+      "bytes": 31952,
+      "sha256": "78a03c96b7da5767c765a550f6e5ca3d52f39e87ba5e47960156e8263528d1c4"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 539639,
+      "sha256": "0262a4a6e46e59d870e4d4e1491063a0caaebdc7d67722d3cb9b25155fc01231"
+    }
+  ],
+  "cases": [
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-200-scf8",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-400-scf8",
+      "basis": "DZVP",
+      "cutoff": 400,
+      "scf_mesh": 8
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-600-scf8",
+      "basis": "DZVP",
+      "cutoff": 600,
+      "scf_mesh": 8
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-400-scf8",
+      "basis": "TZVP",
+      "cutoff": 400,
+      "scf_mesh": 8
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-scf8",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 8
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-scf12",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-scf18",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 18
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 60,
+      "label": "tzvp-600-rel60",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    },
+    {
+      "size": 12,
+      "mode": "bloch",
+      "height": 25,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-height25",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    },
+    {
+      "size": 21,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-200-torus21",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8
+    },
+    {
+      "size": 12,
+      "mode": "reference",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-wilson",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    }
+  ]
+}

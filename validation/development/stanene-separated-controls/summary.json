@@ -1,0 +1,2059 @@
+[
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-200-scf8",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "dzvp-200-scf8",
+        "basis": "DZVP",
+        "cutoff": 200,
+        "scf_mesh": 8
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 10.601124292006716,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.952410311116839"
+      ],
+      "outputs": {
+        "output.out": "f25b42f217f00345af367e4c7aec206086f9a4784ae0959f7225af08f56427b7",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "4fa24dbff0fd271837f63bff52a68ae22f11e1f78954b3c34b246c64db90fa1a",
+        "stanene.mmn": "e44ce92ab5e09ed1e24b9fb7ce05a7a4bb7e03ecfea12c6c5d7497f7238102f8",
+        "stanene.eig": "0276b27167e1adb0b4de1adf4e099bf143502530639cab0424e93d1c2b3abfe2"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.04692856229826925,
+        "minimum_coordinate_singular_value": 0.9762537773047184,
+        "coordinate_commutator_norm": 0.02363370718488463,
+        "localizer_order": 14976,
+        "sampled_energy_gap_hartree": 0.0013540534218271782,
+        "occupied_spinors": 1152,
+        "valence_max": -0.160548177407877,
+        "conduction_min": -0.1578400705642226
+      },
+      "queries": [
+        {
+          "energy": -0.15919412398604982,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.29126552146855034,
+          "nu": 1,
+          "nearzero": [
+            0.29126552146855034,
+            0.29126552146855034,
+            0.2954596551577873,
+            0.2954596551577873,
+            0.4883417754380796,
+            0.4883417754380796,
+            0.4986061578978747,
+            0.4986061578978747
+          ],
+          "aii_residual": 4.776127410233144e-14,
+          "eigen_residual": 6.5422227542860835e-12,
+          "factor_residual": 4.1949620486330664e-13,
+          "pfaffian_fill": 24124884,
+          "nnz": 15126064,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 4.1949620486330664e-13,
+              "fill": 24124884
+            }
+          ],
+          "elapsed_seconds": 27.154541249969043
+        },
+        {
+          "energy": -0.15919412398604982,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.22991390264585165,
+          "nu": 1,
+          "nearzero": [
+            0.22991390264585165,
+            0.22991390264585165,
+            0.25019235688821245,
+            0.25019235688821245,
+            0.5293476483469206,
+            0.5293476483469206,
+            0.6199422584957408,
+            0.6199422584957408
+          ],
+          "aii_residual": 4.776127410233144e-14,
+          "eigen_residual": 9.915857937025712e-12,
+          "factor_residual": 1.0907503943486213e-13,
+          "pfaffian_fill": 24124884,
+          "nnz": 15126032,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.0907503943486213e-13,
+              "fill": 24124884
+            }
+          ],
+          "elapsed_seconds": 21.331551708979532
+        },
+        {
+          "energy": -0.15919412398604982,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17193776265766064,
+          "nu": 1,
+          "nearzero": [
+            0.17193776265766064,
+            0.17193776265766064,
+            0.22503065616739168,
+            0.22503065616739168,
+            0.532105597607621,
+            0.532105597607621,
+            0.6119389490068267,
+            0.6119389490068267
+          ],
+          "aii_residual": 4.776127410233144e-14,
+          "eigen_residual": 1.743890997652714e-11,
+          "factor_residual": 6.323501039983464e-14,
+          "pfaffian_fill": 25132956,
+          "nnz": 15125984,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 6.323501039983464e-14,
+              "fill": 25132956
+            }
+          ],
+          "elapsed_seconds": 20.844756000093184
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "4fa24dbff0fd271837f63bff52a68ae22f11e1f78954b3c34b246c64db90fa1a",
+        "stanene.mmn": "e44ce92ab5e09ed1e24b9fb7ce05a7a4bb7e03ecfea12c6c5d7497f7238102f8"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.0027081068436543843,
+      "maximum_resident_bytes": 4820074496
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-400-scf8",
+      "basis": "DZVP",
+      "cutoff": 400,
+      "scf_mesh": 8
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "dzvp-400-scf8",
+        "basis": "DZVP",
+        "cutoff": 400,
+        "scf_mesh": 8
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 15.165037875063717,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.952409834154265"
+      ],
+      "outputs": {
+        "output.out": "61320b2f13652bc915c592400a921352763b32c0fd11320ac59ca9b914f37b0a",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "49ea4c71f2721d9e1f9b9afbb6eca49aaf8e11eb53feeac475e764824275a3eb",
+        "stanene.mmn": "e791b9a9453105f1b30c5389c070499d83e06e3960d5889d85b0922d3a122ec3",
+        "stanene.eig": "3eca0c0c33a77c6d2889c5c988529db0c17b2be62da481fee2bad6e1587fcaa8"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.046928562298268806,
+        "minimum_coordinate_singular_value": 0.9762537773047186,
+        "coordinate_commutator_norm": 0.023633707184883154,
+        "localizer_order": 14976,
+        "sampled_energy_gap_hartree": 0.0013540443386802214,
+        "occupied_spinors": 1152,
+        "valence_max": -0.1605476379461345,
+        "conduction_min": -0.15783954926877403
+      },
+      "queries": [
+        {
+          "energy": -0.15919359360745428,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.29126508211896723,
+          "nu": 1,
+          "nearzero": [
+            0.29126508211896723,
+            0.29126508211896723,
+            0.2954592292928196,
+            0.2954592292928196,
+            0.48834177201537926,
+            0.48834177201537926,
+            0.4986061520515283,
+            0.4986061520515283
+          ],
+          "aii_residual": 6.957791547773651e-14,
+          "eigen_residual": 6.5413582751920704e-12,
+          "factor_residual": 3.08686188000725e-13,
+          "pfaffian_fill": 26989878,
+          "nnz": 15125792,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 3.08686188000725e-13,
+              "fill": 26989878
+            }
+          ],
+          "elapsed_seconds": 25.428341999999247
+        },
+        {
+          "energy": -0.15919359360745428,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.22991346743463068,
+          "nu": 1,
+          "nearzero": [
+            0.22991346743463068,
+            0.22991346743463068,
+            0.25019198475175447,
+            0.25019198475175447,
+            0.5293444944586735,
+            0.5293444944586735,
+            0.619940597347833,
+            0.619940597347833
+          ],
+          "aii_residual": 6.957791547773651e-14,
+          "eigen_residual": 9.914573772144434e-12,
+          "factor_residual": 1.0073222953586472e-13,
+          "pfaffian_fill": 25530756,
+          "nnz": 15125760,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.0073222953586472e-13,
+              "fill": 25530756
+            }
+          ],
+          "elapsed_seconds": 21.679817624972202
+        },
+        {
+          "energy": -0.15919359360745428,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17193731696180337,
+          "nu": 1,
+          "nearzero": [
+            0.17193731696180337,
+            0.17193731696180337,
+            0.22503030930925993,
+            0.22503030930925993,
+            0.532102642392177,
+            0.532102642392177,
+            0.6119374949793575,
+            0.6119374949793575
+          ],
+          "aii_residual": 6.957791547773651e-14,
+          "eigen_residual": 1.74379431057277e-11,
+          "factor_residual": 8.522086075834596e-14,
+          "pfaffian_fill": 25530756,
+          "nnz": 15125712,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 8.522086075834596e-14,
+              "fill": 25530756
+            }
+          ],
+          "elapsed_seconds": 20.587505000061356
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "49ea4c71f2721d9e1f9b9afbb6eca49aaf8e11eb53feeac475e764824275a3eb",
+        "stanene.mmn": "e791b9a9453105f1b30c5389c070499d83e06e3960d5889d85b0922d3a122ec3"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.0027080886773604707,
+      "maximum_resident_bytes": 5615337472
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-600-scf8",
+      "basis": "DZVP",
+      "cutoff": 600,
+      "scf_mesh": 8
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "dzvp-600-scf8",
+        "basis": "DZVP",
+        "cutoff": 600,
+        "scf_mesh": 8
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 20.303399041993544,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.952410287494375"
+      ],
+      "outputs": {
+        "output.out": "a00f1c2898d8fa990b019eb9fcd8bf72fb6c7a4019817b29212f45de95a4c3eb",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "f839f1df7d8866b9ebc203a829dec39cc514d98911a76229b5bb20c72331a23e",
+        "stanene.mmn": "c58af3f8357ff3fb8e2ace31cc70632085d8a88347ba62365a9f7b848995f268",
+        "stanene.eig": "e25228e9736c86ef753ee6185d273bc55ee0a0c9e568ea3f522b4e5ba01d9243"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.04692856229826925,
+        "minimum_coordinate_singular_value": 0.9762537773047184,
+        "coordinate_commutator_norm": 0.02363370718488611,
+        "localizer_order": 14976,
+        "sampled_energy_gap_hartree": 0.0013540527356813437,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16054817445876512,
+        "conduction_min": -0.15784006898740244
+      },
+      "queries": [
+        {
+          "energy": -0.15919412172308378,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.29126549380975486,
+          "nu": 1,
+          "nearzero": [
+            0.29126549380975486,
+            0.29126549380975486,
+            0.2954596282988313,
+            0.2954596282988313,
+            0.4883417730493246,
+            0.4883417730493246,
+            0.4986061547933983,
+            0.4986061547933983
+          ],
+          "aii_residual": 3.157283462451588e-14,
+          "eigen_residual": 6.5421441098547004e-12,
+          "factor_residual": 2.983135820976771e-13,
+          "pfaffian_fill": 24599958,
+          "nnz": 15125904,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.983135820976771e-13,
+              "fill": 24599958
+            }
+          ],
+          "elapsed_seconds": 24.509622875018977
+        },
+        {
+          "energy": -0.15919412172308378,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.22991387222191637,
+          "nu": 1,
+          "nearzero": [
+            0.22991387222191637,
+            0.22991387222191637,
+            0.25019232967878163,
+            0.25019232967878163,
+            0.5293475466042219,
+            0.5293475466042219,
+            0.6199421965009186,
+            0.6199421965009186
+          ],
+          "aii_residual": 3.157283462451588e-14,
+          "eigen_residual": 9.915609954428569e-12,
+          "factor_residual": 1.1637576124572616e-13,
+          "pfaffian_fill": 24599958,
+          "nnz": 15125856,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.1637576124572616e-13,
+              "fill": 24599958
+            }
+          ],
+          "elapsed_seconds": 21.782609834102914
+        },
+        {
+          "energy": -0.15919412172308378,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17193773025402237,
+          "nu": 1,
+          "nearzero": [
+            0.17193773025402237,
+            0.17193773025402237,
+            0.22503062965382936,
+            0.22503062965382936,
+            0.5321055030241051,
+            0.5321055030241051,
+            0.6119388942041717,
+            0.6119388942041717
+          ],
+          "aii_residual": 3.157283462451588e-14,
+          "eigen_residual": 1.744016844934228e-11,
+          "factor_residual": 7.924058630682715e-14,
+          "pfaffian_fill": 24124470,
+          "nnz": 15125856,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 7.924058630682715e-14,
+              "fill": 24124470
+            }
+          ],
+          "elapsed_seconds": 20.634930790984072
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "f839f1df7d8866b9ebc203a829dec39cc514d98911a76229b5bb20c72331a23e",
+        "stanene.mmn": "c58af3f8357ff3fb8e2ace31cc70632085d8a88347ba62365a9f7b848995f268"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.0027081054713626873,
+      "maximum_resident_bytes": 5348474880
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-400-scf8",
+      "basis": "TZVP",
+      "cutoff": 400,
+      "scf_mesh": 8
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "tzvp-400-scf8",
+        "basis": "TZVP",
+        "cutoff": 400,
+        "scf_mesh": 8
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 15.600402166950516,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.953405937105718"
+      ],
+      "outputs": {
+        "output.out": "3284de83ccb9805d98e807fe6015c0ec4503da346613543dffcc1fa636be3631",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "6953aad7128563258a635c2352d484ca0e9b6405210832d975dcb6c5e7beb9f8",
+        "stanene.mmn": "e949d409fa5056f0a8b452e9bdc8fb40b03fcc199a53145532aea91eb3cdc4b4",
+        "stanene.eig": "bbd9cea39ec11fd3ce063cd19e9588ab9e4042042bbf9a13cb77624fa155602b"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.08464091351888936,
+        "minimum_coordinate_singular_value": 0.9567440025843437,
+        "coordinate_commutator_norm": 0.04876184394985076,
+        "localizer_order": 19584,
+        "sampled_energy_gap_hartree": 0.0014069206283202629,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16191424284542735,
+        "conduction_min": -0.15910040158878683
+      },
+      "queries": [
+        {
+          "energy": -0.1605073222171071,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.2930463085282675,
+          "nu": 1,
+          "nearzero": [
+            0.2930463085282675,
+            0.2930463085282675,
+            0.2972182894137392,
+            0.2972182894137392,
+            0.4885385823442123,
+            0.4885385823442123,
+            0.49902497182811023,
+            0.49902497182811023
+          ],
+          "aii_residual": 4.2722818894267746e-14,
+          "eigen_residual": 1.3983082068865471e-11,
+          "factor_residual": 4.074498747142939e-13,
+          "pfaffian_fill": 43435688,
+          "nnz": 25890168,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 4.074498747142939e-13,
+              "fill": 43435688
+            }
+          ],
+          "elapsed_seconds": 55.5201709169196
+        },
+        {
+          "energy": -0.1605073222171071,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.23185248238157913,
+          "nu": 1,
+          "nearzero": [
+            0.23185248238157913,
+            0.23185248238157913,
+            0.2521496841940295,
+            0.2521496841940295,
+            0.5283492899961542,
+            0.5283492899961542,
+            0.62166942789871,
+            0.62166942789871
+          ],
+          "aii_residual": 4.2722818894267746e-14,
+          "eigen_residual": 1.1535845196731811e-11,
+          "factor_residual": 1.3289915301847748e-13,
+          "pfaffian_fill": 43440720,
+          "nnz": 25890120,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.3289915301847748e-13,
+              "fill": 43440720
+            }
+          ],
+          "elapsed_seconds": 45.424090999993496
+        },
+        {
+          "energy": -0.1605073222171071,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.1738815853237885,
+          "nu": 1,
+          "nearzero": [
+            0.1738815853237885,
+            0.1738815853237885,
+            0.22695122200765772,
+            0.22695122200765772,
+            0.5311239057421383,
+            0.5311239057421383,
+            0.6134661471064895,
+            0.6134661471064895
+          ],
+          "aii_residual": 4.2722818894267746e-14,
+          "eigen_residual": 2.4961367667878627e-11,
+          "factor_residual": 8.676186717440515e-14,
+          "pfaffian_fill": 45066056,
+          "nnz": 25890072,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 8.676186717440515e-14,
+              "fill": 45066056
+            }
+          ],
+          "elapsed_seconds": 43.307891957927495
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "6953aad7128563258a635c2352d484ca0e9b6405210832d975dcb6c5e7beb9f8",
+        "stanene.mmn": "e949d409fa5056f0a8b452e9bdc8fb40b03fcc199a53145532aea91eb3cdc4b4"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.0028138412566405258,
+      "maximum_resident_bytes": 6398787584
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-scf8",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 8
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "tzvp-600-scf8",
+        "basis": "TZVP",
+        "cutoff": 600,
+        "scf_mesh": 8
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 23.164100082940422,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.953406508776736"
+      ],
+      "outputs": {
+        "output.out": "4be4fdacfb6daa52a36b7ceca1b9be549770eaf7bab398cc5438761a68b487bc",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "996f783eaeceb479aec3714ec40d8f9494c0929e240b343a1e01637808b395ba",
+        "stanene.mmn": "0a8a4e7ed47f0f4622411af11ce8b31fe1c82c55026a5fdcb78ba6899b02e4f3",
+        "stanene.eig": "340e90a1e7d92fc454f761336c599ae863f4c046ac148528c98a3866d38b65bd"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.08464091351888625,
+        "minimum_coordinate_singular_value": 0.9567440025843453,
+        "coordinate_commutator_norm": 0.04876184394985774,
+        "localizer_order": 19584,
+        "sampled_energy_gap_hartree": 0.0014069200247903146,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16191434260631776,
+        "conduction_min": -0.1591005025567371
+      },
+      "queries": [
+        {
+          "energy": -0.16050742258152745,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.2930464407336551,
+          "nu": 1,
+          "nearzero": [
+            0.2930464407336551,
+            0.2930464407336551,
+            0.29721840558780416,
+            0.29721840558780416,
+            0.4885385275606349,
+            0.4885385275606349,
+            0.49902490827005985,
+            0.49902490827005985
+          ],
+          "aii_residual": 5.82415517723367e-14,
+          "eigen_residual": 1.3980383182269078e-11,
+          "factor_residual": 3.74387705751827e-13,
+          "pfaffian_fill": 47414772,
+          "nnz": 25890272,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 3.74387705751827e-13,
+              "fill": 47414772
+            }
+          ],
+          "elapsed_seconds": 51.7906992090866
+        },
+        {
+          "energy": -0.16050742258152745,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.23185256394268125,
+          "nu": 1,
+          "nearzero": [
+            0.23185256394268125,
+            0.23185256394268125,
+            0.2521496904274212,
+            0.2521496904274212,
+            0.5283513466506679,
+            0.5283513466506679,
+            0.6216703369771537,
+            0.6216703369771537
+          ],
+          "aii_residual": 5.82415517723367e-14,
+          "eigen_residual": 1.153542022359379e-11,
+          "factor_residual": 3.137442653428112e-13,
+          "pfaffian_fill": 43117580,
+          "nnz": 25890208,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 3.137442653428112e-13,
+              "fill": 43117580
+            }
+          ],
+          "elapsed_seconds": 41.98560200002976
+        },
+        {
+          "energy": -0.16050742258152745,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17388167550128822,
+          "nu": 1,
+          "nearzero": [
+            0.17388167550128822,
+            0.17388167550128822,
+            0.22695119477166512,
+            0.22695119477166512,
+            0.5311258114327373,
+            0.5311258114327373,
+            0.6134669042098109,
+            0.6134669042098109
+          ],
+          "aii_residual": 5.82415517723367e-14,
+          "eigen_residual": 2.497011494573165e-11,
+          "factor_residual": 1.2322075543934514e-13,
+          "pfaffian_fill": 42773908,
+          "nnz": 25890152,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.2322075543934514e-13,
+              "fill": 42773908
+            }
+          ],
+          "elapsed_seconds": 39.460635499912314
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "996f783eaeceb479aec3714ec40d8f9494c0929e240b343a1e01637808b395ba",
+        "stanene.mmn": "0a8a4e7ed47f0f4622411af11ce8b31fe1c82c55026a5fdcb78ba6899b02e4f3"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.002813840049580657,
+      "maximum_resident_bytes": 6345195520
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-scf12",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "tzvp-600-scf12",
+        "basis": "TZVP",
+        "cutoff": 600,
+        "scf_mesh": 12
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 27.34331420797389,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.953366129867534"
+      ],
+      "outputs": {
+        "output.out": "6808c648f0d900cb74a0fac1bcca6a18a0ce4214e9e3581aa3f2d291f7cdc430",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "bf3c1bfcfe17488e14ac12cab60d9ba6b7a4b5970263f8e8cae03263ef30d50c",
+        "stanene.mmn": "9298c4d1e26f28389c715e40d7b00330ce17c881cb5dcbe9fbd1b834a2a2f3b8",
+        "stanene.eig": "c859f10af87776d2e3bacc54d3e06265d854955b363085b8b3061e971c4e67d9"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.08464091351888425,
+        "minimum_coordinate_singular_value": 0.9567440025843463,
+        "coordinate_commutator_norm": 0.04876184394985741,
+        "localizer_order": 19584,
+        "sampled_energy_gap_hartree": 0.001406415435926317,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16187818859626388,
+        "conduction_min": -0.15906535772441122
+      },
+      "queries": [
+        {
+          "energy": -0.16047177316033756,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.2928490581993659,
+          "nu": 1,
+          "nearzero": [
+            0.2928490581993659,
+            0.2928490581993659,
+            0.2970472818353702,
+            0.2970472818353702,
+            0.4886630480899705,
+            0.4886630480899705,
+            0.49917078348424865,
+            0.49917078348424865
+          ],
+          "aii_residual": 6.66820327832003e-14,
+          "eigen_residual": 1.728439931898589e-11,
+          "factor_residual": 7.627762574918785e-13,
+          "pfaffian_fill": 46089316,
+          "nnz": 25890152,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 7.627762574918785e-13,
+              "fill": 46089316
+            }
+          ],
+          "elapsed_seconds": 47.345919875078835
+        },
+        {
+          "energy": -0.16047177316033756,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.23177911596055184,
+          "nu": 1,
+          "nearzero": [
+            0.23177911596055184,
+            0.23177911596055184,
+            0.2522079830995761,
+            0.2522079830995761,
+            0.5282519311468188,
+            0.5282519311468188,
+            0.621616407484076,
+            0.621616407484076
+          ],
+          "aii_residual": 6.66820327832003e-14,
+          "eigen_residual": 1.1515537332543012e-11,
+          "factor_residual": 2.913968722653962e-13,
+          "pfaffian_fill": 45805348,
+          "nnz": 25890096,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.913968722653962e-13,
+              "fill": 45805348
+            }
+          ],
+          "elapsed_seconds": 40.19058804109227
+        },
+        {
+          "energy": -0.16047177316033756,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.1737883471127683,
+          "nu": 1,
+          "nearzero": [
+            0.1737883471127683,
+            0.1737883471127683,
+            0.2270766840033662,
+            0.2270766840033662,
+            0.5310391710869956,
+            0.5310391710869956,
+            0.6134269060277335,
+            0.6134269060277335
+          ],
+          "aii_residual": 6.66820327832003e-14,
+          "eigen_residual": 2.461264693539103e-11,
+          "factor_residual": 1.9569756649400018e-13,
+          "pfaffian_fill": 45551574,
+          "nnz": 25890040,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.9569756649400018e-13,
+              "fill": 45551574
+            }
+          ],
+          "elapsed_seconds": 38.91144683305174
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "bf3c1bfcfe17488e14ac12cab60d9ba6b7a4b5970263f8e8cae03263ef30d50c",
+        "stanene.mmn": "9298c4d1e26f28389c715e40d7b00330ce17c881cb5dcbe9fbd1b834a2a2f3b8"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.002812830871852662,
+      "maximum_resident_bytes": 6316294144
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-scf18",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 18
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "tzvp-600-scf18",
+        "basis": "TZVP",
+        "cutoff": 600,
+        "scf_mesh": 18
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 27.888922082958743,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.953349553627936"
+      ],
+      "outputs": {
+        "output.out": "5eee3960d2867d4eaec85f11273a2997c92c0fdfdc8f222a77ecdd8f9dd25665",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "00f437f087c47844185bfaca4f72e3e97aabca09e4621952463600501d868dab",
+        "stanene.mmn": "f875307838cafceef6ef9a4aab780840226390c8e94aa18420f361f5c57d70e0",
+        "stanene.eig": "635622160bc58aa7908e4309be87d096acb814f1606f12446be3b7322214a18d"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.08464091351888259,
+        "minimum_coordinate_singular_value": 0.9567440025843472,
+        "coordinate_commutator_norm": 0.04876184394985502,
+        "localizer_order": 19584,
+        "sampled_energy_gap_hartree": 0.001406322905863372,
+        "occupied_spinors": 1152,
+        "valence_max": -0.1618703526382214,
+        "conduction_min": -0.15905770682649464
+      },
+      "queries": [
+        {
+          "energy": -0.16046402973235802,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.2928742761299732,
+          "nu": 1,
+          "nearzero": [
+            0.2928742761299732,
+            0.2928742761299732,
+            0.29706975008084185,
+            0.29706975008084185,
+            0.4886439270132129,
+            0.4886439270132129,
+            0.49914820752400557,
+            0.49914820752400557
+          ],
+          "aii_residual": 5.3507408820683633e-14,
+          "eigen_residual": 1.6749089620847228e-11,
+          "factor_residual": 4.5077755414836037e-13,
+          "pfaffian_fill": 43468188,
+          "nnz": 25890120,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 4.5077755414836037e-13,
+              "fill": 43468188
+            }
+          ],
+          "elapsed_seconds": 46.60925124993082
+        },
+        {
+          "energy": -0.16046402973235802,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.23178602264671863,
+          "nu": 1,
+          "nearzero": [
+            0.23178602264671863,
+            0.23178602264671863,
+            0.25220017851109766,
+            0.25220017851109766,
+            0.5282403444513961,
+            0.5282403444513961,
+            0.6216231335824054,
+            0.6216231335824054
+          ],
+          "aii_residual": 5.3507408820683633e-14,
+          "eigen_residual": 1.1585109839200663e-11,
+          "factor_residual": 1.5003529938857125e-13,
+          "pfaffian_fill": 43462476,
+          "nnz": 25890072,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.5003529938857125e-13,
+              "fill": 43462476
+            }
+          ],
+          "elapsed_seconds": 39.122899000067264
+        },
+        {
+          "energy": -0.16046402973235802,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17379608794679008,
+          "nu": 1,
+          "nearzero": [
+            0.17379608794679008,
+            0.17379608794679008,
+            0.22706037348723573,
+            0.22706037348723573,
+            0.5310283315724532,
+            0.5310283315724532,
+            0.6134336985686233,
+            0.6134336985686233
+          ],
+          "aii_residual": 5.3507408820683633e-14,
+          "eigen_residual": 2.45214343589247e-11,
+          "factor_residual": 6.906883134780874e-14,
+          "pfaffian_fill": 44288948,
+          "nnz": 25890104,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 6.906883134780874e-14,
+              "fill": 44288948
+            }
+          ],
+          "elapsed_seconds": 38.19465204095468
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "00f437f087c47844185bfaca4f72e3e97aabca09e4621952463600501d868dab",
+        "stanene.mmn": "f875307838cafceef6ef9a4aab780840226390c8e94aa18420f361f5c57d70e0"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.002812645811726744,
+      "maximum_resident_bytes": 6551224320
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 60,
+      "label": "tzvp-600-rel60",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 60,
+        "label": "tzvp-600-rel60",
+        "basis": "TZVP",
+        "cutoff": 600,
+        "scf_mesh": 12
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 27.296587000018917,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.953366130496336"
+      ],
+      "outputs": {
+        "output.out": "4006412241f3e4451c1977fe40f568a9420cd6776b73bfec274e80551beefa00",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "dbcdeef38904499dd97ecdfd6a98b418fc0c84da30eeee9671939694bfd4329a",
+        "stanene.mmn": "e8c18e43b5c2a6f38145cdf7281d1bf06a6f3ef32cacb76b5719cdb96e189fa0",
+        "stanene.eig": "09d0779a8a4eecb9694813fa98e71b2409507718bb9f1bf12aa8669c341132f4"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.08464091351888603,
+        "minimum_coordinate_singular_value": 0.9567440025843454,
+        "coordinate_commutator_norm": 0.0487618439498509,
+        "localizer_order": 19584,
+        "sampled_energy_gap_hartree": 0.0014064154634801374,
+        "occupied_spinors": 1152,
+        "valence_max": -0.16187818757075706,
+        "conduction_min": -0.15906535664379678
+      },
+      "queries": [
+        {
+          "energy": -0.16047177210727692,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.2928490592607729,
+          "nu": 1,
+          "nearzero": [
+            0.2928490592607729,
+            0.2928490592607729,
+            0.29704728287686166,
+            0.29704728287686166,
+            0.4886630482536538,
+            0.4886630482536538,
+            0.49917078363886663,
+            0.49917078363886663
+          ],
+          "aii_residual": 1.1749400242711233e-13,
+          "eigen_residual": 1.7284556864464157e-11,
+          "factor_residual": 1.4527652555880203e-13,
+          "pfaffian_fill": 44571692,
+          "nnz": 25890208,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.4527652555880203e-13,
+              "fill": 44571692
+            }
+          ],
+          "elapsed_seconds": 48.8517757919617
+        },
+        {
+          "energy": -0.16047177210727692,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.2317791171647557,
+          "nu": 1,
+          "nearzero": [
+            0.2317791171647557,
+            0.2317791171647557,
+            0.2522079842365707,
+            0.2522079842365707,
+            0.5282519391808369,
+            0.5282519391808369,
+            0.6216164116481541,
+            0.6216164116481541
+          ],
+          "aii_residual": 1.1749400242711233e-13,
+          "eigen_residual": 1.1515693348973612e-11,
+          "factor_residual": 4.073452993631663e-13,
+          "pfaffian_fill": 42539172,
+          "nnz": 25890168,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 4.073452993631663e-13,
+              "fill": 42539172
+            }
+          ],
+          "elapsed_seconds": 39.61720679199789
+        },
+        {
+          "energy": -0.16047177210727692,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17378834832310713,
+          "nu": 1,
+          "nearzero": [
+            0.17378834832310713,
+            0.17378834832310713,
+            0.2270766851287021,
+            0.2270766851287021,
+            0.5310391785807684,
+            0.5310391785807684,
+            0.6134269095967702,
+            0.6134269095967702
+          ],
+          "aii_residual": 1.1749400242711233e-13,
+          "eigen_residual": 2.4613264494740182e-11,
+          "factor_residual": 1.6251375659711342e-13,
+          "pfaffian_fill": 42785198,
+          "nnz": 25890120,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.6251375659711342e-13,
+              "fill": 42785198
+            }
+          ],
+          "elapsed_seconds": 39.56331729097292
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "dbcdeef38904499dd97ecdfd6a98b418fc0c84da30eeee9671939694bfd4329a",
+        "stanene.mmn": "e8c18e43b5c2a6f38145cdf7281d1bf06a6f3ef32cacb76b5719cdb96e189fa0"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.0028128309269602747,
+      "maximum_resident_bytes": 7148683264
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "bloch",
+      "height": 25,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-height25",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "bloch",
+        "height": 25,
+        "rel_cutoff": 40,
+        "label": "tzvp-600-height25",
+        "basis": "TZVP",
+        "cutoff": 600,
+        "scf_mesh": 12
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 36.81910425005481,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.953366088544440"
+      ],
+      "outputs": {
+        "output.out": "7065a6657137160546e52376a559f974449704e51b33dbba40b249b54fd719f2",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "ccd0b39a6e32a887b49ea6ff3eb181d7b70b63b990576a8adbf4ca14dd9593c0",
+        "stanene.mmn": "d508461e2d2db9253db62bfca0ca5292214ea89c56b9b22ad61294d195f700f3",
+        "stanene.eig": "c86ec75a2efcf5ca3a1a803e6c6191d90592b5dcb5e962fbfbae8def66b47e2f"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.0846409135188616,
+        "minimum_coordinate_singular_value": 0.9567440025843582,
+        "coordinate_commutator_norm": 0.04876184394984857,
+        "localizer_order": 19584,
+        "sampled_energy_gap_hartree": 0.0014064149076383758,
+        "occupied_spinors": 1152,
+        "valence_max": -0.1618782002402134,
+        "conduction_min": -0.15906537042493663
+      },
+      "queries": [
+        {
+          "energy": -0.160471785332575,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.29284903833119935,
+          "nu": 1,
+          "nearzero": [
+            0.29284903833119935,
+            0.29284903833119935,
+            0.2970472617446292,
+            0.2970472617446292,
+            0.4886630449245637,
+            0.4886630449245637,
+            0.499170779654178,
+            0.499170779654178
+          ],
+          "aii_residual": 1.8253081836761668e-13,
+          "eigen_residual": 1.7283739975420727e-11,
+          "factor_residual": 2.338644750829778e-12,
+          "pfaffian_fill": 45077068,
+          "nnz": 25890344,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.338644750829778e-12,
+              "fill": 45077068
+            }
+          ],
+          "elapsed_seconds": 48.09403149993159
+        },
+        {
+          "energy": -0.160471785332575,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.23177909358061796,
+          "nu": 1,
+          "nearzero": [
+            0.23177909358061796,
+            0.23177909358061796,
+            0.252207959707442,
+            0.252207959707442,
+            0.5282520935565886,
+            0.5282520935565886,
+            0.6216164587594788,
+            0.6216164587594788
+          ],
+          "aii_residual": 1.8253081836761668e-13,
+          "eigen_residual": 1.1515061152883944e-11,
+          "factor_residual": 2.5034070599188767e-12,
+          "pfaffian_fill": 42493226,
+          "nnz": 25890264,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.5034070599188767e-12,
+              "fill": 42493226
+            }
+          ],
+          "elapsed_seconds": 42.93789749999996
+        },
+        {
+          "energy": -0.160471785332575,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.17378832467341487,
+          "nu": 1,
+          "nearzero": [
+            0.17378832467341487,
+            0.17378832467341487,
+            0.22707665939953567,
+            0.22707665939953567,
+            0.5310393236851726,
+            0.5310393236851726,
+            0.6134269536370135,
+            0.6134269536370135
+          ],
+          "aii_residual": 1.8253081836761668e-13,
+          "eigen_residual": 2.461325148620463e-11,
+          "factor_residual": 9.585996301518927e-13,
+          "pfaffian_fill": 45047556,
+          "nnz": 25890208,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 9.585996301518927e-13,
+              "fill": 45047556
+            }
+          ],
+          "elapsed_seconds": 38.660526582971215
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "ccd0b39a6e32a887b49ea6ff3eb181d7b70b63b990576a8adbf4ca14dd9593c0",
+        "stanene.mmn": "d508461e2d2db9253db62bfca0ca5292214ea89c56b9b22ad61294d195f700f3"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.0028128298152767794,
+      "maximum_resident_bytes": 6315835392
+    }
+  },
+  {
+    "case": {
+      "size": 21,
+      "mode": "bloch",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "dzvp-200-torus21",
+      "basis": "DZVP",
+      "cutoff": 200,
+      "scf_mesh": 8
+    },
+    "run": {
+      "case": {
+        "size": 21,
+        "mode": "bloch",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "dzvp-200-torus21",
+        "basis": "DZVP",
+        "cutoff": 200,
+        "scf_mesh": 8
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 13.116704000043683,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.952410311118090"
+      ],
+      "outputs": {
+        "output.out": "7424ad17f9a1bd21542bb062780ddfe6293f68a4248135d0aab45a678fb4af20",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.topology": "7628049dbfa1a0f58e6f01de78c538f38eb2e3adaf24a8709a93fbb33d3f8991",
+        "stanene.mmn": "3198776c9dfe261130d0297b7b40135a13bd8a8e2e0f172bdf0db7d093c932c9",
+        "stanene.eig": "493e9a99cfb7480719713a3c94a5bca6e1541743c621631ec3d31d997ea357e7"
+      }
+    },
+    "analysis": {
+      "diagnostics": {
+        "coordinate_unitarity_defect": 0.01578710796299032,
+        "minimum_coordinate_singular_value": 0.9920750435511467,
+        "coordinate_commutator_norm": 0.007697068264029595,
+        "localizer_order": 45864,
+        "sampled_energy_gap_hartree": 0.0013540534222161171,
+        "occupied_spinors": 3528,
+        "valence_max": -0.1605481774058265,
+        "conduction_min": -0.15784007056139426
+      },
+      "queries": [
+        {
+          "energy": -0.15919412398361038,
+          "eta": 0.75,
+          "flatten_scale": 1.0,
+          "gap": 0.3318646240810676,
+          "nu": 1,
+          "nearzero": [
+            0.3318646240810676,
+            0.3318646240810676,
+            0.3320069169106166,
+            0.3320069169106166,
+            0.49626116344249843,
+            0.49626116344249843,
+            0.49989005035527473,
+            0.49989005035527473
+          ],
+          "aii_residual": 4.0157981107125096e-14,
+          "eigen_residual": 1.0178641171892965e-11,
+          "factor_residual": 2.73663436122371e-13,
+          "pfaffian_fill": 110581340,
+          "nnz": 47244920,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 2.73663436122371e-13,
+              "fill": 110581340
+            }
+          ],
+          "elapsed_seconds": 180.0447603749344
+        },
+        {
+          "energy": -0.15919412398361038,
+          "eta": 1.0,
+          "flatten_scale": 1.0,
+          "gap": 0.28205168676324505,
+          "nu": 1,
+          "nearzero": [
+            0.28205168676324505,
+            0.28205168676324505,
+            0.28277079516990616,
+            0.28277079516990616,
+            0.5556253687362825,
+            0.5556253687362825,
+            0.6937781162625914,
+            0.6937781162625914
+          ],
+          "aii_residual": 4.0157981107125096e-14,
+          "eigen_residual": 5.2302528485058225e-12,
+          "factor_residual": 1.0424319599391294e-12,
+          "pfaffian_fill": 113913082,
+          "nnz": 47244744,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.0424319599391294e-12,
+              "fill": 113913082
+            }
+          ],
+          "elapsed_seconds": 105.86802541592624
+        },
+        {
+          "energy": -0.15919412398361038,
+          "eta": 1.25,
+          "flatten_scale": 1.0,
+          "gap": 0.2404765153328494,
+          "nu": 1,
+          "nearzero": [
+            0.2404765153328494,
+            0.2404765153328494,
+            0.24324032734454223,
+            0.24324032734454223,
+            0.5509994506286742,
+            0.5509994506286742,
+            0.6802419354326585,
+            0.6802419354326585
+          ],
+          "aii_residual": 4.0157981107125096e-14,
+          "eigen_residual": 1.7309164228833537e-11,
+          "factor_residual": 1.9424728762229306e-13,
+          "pfaffian_fill": 115122812,
+          "nnz": 47244728,
+          "factor_attempts": [
+            {
+              "ordering": "original",
+              "resolved": true,
+              "residual": 1.9424728762229306e-13,
+              "fill": 115122812
+            }
+          ],
+          "elapsed_seconds": 94.85918099991977
+        }
+      ],
+      "inputs": {
+        "stanene.topology": "7628049dbfa1a0f58e6f01de78c538f38eb2e3adaf24a8709a93fbb33d3f8991",
+        "stanene.mmn": "3198776c9dfe261130d0297b7b40135a13bd8a8e2e0f172bdf0db7d093c932c9"
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "sampled_indirect_gap_hartree": 0.0027081068444322343,
+      "maximum_resident_bytes": 9715007488
+    }
+  },
+  {
+    "case": {
+      "size": 12,
+      "mode": "reference",
+      "height": 20,
+      "rel_cutoff": 40,
+      "label": "tzvp-600-wilson",
+      "basis": "TZVP",
+      "cutoff": 600,
+      "scf_mesh": 12
+    },
+    "run": {
+      "case": {
+        "size": 12,
+        "mode": "reference",
+        "height": 20,
+        "rel_cutoff": 40,
+        "label": "tzvp-600-wilson",
+        "basis": "TZVP",
+        "cutoff": 600,
+        "scf_mesh": 12
+      },
+      "provenance": {
+        "source_commit": "851fe2178997f1fbb2a8c2141a1da5fff40e644d",
+        "sources": {
+          "build-mpi/bin/cp2k.psmp": "f57c60412bdfc00a2a5d73584123a5581b264d93dbac42d5b8d08372d3775324",
+          "build-mpi/src/libcp2k.2026.2.dylib": "55e22c5415c5bbb28eacf581c0cfe35d388bdce996609d601f1102e87c3ab7cb",
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+          "build-serial/check_stanene_localizer.py": "cb1280f29bab42d347744930f7a0f40321cf215c2e8d261d76ed5bc3fe90793d",
+          "build-serial/check_sparse_bloch_localizer.py": "ff8b202861b9c7d60b930cfdae1544bedc78de02e712eca52f9032407ad1753b",
+          "build-serial/check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+          "build-serial/gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5"
+        },
+        "runner_sha256": "3fe9911850c77fc568141d386559f4037a9faff0bd6048738fd5351e7e9cfb88",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        }
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "2",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 262.4159658330027,
+      "scf_converged": true,
+      "completed": true,
+      "total_energy_hartree": [
+        "-6.953366129864568"
+      ],
+      "outputs": {
+        "output.out": "181236b2320ce5a0ca919d8bfccc88deb90a6688f6faf90b8015a0f67ebdb48c",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stanene.wilson": "ff7683dad1fdeb308f32c00706ca17ab95f946d27b44941e693333d27e9cd9a2"
+      }
+    },
+    "wilson_index": 1,
+    "wilson_gap_ev": 0.076541020622
+  }
+]

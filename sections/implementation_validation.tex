@@ -207,6 +207,22 @@ checks without the optional sparse libraries. Source snapshots,
 prototype and native results, and memory limitations are retained
 separately in the Supporting Information. Numerical Pfaffian factors
 are still stored on a single MPI rank.
+Fresh one-parameter controls separate discretization effects at fixed
+$12\times12$ analysis size. With DZVP, cutoffs of 200, 400 and
+600 Ry change the $\eta/\Delta=1$ localizer gap by less than
+$4.4\times10^{-7}$ hartree. At the common 400 Ry cutoff, switching
+from DZVP to TZVP instead changes this gap by
+$1.94\times10^{-3}$ hartree. With TZVP/600 Ry, refining the scalar
+SCF mesh from $12\times12$ to $18\times18$ changes it by
+$6.9\times10^{-6}$ hartree. All three sampled localizer scales
+retain $\nu=1$. These controls distinguish a stable sampled index
+from quantitative basis and volume convergence; the Supporting
+Information retains the complete exports and separate electronic gaps.
+The independent DZVP $21\times21$ torus also gives $\nu=1$
+at all three sampled scales. Its $\eta/\Delta=1$ gap is
+0.282052 hartree, still 5.2\% above the $18\times18$ value.
+A fresh sampling-converged TZVP/600 Ry Wilson surface independently
+confirms the nontrivial band invariant.
 Thus the expanded evidence supports consistency over
 more sampled sizes and scales, but neither quantitative gap
 convergence nor the finite-range theorem's full hypotheses.

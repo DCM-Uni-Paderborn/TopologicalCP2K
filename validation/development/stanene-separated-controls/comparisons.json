@@ -1,0 +1,119 @@
+[
+  {
+    "control": "DZVP cutoff 200 to 400",
+    "before": "dzvp-200-scf8",
+    "after": "dzvp-400-scf8",
+    "electronic_gap_change_ev": -4.943300403411597e-07,
+    "gap_changes_hartree": [
+      -4.393495831034322e-07,
+      -4.352112209782266e-07,
+      -4.456958572762737e-07
+    ],
+    "largest_gap_change_hartree": 4.456958572762737e-07,
+    "unchanged_indices": true
+  },
+  {
+    "control": "DZVP cutoff 400 to 600",
+    "before": "dzvp-400-scf8",
+    "after": "dzvp-600-scf8",
+    "electronic_gap_change_ev": 4.5698808093345793e-07,
+    "gap_changes_hartree": [
+      4.116907876272613e-07,
+      4.0478728569048883e-07,
+      4.132922190036581e-07
+    ],
+    "largest_gap_change_hartree": 4.132922190036581e-07,
+    "unchanged_indices": true
+  },
+  {
+    "control": "TZVP cutoff 400 to 600",
+    "before": "tzvp-400-scf8",
+    "after": "tzvp-600-scf8",
+    "electronic_gap_change_ev": -3.284577230988464e-08,
+    "gap_changes_hartree": [
+      1.3220538758185185e-07,
+      8.156110212209633e-08,
+      9.017749971751421e-08
+    ],
+    "largest_gap_change_hartree": 1.3220538758185185e-07,
+    "unchanged_indices": true
+  },
+  {
+    "control": "Basis at 400 Ry",
+    "before": "dzvp-400-scf8",
+    "after": "tzvp-400-scf8",
+    "electronic_gap_change_ev": 0.0028776742812990468,
+    "gap_changes_hartree": [
+      0.001781226409300285,
+      0.001939014946948453,
+      0.0019442683619851353
+    ],
+    "largest_gap_change_hartree": 0.0019442683619851353,
+    "unchanged_indices": true
+  },
+  {
+    "control": "Basis at 600 Ry",
+    "before": "dzvp-600-scf8",
+    "after": "tzvp-600-scf8",
+    "electronic_gap_change_ev": 0.0028771844474458036,
+    "gap_changes_hartree": [
+      0.0017809469239002396,
+      0.0019386917207648846,
+      0.0019439452472658492
+    ],
+    "largest_gap_change_hartree": 0.0019439452472658492,
+    "unchanged_indices": true
+  },
+  {
+    "control": "SCF mesh 8 to 12",
+    "before": "tzvp-600-scf8",
+    "after": "tzvp-600-scf12",
+    "electronic_gap_change_ev": -2.7461124947327292e-05,
+    "gap_changes_hartree": [
+      -0.00019738253428919217,
+      -7.344798212940984e-05,
+      -9.332838851991432e-05
+    ],
+    "largest_gap_change_hartree": 0.00019738253428919217,
+    "unchanged_indices": true
+  },
+  {
+    "control": "SCF mesh 12 to 18",
+    "before": "tzvp-600-scf12",
+    "after": "tzvp-600-scf18",
+    "electronic_gap_change_ev": -5.035742565083202e-06,
+    "gap_changes_hartree": [
+      2.5217930607279726e-05,
+      6.906686166791021e-06,
+      7.74083402177439e-06
+    ],
+    "largest_gap_change_hartree": 2.5217930607279726e-05,
+    "unchanged_indices": true
+  },
+  {
+    "control": "Relative cutoff 40 to 60",
+    "before": "tzvp-600-scf12",
+    "after": "tzvp-600-rel60",
+    "electronic_gap_change_ev": 1.4995545401892846e-09,
+    "gap_changes_hartree": [
+      1.0614070178327495e-09,
+      1.2042038477488859e-09,
+      1.210338829160662e-09
+    ],
+    "largest_gap_change_hartree": 1.210338829160662e-09,
+    "unchanged_indices": true
+  },
+  {
+    "control": "Open-axis height 20 to 25",
+    "before": "tzvp-600-scf12",
+    "after": "tzvp-600-height25",
+    "electronic_gap_change_ev": -2.8750894432579054e-08,
+    "gap_changes_hartree": [
+      -1.986816655641377e-08,
+      -2.237993387832482e-08,
+      -2.2439353430936393e-08
+    ],
+    "largest_gap_change_hartree": 2.2439353430936393e-08,
+    "unchanged_indices": true
+  }
+]

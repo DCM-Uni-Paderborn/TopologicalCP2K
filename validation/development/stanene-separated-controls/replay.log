@@ -1,0 +1,15 @@
+{"energy": -0.15919359360745428, "eta": 0.75, "flatten_scale": 1.0, "gap": 0.29126508211896723, "nu": 1, "nearzero": [0.29126508211896723, 0.29126508211896723, 0.2954592292928196, 0.2954592292928196, 0.48834177201537926, 0.48834177201537926, 0.4986061520515283, 0.4986061520515283], "aii_residual": 6.957791547773651e-14, "eigen_residual": 6.5413582751920704e-12, "factor_residual": 3.08686188000725e-13, "pfaffian_fill": 26989878, "nnz": 15125792, "factor_attempts": [{"ordering": "original", "resolved": true, "residual": 3.08686188000725e-13, "fill": 26989878}], "elapsed_seconds": 23.904208082938567}
+{"energy": -0.15919359360745428, "eta": 1.0, "flatten_scale": 1.0, "gap": 0.22991346743463068, "nu": 1, "nearzero": [0.22991346743463068, 0.22991346743463068, 0.25019198475175447, 0.25019198475175447, 0.5293444944586735, 0.5293444944586735, 0.619940597347833, 0.619940597347833], "aii_residual": 6.957791547773651e-14, "eigen_residual": 9.914573772144434e-12, "factor_residual": 1.0073222953586472e-13, "pfaffian_fill": 25530756, "nnz": 15125760, "factor_attempts": [{"ordering": "original", "resolved": true, "residual": 1.0073222953586472e-13, "fill": 25530756}], "elapsed_seconds": 21.18523729208391}
+{"energy": -0.15919359360745428, "eta": 1.25, "flatten_scale": 1.0, "gap": 0.17193731696180337, "nu": 1, "nearzero": [0.17193731696180337, 0.17193731696180337, 0.22503030930925993, 0.22503030930925993, 0.532102642392177, 0.532102642392177, 0.6119374949793575, 0.6119374949793575], "aii_residual": 6.957791547773651e-14, "eigen_residual": 1.74379431057277e-11, "factor_residual": 8.522086075834596e-14, "pfaffian_fill": 25530756, "nnz": 15125712, "factor_attempts": [{"ordering": "original", "resolved": true, "residual": 8.522086075834596e-14, "fill": 25530756}], "elapsed_seconds": 20.30122087500058}
+{
+  "verified_files": 126,
+  "cases": 11,
+  "maximum_previous_gap_difference": 1.2156942119645464e-13,
+  "maximum_factor_residual": 2.5034070599188767e-12,
+  "maximum_eigen_residual": 2.497011494573165e-11,
+  "recomputed_cases": [
+    "dzvp-400-scf8"
+  ],
+  "maximum_recomputed_gap_difference": 0.0,
+  "generated_table_and_comparisons_verified": true
+}

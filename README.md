@@ -55,7 +55,7 @@ repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
 The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/paper-revisions/topology-progress-20260925/large-bloch-tori/.
+/Users/tkuehne/paper-revisions/topology-progress-20260925/separated-stanene-controls/.
 The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
@@ -277,6 +277,16 @@ archived complete-band material queries at unchanged tolerance, with maximum
 solve residual 4.07e-11; this does not rerun the large-system SCF calculations.
 Numerical Pfaffian factors remain serial;
 these are not multi-node scaling results.
+
+Separately varied fresh SCF controls distinguish basis and cutoff effects
+on a fixed 12x12 analysis torus, then refine the scalar SCF mesh, relative
+grid cutoff and open-axis cell height independently. Their complete exports,
+native-factor diagnostics and replay are retained in
+`validation/development/stanene-separated-controls/`. The Supporting
+Information table is generated directly from the retained results; its
+electronic gaps are distinguished from the rescaled localizer gaps.
+This is an independent complete-band reference analysis, not a new native
+large-torus production representation or a complete-basis-limit claim.
 
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.
