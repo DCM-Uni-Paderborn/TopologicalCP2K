@@ -4,9 +4,11 @@
 An independently versioned native extension evaluates inversion
 representations at time-reversal-invariant momenta (TRIM). This analysis
 requires spatial inversion of the crystal, unlike the time-reversal
-pairing used to reduce a scalar SCF mesh. The TRIM are diagonalized at
+pairing used to reduce a scalar SCF mesh. The TRIM states are obtained at
 the converged SCF potential independently of the integration mesh,
-without a Wannier90 execution or a Wannier fit. If
+by direct diagonalization or the optional validated reconstruction of
+Section~\ref{sec:property-symmetry}, without a Wannier90 execution or
+a Wannier fit. If
 $T_{\mathcal I}(\bk)$ is the coefficient-space action of inversion,
 including atom permutations, orbital parities and lattice phases, its
 representation in the selected subspace is
@@ -440,9 +442,11 @@ are evaluated as additional points rather than matched through
 assumed irrep labels.
 
 The input mode \texttt{KPOINTS\_SOURCE SYMMETRY} connects this geometry
-directly to the Gaussian post-SCF analysis. It diagonalizes the frozen
-Hamiltonian at the generated points and enables both little-group and
-segment-compatibility checks, without changing the SCF density or mesh.
+directly to the Gaussian post-SCF analysis. It obtains eigenstates of the
+frozen Hamiltonian at the generated points and enables both little-group
+and segment-compatibility checks, without changing the SCF density or
+mesh. Optional property symmetry reduces the independent eigenproblems,
+but retains all points and directed compatibility connections.
 Uniform interior sampling is controlled by
 \texttt{LITTLE\_GROUP\_PATH\_POINTS}, including the endpoints.
 If successive lifted samples are $\bk_j+G_j$, the stored subedge

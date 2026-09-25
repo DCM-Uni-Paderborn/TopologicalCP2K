@@ -1,0 +1,439 @@
+{
+  "verified_members": 394,
+  "comparisons": [
+    {
+      "name": "build-serial-helium-k290",
+      "eigenvalue_error_hartree": 6.661338147750939e-16,
+      "frame_norm_error": 1.5543122382566162e-15,
+      "subspace_residual": 1.6704718899819195e-15,
+      "sewing_unitarity_error": 2.220446049251197e-15,
+      "link_covariance_error": 7.66777603626068e-15,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 1,
+      "link_singular_value_error": 4.440892098500626e-16,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-serial-helium-spglib",
+      "eigenvalue_error_hartree": 6.106226635438361e-16,
+      "frame_norm_error": 1.5543122382566162e-15,
+      "subspace_residual": 1.819155273315338e-15,
+      "sewing_unitarity_error": 2.109423746788026e-15,
+      "link_covariance_error": 6.654858695507619e-15,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 1,
+      "link_singular_value_error": 3.3306690738754696e-16,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-serial-neon-k290",
+      "eigenvalue_error_hartree": 1.1546319456101628e-14,
+      "frame_norm_error": 7.216503035973075e-15,
+      "subspace_residual": 1.546582767262564e-14,
+      "sewing_unitarity_error": 1.099120794378905e-14,
+      "link_covariance_error": 1.3228553094684648e-14,
+      "wilson_phase_error": 8.881784197001252e-16,
+      "wilson_loops": 5,
+      "link_singular_value_error": 1.5543122344752192e-15,
+      "points": 40,
+      "links": 40,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-serial-neon-spglib",
+      "eigenvalue_error_hartree": 1.5987211554602254e-14,
+      "frame_norm_error": 6.9952861290293824e-15,
+      "subspace_residual": 1.4309909133528225e-14,
+      "sewing_unitarity_error": 1.176836406102666e-14,
+      "link_covariance_error": 1.2905477135801572e-14,
+      "wilson_phase_error": 8.881784197001252e-16,
+      "wilson_loops": 5,
+      "link_singular_value_error": 3.3306690738754696e-16,
+      "points": 40,
+      "links": 40,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-serial-stanene-k290",
+      "eigenvalue_error_hartree": 5.297984273511247e-13,
+      "frame_norm_error": 8.992806499494182e-15,
+      "subspace_residual": 3.063972933549931e-14,
+      "sewing_unitarity_error": 1.7319479184152442e-14,
+      "link_covariance_error": 1.7319479184152445e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-serial-stanene-spglib",
+      "eigenvalue_error_hartree": 8.233413950620161e-13,
+      "frame_norm_error": 8.992806499494182e-15,
+      "subspace_residual": 7.279101149380133e-14,
+      "sewing_unitarity_error": 1.6209256159527285e-14,
+      "link_covariance_error": 1.6209256159527304e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-mpi-helium-k290",
+      "eigenvalue_error_hartree": 4.440892098500626e-16,
+      "frame_norm_error": 1.5543122382566162e-15,
+      "subspace_residual": 1.7325113277932085e-15,
+      "sewing_unitarity_error": 2.553512956637952e-15,
+      "link_covariance_error": 8.189353020564573e-15,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 1,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-mpi-helium-spglib",
+      "eigenvalue_error_hartree": 7.494005416219807e-16,
+      "frame_norm_error": 1.9984014443252818e-15,
+      "subspace_residual": 1.6009515411806033e-15,
+      "sewing_unitarity_error": 3.552713678800523e-15,
+      "link_covariance_error": 6.610257073537882e-15,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 1,
+      "link_singular_value_error": 6.661338147750939e-16,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-mpi-neon-k290",
+      "eigenvalue_error_hartree": 1.509903313490213e-14,
+      "frame_norm_error": 7.105485008547094e-15,
+      "subspace_residual": 1.4666392146472236e-14,
+      "sewing_unitarity_error": 1.1879386363489175e-14,
+      "link_covariance_error": 1.465872828765228e-14,
+      "wilson_phase_error": 7.771561172376096e-16,
+      "wilson_loops": 5,
+      "link_singular_value_error": 1.4432899320127035e-15,
+      "points": 40,
+      "links": 40,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-mpi-neon-spglib",
+      "eigenvalue_error_hartree": 1.509903313490213e-14,
+      "frame_norm_error": 6.9952861290293824e-15,
+      "subspace_residual": 1.460125820570211e-14,
+      "sewing_unitarity_error": 1.1435297153639112e-14,
+      "link_covariance_error": 1.460143779179374e-14,
+      "wilson_phase_error": 8.881784197001252e-16,
+      "wilson_loops": 5,
+      "link_singular_value_error": 1.2212453270876722e-15,
+      "points": 40,
+      "links": 40,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-mpi-stanene-k290",
+      "eigenvalue_error_hartree": 6.66577903984944e-13,
+      "frame_norm_error": 8.992806499494182e-15,
+      "subspace_residual": 9.55664545584251e-14,
+      "sewing_unitarity_error": 1.709743457922741e-14,
+      "link_covariance_error": 1.7097434579227474e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "build-mpi-stanene-spglib",
+      "eigenvalue_error_hartree": 6.139533326177116e-13,
+      "frame_norm_error": 8.992806499494182e-15,
+      "subspace_residual": 9.507095762056965e-14,
+      "sewing_unitarity_error": 1.709743457922741e-14,
+      "link_covariance_error": 1.709743457922741e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "mpi-full-helium",
+      "eigenvalue_error_hartree": 7.771561172376096e-16,
+      "frame_norm_error": 1.5543122382566162e-15,
+      "subspace_residual": 1.7547993400206673e-15,
+      "sewing_unitarity_error": 2.4424906541759037e-15,
+      "link_covariance_error": 8.165990349887982e-15,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 1,
+      "link_singular_value_error": 1.1102230246251565e-16,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "mpi-full-neon",
+      "eigenvalue_error_hartree": 1.509903313490213e-14,
+      "frame_norm_error": 6.9952861290293824e-15,
+      "subspace_residual": 7.177690665921829e-15,
+      "sewing_unitarity_error": 1.1879386363489175e-14,
+      "link_covariance_error": 1.5094134297439634e-14,
+      "wilson_phase_error": 1.4432899320127035e-15,
+      "wilson_loops": 5,
+      "link_singular_value_error": 1.4432899320127035e-15,
+      "points": 40,
+      "links": 40,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "mpi-full-stanene",
+      "eigenvalue_error_hartree": 3.6637359812630166e-13,
+      "frame_norm_error": 8.992806499494182e-15,
+      "subspace_residual": 8.896818268527382e-14,
+      "sewing_unitarity_error": 1.5987211554602254e-14,
+      "link_covariance_error": 1.5987211554602254e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-tight-k290",
+      "eigenvalue_error_hartree": 3.1907809727727e-13,
+      "frame_norm_error": 9.547920550249474e-15,
+      "subspace_residual": 1.672041299773747e-13,
+      "sewing_unitarity_error": 1.709743457922741e-14,
+      "link_covariance_error": 1.7097434582427106e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-tight-spglib",
+      "eigenvalue_error_hartree": 2.567945855957987e-13,
+      "frame_norm_error": 9.547920550249474e-15,
+      "subspace_residual": 1.6542804026047516e-13,
+      "sewing_unitarity_error": 1.8318679906315083e-14,
+      "link_covariance_error": 1.8318679925260953e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-ci-k290",
+      "eigenvalue_error_hartree": 3.6148861681795097e-13,
+      "frame_norm_error": 1.0103029524115995e-14,
+      "subspace_residual": 1.688599365161531e-13,
+      "sewing_unitarity_error": 1.6431300764452317e-14,
+      "link_covariance_error": 1.6431300764452317e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-ci-spglib",
+      "eigenvalue_error_hartree": 3.752553823233029e-13,
+      "frame_norm_error": 8.992806499494182e-15,
+      "subspace_residual": 1.671209875258111e-13,
+      "sewing_unitarity_error": 1.554312234475219e-14,
+      "link_covariance_error": 1.5543122344752214e-14,
+      "wilson_phase_error": 0.0,
+      "wilson_loops": 0,
+      "link_singular_value_error": 0.0,
+      "points": 4,
+      "links": 4,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-wilson-k290",
+      "eigenvalue_error_hartree": 8.166800569142652e-13,
+      "frame_norm_error": 8.770940316461599e-15,
+      "subspace_residual": 2.8509961778364266e-13,
+      "sewing_unitarity_error": 1.6653345369377348e-14,
+      "link_covariance_error": 1.8693921475132649e-13,
+      "wilson_phase_error": 2.653433028854124e-14,
+      "wilson_loops": 9,
+      "link_singular_value_error": 1.0380585280245214e-13,
+      "points": 144,
+      "links": 144,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-wilson-spglib",
+      "eigenvalue_error_hartree": 3.494982081519993e-13,
+      "frame_norm_error": 8.437880451892824e-15,
+      "subspace_residual": 3.0759387322280636e-13,
+      "sewing_unitarity_error": 1.554312234475219e-14,
+      "link_covariance_error": 2.1171910143560261e-13,
+      "wilson_phase_error": 3.574918139293004e-14,
+      "wilson_loops": 9,
+      "link_singular_value_error": 8.304468224196171e-14,
+      "points": 144,
+      "links": 144,
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-surface-k290",
+      "indices": [
+        1,
+        1
+      ],
+      "loops": 193,
+      "links": 37056,
+      "occupied_eigenvalue_error_ev": 8.499867476530198e-13,
+      "phase_error": 2.2015722578316854e-13,
+      "loop_singular_value_error": 4.860556401808935e-13,
+      "all_link_singular_value_error": 4.910516437917067e-13,
+      "scalar_diagonalizations": [
+        [
+          "61",
+          "156"
+        ],
+        [
+          "217",
+          "600"
+        ],
+        [
+          "817",
+          "2352"
+        ],
+        [
+          "3169",
+          "9312"
+        ],
+        [
+          "12481",
+          "37056"
+        ]
+      ],
+      "soc_diagonalizations": [
+        [
+          "61",
+          "156"
+        ],
+        [
+          "217",
+          "600"
+        ],
+        [
+          "817",
+          "2352"
+        ],
+        [
+          "3169",
+          "9312"
+        ],
+        [
+          "12481",
+          "37056"
+        ]
+      ],
+      "tolerance": 2e-07,
+      "accepted": true
+    },
+    {
+      "name": "stanene-surface-spglib",
+      "indices": [
+        1,
+        1
+      ],
+      "loops": 193,
+      "links": 37056,
+      "occupied_eigenvalue_error_ev": 2.049915792667889e-12,
+      "phase_error": 2.09277040141842e-13,
+      "loop_singular_value_error": 4.2599257454867256e-13,
+      "all_link_singular_value_error": 4.268807529683727e-13,
+      "scalar_diagonalizations": [
+        [
+          "61",
+          "156"
+        ],
+        [
+          "217",
+          "600"
+        ],
+        [
+          "817",
+          "2352"
+        ],
+        [
+          "3169",
+          "9312"
+        ],
+        [
+          "12481",
+          "37056"
+        ]
+      ],
+      "soc_diagonalizations": [
+        [
+          "61",
+          "156"
+        ],
+        [
+          "217",
+          "600"
+        ],
+        [
+          "817",
+          "2352"
+        ],
+        [
+          "3169",
+          "9312"
+        ],
+        [
+          "12481",
+          "37056"
+        ]
+      ],
+      "tolerance": 2e-07,
+      "accepted": true
+    }
+  ],
+  "accepted": true
+}

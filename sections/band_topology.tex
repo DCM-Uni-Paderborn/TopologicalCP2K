@@ -145,7 +145,7 @@ generated internally with \texttt{KPOINTS\_SOURCE WILSON}.
 \texttt{WILSON\_LOOP} evaluates a loop, \texttt{Z2} selects the
 half-plane analysis, and \texttt{CHERN} selects the full-surface $C_1$
 analysis. The converged SCF potential is held fixed while the
-post-SCF points are diagonalized. The integration mesh defining the density
+post-SCF eigenstates are obtained. The integration mesh defining the density
 and the ordered paths probing its band topology are distinct objects.
 Spin--orbit coupling (SOC) enters through a second-variational spinor
 Hamiltonian built from the scalar states and pseudopotential SOC matrix
@@ -161,12 +161,81 @@ This application makes the role of symmetry particularly clear. Scalar
 irreducible-mesh weights cannot replace an ordered Wilson product. A path
 requires explicit states at its points or their symmetry reconstruction
 with all orbital rotations, spin transformations, and boundary phases.
-The native explicit-path calculation obtains these states by diagonalizing
-the fixed-potential problem at the requested points. It therefore
-complements symmetry-reduced SCF quadrature while retaining the complete
-neighbor connectivity needed for a gauge-covariant observable.
+By default the native explicit-path calculation diagonalizes the
+fixed-potential problem at every requested point. An optional independent
+property-symmetry path instead reconstructs equivalent eigenframes, as
+described below. Both retain the complete directed neighbor connectivity;
+neither replaces it with irreducible-SCF weights.
 
-Figure~\ref{fig:topology} demonstrates the calculation using small test
+\subsection{Independent property eigenframe reconstruction}
+\label{sec:property-symmetry}
+The property graph is not an SCF quadrature. In particular, a Wilson
+half-plane need not contain a complete crystal-symmetry star, and a
+reciprocal-boundary point may occur more than once with different edge
+labels. The property planner therefore deduplicates periodic points only
+for diagonalization, and relates only points actually present in the
+requested graph. It does not add missing integration points or alter the
+closure condition for ordinary explicit SCF meshes.
+
+For an operation taking a representative $\bk_r$ to $\bk_t$, let
+$A_g(\bk_t)$ denote the cell-gauge AO action, including atom permutation,
+real-spherical-orbital rotation and the image phase
+$\exp[-2\pi\ii\,\bk_t\cdot\mathbf L_A]$. Here $\bk_t$ and
+$\mathbf L_A$ have fractional reciprocal and integer direct-lattice
+coordinates. The reconstructed scalar frame is
+\begin{equation}
+ \widetilde C_t=A_g(\bk_t)\mathcal K^{a_g}C_r,
+ \qquad a_g\in\{0,1\},
+\end{equation}
+where $\mathcal K$ is complex conjugation. Before using it, the code
+checks $\widetilde C_t^\dagger S_t\widetilde C_t-I$, the full residual
+$R_t=H_t\widetilde C_t-S_t\widetilde C_t\varepsilon_r$, and
+$\widetilde C_t^\dagger R_t$. The last check detects projected energy
+errors that an AO-scaled residual can underestimate in an ill-conditioned
+basis. The actual frozen target Hamiltonian is used, not an operator
+symmetrized to force agreement. Inconsistent orbits are rejected without
+an unreported target diagonalization.
+
+The scalar target gauge is then known, allowing second-variational SOC
+eigenvectors to be transported with the corresponding spin rotation and,
+when appropriate, physical time reversal. The implementation uses the
+conjugate SU(2) representation consistent with its
+$(\sigma_x,-\sigma_y,\sigma_z)$ SOC convention. The complete reconstructed
+SOC frame is checked for normalization and its target Hamiltonian
+residual before band selection. A truncated scalar window that cuts a
+degenerate group is rejected; convergence of a complete window remains
+a separate physical requirement.
+
+\texttt{WANNIER90\%SYMMETRY T} enables this optional path for
+\texttt{NNKP}, \texttt{WILSON}, \texttt{TRIM}, and
+\texttt{SYMMETRY} point sources, with \texttt{K290} or
+\texttt{SPGLIB} selected by \texttt{SYMMETRY\_BACKEND}.
+It is independent of SCF mesh reduction and presently requires a
+restricted scalar SCF. All cross-k AO integrals and reciprocal-boundary
+links are still evaluated explicitly. This is eigenproblem reduction,
+not yet a reduction of link construction or a separate distribution of
+property representatives over k-point MPI groups.
+
+Tests compare the physical subspaces and the link law
+$M^{\rm rec}_{ij}=G_i^\dagger M^{\rm full}_{ij}G_j$, where
+$G_i=(C_i^{\rm full})^\dagger S_iC_i^{\rm rec}$ is evaluated using
+independently integrated Gaussian overlaps. Thus a degenerate gauge
+rotation is permitted, but a missing subspace component is not.
+Neon/SOC reduces 40 requested points to 15 scalar and SOC
+diagonalizations. A symmetrically sampled stanene reference reduces four
+TRIM to two and retains $\nu=1$. The latter agrees with the unreduced
+full spectrum on the $10^{-12}$ hartree scale in the tested setups.
+An intentionally symmetry-breaking SCF sampling is instead rejected.
+On a sampling-converged stanene surface, both backends reduce 37,056
+requested points to 12,481 scalar and SOC diagonalizations, retain
+$\nu=1$, and reproduce all 193 Wilson spectra to below
+$2.3\times10^{-13}$ in reduced units. This small, 26-AO benchmark does
+not become faster overall: validating the transported frames outweighs
+the saved diagonalization time.
+These comparisons and their numerical integration controls are detailed
+in the Supporting Information; the counts are not total-runtime speedups.
+
+The separately archived reference in Figure~\ref{fig:topology} demonstrates the calculation using small test
 systems: a periodic neon reference and buckled stanene, a representative quantum spin Hall
 system~\cite{Xu2013}. The computed invariants are $\nu=0$ and $\nu=1$,
 respectively. The sampling-converged stanene surface contains 193 loops with 192

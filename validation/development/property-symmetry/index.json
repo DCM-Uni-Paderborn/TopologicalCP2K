@@ -1,0 +1,265 @@
+{
+  "archives": [
+    {
+      "file": "build-serial-regtests.tar.gz",
+      "bytes": 1992111,
+      "sha256": "fa34f74dee362ab58c0497a1f281e5b8a505a0ff3cefaed87a906615d336149a"
+    },
+    {
+      "file": "build-mpi-regtests.tar.gz",
+      "bytes": 1999862,
+      "sha256": "daea3ee0b08d08502307ef77a64060d43ff0914597dd735fccf7126f5627f34d"
+    },
+    {
+      "file": "stanene-mirrored-full.tar.gz",
+      "bytes": 49010,
+      "sha256": "89e3bcaed709128d621de85e4b34c755889da3072af1cfbc5da44d1832a2c79e"
+    },
+    {
+      "file": "stanene-mirrored-k290.tar.gz",
+      "bytes": 5451,
+      "sha256": "6499773849b83998fea5c10f319f004b7007dafa3f6da7b8a740180e827147dc"
+    },
+    {
+      "file": "stanene-mirrored-spglib.tar.gz",
+      "bytes": 5451,
+      "sha256": "480e32092708d828b2d62c94a76acbbf66e9408e6ff4b9dbfc809764a99c1eaf"
+    },
+    {
+      "file": "stanene-symmetric-full.tar.gz",
+      "bytes": 49769,
+      "sha256": "a43b26af59d66f2d7f1f15350f31eeedb35c50f98aae8c403646768626e164e0"
+    },
+    {
+      "file": "stanene-symmetric-k290.tar.gz",
+      "bytes": 49003,
+      "sha256": "e8005c9adc1048316ce4edd98f50d5ddde66de85aa1d5dbe661373ca5b837d0a"
+    },
+    {
+      "file": "stanene-symmetric-spglib.tar.gz",
+      "bytes": 49025,
+      "sha256": "65e66fce87bf37a0e8ec7f6e4fab8beff086ebd559c4772cd4abee147639280e"
+    },
+    {
+      "file": "stanene-small-full.tar.gz",
+      "bytes": 49925,
+      "sha256": "7e7c3b2738c8a66afcbcef910ac58dbfba849125494dc0330d0a78f3e3932011"
+    },
+    {
+      "file": "stanene-small-k290.tar.gz",
+      "bytes": 5781,
+      "sha256": "f66551ba84997b196b4ff83abef05641925bfe7ae64feecabe8262bda36ef1ad"
+    },
+    {
+      "file": "stanene-small-spglib.tar.gz",
+      "bytes": 5789,
+      "sha256": "237553a24dcb9e6547d4641d9162dee21c85d78bd69fb7022b6876ac984eadbb"
+    },
+    {
+      "file": "stanene-tight-full.tar.gz",
+      "bytes": 49497,
+      "sha256": "e55a3563245711f35c6212f2315aa14605f93b4fb1588134a6da88d5019a260e"
+    },
+    {
+      "file": "stanene-tight-k290.tar.gz",
+      "bytes": 48393,
+      "sha256": "ebd046d5142a49fb22751c85ce0d6375182267373c60f13f6e41d9ebffda35d5"
+    },
+    {
+      "file": "stanene-tight-spglib.tar.gz",
+      "bytes": 48538,
+      "sha256": "56661fbf3a66dcd2fe2e50d30ad66dae087f503a11608f8f913d480da4180ed7"
+    },
+    {
+      "file": "stanene-ci-full.tar.gz",
+      "bytes": 49711,
+      "sha256": "7e683ac5037d4c6903f0fd5ceba17e7a3d37f67b638737efe4c8d027bbbac766"
+    },
+    {
+      "file": "stanene-ci-k290.tar.gz",
+      "bytes": 48663,
+      "sha256": "ae8bc774676b3cf77e5eb08bdc398a6cd1bab2ba1aed3493c63f5e3111b0513d"
+    },
+    {
+      "file": "stanene-ci-spglib.tar.gz",
+      "bytes": 48631,
+      "sha256": "e2760a374ddcfded23fdd302bad6b2000146fbae5b10db8c521369db1faa3e29"
+    },
+    {
+      "file": "stanene-wilson-full.tar.gz",
+      "bytes": 1554640,
+      "sha256": "e15748cf52d677c8c132b379032b6011c3cc6033cf296dc47ed7ef1b034d5a75"
+    },
+    {
+      "file": "stanene-wilson-k290.tar.gz",
+      "bytes": 1529134,
+      "sha256": "75e3cea49c6a38951d6e1907bdd134a5a2d8fd99de2c21f918c28b6d489c1fb9"
+    },
+    {
+      "file": "stanene-wilson-spglib.tar.gz",
+      "bytes": 1528659,
+      "sha256": "5d3d89e14906157c82b4d1904100d0aed45a8b22336fe4a58f69d45fc03b051f"
+    },
+    {
+      "file": "stanene-surface-full.tar.gz",
+      "bytes": 45523095,
+      "sha256": "029352f8a319fbff45b0b9242269dc367192112b5c3f07599b74c7332635df43"
+    },
+    {
+      "file": "stanene-surface-k290.tar.gz",
+      "bytes": 45128206,
+      "sha256": "bf286af21ca38edcbe779f8c4b42203fbf258e9821c651fcc174f29f0f4de0ba"
+    },
+    {
+      "file": "stanene-surface-spglib.tar.gz",
+      "bytes": 45125049,
+      "sha256": "b6449b5708dbbda3d1467d8591362e64f4902ef6ef1111a7e7677ea4b3ee55f6"
+    },
+    {
+      "file": "stanene-frozen-negative-full.tar.gz",
+      "bytes": 48982,
+      "sha256": "87e7fc7c6fe61127d8dd0e9e64f166e37d6211263f918f47c1fcfdb839ea1b82"
+    },
+    {
+      "file": "stanene-frozen-negative-k290.tar.gz",
+      "bytes": 5560,
+      "sha256": "687b58554506187638443d45ce4f48a05d660b1d8491ba07db3f2ab5dcfb47a8"
+    },
+    {
+      "file": "stanene-frozen-negative-spglib.tar.gz",
+      "bytes": 5566,
+      "sha256": "3354cc760b9ba1a00a0f435311bb6254574cbd945c72561242ddcac17e3db940"
+    },
+    {
+      "file": "negative-controls.tar.gz",
+      "bytes": 223792,
+      "sha256": "86238c29855b7b6ba1be360832dc92aa82a4d5b6c8082883827f94006cd83907"
+    },
+    {
+      "file": "methods.tar.gz",
+      "bytes": 793937,
+      "sha256": "7f5f1169b2b0480a2cdc75af6d2a790cf19e287d94263164e8d4f0075bd3146c"
+    }
+  ],
+  "source_commit": "4ac3ac90d4bd660e42b7b0107b3d4613128ee841",
+  "comparisons": [
+    {
+      "name": "build-serial-helium-k290",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/helium-full",
+      "candidate": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/helium-k290"
+    },
+    {
+      "name": "build-serial-helium-spglib",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/helium-full",
+      "candidate": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/helium-spglib"
+    },
+    {
+      "name": "build-serial-neon-k290",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/neon-full",
+      "candidate": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/neon-k290"
+    },
+    {
+      "name": "build-serial-neon-spglib",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/neon-full",
+      "candidate": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/neon-spglib"
+    },
+    {
+      "name": "build-serial-stanene-k290",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/stanene-full",
+      "candidate": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/stanene-k290"
+    },
+    {
+      "name": "build-serial-stanene-spglib",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/stanene-full",
+      "candidate": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/stanene-spglib"
+    },
+    {
+      "name": "build-mpi-helium-k290",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/helium-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/helium-k290"
+    },
+    {
+      "name": "build-mpi-helium-spglib",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/helium-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/helium-spglib"
+    },
+    {
+      "name": "build-mpi-neon-k290",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/neon-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/neon-k290"
+    },
+    {
+      "name": "build-mpi-neon-spglib",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/neon-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/neon-spglib"
+    },
+    {
+      "name": "build-mpi-stanene-k290",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/stanene-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/stanene-k290"
+    },
+    {
+      "name": "build-mpi-stanene-spglib",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/stanene-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/stanene-spglib"
+    },
+    {
+      "name": "mpi-full-helium",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/helium-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/helium-full"
+    },
+    {
+      "name": "mpi-full-neon",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/neon-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/neon-full"
+    },
+    {
+      "name": "mpi-full-stanene",
+      "reference": "build-serial/property-final-regtests/TEST-2026-09-25_23-49-24/QS/regtest-property-wilson/stanene-full",
+      "candidate": "build-mpi/property-final-regtests/TEST-2026-09-25_23-56-33/QS/regtest-property-wilson/stanene-full"
+    },
+    {
+      "name": "stanene-tight-k290",
+      "reference": "build-mpi/property-stanene-tight/full/stanene",
+      "candidate": "build-mpi/property-stanene-tight/k290/stanene"
+    },
+    {
+      "name": "stanene-tight-spglib",
+      "reference": "build-mpi/property-stanene-tight/full/stanene",
+      "candidate": "build-mpi/property-stanene-tight/spglib/stanene"
+    },
+    {
+      "name": "stanene-ci-k290",
+      "reference": "build-mpi/property-stanene-ci/full/stanene",
+      "candidate": "build-mpi/property-stanene-ci/k290/stanene"
+    },
+    {
+      "name": "stanene-ci-spglib",
+      "reference": "build-mpi/property-stanene-ci/full/stanene",
+      "candidate": "build-mpi/property-stanene-ci/spglib/stanene"
+    },
+    {
+      "name": "stanene-wilson-k290",
+      "reference": "build-mpi/property-stanene-wilson/full/stanene",
+      "candidate": "build-mpi/property-stanene-wilson/k290/stanene"
+    },
+    {
+      "name": "stanene-wilson-spglib",
+      "reference": "build-mpi/property-stanene-wilson/full/stanene",
+      "candidate": "build-mpi/property-stanene-wilson/spglib/stanene"
+    }
+  ],
+  "surfaces": [
+    {
+      "name": "stanene-surface-k290",
+      "reference": "build-mpi/property-stanene-surface/full",
+      "candidate": "build-mpi/property-stanene-surface/k290"
+    },
+    {
+      "name": "stanene-surface-spglib",
+      "reference": "build-mpi/property-stanene-surface/full",
+      "candidate": "build-mpi/property-stanene-surface/spglib"
+    }
+  ],
+  "note": "Precursor controls retain executable-only hashes, not contemporaneous shared-library hashes. Final source, library hashes and regression inputs are recorded separately. The first serial suite lacked an explicit OpenMP stack, timed out in grid collocation, and was stopped before restarting in a new directory with OMP_STACKSIZE=64M. The 144-point Wilson controls test reconstruction but are not sampling-converged."
+}

@@ -3451,6 +3451,163 @@ reproduces both 45-query scans, the physical cross-basis comparison
 and all reported accepted or rejected interval bounds without
 numerical change. This replay is separate from the native runs.
 
+\section{Independent Wilson and TRIM Eigenframe Symmetry}
+\label{sec:si-property-symmetry}
+This validation concerns an independent post-SCF property point set,
+not reuse of SCF quadrature weights. The default full-diagonalization
+route is compared with the optional K290 and SPGLIB property backends.
+All calculations retain the original ordered links and reciprocal
+boundary shifts. The new regression inputs use MOLOPT UZH bases;
+SOC cases use GTH SOC pseudopotentials.
+
+The scalar He fixture has one atom at fractional coordinates
+$(1/2,1/2,1/2)$ in a cubic 4 \AA{} cell. Its four-point directed
+NNKP loop includes an explicit reciprocal-cell closing shift.
+Both backends use three scalar diagonalizations and recover the
+full-loop Berry phase $\pi$. For Ne/SOC in a cubic 5 \AA{} cell,
+the refined $8\times5$ property surface has 40 points, reduced to
+15 scalar and 15 SOC diagonalizations. All 13 scalar AO states
+are retained in the second variation, and the exported subspace
+contains eight occupied spinors. All five Wilson spectra and
+40 directed links are compared, not just the trivial final index.
+An earlier five-scalar-state window cuts a degenerate unoccupied
+group. That input is retained as an expected rejection, rather
+than used as a quantitative reference.
+
+The comparison evaluator independently integrates contracted
+Cartesian Gaussians with the exported spherical contraction
+coefficients. For every point it obtains the physical sewing
+matrix $G=C_{\rm full}^\dagger S C_{\rm rec}$ and tests both
+frame norms, $G^\dagger G-I$, and the residual subspace norm
+of $C_{\rm rec}-C_{\rm full}G$. Every directed MMN connection
+is checked against $G_i^\dagger M_{ij}^{\rm full}G_j$.
+Wilson centers are compared modulo one with permutation and
+branch-cut handling. A fixed $2\times10^{-7}$ threshold is used
+for these development comparisons, including energies in hartree;
+the Ne and He errors are orders of magnitude smaller. Seven
+synthetic sensitivity tests include complex degenerate spinor
+gauges in a nonorthogonal metric, missing subspace components,
+wrong metrics, wrong link conjugation, branch cuts, and
+nonfinite overlap data.
+
+The nontrivial stanene TRIM control uses the geometry of the
+earlier parity fixture, two Sn atoms and 26 scalar AO functions.
+Its 52-state second-variational problem exports eight occupied
+spinors. A Gamma-centered, symmetry-reduced $2\times2\times1$
+SCF mesh with 400 Ry cutoff, 100 Ry relative cutoff, and
+$10^{-10}$ SCF tolerance gives two property representatives
+for the four TRIM. K290 and SPGLIB both retain $\nu=1$.
+For SPGLIB, independent comparison with four full
+diagonalizations gives a maximum complete-spectrum discrepancy
+$3.76\times10^{-13}$ hartree, a physical subspace residual
+$1.68\times10^{-13}$, and an MMN covariance residual below
+$1.6\times10^{-14}$. TRIM connections in this test are
+self-links; they do not establish Wilson-surface convergence.
+A separate $4\times4\times1$, 1200/100 Ry control gives
+complete-spectrum discrepancies below $3.2\times10^{-13}$
+hartree for both backends.
+
+The same 400/100 Ry frozen-potential setup also tests nontrivial
+Wilson connections. An initial $8\times5$ surface with one allowed
+refinement reaches 144 points and nine loops, with 30 representatives.
+Full diagonalization, K290 and SPGLIB all report insufficient Wilson
+sampling convergence. Nevertheless, the exported frames and connections
+agree: the SPGLIB full-spectrum error is below $3.5\times10^{-13}$
+hartree, the physical subspace residual below $3.1\times10^{-13}$,
+and the directed-link covariance residual below $2.2\times10^{-13}$.
+This validates reconstruction, not the convergence of that coarse surface.
+
+A second calculation starts with 12 points per loop and 13 transverse
+loops and permits four refinements. All three routes terminate normally
+with $\nu=1$ at 192 points per loop and 193 loops, or 37,056 points.
+The successive representative counts are 61/156, 217/600, 817/2352,
+3169/9312 and 12,481/37,056 for both backends. The final comparison
+checks every occupied eigenvalue, every Wilson spectrum modulo one,
+and the singular spectra of all 37,056 directed MMN links.
+For K290 and SPGLIB, respectively, the maximum occupied-energy errors
+are $8.50\times10^{-13}$ and $2.05\times10^{-12}$ eV, the Wilson-center
+errors are $2.21\times10^{-13}$ and $2.10\times10^{-13}$, and the
+all-link singular-value errors are $4.92\times10^{-13}$ and
+$4.27\times10^{-13}$. This large run omits the full AO-state export;
+its external comparison is gauge-invariant, whereas the smaller
+144-point run additionally verifies physical subspaces and the full
+gauge-covariant link matrices. Native H/S and SOC residual checks
+remain active in both runs.
+
+These are correctness measurements, not a demonstrated runtime gain.
+Single complete runs, including SCF and all refinements, take
+226.1 s without property reduction, 254.3 s with K290 and 252.5 s
+with SPGLIB on an Apple M4 Max using two MPI ranks and two OpenMP
+threads per rank, with one BLAS thread. In this small 26-AO problem,
+orbit planning, AO-frame reconstruction and target-operator checks
+offset the saved scalar and SOC diagonalizations; cross-k integrals
+and links are still built explicitly. Repeated timings, larger bases
+and distributed property representatives would be needed for a
+scaling claim.
+
+The rejected controls are significant. The original shifted,
+unreduced $4\times4\times1$ SCF mesh at 200/40 Ry breaks
+threefold equivalence: the maximum spectral splitting among
+the nominally equivalent M points is
+$1.06127\times10^{-3}$ hartree. Both reconstruction backends
+reject its frozen H/S problem. Symmetry-preserving SCF sampling
+alone is insufficient: at 600/40 Ry an independent comparison
+still found $2.86206\times10^{-7}$ hartree error in the full
+spectrum. This motivated the additional projected-H residual
+check. Raising the relative integration cutoff, rather than
+relaxing an acceptance threshold, eliminates that discrepancy
+in the tested controls. These are operator-consistency checks,
+not a complete-basis or physical material-convergence claim.
+
+Ordinary incomplete \texttt{SCHEME GENERAL} integration stars
+remain invalid. Separate negative runs check this for K290 and
+SPGLIB, the scalar-window degeneracy boundary for both backends,
+and an invalid operator tolerance. The property-only planner
+may handle incomplete stars, but cannot change the SCF closure
+requirement. A multi-atom test also exercises complete mirrored
+image-cell storage for the dense Fourier H/S check; the sparse
+source retains its original triangular DBCSR storage convention.
+
+The final native regression driver passes 220 checks in each of the
+SSMP and two-rank PSMP runs, spanning the new 12-input directory and
+the existing topology, little-group and Kubo directories. Two OpenMP
+threads and one BLAS thread are used, with an explicit 64 MiB OpenMP
+stack. An earlier serial attempt using the runtime-default stack
+timed out during pre-property grid collocation and was stopped; its
+log and stack sample are retained and are not counted as a successful
+run. No numerical reference or operator tolerance was changed for
+the completed repeat.
+
+The automatic TQC smoke uses two Ne atoms, 16 occupied spinors, 56
+sampled points and 82 directed compatibility segments. All three
+routes remain compatible and preserve the sampled atomic signature.
+This particular generated graph already has 56 independent property
+points, so it tests interface compatibility rather than additional
+eigenproblem reduction. The final build also repeats the
+symmetry-breaking stanene control: full diagonalization completes,
+whereas both reduced routes reject the fourth point with
+AO-scaled H residual $1.2923\times10^{-5}$ and projected-H residual
+$2.8702\times10^{-4}$. The metric residual is only
+$1.69\times10^{-14}$, demonstrating why normalization alone is
+insufficient.
+
+Inputs, final native sources, build settings, rejected controls and
+comparison methods are retained in
+\nolinkurl{validation/development/property-symmetry/}.
+Archive-only replay verifies 394 file entries in 28 archives and
+passes all 23 quantitative comparisons and seven sensitivity tests.
+The frame comparisons include direct SSMP--PSMP full-diagonalization
+controls as well as both reconstruction backends. Across these
+comparisons, the largest full-spectrum discrepancy is
+$8.24\times10^{-13}$ hartree, the largest physical subspace residual
+$3.08\times10^{-13}$, and the largest directed-link covariance
+residual $2.12\times10^{-13}$. The two large-surface comparisons use
+the separate gauge-invariant criteria described above.
+This replay reruns the archived comparison algorithms, not the native
+DFT calculations. Final shared-library checksums are recorded along
+with executable checksums; the earlier exploratory runs retain their
+original, executable-only provenance.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
