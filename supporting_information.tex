@@ -2335,6 +2335,110 @@ SCF/torus regression retains all 52 spinor bands and reproduces the
 independently reconstructed gap to $2.19\times10^{-12}$ hartree;
 this inexpensive fixture is not substituted for the material scan.
 
+\subsection{Full-band spectral flattening: size and scale controls}
+\label{sec:si-stanene-flattening}
+The next comparison retains the same scalar SCF potential, all
+52 (DZVP) or 68 (TZVP) spinor bands, analytic Gaussian neighbour
+overlaps, query energies and Cartesian origin from
+Section~\ref{sec:si-stanene-localizer}. Only the shifted Hamiltonian
+is changed. In its complete Bloch eigensystem we replace each
+$\epsilon_{nk}-E$ by
+$\Delta\operatorname{sign}(\epsilon_{nk}-E)$, with
+$\Delta=1$ hartree. This retains the eight occupied spinors at
+every sampled k-point, their projectors, and their time-reversal
+structure. It is neither an occupied-only projection nor a
+replacement of coordinate links by their polar factors.
+The scale and all quoted localizer gaps below refer to this
+artificially flattened spectrum, not the physical SOC band gap.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Basis/cutoff & $N$ & $\eta/\Delta$ & $\nu$ & Gap/$\Delta$\\
+\midrule
+DZVP/200 Ry & 3 & 0.50 & 1 & 0.016624\\
+DZVP/200 Ry & 3 & 1.00 & 0 & 0.384762\\
+DZVP/200 Ry & 3 & 1.25 & 0 & 0.618729\\
+DZVP/200 Ry & 6 & 0.50 & 1 & 0.036234\\
+DZVP/200 Ry & 6 & 0.75 & 1 & 0.204263\\
+DZVP/200 Ry & 6 & 1.00 & 1 & 0.062925\\
+DZVP/200 Ry & 6 & 1.25 & 0 & 0.079258\\
+DZVP/200 Ry & 8 & 0.75 & 1 & 0.059190\\
+DZVP/200 Ry & 8 & 1.00 & 1 & 0.024216\\
+DZVP/200 Ry & 8 & 1.25 & 0 & 0.041019\\
+DZVP/200 Ry & 9 & 0.75 & 1 & 0.263043\\
+DZVP/200 Ry & 9 & 1.00 & 1 & 0.186946\\
+DZVP/200 Ry & 9 & 1.25 & 1 & 0.102412\\
+TZVP/400 Ry & 6 & 0.75 & 1 & 0.205441\\
+TZVP/400 Ry & 6 & 1.00 & 1 & 0.064210\\
+\bottomrule
+\end{tabular}
+\caption{Complete exact-sign reference scan. The $N=8$ control is
+not a multiple of three. All rows retain unmodified projected
+coordinate links and all spinor bands. A nonzero finite-matrix gap
+alone does not certify the bulk index.}
+\label{tab:si-stanene-flattening}
+\end{table}
+
+At $\eta/\Delta=0.75$ and 1, all three larger DZVP meshes and the
+TZVP control agree with the nontrivial Wilson reference. This is
+a consistency window, not a converged localizer-gap extrapolation.
+At $\eta/\Delta=1.25$ the index is still size dependent.
+The $N=3$ control also demonstrates that flattening does not
+automatically repair an undersized torus. At this size we additionally
+retain the interpolation
+$(1-t)(\epsilon_{nk}-E)+t\Delta\operatorname{sign}(\epsilon_{nk}-E)$
+for $t=0,0.5,1$ and $\eta/\Delta=0.5,1,1.25$.
+The sampled electronic gap cannot close along this interpolation,
+but the $\eta/\Delta=0.5$ finite-localizer parity changes from
+zero to one. A gap closing of the finite localizer must therefore
+occur between the sampled interpolation points.
+
+For DZVP at $N=3,6,8,9$, respectively, the maximum coordinate
+unitarity defects are 0.47209, 0.16672, 0.10024 and 0.08074;
+the corresponding coordinate commutator norms are 0.31692,
+0.09100, 0.05265 and 0.04182. TZVP at $N=6$ gives 0.25480
+and 0.16651, respectively. The larger basis does not monotonically
+improve these operator-norm diagnostics, although the tested
+indices agree. The complete Fourier frames have maximum entrywise
+unitarity residual below $4.8\times10^{-14}$.
+The exact-sign operator is not strictly finite ranged, and the
+Gaussian-projected coordinate operators are not exact commuting
+unitaries. These results therefore do not establish all sufficient
+conditions of the periodic-localizer theorem.
+
+The material results above are obtained independently with
+NumPy/SciPy from CP2K full-band exports, using the checked
+Hessenberg Pfaffian-sign algorithm of the preceding subsection.
+A separate CP2K kernel evaluates the metric-covariant sign using
+distributed realification, the existing Hotelling metric inverse
+and Newton--Schulz matrix-sign iterations. It checks inverse,
+sign-square, complex-structure and Hermiticity residuals rather
+than averaging away errors. Its positive-metric and electronic-gap
+preconditions must be validated by a future caller. No production
+input option is introduced, and these material numbers were not
+generated with that kernel. It avoids dense AO gathering and
+$S^{-1/2}$, but forms a distributed inverse and does not by itself
+guarantee limited fill-in or linear scaling.
+Six constructed $12\times12$ complex pencils cover an orthogonal
+metric, nonorthogonal congruences including a more ill-conditioned
+metric, Kramers-paired spin mixing, and wholly positive or negative
+spectra. The maximum entrywise error against exact spectral
+constructions is below $6.1\times10^{-15}$ for serial and two-/four-rank
+MPI runs, including row- and column-distributed block grids.
+Additional checks reject a zero spectral mode, the zero Hamiltonian,
+nonfinite query energy, a negative scale and a non-Hermitian input.
+The flattening, localizer and quadratic-DBCSR unit tests each pass
+through the regular test driver in both serial and two-rank MPI runs.
+
+Inputs, complete exports, analysis scripts, source snapshots,
+constructed-matrix test logs and member checksums are retained in
+\nolinkurl{validation/development/stanene-flattening.tar.gz}.
+The companion replay verifies all member hashes and can recompute
+any or all size/basis scans. Older unflattened evidence archives
+are unchanged.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

@@ -191,6 +191,28 @@ weights cannot replace the full torus operator.
 The present periodic localizer covers two-dimensional periodic planes;
 a general three-dimensional AII implementation is not claimed.
 
+Spectral flattening provides a separate way to examine the large
+bandwidth-to-gap ratio of a DFT Hamiltonian. For positive $S$ and
+$E$ in a resolved electronic gap, define
+\begin{equation}
+ \begin{aligned}
+ F_E&=\Delta S\,\operatorname{sign}\!\left[S^{-1}(H-ES)\right]\\
+ &=\Delta S^{1/2}\operatorname{sign}\!\left[S^{-1/2}(H-ES)S^{-1/2}\right]S^{1/2},
+ \qquad \Delta>0 .
+ \end{aligned}
+ \label{eq:covariant-flattening}
+\end{equation}
+This covariant Hermitian operator retains the occupied projector
+and replaces generalized band energies by $\pm\Delta$.
+The dispersion-reduction argument for periodic localizers motivates
+this control \cite{Doll2025}. It does not equate a flattened
+finite-volume localizer with the original one: the localizer gap
+can close during flattening even when the electronic gap stays open.
+An exact sign is also generally longer ranged than $H$.
+Consequently, the material tests in the Supporting Information
+are distinguished from a proof of the finite-range theorem's
+hypotheses and from the native unflattened calculation.
+
 \subsection{Connection to the quadratic pseudospectrum}
 For Hermitian operators $A_j$ and anticommuting Hermitian Clifford
 matrices $\gamma_j$, squaring $L=\sum_jA_j\otimes\gamma_j$ gives

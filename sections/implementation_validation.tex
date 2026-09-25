@@ -143,6 +143,23 @@ localizer classification. The Supporting Information reports the
 corrected queries, the full-matrix comparison and the provenance of
 the superseded development data separately.
 
+A subsequent full-band reference applies
+Eq.~\eqref{eq:covariant-flattening} without altering the Gaussian
+coordinate links or discarding empty states. With flattened energies
+$\pm1$ hartree and $\eta/\Delta=0.75$ or 1, the $6\times6$,
+$8\times8$ and $9\times9$ DZVP tori all give $\nu=1$;
+the $6\times6$ TZVP control agrees. The $\eta/\Delta=1$ gaps
+are 0.062925, 0.024216 and 0.186946 hartree for the three DZVP sizes,
+and 0.064210 hartree for TZVP. These are gaps of the rescaled
+localizer, not electronic band gaps. The small-torus and
+$\eta/\Delta=1.25$ counterexamples remain in the Supporting
+Information. Thus flattening improves the tested index consistency,
+but the nonmonotonic gaps and residual scale dependence do not
+establish asymptotic convergence. These results use an independent
+full-band eigensystem analysis; the separate DBCSR matrix-sign kernel
+has constructed-matrix tests but is not yet exposed as a production
+input option.
+
 The retained open-boundary Qi--Wu--Zhang model measurements also
 illustrate when sparse factorization becomes useful. For a
 $30\times30$ lattice, the complex localizer has order 3,600

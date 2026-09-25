@@ -228,6 +228,14 @@ current results and replay are in `validation/development/stanene-soc-validation
 older localizer scans are explicitly superseded, while their Wilson
 references remain valid. The corrected matrices agree within 1.85e-12 Ha,
 but size/basis/scale dependence still prevents a material-localizer claim.
+A separate complete-band spectral-flattening scan now compares DZVP tori
+of sides 3, 6, 8 and 9 and a TZVP side-6 control, without changing the
+projected coordinate links. At eta/Delta=0.75 and 1, every tested larger
+torus has index one; small-size and eta/Delta=1.25 counterexamples remain
+explicit in SI Table S15. This is not an asymptotic gap extrapolation.
+The exact-sign material analysis and the separately tested DBCSR kernel
+are distinguished in `validation/development/stanene-flattening-validation.md`.
+The kernel is not exposed as a production input option.
 
 The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.
