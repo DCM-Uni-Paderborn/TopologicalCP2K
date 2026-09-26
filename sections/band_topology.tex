@@ -218,9 +218,16 @@ representative eigenproblems are distributed over equal-sized k-point
 MPI groups, with possibly unequal numbers of representatives per group.
 \texttt{SYMMETRY\_PARALLEL\_GROUP\_SIZE} selects automatic grouping
 ($-1$, the default), one group using all ranks ($0$), or a positive
-group size. Each group first assembles its own representative frame;
-inter-group communication then transfers that frame and its eigenvalues
-for reconstruction on the full property graph. The SOC stage distributes
+group size. Each group reconstructs and checks the scalar target frames
+belonging to its representatives. Bounded H/S operator snapshots are
+Fourier-transformed locally, without replicating every dense real-space
+image. The metric, AO-scaled and projected-Hamiltonian tests above are
+unchanged. One validated frame per group and round is transferred into
+the global property MO storage, with idle groups joining the same
+transfer sequence. Temporary frame storage does not grow with orbit size.
+If the snapshots are unavailable, an explicitly reported collective
+validation path retains the same physical checks within the memory bound.
+The SOC stage distributes
 complete orbits over the same groups: bounded snapshots of the three
 real-space SOC components are Fourier-transformed into group-local
 matrix tiles, projected into the reconstructed scalar basis, and
@@ -231,9 +238,9 @@ operator is included before conjugating mirrored Fourier blocks.
 Only one complete representative spinor frame is retained per group
 at a time. If a bounded operator snapshot is unavailable, an explicitly
 reported collective assembly path preserves the same orbit reduction
-and physical checks, without full-mesh rediagonalization. Scalar
-target-frame checks and directed links still use the complete MPI
-environment; multi-node scaling is not established by the local tests.
+and physical checks, without full-mesh rediagonalization. Directed
+links still use the complete MPI environment; multi-node scaling
+is not established by the local tests.
 
 Tests compare the physical subspaces and the link law
 $M^{\rm rec}_{ij}=G_i^\dagger M^{\rm full}_{ij}G_j$, where

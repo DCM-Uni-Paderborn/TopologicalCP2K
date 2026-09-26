@@ -1,0 +1,26 @@
+{
+  "source_commit": "10250fccd258b6884623bbf4b067f1cda6924450",
+  "comparisons": 36,
+  "native_cases": 52,
+  "regtest_checks_per_build": 33,
+  "shared_operator_checks_per_build": 16,
+  "validation_collections": [
+    "validation",
+    "gapw"
+  ],
+  "prefix": "property-target-groups-final",
+  "shared_libraries": {
+    "build-serial": {
+      "build-serial/src/libcp2k.2026.2.dylib": "d4ee830c282ac9133587a3314de6c4d1c7d832711a5771223770e680bdaeb587"
+    },
+    "build-mpi": {
+      "build-mpi/src/libcp2k.2026.2.dylib": "f14f51e65c72f6308c723dc351b795bac92e5bc73b9bfbfb0b57133f094a70ef"
+    }
+  },
+  "scope": "Scalar target H/S checks and SOC orbits distributed; ordered links remain collective.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 6699994,
+    "sha256": "86946c53279168c99917fa4d0d948253aecd90ca645529e1cc12fb19d4eb82c8"
+  }
+}

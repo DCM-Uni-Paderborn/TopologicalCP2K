@@ -24,7 +24,7 @@ transferred from the k-point manuscript with separately validated
 transport, localizer, and quadratic-pseudospectrum developments.
 The original results are not recomputed or relabelled by moving
 the manuscript text.
-The development status is recorded as of 25 September 2026.
+The development status is recorded as of 26 September 2026.
 A source freeze and complete public reproduction archive remain
 submission requirements.
 
@@ -3700,9 +3700,74 @@ configuration, executable and shared-library checksums, and
 comparison methods. Archive-only replay verifies all 463 member
 files and repeats the 32 physical comparisons with the same
 maximal discrepancies. It does not rerun the DFT calculations.
-Scalar target-frame validation and directed-link construction
-remain collective stages; their independent distribution is not
-established by this checkpoint.
+At this checkpoint, scalar target-frame validation and directed-link
+construction remained collective stages; their independent
+distribution was not yet established.
+
+\subsection{Group-local scalar target checks}
+A further stage distributes the scalar target-frame validation,
+not only representative diagonalization and SOC assembly.
+Each group processes the targets of its representatives using
+bounded real-space H/S snapshots, rather than dense arrays of every
+real-space image on every rank. The three physical residual tests
+are shared with the previous collective implementation. A stable
+orbit ordering and a source-frame cache avoid retaining all target
+frames. Each round transfers at most one checked frame per group
+into the existing full-graph MO storage, with exactly one delivery
+per point. Idle groups participate in the same transfer sequence.
+
+The additional all-electron GAPW control uses He with the UZH
+\texttt{TZVPP-MOLOPT-GGA-ae} basis, a 400 Ry cutoff and a
+100 Ry relative cutoff. All 14 scalar orbitals, including p/d
+components and degenerate spaces, are retained in the frame/link
+comparison. Four explicit loop points reduce to three independent
+eigenproblems. The full-diagonalization reference uses two MPI
+ranks; K290 and SPGLIB each use two one-rank or two two-rank groups.
+These are operator and parallel-consistency tests, not a
+complete-basis or material-convergence study.
+
+The final He/Ne/stanene matrix passes all 32 physical frame/link
+comparisons with group-local scalar checks enabled. The largest
+complete-spectrum discrepancy is $5.96\times10^{-13}$ hartree,
+the largest physical subspace residual $1.73\times10^{-13}$,
+and the largest directed-link covariance residual
+$1.73\times10^{-13}$. Wilson centers agree to
+$3.47\times10^{-14}$ in reduced units. Every reduced run reports
+the expected validation grouping, without the collective H/S
+snapshot fallback.
+
+All four GAPW comparisons also pass. Their largest complete-spectrum
+difference is $1.25\times10^{-14}$ hartree, the largest physical
+subspace residual $4.59\times10^{-15}$, and the largest directed-link
+covariance error $1.20\times10^{-14}$. Wilson centers differ by at
+most $6.67\times10^{-16}$ in reduced units. Together with the
+He/Ne/stanene matrix, this gives 36 independent physical comparisons.
+
+Four additional four-rank tests reject a scalar SOC window cutting
+a degeneracy. The asymmetric-SCF stanene control is also repeated
+on four ranks: full diagonalization completes, while both reduced
+routes reject target point four. Its metric error remains below
+$3.0\times10^{-14}$, but the AO-scaled and projected-Hamiltonian
+errors are $1.2923\times10^{-5}$ and $2.8702\times10^{-4}$.
+Thus a successful norm check cannot conceal the physically invalid
+orbit. These expected failures complete collectively, without
+leaving an MPI group waiting for a missing transfer.
+
+Including the four invalid group requests, the final matrix contains
+52 native cases. The 17-input property directory passes all 33 checks
+in SSMP and four-rank PSMP; the shared-operator directory
+\texttt{QS/regtest-kp-3} passes another 16 checks in each build.
+All runs use two OpenMP threads and one BLAS thread, without changing
+existing reference values or physical acceptance tolerances.
+
+The retained evidence in
+\nolinkurl{validation/development/property-target-groups/}
+contains the native inputs and outputs, final sources, build logs,
+executable and shared-library checksums, and comparison methods.
+Archive-only replay verifies all 541 payload files and passes the
+36 physical comparisons without rerunning DFT. Directed-link
+construction still uses the complete MPI environment; its independent
+distribution and multi-node scaling are not established by these tests.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
