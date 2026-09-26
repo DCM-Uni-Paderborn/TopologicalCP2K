@@ -250,7 +250,11 @@ index surveys agree; three joint parameter boxes are independently rechecked
 at 100 K in `bismuth-temperature-region-validation/`. Three native sparse
 queries match complete-AO references without changing comparison tolerances.
 These endpoint checks do not establish the zero-temperature limit.
-The source tree still has no full general EBR catalogue. Hall response,
+The optional `HALL_RESPONSE` adds the antisymmetric charge DC tensor to
+the existing projected-AO/Bloch currents, using scalar relaxation.
+Its nonzero model checks and native time-reversal controls are separate:
+it does not introduce magnetic order or constitute a magnetic-material benchmark.
+The source tree still has no full general EBR catalogue. Spin Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.
 

@@ -13,8 +13,10 @@ $\nabla_a=-\ii[X_a,\,\cdot\,]$, a convenient conductivity convention is
  \right].
  \label{eq:kubo-liouville}
 \end{equation}
-The real symmetric part gives the dissipative DC response considered
-here. The factor $e>0$ is the magnitude of the electron charge.
+The real symmetric part gives the dissipative DC response; the real
+antisymmetric part gives the Hall response. Throughout this section,
+the first tensor index denotes current and the second electric field.
+The factor $e>0$ is the magnitude of the electron charge.
 This expression states the operator structure behind the
 finite-volume calculation, including the role of dissipation
 \cite{KuehneTransport2020}. A constant $\Gamma$ is an approximation to
@@ -58,6 +60,70 @@ optionally printed as S/cm. Vacuum padding must not change a
 two-dimensional sheet conductivity through an arbitrary three-dimensional
 volume factor. An isolated finite-system response is not automatically
 a measurable bulk conductivity.
+
+\subsection{Antisymmetric charge response and its sign}
+Write $\Delta_{nm}=\varepsilon_n-\varepsilon_m$ and
+$q^{ab}_{nm}=a^a_{nm}a^b_{mn}$. The resolvent acting on the
+$mn$ element of the drive has denominator $\Gamma-\ii\Delta_{nm}$.
+Consequently,
+\begin{equation}
+ \Re\frac{q^{ab}_{nm}}{\Gamma-\ii\Delta_{nm}}
+ =\frac{\Gamma\Re q^{ab}_{nm}-\Delta_{nm}\Im q^{ab}_{nm}}
+ {\Gamma^2+\Delta_{nm}^2}.
+ \label{eq:kubo-complex-weight}
+\end{equation}
+The first term gives Eq.~\eqref{eq:kubo-spectral}, while the second yields
+\begin{equation}
+ \sigma^A_{ab}=-\frac{e^2}{\hbar V_d}
+ \sum_{\bk,s}w_{\bk}g_s\sum_{nm}
+ F_{nm\bk s}\frac{\Delta_{nm\bk s}}
+ {\Gamma^2+\Delta_{nm\bk s}^2}\Im q^{ab}_{nm\bk s}.
+ \label{eq:kubo-hall}
+\end{equation}
+Hermiticity gives $q^{ba}_{nm}=(q^{ab}_{nm})^*$, hence
+$\sigma^A_{ba}=-\sigma^A_{ab}$ and $\sigma^A_{aa}=0$.
+This contribution does not enter the isotropic trace or Joule heating.
+
+The implementation stores $J_a=-\ii a^a$, not the Hermitian velocity.
+Pairing $n,m$ therefore gives the equivalent kernel
+$2f[\varepsilon_n,\varepsilon_m]\Delta_{nm}
+\Im[(J_a)_{mn}(J_b)_{nm}]/(\Gamma^2+\Delta_{nm}^2)$ for $n<m$,
+where $f[\varepsilon_n,\varepsilon_m]=-F_{nm}$.
+Retaining both this minus sign and the tensor-index convention is
+essential. The kernel is checked against an independently assembled
+complex Liouvillian in a nondiagonal Hamiltonian frame.
+
+For $T,\Gamma>0$ the finite-temperature divided difference remains
+bounded at a degeneracy. Exactly degenerate pairs contribute zero to
+Eq.~\eqref{eq:kubo-hall}; nearly degenerate pairs approach this limit
+continuously. Unitary rotations within either degenerate eigenspace
+preserve the summed contraction. No inverse band splitting is needed
+in the implemented kernel.
+
+In a gapped two-dimensional orthogonal model, take the cold and
+weak-relaxation limits only after resolving the gap and k integration.
+With Berry connection $\mathcal A_n=\ii\langle u_n|\nabla_{\bk}u_n\rangle$
+and curvature
+$\Omega_{n,xy}=-2\Im\sum_{m\ne n}q^{xy}_{nm}/\Delta_{nm}^2$,
+Eq.~\eqref{eq:kubo-hall} becomes
+\begin{equation}
+ \sigma^A_{xy}=-\frac{e^2}{\hbar}
+ \sum_{n\,\mathrm{occupied}}\int_{\mathrm{BZ}}
+ \frac{d^2k}{(2\pi)^2}\,\Omega_{n,xy}
+ =-\frac{e^2}{h}C .
+ \label{eq:kubo-chern-limit}
+\end{equation}
+This sign refers to the explicitly stated current/field convention.
+A finite relaxation scale, partial occupation or an unconverged mesh
+does not in general give an integer conductance.
+
+The opt-in \texttt{HALL\_RESPONSE} setting combines
+Eq.~\eqref{eq:kubo-hall} with the dissipative tensor for the projected-AO
+and Bloch operators and separately prints its three independent entries.
+Under time reversal the charge Hall tensor changes sign. A
+time-reversal-invariant Hamiltonian therefore has zero net charge Hall
+response, including after GTH SOC is added to a restricted SCF.
+Enabling this output does not create magnetic order or an applied field.
 
 \subsection{Degenerate levels and intraband response}
 The equal-energy branch of Eq.~\eqref{eq:fermi-divided} applies to all
@@ -189,10 +255,14 @@ the extra factor of $\ii$ must also be conjugated.
 The response sums the full tensor over the full mesh; it is not an
 irreducible scalar-weight substitution for anisotropic currents.
 
-The current implementation provides symmetric dissipative DC
-conductivity with a prescribed relaxation scale. It does not yet
-provide anomalous Hall, spin Hall, a general frequency-dependent
-response, or microscopic scattering superoperators.
+The implementation provides dissipative and optional antisymmetric
+charge DC conductivity with a prescribed scalar relaxation scale.
+Nonzero Hall signs are validated in analytic lattice models; the native
+GPW/GAPW SOC fixtures are time-reversal-invariant zero-Hall controls,
+not converged magnetic-material benchmarks. Spin Hall currents,
+self-consistent noncollinear magnetic order, a general
+frequency-dependent response and microscopic scattering superoperators
+are not supplied by this extension.
 Its Bloch matrices and eigenframes are a bounded dense reference path,
 although eigensystems are distributed over MPI ranks.
 Fewer diagonalizations do not imply proportional memory or runtime

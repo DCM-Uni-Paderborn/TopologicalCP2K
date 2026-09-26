@@ -21,7 +21,7 @@ the local-orbital representation to band geometry. For a nondegenerate
 band, the moment implementation evaluates the interband expression
 \begin{equation}
  \begin{split}
- \Omega^\gamma_n(\bk)
+ \Omega^{\mathrm{mom},\gamma}_n(\bk)
  &=2\,\operatorname{Im}\sum_{m\ne n}
  d^\alpha_{nm}(\bk)d^\beta_{mn}(\bk)\\
  &=2\,\operatorname{Im}\sum_{m\ne n}
@@ -31,10 +31,13 @@ band, the moment implementation evaluates the interband expression
  \label{eq:berry-curvature-dipoles}
 \end{equation}
 where $(\alpha,\beta,\gamma)$ is a cyclic permutation of $(x,y,z)$.
-This equation uses the sign convention of the moment output.
-Comparisons with overlap-based phases require matching the phase and
-surface-orientation conventions. With Cartesian reciprocal coordinates,
-$\Omega^\gamma_n$ has units of length squared. The formula reveals why
+This equation uses the sign convention of the moment output:
+at identical orientation, $\Omega^{\mathrm{mom},z}_n=-\Omega_{n,xy}$
+for the Berry connection $\mathcal A_n=\ii\langle u_n|\nabla_{\bk}u_n\rangle$
+used in Eq.~\eqref{eq:kubo-chern-limit}. This conversion must also be
+applied when comparing Hall signs. Overlap-based phases additionally
+require matching the surface orientation. With Cartesian reciprocal
+coordinates, $\Omega^{\mathrm{mom},\gamma}_n$ has units of length squared. The formula reveals why
 small avoided crossings can produce sharply localized curvature and why
 band-energy convergence alone does not establish convergence of this
 observable. The band sum, AO basis, and reciprocal-space sampling require
@@ -51,8 +54,8 @@ viewpoint without resolving arbitrary eigenvectors within the group.
 The interband expression describes the implemented finite-basis moment
 representation and is not by itself a proof of complete-basis curvature
 or an integer Chern number. Nor does this geometric quantity constitute
-an implementation of anomalous Hall transport, which is distinct from
-the dissipative response in Section~\ref{sec:kubo}.
+an implementation of Hall transport: Section~\ref{sec:kubo} separately
+defines the occupation-, relaxation- and current-dependent DC tensor.
 
 \subsection{Directed overlaps and Wilson loops}
 Consider a closed directed path $\bk_0,\ldots,\bk_{L}$ with

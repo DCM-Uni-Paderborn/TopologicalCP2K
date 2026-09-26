@@ -4194,7 +4194,71 @@ This block establishes local parallel consistency and collective
 error handling, not multi-node speedup or distributed sparse
 integer factorizations.
 
-\enlargethispage{2\baselineskip}
+\clearpage
+\section{Antisymmetric Kubo Charge Response}
+\label{sec:si-kubo-hall}
+The optional \texttt{HALL\_RESPONSE} uses the same projected-AO or
+Bloch current as the dissipative response, retaining the imaginary
+current products. Its sign is fixed by the current/field index order
+and the resolvent in the main text. It does not create magnetic
+order, an applied field or a spin Hall current.
+
+The mathematical unit compares a two-level analytic response and
+an independent $16\times16$ complex Liouvillian solve in a
+nondiagonal four-level frame. The maximum discrepancy over optimized
+and instrumented runs is $7.55\times10^{-15}$.
+Additional tests cover band permutations, energy shifts, rotations
+within two degenerate doublets, Cartesian rotations and reflections,
+time reversal and splittings down to $10^{-14}$ in model units.
+
+The lattice Hamiltonian
+\begin{equation}
+ H(\bk)=\sin k_x\,\sigma_x+\sin k_y\,\sigma_y+
+ (m+\cos k_x+\cos k_y)\sigma_z
+\end{equation}
+provides nonzero Hall controls independent of the native
+time-reversal fixtures. With $48^2$ points, $k_BT=0.01$ and
+$\Gamma=0.001$ in model energy units, the results are
+\begin{center}
+\begin{tabular}{rrr}
+\toprule
+$m$ & Lower-band $C$ & $\sigma^A_{xy}/(e^2/h)$\\
+\midrule
+$-1$ & $+1$ & $-0.99999976562$\\
+$+1$ & $-1$ & $+0.99999976562$\\
+$+3$ & $0$ & $9.65149189\times10^{-9}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The trivial-phase Chern integral is zero within
+$5.3\times10^{-15}$. Pointwise finite-temperature and relaxation
+responses agree with analytic curvature within
+$7.22\times10^{-16}$.
+Repeating all meshes in k-dependent nonorthogonal AO frames,
+including transformed overlap and connection derivatives, changes
+the tensor by at most $2.34\times10^{-15}$.
+
+The final native suites pass 67/67 assertions in SSMP and 67/67
+on four MPI ranks; the Hall-only subset passes 14/14 on two ranks.
+All use two OpenMP threads and one BLAS thread. The mathematical
+unit also passes bounds and floating-point exception checks.
+Native Ne/GTH-SOC tests use UZH MOLOPT bases and cover finite
+GPW/GAPW, periodic GPW/GAPW, K290/SPGLIB property reconstruction,
+and one- and two-dimensional normalization. The largest finite/3D
+zero-Hall residual is below $10^{-11}$ S/m; the sheet residual
+is below $10^{-21}$ S and the one-dimensional response is exactly
+zero. These are zero-Hall consistency controls, not magnetic
+DFT material predictions. Existing Bi and diamond references remain
+unchanged.
+
+Seven extra calculations compare Hall on/off on identical
+$3^3$ scalar/SOC Bloch grids and in a finite projected-SOC model,
+and check rejection of the atom-embedding option. Printed
+diagonal averages agree exactly and the largest full-tensor
+difference is $3.913\times10^{-12}$ S/m.
+The frozen archive and standalone mathematical replay are in
+\nolinkurl{validation/development/kubo-hall/}.
+
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse
