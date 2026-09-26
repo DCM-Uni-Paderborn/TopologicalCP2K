@@ -1,0 +1,34 @@
+{
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 44112,
+    "sha256": "8205010c0c4d81455c6dc7b80200a3206ea190dbaa6af3c2a326d23d25180867"
+  },
+  "cases": [
+    {
+      "report": "reports/flake3-dzvp-region-audited.json",
+      "archive": "../bismuth-size-basis-validation/flake3-trim-dzvp300-spectrum.tar.gz",
+      "sha256": "9cfdea83f19d3695230d3025ec0b23a5371bd04b4bce014f05695efefab0b7d8"
+    },
+    {
+      "report": "reports/flake3-tzvp-region-audited.json",
+      "archive": "../bismuth-size-basis-validation/flake3-trim-tzvp300-spectrum.tar.gz",
+      "sha256": "ca0b186667c6b7ac851ad2d124ce843cad9a2abcc9d6329fb42fdcc43c0b0f8b"
+    },
+    {
+      "report": "reports/flake4-dzvp-high-region-audited.json",
+      "archive": "../bismuth-size-basis-validation/flake4-trim-dzvp300-spectrum.tar.gz",
+      "sha256": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3"
+    },
+    {
+      "report": "reports/flake4-dzvp-low-region-audited.json",
+      "archive": "../bismuth-size-basis-validation/flake4-trim-dzvp300-spectrum.tar.gz",
+      "sha256": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3"
+    },
+    {
+      "report": "reports/flake4-dzvp-middle-region-audited.json",
+      "archive": "../bismuth-size-basis-validation/flake4-trim-dzvp300-spectrum.tar.gz",
+      "sha256": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "accepted": true,
+  "native_scf_rerun": false,
+  "results": [
+    {
+      "report": "reports/flake3-dzvp-region-audited.json",
+      "resolved": true,
+      "index": 1,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "report": "reports/flake3-tzvp-region-audited.json",
+      "resolved": true,
+      "index": 1,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "report": "reports/flake4-dzvp-high-region-audited.json",
+      "resolved": true,
+      "index": 0,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "report": "reports/flake4-dzvp-low-region-audited.json",
+      "resolved": true,
+      "index": 1,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "report": "reports/flake4-dzvp-middle-region-audited.json",
+      "resolved": true,
+      "index": 1,
+      "maximum_absolute_difference": 0.0
+    }
+  ],
+  "verified_members": 72
+}

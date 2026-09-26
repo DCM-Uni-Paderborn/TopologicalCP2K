@@ -3451,6 +3451,94 @@ reproduces both 45-query scans, the physical cross-basis comparison
 and all reported accepted or rejected interval bounds without
 numerical change. This replay is separate from the native runs.
 
+\subsection{Joint energy, position and scale neighborhoods}
+\label{sec:si-bismuth-regions}
+The preceding scale intervals keep energy and position fixed.
+To test simultaneous changes, retain the complete physical AO
+Hamiltonian and orthonormalized position operators of each converged
+snapshot. For $p=(E,\kappa,x,y)$, write
+\begin{equation}
+ L(p)=\begin{pmatrix}
+ H-EI & \kappa Z(x,y)\\
+ \kappa Z(x,y)^\dagger & -H+EI
+ \end{pmatrix},\qquad
+ Z(x,y)=X-xI-i(Y-yI).
+\end{equation}
+Consider a closed parameter box with center $p_c$, half-widths
+$(r_E,r_\kappa,r_x,r_y)$ and positive scale upper bound
+$\kappa_+$. Its off-diagonal perturbation is
+$D=\delta\kappa Z(x_c,y_c)-\kappa(\delta x-i\delta y)I$.
+The scalar diagonal and off-diagonal perturbations anticommute,
+so squaring the Hermitian perturbation gives
+\begin{equation}
+ \|L(p)-L(p_c)\|
+ =\sqrt{\delta E^2+\|D\|^2}
+ \leq\sqrt{r_E^2+
+ \left[r_\kappa R_c+\kappa_+\sqrt{r_x^2+r_y^2}\right]^2}
+ \equiv b_c .
+\end{equation}
+Here $R_c$ bounds $\|Z(x_c,y_c)\|$. A single singular-value
+calculation at reference position $(x_0,y_0)$ suffices: the
+triangle inequality gives
+$R_c=\|Z(x_0,y_0)\|+
+\sqrt{(x_c-x_0)^2+(y_c-y_0)^2}$.
+The minimum absolute localizer eigenvalue therefore obeys
+$g_L(p)\geq g_L(p_c)-b_c$. Binary subdivision continues until
+every leaf has a positive lower bound after subtracting a
+$10^{-10}$ hartree numerical margin. Leaves that exhaust the
+evaluation budget or floating-point subdivision resolution remain
+explicitly unresolved. A covered connected box has the index of
+a separately evaluated, gapped Pfaffian anchor. The bound alone
+does not determine that index.
+
+All boxes in Table~\ref{tab:bi-regions} use
+$|E-E_0|\leq0.02g_{\rm el}$, where $E_0$ and $g_{\rm el}$ are
+the midpoint and full width of that snapshot's neutral SOC gap.
+Both $|x-x_0|$ and $|y-y_0|$ are at most 0.05~\AA{}, with
+$(x_0,y_0)$ the atomic centroid. These are changes in analysis
+parameters only, not changes in electron number, atomic geometry
+or self-consistent potential.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{llrrr}
+\toprule
+Patch/basis & $\kappa$ interval & $\nu$ & Leaves & Gap lower bound\\
+ & (hartree/bohr) & & & (hartree)\\
+\midrule
+16/DZVP & $[0.003,0.0035]$ & 1 & 5 & $2.52857\times10^{-4}$\\
+16/TZVP & $[0.003,0.0035]$ & 1 & 25 & $6.03154\times10^{-6}$\\
+30/DZVP & $[0.003,0.0035]$ & 0 & 8 & $2.59857\times10^{-5}$\\
+30/DZVP & $[0.00025,0.0004]$ & 1 & 11 & $4.97429\times10^{-6}$\\
+30/DZVP & $[0.0015,0.0025]$ & 1 & 10 & $2.29411\times10^{-4}$\\
+\bottomrule
+\end{tabular}
+\caption{Numerically covered joint energy--position--scale boxes
+for frozen finite Bi Hamiltonians. The last column is the smallest
+leaf bound, not an estimate of the exact minimum gap.}
+\label{tab:bi-regions}
+\end{table}
+
+The five covers require 9, 49, 15, 21 and 19 midpoint evaluations,
+respectively; none has an unresolved leaf. At each box's 16 corners
+and center, an independent full-spectrum divide-and-conquer solve
+checks the restricted middle-four eigenvalue calculation, spectral
+pairing and actual perturbation norm. The Pfaffian is also recomputed
+at all 85 points and agrees with the covered index in every case.
+Thus the opposite indices in the common scale window are robust
+within these finite parameter neighborhoods. They are not an
+isolated sampling accident, but still do not imply material-size
+convergence or a common absolute energy across different snapshots.
+
+Ten method and replay tests include independent random-matrix
+corner bounds, exact scalar limits, origin translation, analytic
+gapped spectra, full partition coverage and deliberate unresolved
+or malformed inputs. Methods, reports and checksums are retained in
+\path{validation/development/bismuth-region-validation/}, referencing
+the unchanged full-snapshot archives above. These are numerical
+Weyl bounds with a fixed margin, not interval-arithmetic proofs.
+
 \section{Independent Wilson and TRIM Eigenframe Symmetry}
 \label{sec:si-property-symmetry}
 This validation concerns an independent post-SCF property point set,
