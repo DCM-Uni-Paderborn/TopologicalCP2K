@@ -3451,6 +3451,73 @@ reproduces both 45-query scans, the physical cross-basis comparison
 and all reported accepted or rejected interval bounds without
 numerical change. This replay is separate from the native runs.
 
+\subsection{A 48-atom extension and native sparse comparison}
+The next patch has five primitive cells in each in-plane direction,
+again with the two singly coordinated corners removed. It contains
+48 atoms, 240 electrons, 624 UZH DZVP scalar AOs and 1,248 SOC
+spinors. The geometry, basis family, 400/40 Ry grids, 20 \AA{}
+vacuum padding, 300 K smearing and $10^{-9}$ SCF convergence
+criterion follow the preceding series; no bands are discarded.
+
+The neutral SOC gap is $0.0013933545044$ hartree (37.915 meV),
+or $1.4666\,k_BT$, compared with 219.6 and 72.14 meV for the
+16- and 30-atom DZVP patches. Eighteen of 48 atoms have coordination
+below three, using the same 3.3 \AA{} bond cutoff. The complete
+occupied and empty frontier doublets place 65.14\% and 64.49\%
+of their Lowdin weight on those atoms, versus their 37.5\%
+share of the patch. These basis-dependent weights and the gap
+decrease remain evidence of important finite-boundary effects,
+not proof of a closing periodic bulk gap. Neither the finite
+electronic gap nor the localizer classification is
+declared converged in material size or electronic temperature.
+
+The same 45-query grid, normalized to this snapshot's own gap
+and extent, now contains seven nontrivial queries rather than
+three. At the neutral centroid, the finer 20-scale scan finds
+nontrivial samples at 0.0002--0.00035 and 0.0008--0.002
+hartree/bohr. Samples at 0.0004--0.0006 and at 0.0025 and
+above are trivial. These ranges denote sampled points, not
+certified continuous intervals. In particular, both lower-scale
+windows covered for the 30-atom patch have endpoints with
+different gapped indices in this larger system. They must not
+be transferred without a fresh gap check.
+
+A separate six-step native restart evaluates three localizers
+at the centroid, at the original spectrum's neutral midpoint
+$E_0=-0.15121038346342175$ hartree, and at
+$\kappa=0.0003$, 0.0015 and 0.003 hartree/bohr. The localizer
+order is 2,496. Tacho Pfaffians and independent dense references
+give indices $(1,1,0)$, respectively. All three independent gaps,
+$1.9979089056\times10^{-4}$, $3.2042926640\times10^{-3}$ and
+$3.5834950312\times10^{-3}$ hartree, lie inside their MUMPS
+brackets, whose widths are below $9.01\times10^{-11}$ hartree.
+No comparison tolerance is relaxed: it remains
+$2\times10^{-8}$ hartree. The largest Pfaffian solve residual
+is below $1.27\times10^{-13}$; there are no workspace retries.
+These are three native queries, not 45. Their reference uses
+this restart's freshly exported full SOC spectrum; its electronic
+gap changes by only $1.21\times10^{-11}$ hartree.
+
+These restarts are not atomic-guess benchmarks. The four-rank
+attempt was deliberately stopped after step 25 because of host
+memory pressure. Its unchanged checkpoint was resumed with one
+MPI rank and two OpenMP threads: the final 91-step SCF/export
+stage takes 2310.61 s, excluding earlier interrupted work.
+The native three-query restart takes 477.44 s including SCF/export;
+the independent dense analysis takes 12.63 s, a different workload.
+Sampled process-tree RSS maxima are 20.99 and 21.76 GiB.
+A separate macOS spectrum-run snapshot reports a 42.5 GiB
+footprint including swapped memory, with 45.2 GiB peak. RSS is
+not a complete memory bound, and these are not MPI-scaling
+benchmarks. Inputs, solver reports, the resource stop, restart
+provenance and memory snapshots are retained
+in \path{validation/development/bismuth-flake48-validation/}.
+Archive-only replay verifies 200 members in three archives and
+reintegrates both AO-moment caches from the retained Gaussian
+contractions. All moments, independent gaps and indices, native
+comparisons, frontier weights and both surveys reproduce without
+numerical change. No SCF is rerun in this reproduction check.
+
 \subsection{Joint energy, position and scale neighborhoods}
 \label{sec:si-bismuth-regions}
 The preceding scale intervals keep energy and position fixed.
@@ -3512,6 +3579,9 @@ Patch/basis & $\kappa$ interval & $\nu$ & Leaves & Gap lower bound\\
 30/DZVP & $[0.003,0.0035]$ & 0 & 8 & $2.59857\times10^{-5}$\\
 30/DZVP & $[0.00025,0.0004]$ & 1 & 11 & $4.97429\times10^{-6}$\\
 30/DZVP & $[0.0015,0.0025]$ & 1 & 10 & $2.29411\times10^{-4}$\\
+48/DZVP & $[0.003,0.0035]$ & 0 & 3 & $7.63282\times10^{-4}$\\
+48/DZVP & $[0.00025,0.0003]$ & 1 & 5 & $6.16562\times10^{-6}$\\
+48/DZVP & $[0.0015,0.002]$ & 1 & 7 & $6.16244\times10^{-5}$\\
 \bottomrule
 \end{tabular}
 \caption{Numerically covered joint energy--position--scale boxes
@@ -3520,12 +3590,12 @@ leaf bound, not an estimate of the exact minimum gap.}
 \label{tab:bi-regions}
 \end{table}
 
-The five covers require 9, 49, 15, 21 and 19 midpoint evaluations,
+The first five covers require 9, 49, 15, 21 and 19 midpoint evaluations,
 respectively; none has an unresolved leaf. At each box's 16 corners
 and center, an independent full-spectrum divide-and-conquer solve
 checks the restricted middle-four eigenvalue calculation, spectral
 pairing and actual perturbation norm. The Pfaffian is also recomputed
-at all 85 points and agrees with the covered index in every case.
+at their 85 audit points and agrees with the covered index in every case.
 Thus the opposite indices in the common scale window are robust
 within these finite parameter neighborhoods. They are not an
 isolated sampling accident, but still do not imply material-size
@@ -3551,6 +3621,30 @@ correctly remains unresolved, with eight pending leaves after
 sampling nor corner-plus-center sampling replaces a gap cover.
 The two reports and their replay are retained separately under
 \path{validation/development/bismuth-region-counterexample/}.
+
+The 48-atom boxes in the table require 5, 9 and 13 midpoint
+evaluations, respectively. Their position-norm constant is
+29.35465 bohr, and they retain the same energy fraction, position
+widths and numerical margin as the smaller patches. The independent
+full-spectrum audit is repeated at all 51 corners and centers;
+every audited index matches its covered box. Together with the
+previous table entries, this gives 136 audit points in eight
+resolved boxes, not a continuum inferred from those samples alone.
+
+\begingroup\clubpenalty=10000
+The broader inherited intervals $[0.00025,0.0004]$ and
+$[0.0015,0.0025]$ are also retained as negative 48-atom controls.
+Each has both $\nu=0$ and $\nu=1$ among its gapped corner
+checks, which rules out a common index independently of the
+subdivision budget. Fifteen midpoint evaluations leave four and
+two unresolved leaves, respectively; neither box is assigned an
+index. The narrower positive boxes are deliberate restrictions
+informed by the fine scan, not a relabelling of either failed
+transfer. All five reports and the full-snapshot references are
+retained in \path{validation/development/bismuth-region48-validation/}.
+The extended method suite has 32 passing checks, including an
+additional rejection test for archive paths outside the evidence tree.
+\par\endgroup
 
 \section{Independent Wilson and TRIM Eigenframe Symmetry}
 \label{sec:si-property-symmetry}

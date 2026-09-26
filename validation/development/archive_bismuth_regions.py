@@ -38,6 +38,17 @@ def compare(expected, actual, path="", tolerance=1e-10):
     return 0.
 
 
+def case_archive(directory, case, development):
+    """Keep full-snapshot references inside the retained evidence tree."""
+    directory, development = directory.resolve(), development.resolve()
+    if not case or Path(case).name != case or case in (".", ".."):
+        raise ValueError("Invalid case name")
+    archive = (directory / (case + ".tar.gz")).resolve()
+    if not archive.is_relative_to(development):
+        raise ValueError("Archive reference outside development evidence")
+    return archive
+
+
 def replay(bundle):
     index = json.loads((bundle / "index.json").read_text())
     methods_archive = bundle / index["archive"]["file"]
@@ -101,6 +112,8 @@ def main():
     parser.add_argument("work", type=Path)
     parser.add_argument("destination", type=Path)
     parser.add_argument("--reports", nargs="+", type=Path)
+    parser.add_argument("--case-archives", type=Path,
+                        help="Full-snapshot archive directory; default: bismuth-size-basis-validation")
     parser.add_argument("--replay", action="store_true")
     parser.add_argument("--output", type=Path, help="Fresh replay-report path instead of bundle/replay.json")
     args = parser.parse_args()
@@ -113,8 +126,11 @@ def main():
         if not args.reports:
             parser.error("--reports is required when collecting evidence")
         root, work, destination = args.root.resolve(), args.work.resolve(), args.destination.resolve()
-        destination.mkdir(parents=True, exist_ok=False)
         scripts = Path(__file__).parent
+        archive_directory = args.case_archives or scripts / "bismuth-size-basis-validation"
+        for path in args.reports:
+            case_archive(archive_directory, json.loads(path.read_text())["case"], destination.parent)
+        destination.mkdir(parents=True, exist_ok=False)
         files = {"scripts/" + name: scripts / name for name in
                  ("check_bismuth_region.py", "localizer_region.py", "test_localizer_region.py",
                   "analyze_bismuth_flakes.py", "archive_bismuth_regions.py",
@@ -131,7 +147,7 @@ def main():
             scan = root / "build-mpi/bismuth-neutral-window" / (report["case"].replace("-spectrum", "-frontier") + ".json")
             if digest(scan) != report["scan_sha256"]:
                 raise ValueError("Changed underlying scan")
-            archive = scripts / "bismuth-size-basis-validation" / (report["case"] + ".tar.gz")
+            archive = case_archive(archive_directory, report["case"], destination.parent)
             archived_index = json.loads((archive.parent / "index.json").read_text())
             archive_record = next(item for item in archived_index["archives"] if item["file"] == archive.name)
             native = verify(archive, archive_record["sha256"])
@@ -144,7 +160,7 @@ def main():
             files[target] = path
             files[target.replace(".json", ".log")] = path.with_suffix(".log")
             files["scans/" + report["case"] + ".json"] = scan
-            cases.append(dict(report=target, archive="../bismuth-size-basis-validation/" + archive.name,
+            cases.append(dict(report=target, archive=os.path.relpath(archive, destination),
                               sha256=digest(archive)))
         record = pack(destination / "methods-results.tar.gz", files,
                       dict(scope="Frozen finite operators; numerical bounds, not interval arithmetic or size convergence"))

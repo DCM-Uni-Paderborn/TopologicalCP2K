@@ -1,0 +1,23 @@
+{
+  "cases": [
+    "flake5-trim-dzvp300-one-rank-spectrum",
+    "flake5-trim-dzvp300-one-rank-native"
+  ],
+  "archives": [
+    {
+      "file": "flake5-trim-dzvp300-one-rank-spectrum.tar.gz",
+      "bytes": 77505523,
+      "sha256": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712"
+    },
+    {
+      "file": "flake5-trim-dzvp300-one-rank-native.tar.gz",
+      "bytes": 71361647,
+      "sha256": "c2f16b9554464c08d0cc905c78cb2b1b8d68b09927be02bc9bd7f519c0591ba7"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 1039949,
+      "sha256": "614b238cf57505e998a6806ee806c2844056292070b2cd6395cf97e9a335919e"
+    }
+  ]
+}

@@ -303,15 +303,29 @@ nor agreement on a finite set of queries establishes a
 size-converged material classification.\par
 \endgroup
 
+Extending the same bare-flake series to 48 atoms reduces the
+neutral gap further to 37.92 meV. Boundary atoms constitute
+37.5\% of this patch but carry 65.14\% and 64.49\% of the
+occupied and empty frontier-doublet weights. This finite-flake
+level gap is not the periodic bulk gap; moving localizer-window
+boundaries alone do not imply a bulk phase change. At three selected
+scales, the native sparse calculation and a separately integrated
+complete-AO reference agree on every index, with each reference
+gap inside its native MUMPS bracket. This is a three-query
+native check, distinct from the independent 45-query survey.
+
 This contrast persists in joint parameter neighborhoods, not only
 along a line in $\kappa$. A norm bound for simultaneous changes in
 energy, both in-plane positions and scale keeps the finite localizer
 gapped for energies within 2\% of each calculation's neutral gap
 around its midpoint and positions within 0.05~\AA{} of its centroid
 in each in-plane direction. On $[0.003,0.0035]$ hartree/bohr,
-both 16-atom bases retain $\nu=1$, whereas the 30-atom DZVP
-model retains $\nu=0$ throughout these respective boxes.
-Two lower-scale boxes for the larger flake retain $\nu=1$.
+both 16-atom bases retain $\nu=1$, whereas the 30- and 48-atom
+DZVP models retain $\nu=0$ throughout their respective boxes.
+Two lower-scale boxes for the 30-atom flake retain $\nu=1$.
+They do not transfer in full to 48 atoms, where both contain
+opposite-index samples; freshly checked, narrower subboxes do
+retain $\nu=1$.
 Adaptive coverage, independent full-spectrum corner checks and
 the numerical margins are detailed in the Supporting Information.
 The Hamiltonian is frozen in each box; these tests do not change

@@ -1,13 +1,15 @@
 """Independent matrix, subdivision and rejection checks for localizer boxes."""
 
 from itertools import product
+from pathlib import Path
+import tempfile
 import unittest
 
 import numpy as np
 from scipy.linalg import eigvalsh, svdvals
 
 from localizer_region import cover_region, variation_bound
-from archive_bismuth_regions import compare
+from archive_bismuth_regions import case_archive, compare
 
 
 class RegionChecks(unittest.TestCase):
@@ -120,6 +122,21 @@ class RegionChecks(unittest.TestCase):
             compare(expected, dict(covered=[dict(lower=[.1, 1.], upper=[.5, 2.])], unresolved=[]))
         with self.assertRaises(ValueError):
             compare(expected, dict(covered=expected['covered'], unresolved=[[0., .1]]))
+
+    def test_case_archive_stays_in_evidence_tree(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            self.assertEqual(case_archive(root / 'new-cases', 'flake5', root),
+                             root / 'new-cases/flake5.tar.gz')
+            for name in ('', '.', '..', '../flake5', '/flake5'):
+                with self.assertRaises(ValueError):
+                    case_archive(root / 'new-cases', name, root)
+            with self.assertRaises(ValueError):
+                case_archive(root.parent, 'flake5', root)
+            outside = root / 'outside'
+            outside.symlink_to(root.parent, target_is_directory=True)
+            with self.assertRaises(ValueError):
+                case_archive(outside, 'flake5', root)
 
 
 if __name__ == '__main__':

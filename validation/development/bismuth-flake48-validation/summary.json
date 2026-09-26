@@ -1,0 +1,424 @@
+[
+  {
+    "label": "flake5-trim-dzvp300-one-rank-spectrum",
+    "run": {
+      "options": {
+        "root": "/Users/tkuehne/cp2k-spectral-localizer",
+        "output": "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bismuth-flake-validation/flake5-trim-dzvp300-one-rank-spectrum",
+        "mode": "spectrum",
+        "size": 5,
+        "vacuum": 20.0,
+        "basis": "DZVP",
+        "cutoff": 400,
+        "scf_mesh": 8,
+        "temperature": 300.0,
+        "solver": "TACHO",
+        "energy": null,
+        "kappa": [
+          0.001,
+          0.003,
+          0.01
+        ],
+        "offset": [
+          0.0
+        ],
+        "ranks": 1,
+        "checkpoint": true,
+        "restart": "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bismuth-flake-validation/flake5-trim-dzvp300-resumed-spectrum/bismuth-RESTART.wfn",
+        "export_spectrum": false,
+        "ao_matrices": false,
+        "trim_undercoordinated": true
+      },
+      "provenance": {
+        "source_commit": "ef37b012c72a90676c35dea08f1419fb0ee4cab6",
+        "executable_sha256": "ba87a15772327a2c45c6218d4dc69c136a08c5b44602443602bf2bbbe81084a6",
+        "runner_sha256": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+        "sources": {
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e"
+        },
+        "runtime": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "2",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        },
+        "library_sha256": "3b4bd30f193af0f45d3d28987ca3945d96149bc14396e3b67c7d04dc9070a0dd",
+        "restart_sha256": "b6f429f9ede79c2d62d08588eb27a8d24f483075bd67666953f5e629e7b5bcae"
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "1",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 2310.613995499998,
+      "memory": {
+        "sampling_interval_seconds": 1,
+        "samples": 2239,
+        "failed_samples": 0,
+        "sampled_peak_process_tree_rss_kib": 22011872,
+        "sampled_peak_single_process_rss_kib": 22008048,
+        "scope": "RSS sum over the launcher and its descendants; shared pages may be counted repeatedly; sampled maximum, not exact peak or unique physical memory"
+      },
+      "interrupted_reason": null,
+      "completed": true,
+      "scf_converged": true,
+      "energy": [
+        "-264.873722824415324"
+      ],
+      "files": {
+        "bismuth-RESTART.wfn": "2f50e44f680c9a440c622de72f5d79bba3acf7cc1798eef9c2936288712be680",
+        "bismuth-RESTART.wfn.bak-1": "f98a8b2a30dcf3b38274f56d93a31ebfe97d55b6f7110b53a08b9327e41f42f4",
+        "bismuth.eig": "c511aca00cf77194e89c793c233c6a5ffb3a5d040ded22f2632b92f59c1a9750",
+        "bismuth.mmn": "5d3f59bff40110dd63a61432f04a240b0e4febcf602d9602d3532d7bd9e8f1f7",
+        "bismuth.topology": "3cd77dfbea69700cca0043460b606cb46a93f13f2f84431d113e9db226465607",
+        "gamma.nnkp": "cca314d913356183f21a19a3911df8de952722cbf390142b938c27cec5c0e7e3",
+        "initial.wfn": "b6f429f9ede79c2d62d08588eb27a8d24f483075bd67666953f5e629e7b5bcae",
+        "input.inp": "3c58ac771c64c51fd28fbf751a25198c9ff594110e88e9ea5b848f8c294b8263",
+        "one-rank-memory.txt": "bafe93835eb9a084d6c0ce2d02fb3101e1d268610a7c08f332db63a15391eac3",
+        "output.out": "9329b69f0838d6d6856186776a05529801b444a9f11d21d94aac4b44616c8c19",
+        "process.json": "0d82ac7a729dfa5281821b2b7bca9761d48c173240258b2936abc3e20f3a20e6",
+        "runner.py": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "diagnostics": [
+        "TOPOLOGY| Scalar bands in SOC second variation: 624"
+      ]
+    },
+    "analysis": {
+      "snapshot_sha256": "3cd77dfbea69700cca0043460b606cb46a93f13f2f84431d113e9db226465607",
+      "source_sha256": "3ff1826689eb6d2bbff220955ea6df60fc1779a3a43289be4151b2d82fa42d6e",
+      "integral_sha256": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5",
+      "natoms": 48,
+      "nao": 624,
+      "occupied_spinors": 240,
+      "spectral_gap_hartree": 0.0013933545044090834,
+      "neutral_midpoint_hartree": -0.15121038346342175,
+      "diagnostics": {
+        "metric_minimum": 0.021460884980157316,
+        "metric_ratio": 0.004104539558345282,
+        "frame_residual": 7.541086862937631e-13,
+        "time_reversal_residual": 4.4771945964160176e-15
+      },
+      "queries": [
+        {
+          "energy_hartree": -0.15121038346342175,
+          "kappa_hartree_bohr": 0.0003,
+          "position_bohr": [
+            45.49043233388965,
+            34.25083576721811,
+            20.54132306446694
+          ],
+          "gap_hartree": 0.0001997908980377282,
+          "z2": 1,
+          "skew_residual": 2.220446049250313e-15
+        },
+        {
+          "energy_hartree": -0.15121038346342175,
+          "kappa_hartree_bohr": 0.0015,
+          "position_bohr": [
+            45.49043233388965,
+            34.25083576721811,
+            20.54132306446694
+          ],
+          "gap_hartree": 0.003204292674349492,
+          "z2": 1,
+          "skew_residual": 2.220446049250313e-15
+        },
+        {
+          "energy_hartree": -0.15121038346342175,
+          "kappa_hartree_bohr": 0.003,
+          "position_bohr": [
+            45.49043233388965,
+            34.25083576721811,
+            20.54132306446694
+          ],
+          "gap_hartree": 0.0035834950115579264,
+          "z2": 0,
+          "skew_residual": 2.220446049250313e-15
+        }
+      ],
+      "elapsed_seconds": 12.433006790997752
+    }
+  },
+  {
+    "label": "flake5-trim-dzvp300-one-rank-native",
+    "run": {
+      "options": {
+        "root": "/Users/tkuehne/cp2k-spectral-localizer",
+        "output": "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bismuth-flake-validation/flake5-trim-dzvp300-one-rank-native",
+        "mode": "localizer",
+        "size": 5,
+        "vacuum": 20.0,
+        "basis": "DZVP",
+        "cutoff": 400,
+        "scf_mesh": 8,
+        "temperature": 300.0,
+        "solver": "TACHO",
+        "energy": [
+          -0.15121038346342175
+        ],
+        "kappa": [
+          0.0003,
+          0.0015,
+          0.003
+        ],
+        "offset": [
+          0.0
+        ],
+        "ranks": 1,
+        "checkpoint": false,
+        "restart": "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bismuth-flake-validation/flake5-trim-dzvp300-one-rank-spectrum/bismuth-RESTART.wfn",
+        "export_spectrum": true,
+        "ao_matrices": false,
+        "trim_undercoordinated": true
+      },
+      "provenance": {
+        "source_commit": "ef37b012c72a90676c35dea08f1419fb0ee4cab6",
+        "executable_sha256": "ba87a15772327a2c45c6218d4dc69c136a08c5b44602443602bf2bbbe81084a6",
+        "runner_sha256": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+        "sources": {
+          "data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+          "data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e"
+        },
+        "runtime": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "2",
+          "DYLD_LIBRARY_PATH": "/Users/tkuehne/cp2k-spectral-localizer/build-serial/openblas-thread-safe/lib"
+        },
+        "library_sha256": "3b4bd30f193af0f45d3d28987ca3945d96149bc14396e3b67c7d04dc9070a0dd",
+        "restart_sha256": "2f50e44f680c9a440c622de72f5d79bba3acf7cc1798eef9c2936288712be680"
+      },
+      "command": [
+        "mpiexec",
+        "-n",
+        "1",
+        "/Users/tkuehne/cp2k-spectral-localizer/build-mpi/bin/cp2k.psmp",
+        "-i",
+        "input.inp",
+        "-o",
+        "output.out"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 477.44289241700244,
+      "memory": {
+        "sampling_interval_seconds": 1,
+        "samples": 466,
+        "failed_samples": 0,
+        "sampled_peak_process_tree_rss_kib": 22812368,
+        "sampled_peak_single_process_rss_kib": 22799392,
+        "scope": "RSS sum over the launcher and its descendants; shared pages may be counted repeatedly; sampled maximum, not exact peak or unique physical memory"
+      },
+      "interrupted_reason": null,
+      "completed": true,
+      "scf_converged": true,
+      "energy": [
+        "-264.873722835446586"
+      ],
+      "files": {
+        "bismuth.eig": "cb2fc26de65fe11b957b12dd2bf86e121fdf2ba0caa7358190e7fc2bf0b9ffa7",
+        "bismuth.mmn": "06659f547ad361b99f613a7d6baa569365b7516da2faaafe244ea4491530a101",
+        "bismuth.topology": "c466153e97717db4f42f886738f7893f41d0d4396b72fc892dff2b06b0f04275",
+        "gamma.nnkp": "cca314d913356183f21a19a3911df8de952722cbf390142b938c27cec5c0e7e3",
+        "initial.wfn": "2f50e44f680c9a440c622de72f5d79bba3acf7cc1798eef9c2936288712be680",
+        "input.inp": "5b84e4a52060c9d81ad7e2608379079f279e4f506895b2417c00bf42be8c91d1",
+        "output.out": "e9b31e88c8bb699f9ae8010977afc57156a4c8dbcf0f4f94b2c3479131e53ac4",
+        "process.json": "a71378f12627afe6675dc72d19f04f13fc69eebfa53c33b71001381db0496301",
+        "runner.py": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+        "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "diagnostics": [
+        "SPECTRAL_LOCALIZER| Finite-system DBCSR localizer",
+        "SPECTRAL_LOCALIZER| Tacho sparse Pfaffian with independent MUMPS gap brackets.",
+        "SPECTRAL_LOCALIZER| Pfaffian factorization on source rank; sparse COO collection.",
+        "SPECTRAL_LOCALIZER| Localizer dimension: 2496",
+        "SPECTRAL_LOCALIZER| Oriented plane: XY",
+        "SPECTRAL_LOCALIZER| Check basis, volume and KAPPA convergence.",
+        "SPECTRAL_LOCALIZER| Position [bohr]:    4.54904323338896E+01   3.42508357672181E+01   2.05413230644669E+01",
+        "SPECTRAL_LOCALIZER| Energy [hartree]:   -1.51210383463422E-01",
+        "SPECTRAL_LOCALIZER| Kappa [hartree/bohr]:    3.00000000000000E-04",
+        "SPECTRAL_LOCALIZER| Metric ratio lower bound:    9.76562500000000E-04",
+        "SPECTRAL_LOCALIZER| Gap bracket [hartree]:    1.99790828818045E-04   1.99790908619526E-04",
+        "SPECTRAL_LOCALIZER| Sparse factorizations: 66",
+        "SPECTRAL_LOCALIZER| Workspace retries: 0",
+        "SPECTRAL_LOCALIZER| Sparse input entries: 10272152",
+        "SPECTRAL_LOCALIZER| Factor entries: 11854272",
+        "SPECTRAL_LOCALIZER| Factor real workspace entries: 12922678",
+        "SPECTRAL_LOCALIZER| Solver memory sum [MB]:        395.000",
+        "SPECTRAL_LOCALIZER| Pfaffian solve residual:    1.26323546302978E-13",
+        "SPECTRAL_LOCALIZER| Pfaffian scalar panel entries: 6225028",
+        "SPECTRAL_LOCALIZER| Pfaffian numerical buffers [MiB]:         96.291",
+        "SPECTRAL_LOCALIZER| Gap [hartree]:    1.99790828818045E-04",
+        "SPECTRAL_LOCALIZER| Z2 index: 1",
+        "SPECTRAL_LOCALIZER| Position [bohr]:    4.54904323338896E+01   3.42508357672181E+01   2.05413230644669E+01",
+        "SPECTRAL_LOCALIZER| Energy [hartree]:   -1.51210383463422E-01",
+        "SPECTRAL_LOCALIZER| Kappa [hartree/bohr]:    1.50000000000000E-03",
+        "SPECTRAL_LOCALIZER| Metric ratio lower bound:    9.76562500000000E-04",
+        "SPECTRAL_LOCALIZER| Gap bracket [hartree]:    3.20429258750850E-03   3.20429267063067E-03",
+        "SPECTRAL_LOCALIZER| Sparse factorizations: 66",
+        "SPECTRAL_LOCALIZER| Workspace retries: 0",
+        "SPECTRAL_LOCALIZER| Sparse input entries: 10271984",
+        "SPECTRAL_LOCALIZER| Factor entries: 11854272",
+        "SPECTRAL_LOCALIZER| Factor real workspace entries: 12922680",
+        "SPECTRAL_LOCALIZER| Solver memory sum [MB]:        395.000",
+        "SPECTRAL_LOCALIZER| Pfaffian solve residual:    2.13206173103699E-14",
+        "SPECTRAL_LOCALIZER| Pfaffian scalar panel entries: 6225028",
+        "SPECTRAL_LOCALIZER| Pfaffian numerical buffers [MiB]:         96.291",
+        "SPECTRAL_LOCALIZER| Gap [hartree]:    3.20429258750850E-03",
+        "SPECTRAL_LOCALIZER| Z2 index: 1",
+        "SPECTRAL_LOCALIZER| Position [bohr]:    4.54904323338896E+01   3.42508357672181E+01   2.05413230644669E+01",
+        "SPECTRAL_LOCALIZER| Energy [hartree]:   -1.51210383463422E-01",
+        "SPECTRAL_LOCALIZER| Kappa [hartree/bohr]:    3.00000000000000E-03",
+        "SPECTRAL_LOCALIZER| Metric ratio lower bound:    9.76562500000000E-04",
+        "SPECTRAL_LOCALIZER| Gap bracket [hartree]:    3.58349495858067E-03   3.58349504861617E-03",
+        "SPECTRAL_LOCALIZER| Sparse factorizations: 65",
+        "SPECTRAL_LOCALIZER| Workspace retries: 0",
+        "SPECTRAL_LOCALIZER| Sparse input entries: 10271984",
+        "SPECTRAL_LOCALIZER| Factor entries: 11854272",
+        "SPECTRAL_LOCALIZER| Factor real workspace entries: 12922677",
+        "SPECTRAL_LOCALIZER| Solver memory sum [MB]:        395.000",
+        "SPECTRAL_LOCALIZER| Pfaffian solve residual:    1.58020913757789E-14",
+        "SPECTRAL_LOCALIZER| Pfaffian scalar panel entries: 6225028",
+        "SPECTRAL_LOCALIZER| Pfaffian numerical buffers [MiB]:         96.291",
+        "SPECTRAL_LOCALIZER| Gap [hartree]:    3.58349495858067E-03",
+        "SPECTRAL_LOCALIZER| Z2 index: 0",
+        "TOPOLOGY| Scalar bands in SOC second variation: 624"
+      ]
+    },
+    "analysis": {
+      "snapshot_sha256": "c466153e97717db4f42f886738f7893f41d0d4396b72fc892dff2b06b0f04275",
+      "source_sha256": "3ff1826689eb6d2bbff220955ea6df60fc1779a3a43289be4151b2d82fa42d6e",
+      "integral_sha256": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5",
+      "natoms": 48,
+      "nao": 624,
+      "occupied_spinors": 240,
+      "spectral_gap_hartree": 0.0013933545164971084,
+      "neutral_midpoint_hartree": -0.1512103834736297,
+      "diagnostics": {
+        "metric_minimum": 0.021460884980157316,
+        "metric_ratio": 0.004104539558345282,
+        "frame_residual": 7.480383786743611e-13,
+        "time_reversal_residual": 4.107848633255325e-15
+      },
+      "queries": [
+        {
+          "energy_hartree": -0.15121038346342175,
+          "kappa_hartree_bohr": 0.0003,
+          "position_bohr": [
+            45.49043233388965,
+            34.25083576721811,
+            20.54132306446694
+          ],
+          "gap_hartree": 0.00019979089056000853,
+          "z2": 1,
+          "skew_residual": 2.0539125955565396e-15
+        },
+        {
+          "energy_hartree": -0.15121038346342175,
+          "kappa_hartree_bohr": 0.0015,
+          "position_bohr": [
+            45.49043233388965,
+            34.25083576721811,
+            20.54132306446694
+          ],
+          "gap_hartree": 0.003204292664010601,
+          "z2": 1,
+          "skew_residual": 2.0539125955565396e-15
+        },
+        {
+          "energy_hartree": -0.15121038346342175,
+          "kappa_hartree_bohr": 0.003,
+          "position_bohr": [
+            45.49043233388965,
+            34.25083576721811,
+            20.54132306446694
+          ],
+          "gap_hartree": 0.003583495031236514,
+          "z2": 0,
+          "skew_residual": 2.0539125955565396e-15
+        }
+      ],
+      "elapsed_seconds": 12.632114457999705,
+      "native_comparison": {
+        "tolerance_hartree": 2e-08,
+        "accepted": true,
+        "queries": [
+          {
+            "query": 0,
+            "native": {
+              "z2": 1.0,
+              "position_bohr": [
+                45.4904323338896,
+                34.2508357672181,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.151210383463422,
+              "kappa_hartree_bohr": 0.0003,
+              "gap_bracket": [
+                0.000199790828818045,
+                0.000199790908619526
+              ],
+              "solve_residual": 1.26323546302978e-13,
+              "gap_hartree": 0.000199790828818045
+            },
+            "independent_gap_hartree": 0.00019979089056000853,
+            "distance_from_bracket_hartree": 0.0,
+            "independent_z2": 1,
+            "accepted": true
+          },
+          {
+            "query": 1,
+            "native": {
+              "z2": 1.0,
+              "position_bohr": [
+                45.4904323338896,
+                34.2508357672181,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.151210383463422,
+              "kappa_hartree_bohr": 0.0015,
+              "gap_bracket": [
+                0.0032042925875085,
+                0.00320429267063067
+              ],
+              "solve_residual": 2.13206173103699e-14,
+              "gap_hartree": 0.0032042925875085
+            },
+            "independent_gap_hartree": 0.003204292664010601,
+            "distance_from_bracket_hartree": 0.0,
+            "independent_z2": 1,
+            "accepted": true
+          },
+          {
+            "query": 2,
+            "native": {
+              "z2": 0.0,
+              "position_bohr": [
+                45.4904323338896,
+                34.2508357672181,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.151210383463422,
+              "kappa_hartree_bohr": 0.003,
+              "gap_bracket": [
+                0.00358349495858067,
+                0.00358349504861617
+              ],
+              "solve_residual": 1.58020913757789e-14,
+              "gap_hartree": 0.00358349495858067
+            },
+            "independent_gap_hartree": 0.003583495031236514,
+            "distance_from_bracket_hartree": 0.0,
+            "independent_z2": 0,
+            "accepted": true
+          }
+        ]
+      }
+    }
+  }
+]

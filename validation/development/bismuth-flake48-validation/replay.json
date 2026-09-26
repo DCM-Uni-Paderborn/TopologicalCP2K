@@ -1,0 +1,38 @@
+{
+  "accepted": true,
+  "native_scf_rerun": false,
+  "ao_moments_reintegrated": true,
+  "verified_members": 200,
+  "archive_sha256": {
+    "flake5-trim-dzvp300-one-rank-spectrum.tar.gz": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712",
+    "flake5-trim-dzvp300-one-rank-native.tar.gz": "c2f16b9554464c08d0cc905c78cb2b1b8d68b09927be02bc9bd7f519c0591ba7",
+    "methods-results.tar.gz": "614b238cf57505e998a6806ee806c2844056292070b2cd6395cf97e9a335919e"
+  },
+  "analysis": [
+    {
+      "case": "flake5-trim-dzvp300-one-rank-spectrum",
+      "reintegrated_moment_error": 0.0,
+      "maximum_report_difference": 0.0,
+      "native_queries": 0
+    },
+    {
+      "case": "flake5-trim-dzvp300-one-rank-native",
+      "reintegrated_moment_error": 0.0,
+      "maximum_report_difference": 0.0,
+      "native_queries": 3
+    }
+  ],
+  "scans": [
+    {
+      "report": "flake5-trim-dzvp300-one-rank-frontier.json",
+      "queries": 45,
+      "maximum_report_difference": 0.0
+    },
+    {
+      "report": "flake5-trim-dzvp300-one-rank-scale.json",
+      "queries": 20,
+      "maximum_report_difference": 0.0
+    }
+  ],
+  "replay_method_sha256": "6c9add5e6665dbaa59ea2359e2b6a23ee411caee51cdcd5e0442133780579705"
+}

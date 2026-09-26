@@ -1,0 +1,34 @@
+{
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 37448,
+    "sha256": "cbc692f50ed9ee6050159b02dbf22dc3cf032eed26eb8ec7eb5f6226c7eec592"
+  },
+  "cases": [
+    {
+      "report": "reports/high-scale.json",
+      "archive": "../bismuth-flake48-validation/flake5-trim-dzvp300-one-rank-spectrum.tar.gz",
+      "sha256": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712"
+    },
+    {
+      "report": "reports/old-low-scale.json",
+      "archive": "../bismuth-flake48-validation/flake5-trim-dzvp300-one-rank-spectrum.tar.gz",
+      "sha256": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712"
+    },
+    {
+      "report": "reports/old-middle-scale.json",
+      "archive": "../bismuth-flake48-validation/flake5-trim-dzvp300-one-rank-spectrum.tar.gz",
+      "sha256": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712"
+    },
+    {
+      "report": "reports/narrow-low-scale.json",
+      "archive": "../bismuth-flake48-validation/flake5-trim-dzvp300-one-rank-spectrum.tar.gz",
+      "sha256": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712"
+    },
+    {
+      "report": "reports/narrow-middle-scale.json",
+      "archive": "../bismuth-flake48-validation/flake5-trim-dzvp300-one-rank-spectrum.tar.gz",
+      "sha256": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712"
+    }
+  ]
+}
