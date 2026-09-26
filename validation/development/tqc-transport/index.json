@@ -1,0 +1,26 @@
+{
+  "source_commit": "ef37b012c72a90676c35dea08f1419fb0ee4cab6",
+  "baseline_commit": "7df186991fcbef3025b464b79f8a5ef5713c3363",
+  "regtest_checks": {
+    "baseline-serial": 135,
+    "baseline-mpi": 135,
+    "serial": 139,
+    "mpi4": 139,
+    "mpi3": 139,
+    "wilson-serial": 47,
+    "wilson-mpi": 47
+  },
+  "native_binaries": {
+    "build-serial": "220d8c9054b50ef61258b9fe9aca49220be844724bb3b75893239e4c2607855d",
+    "build-mpi": "ba87a15772327a2c45c6218d4dc69c136a08c5b44602443602bf2bbbe81084a6"
+  },
+  "native_libraries": {
+    "build-serial": "b4bca9ea5a5e4371d1bf63d941cf2e69becaf6a4ff99188b6cb0a539fe010e39",
+    "build-mpi": "3b4bd30f193af0f45d3d28987ca3945d96149bc14396e3b67c7d04dc9070a0dd"
+  },
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 4010346,
+    "sha256": "1cdc760abb1907764dca284405ae02e508153ecb094abedca3f3867647e2c6b7"
+  }
+}

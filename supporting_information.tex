@@ -3848,7 +3848,70 @@ It distinguishes the five physical-comparison collections from
 expected input or physical rejections. Archive-only replay verifies
 all 757 payload files and repeats the 52 physical comparisons
 without rerunning DFT. Automatic TQC graph transport
-is not included in the new directed-link distribution.
+was not included in that directed-link checkpoint; the next
+validation block addresses its separate operation and edge algebra.
+
+\subsection{Distributed little-group and compatibility arithmetic}
+The TQC implementation partitions Gaussian AO/spinor actions and
+first-factor rows of the sewing-product check over the complete
+property MPI environment. Directed compatibility restrictions are
+evaluated in bounded batches with at most one owned and one received
+edge per rank. Results are delivered in the original graph order.
+Checks account explicitly for zero-length links, idle ranks and
+optional antiunitary endpoint and line records. Algebra failures
+are propagated before payload delivery. The Gaussian metric and
+selected frames remain replicated, as do the character tables and
+atomic-signature integer lattice calculations.
+
+\pagebreak
+The 16-input little-group directory first passes all 135 checks
+in both the preceding serial and four-rank implementations.
+The new unitary-only He control uses the same two-site screw
+geometry and UZH basis as the existing scalar test, with time
+reversal disabled. Its five-point reciprocal loop includes a
+shifted closure and five zero-length self links. Five nonzero
+segments must be compatible, with no antiunitary line segments.
+The extended directory then passes all 139 checks in SSMP,
+three-rank PSMP and four-rank PSMP. The shared property/Wilson
+directory passes another 47 checks in SSMP and four-rank PSMP,
+giving 511 checks on the final implementation. Runs use two
+OpenMP threads and one BLAS thread; existing references and
+physical tolerances are unchanged.
+
+Comparison examines the entire ordered \texttt{.little\_group}
+records, including rotations, translations, factors, characters,
+corepresentations, branching matrices and exact integer
+certificates. Sixteen before/after files per build and all 17
+final files in each serial/three-rank and serial/four-rank
+comparison give 66 file comparisons, comprising 451,330 paired
+records. All integer and structural fields agree exactly.
+The largest floating-field difference is
+$2.49\times10^{-14}$ before/after and
+$2.14\times10^{-14}$ between final serial and parallel results,
+against a fixed $10^{-10}$ absolute comparison tolerance.
+
+A direct driver of the production graph routine tests valid
+edges, incompatible band counts and invalid factors on one,
+three and four ranks. All nine controls pass: incompatible
+counts remain a diagnostic, while an invalid second edge,
+owned by rank one in the parallel tests, triggers collective
+failure rather than an incomplete receive. Separate partition
+tests reject a corrupted nonroot product row and cover idle
+workers. The 530-Hall-setting algebra sweep also passes in the
+optimized build and with the changed mathematical kernel and
+test driver instrumented for bounds, floating-point and
+undefined-behavior checks. It includes 12,720 little-group
+cases, 6,360 projective character tables, 12,720 unitary/grey
+segments, 4,462 antiunitary line cases and 5,324
+corepresentation tables. These remain algebra tests, not
+calculations of materials in every space group.
+
+Inputs, outputs, method sources, checksums, compiler/formatting
+logs and archive-only comparison replay are retained in
+\nolinkurl{validation/development/tqc-transport/}.
+This block establishes local parallel consistency and collective
+error handling, not multi-node speedup or distributed sparse
+integer factorizations.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged

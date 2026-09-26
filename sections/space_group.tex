@@ -268,6 +268,17 @@ between sampled points, a trivial Bloch bundle, or an atomic-band
 decomposition. Automatic complete Brillouin-zone connectivity and
 standard crystallographic irrep labels remain separate work.
 
+The dense Gaussian action is evaluated once per operation across the
+complete property MPI environment; rows of the sewing-product check
+are partitioned in the same way. Directed segment restrictions are
+computed in bounded MPI batches, retaining at most one owned and one
+received edge per rank. Collective ownership and failure checks
+precede ordered delivery, including reciprocal-image phases and
+optional antiunitary endpoint data. This distributes arithmetic,
+not all storage: AO metrics, selected frames and small representation
+tables remain replicated. Character tables and the atomic-signature
+integer lattices described below also remain replicated.
+
 \subsection{Site-induced atomic band representations}
 The native induction kernel starts from a supplied fractional site $q$
 and constructs its orbit $q_j=t_jq$ modulo integer translations.

@@ -1,0 +1,34 @@
+{
+  "payload_files": 494,
+  "comparisons": [
+    {
+      "reference": "baseline-serial",
+      "candidate": "serial",
+      "files": 16,
+      "records": 112518,
+      "max_error": 2.3092638912203256e-14
+    },
+    {
+      "reference": "baseline-mpi",
+      "candidate": "mpi4",
+      "files": 16,
+      "records": 112518,
+      "max_error": 2.4868995751603507e-14
+    },
+    {
+      "reference": "serial",
+      "candidate": "mpi4",
+      "files": 17,
+      "records": 113147,
+      "max_error": 1.8207657603852567e-14
+    },
+    {
+      "reference": "serial",
+      "candidate": "mpi3",
+      "files": 17,
+      "records": 113147,
+      "max_error": 2.1316282072803006e-14
+    }
+  ],
+  "accepted": true
+}
