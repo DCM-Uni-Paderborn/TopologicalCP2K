@@ -1,0 +1,19 @@
+{
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 33862,
+    "sha256": "6232695895106587ba156fe8e95957e40e5b6a31a30f9df1c9d9edfd791c733a"
+  },
+  "cases": [
+    {
+      "report": "reports/flake4-dzvp-bridged-region-rejected.json",
+      "archive": "../bismuth-size-basis-validation/flake4-trim-dzvp300-spectrum.tar.gz",
+      "sha256": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3"
+    },
+    {
+      "report": "reports/flake4-dzvp-interior-point.json",
+      "archive": "../bismuth-size-basis-validation/flake4-trim-dzvp300-spectrum.tar.gz",
+      "sha256": "ba369e2a9d6ba3171a6b00b4d1696dc606d200a5068987c3fe4613a4b43efba3"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "native_scf_rerun": false,
+  "results": [
+    {
+      "report": "reports/flake4-dzvp-bridged-region-rejected.json",
+      "resolved": false,
+      "index": null,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "report": "reports/flake4-dzvp-interior-point.json",
+      "resolved": true,
+      "index": 0,
+      "maximum_absolute_difference": 0.0
+    }
+  ],
+  "verified_members": 31
+}

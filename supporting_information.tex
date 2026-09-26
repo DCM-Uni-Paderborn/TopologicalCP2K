@@ -3539,6 +3539,19 @@ or malformed inputs. Methods, reports and checksums are retained in
 the unchanged full-snapshot archives above. These are numerical
 Weyl bounds with a fixed margin, not interval-arithmetic proofs.
 
+A deliberate counterexample widens the 30-atom box to
+$0.0003\leq\kappa\leq0.0025$ hartree/bohr, retaining the same
+energy and position widths. All 16 corners and its midpoint have
+$\nu=1$, yet the neutral-centroid point at $\kappa=0.0008$
+inside the box has $\nu=0$ and gap
+$8.70494\times10^{-4}$ hartree. These different gapped indices
+prove that the wider box cannot have a uniform index. The cover
+correctly remains unresolved, with eight pending leaves after
+63 evaluations; no common index is reported. Thus neither corner
+sampling nor corner-plus-center sampling replaces a gap cover.
+The two reports and their replay are retained separately under
+\path{validation/development/bismuth-region-counterexample/}.
+
 \section{Independent Wilson and TRIM Eigenframe Symmetry}
 \label{sec:si-property-symmetry}
 This validation concerns an independent post-SCF property point set,
@@ -3951,7 +3964,6 @@ are propagated before payload delivery. The Gaussian metric and
 selected frames remain replicated, as do the character tables and
 atomic-signature integer lattice calculations.
 
-\pagebreak
 The 16-input little-group directory first passes all 135 checks
 in both the preceding serial and four-rank implementations.
 The new unitary-only He control uses the same two-site screw

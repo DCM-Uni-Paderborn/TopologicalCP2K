@@ -1,0 +1,18 @@
+{
+  "archive_sha256": "6232695895106587ba156fe8e95957e40e5b6a31a30f9df1c9d9edfd791c733a",
+  "same_frozen_inputs": true,
+  "witness_inside_box": true,
+  "corner_and_center_indices": [
+    1
+  ],
+  "interior_index": 0,
+  "interior_parameters": [
+    -0.15271849371855145,
+    0.0008,
+    39.35354671734352,
+    30.70770320451926
+  ],
+  "interior_gap_hartree": 0.0008704938737075379,
+  "unresolved_leaves": 8,
+  "uniform_index_disproved": true
+}
