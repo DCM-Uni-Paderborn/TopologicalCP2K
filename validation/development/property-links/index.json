@@ -1,0 +1,32 @@
+{
+  "source_commit": "7df186991fcbef3025b464b79f8a5ef5713c3363",
+  "comparisons": 52,
+  "native_cases": 71,
+  "regtest_checks_per_build": 47,
+  "shared_operator_checks_per_build": 16,
+  "legacy_kpoint_checks_per_build": 26,
+  "wannier90_checks_per_build": 48,
+  "spglib_kpoint_wannier90_checks_per_build": 41,
+  "validation_collections": [
+    "validation",
+    "gapw",
+    "uneven",
+    "neighbors",
+    "fallback"
+  ],
+  "prefix": "property-links-final",
+  "shared_libraries": {
+    "build-serial": {
+      "build-serial/src/libcp2k.2026.2.dylib": "46c6a4d6d8325dda1b727e2d5f9c115b9a574bef2906e9d63f1af4127e0195bd"
+    },
+    "build-mpi": {
+      "build-mpi/src/libcp2k.2026.2.dylib": "f4c622b29be5182406a01b29671098dd6e1171772050feba3a2f4b5ea6363961"
+    }
+  },
+  "scope": "Scalar target checks, SOC orbits and directed NNKP/WILSON links distributed; TQC graph transport separate.",
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 10701977,
+    "sha256": "64f5383a3889d5393ae5b0c43fa9814754ad34a33c335372abef29e8a82e9dfe"
+  }
+}

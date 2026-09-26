@@ -3765,9 +3765,90 @@ The retained evidence in
 contains the native inputs and outputs, final sources, build logs,
 executable and shared-library checksums, and comparison methods.
 Archive-only replay verifies all 541 payload files and passes the
-36 physical comparisons without rerunning DFT. Directed-link
-construction still uses the complete MPI environment; its independent
-distribution and multi-node scaling are not established by these tests.
+36 physical comparisons without rerunning DFT. At that checkpoint,
+directed-link construction still used the complete MPI environment;
+its independent distribution and multi-node scaling were not
+established by those tests.
+
+\subsection{Directed connections in bounded MPI batches}
+The directed NNKP/Wilson construction now uses the property MPI
+groups as well. Group-local cosine and sine snapshots retain
+ordered atom pairs, rather than mirroring non-Hermitian cross-k
+blocks. Each active group receives the source and destination
+scalar frames, forms one connection and, when needed, projects it
+into the post-SCF SOC spinors. Only the selected-band connections
+of the current batch are collected. Their delivery follows the
+original source/neighbor order, including reciprocal-boundary
+shifts. Cached endpoints avoid repeating an unchanged MO transfer;
+idle groups still participate in all required collective transfers.
+Exactly one owner is required for every delivered edge.
+
+Two additional GAPW graph controls use the preceding 14-orbital
+He basis. Five points along the first reciprocal direction,
+ordered as $0,1/4,1/8,1/2,3/4$, reduce to four representatives.
+The first graph is a forward cycle with a reciprocal-boundary
+closure. The second has three neighbors per point: the forward
+cycle, its reverse and a self link shifted by one reciprocal
+vector in the second direction. Its 15 directed connections are
+checked individually; Wilson analysis is disabled because this
+neighbor graph is not a single ordered loop. Each backend uses
+one two-rank group, four one-rank groups and two two-rank groups.
+Both graph lengths leave an incomplete last batch with four groups.
+All six multiple-neighbor comparisons pass, with a maximal physical
+subspace residual of $4.50\times10^{-15}$ and directed-link
+covariance error of $1.32\times10^{-14}$.
+
+A separate bounded-workspace control uses four He atoms on FCC
+positions, retaining all 56 scalar orbitals. Each backend is run
+on four one-rank groups with a 1024 MiB and a 1 MiB work bound.
+The smaller bound forces only the directed-link stage back to
+collective construction; scalar H/S validation still reports four
+groups. Both normal and fallback paths pass comparison with an
+independent full-diagonalization reference. Across these four
+comparisons, the largest complete-spectrum difference is
+$1.60\times10^{-14}$ hartree, the largest physical subspace
+residual $5.14\times10^{-15}$, and the largest directed-link
+covariance error $1.50\times10^{-14}$. Wilson centers agree to
+$5.56\times10^{-16}$ in reduced units. The fallback therefore
+changes distribution without relaxing the physical checks or
+replacing the requested graph.
+
+The complete comparison matrix repeats He, Ne/SOC, stanene/TRIM,
+non-TRIM stanene loops and the original four-point GAPW loop with
+the final implementation. Together with the additional directed
+graphs and fallback controls, all 52 physical comparisons pass.
+The largest complete-spectrum difference is
+$6.06\times10^{-13}$ hartree, the largest physical subspace
+residual $2.06\times10^{-13}$, and the largest directed-link
+covariance error $2.11\times10^{-13}$. Wilson centers agree to
+$4.70\times10^{-14}$ in reduced units. Both K290 and SPGLIB
+use the requested scalar, SOC and link groups where applicable, without an unexpected
+fallback. These are fixed-resolution parallel and gauge-consistency
+tests, not new material-convergence or multi-node performance results.
+
+Including the invalid group requests, degenerate-window rejections
+and asymmetric frozen-potential controls, the matrix contains
+71 native cases. The 21-input property directory passes all
+47 checks in both SSMP and four-rank PSMP. The existing
+\texttt{QS/regtest-kp-3} and \texttt{QS/regtest-kp-1} suites
+pass another 16 and 26 checks per build, respectively.
+The actual Wannier90-export suite, \texttt{QS/regtest-kp-6},
+passes all 48 checks, including SCF-MO reuse, Bloch phases and
+GENERAL/MACDONALD meshes. The SPGLIB k-point/export suite
+\texttt{QS/regtest-kp-1-spglib} passes another 41 checks.
+This gives 178 successful regression checks per build, or 356
+in total, with two OpenMP threads and one BLAS thread.
+Existing reference values and physical tolerances are unchanged.
+
+The retained evidence in
+\nolinkurl{validation/development/property-links/}
+contains native results, source snapshots, comparison programs,
+build and formatting logs, and executable/shared-library checksums.
+It distinguishes the five physical-comparison collections from
+expected input or physical rejections. Archive-only replay verifies
+all 757 payload files and repeats the 52 physical comparisons
+without rerunning DFT. Automatic TQC graph transport
+is not included in the new directed-link distribution.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged

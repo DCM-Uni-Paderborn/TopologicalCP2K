@@ -238,9 +238,26 @@ operator is included before conjugating mirrored Fourier blocks.
 Only one complete representative spinor frame is retained per group
 at a time. If a bounded operator snapshot is unavailable, an explicitly
 reported collective assembly path preserves the same orbit reduction
-and physical checks, without full-mesh rediagonalization. Directed
-links still use the complete MPI environment; multi-node scaling
-is not established by the local tests.
+and physical checks, without full-mesh rediagonalization.
+
+Directed NNKP/Wilson connections are evaluated in bounded batches
+over the same groups. Each group receives the two scalar eigenframes
+for one edge, constructs the ordered cross-k AO operator from cosine
+and sine snapshots, and projects it into the selected scalar or SOC
+band space. This operator is not Hermitian: ordered atom pairs and
+lattice images are retained without adding conjugate mirror blocks.
+Repeated source or destination frames are reused within a group.
+Only one selected-band connection per active group is collected before
+processing resumes in the original graph order. Thus reciprocal
+boundary phases and Wilson-product ordering remain unchanged, and
+the retained link batch does not grow with graph size. Idle groups
+join the same transfer sequence; ownership checks require exactly
+one contribution for each edge. A bounded-workspace or snapshot
+failure is reported and uses the existing collective construction.
+This is parallel evaluation of the complete link graph, not symmetry
+reduction of its edges. Automatic TQC compatibility graphs use a
+separate representation-transport path. Multi-node scaling is not
+established by the local tests.
 
 Tests compare the physical subspaces and the link law
 $M^{\rm rec}_{ij}=G_i^\dagger M^{\rm full}_{ij}G_j$, where

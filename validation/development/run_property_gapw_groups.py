@@ -15,6 +15,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("root", type=Path)
     parser.add_argument("destination", type=Path)
+    patterns = parser.add_mutually_exclusive_group()
+    patterns.add_argument("--uneven-links", action="store_true",
+                        help="Five edges on four groups, with reversed and unequal link vectors")
+    patterns.add_argument("--multiple-neighbors", action="store_true",
+                          help="Forward, reverse and reciprocal-image self-links at every point")
+    parser.add_argument("--require-link-groups", action="store_true")
     args = parser.parse_args()
     root, destination = args.root.resolve(), args.destination.resolve()
     destination.mkdir(parents=True, exist_ok=False)
@@ -22,6 +28,10 @@ def main():
     libraries, binary_hash = native_libraries(root, "build-mpi"), digest(binary)
     source = root / "tests/QS/regtest-property-wilson/helium-gapw-common.inc"
     nnkp = root / "tests/QS/regtest-topology/helium.nnkp"
+    if args.uneven_links:
+        nnkp = root / "tests/QS/regtest-property-wilson/helium-links.nnkp"
+    if args.multiple_neighbors:
+        nnkp = root / "tests/QS/regtest-property-wilson/helium-neighbors.nnkp"
     comparator = Path(__file__).with_name("compare_property_wilson.py")
     inputs = [source, nnkp, root / "data/BASIS_MOLOPT_UZH", root / "data/POTENTIAL_UZH"]
     source_hashes = {str(p): digest(p) for p in inputs}
@@ -29,8 +39,9 @@ def main():
                        OMP_NUM_THREADS="2", OMP_STACKSIZE="64M",
                        DYLD_LIBRARY_PATH=str(root / "build-serial/openblas-thread-safe/lib"))
     cases, comparisons = [], []
+    layouts = ((2, 0), (4, 1), (4, 2)) if args.uneven_links or args.multiple_neighbors else ((2, 1), (4, 2))
     runs = [("full", 2, 0)] + [(backend, ranks, size) for backend in ("K290", "SPGLIB")
-                             for ranks, size in ((2, 1), (4, 2))]
+                             for ranks, size in layouts]
     for backend, ranks, size in runs:
         work = destination / f"{backend.lower()}-r{ranks}-g{size}"
         work.mkdir()
@@ -38,6 +49,8 @@ def main():
         text = text.replace("${PROPERTY_SYMMETRY}", "F" if backend == "full" else "T")
         text = text.replace("${PROPERTY_BACKEND}", "K290" if backend == "full" else backend)
         text = text.replace("${PROPERTY_GROUP_SIZE}", str(size))
+        text = text.replace("${PROPERTY_NNKP}", nnkp.name)
+        text = text.replace("${PROPERTY_WILSON}", "F" if args.multiple_neighbors else "T")
         text = text.replace("../regtest-topology/helium.nnkp", nnkp.name)
         if "${" in text:
             raise ValueError("Unresolved variable")
@@ -50,11 +63,16 @@ def main():
         output = (work / "output.out").read_text()
         accepted = result.returncode == 0 and "PROGRAM ENDED" in output and "[ABORT]" not in output
         groups = re.findall(r"Property scalar validation MPI groups:\s*(\d+)\s+ranks per group:\s*(\d+)", output)
+        link_groups = re.findall(r"Property directed-link MPI groups:\s*(\d+)\s+ranks per group:\s*(\d+)", output)
         if backend != "full":
-            accepted &= groups == [(str(ranks // size), str(size))]
+            group_size = ranks if size == 0 else size
+            accepted &= groups == [(str(ranks // group_size), str(group_size))]
             accepted &= "Scalar H/S snapshots unavailable" not in output
+            if args.require_link_groups:
+                accepted &= link_groups == groups and "Directed-link snapshots unavailable" not in output
         record = dict(name=work.name, command=command, returncode=result.returncode, accepted=accepted,
-                      validation_groups=groups, files={p.name: digest(p) for p in work.iterdir()})
+                      validation_groups=groups, link_groups=link_groups,
+                      files={p.name: digest(p) for p in work.iterdir()})
         cases.append(record)
         (work / "run.json").write_text(json.dumps(record, indent=2) + "\n")
         print(work.name, accepted, flush=True)
@@ -71,9 +89,11 @@ def main():
         raise ValueError("Native implementation changed during validation")
     if any(digest(Path(p)) != value for p, value in source_hashes.items()):
         raise ValueError("Input source changed during validation")
-    accepted = all(c["accepted"] for c in comparisons) and len(comparisons) == 4
+    accepted = all(c["accepted"] for c in comparisons) and len(comparisons) == 2 * len(layouts)
     report = dict(cases=cases, comparisons=comparisons, accepted=accepted, sources=source_hashes,
                   binary_sha256=binary_hash, library_sha256=libraries,
+                  uneven_links=args.uneven_links, require_link_groups=args.require_link_groups,
+                  multiple_neighbors=args.multiple_neighbors,
                   methods={str(Path(__file__)): digest(Path(__file__)), str(comparator): digest(comparator)})
     (destination / "result.json").write_text(json.dumps(report, indent=2) + "\n")
     if not accepted:

@@ -20,6 +20,8 @@ def main():
                         help="Require SOC assembly to use the same groups as scalar representatives")
     parser.add_argument("--require-scalar-validation-groups", action="store_true",
                         help="Require target H/S frame checks to use the representative groups")
+    parser.add_argument("--require-link-groups", action="store_true",
+                        help="Require directed links to use the representative groups")
     parser.add_argument("--include-stanene-loop", action="store_true",
                         help="Also compare displaced multiatom SOC Wilson loops away from TRIM")
     args = parser.parse_args()
@@ -75,6 +77,7 @@ def main():
         diagonalizations = re.findall(r"Property scalar diagonalizations:\s*(\d+)\s*/\s*(\d+)", output)
         soc_groups = re.findall(r"Property SOC MPI groups:\s*(\d+)\s+ranks per group:\s*(\d+)", output)
         validation_groups = re.findall(r"Property scalar validation MPI groups:\s*(\d+)\s+ranks per group:\s*(\d+)", output)
+        link_groups = re.findall(r"Property directed-link MPI groups:\s*(\d+)\s+ranks per group:\s*(\d+)", output)
         if not diagnostic and backend != "full":
             accepted &= bool(groups) and len(groups) == len(diagonalizations)
             for (count, size), (representatives, _) in zip(groups, diagonalizations):
@@ -88,9 +91,11 @@ def main():
                 accepted &= soc_groups == groups and "SOC snapshots unavailable" not in output
             if args.require_scalar_validation_groups:
                 accepted &= validation_groups == groups and "Scalar H/S snapshots unavailable" not in output
+            if args.require_link_groups and material != "stanene":
+                accepted &= link_groups == groups and "Directed-link snapshots unavailable" not in output
         record = dict(name=name, command=command, returncode=result.returncode, accepted=accepted,
                       elapsed=time.monotonic() - start, expected_diagnostic=diagnostic,
-                      groups=groups, soc_groups=soc_groups, validation_groups=validation_groups,
+                      groups=groups, soc_groups=soc_groups, validation_groups=validation_groups, link_groups=link_groups,
                       diagonalizations=diagonalizations,
                       files={p.name: digest(p) for p in work.iterdir() if p.is_file()})
         (work / "run.json").write_text(json.dumps(record, indent=2) + "\n")
@@ -129,6 +134,7 @@ def main():
     report = dict(cases=records, comparisons=comparisons, accepted=True, sources=sources,
                   require_soc_groups=args.require_soc_groups,
                   require_scalar_validation_groups=args.require_scalar_validation_groups,
+                  require_link_groups=args.require_link_groups,
                   include_stanene_loop=args.include_stanene_loop,
                   binary_sha256=binary_hash, library_sha256=libraries,
                   methods={str(Path(__file__)): digest(Path(__file__)), str(comparator): digest(comparator)},
