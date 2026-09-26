@@ -34,14 +34,28 @@ def run(command, log):
         raise RuntimeError(log.read_text())
 
 
-def replay(bundle, scratch):
+def reference_archive(bundles, label):
+    if not label or Path(label).name != label or label in (".", ".."):
+        raise ValueError("Invalid reference case name")
+    matches = []
+    for bundle in bundles:
+        index = json.loads((bundle / "index.json").read_text())
+        if label in index["cases"]:
+            entry, = [item for item in index["archives"] if item["file"] == label + ".tar.gz"]
+            matches.append((bundle / entry["file"], entry["sha256"]))
+    if len(matches) != 1:
+        raise ValueError("Reference case must occur in exactly one declared bundle: " + label)
+    return matches[0]
+
+
+def replay(bundle, scratch, reference_bundles=()):
     index = json.loads((bundle / "index.json").read_text())
     manifests = {}
     for entry in index["archives"]:
         if Path(entry["file"]).name != entry["file"]:
             raise ValueError("Invalid archive filename")
         manifests[entry["file"]] = verify(bundle / entry["file"], entry["sha256"])
-    comparisons, scans = [], []
+    comparisons, scans, controls = [], [], []
     scratch.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="bismuth-material-replay-", dir=scratch) as temporary:
         root = Path(temporary)
@@ -96,10 +110,39 @@ def replay(bundle, scratch):
                 scans.append(dict(report=report_file.name, queries=len(reference["queries"]),
                                   maximum_report_difference=error))
                 print(json.dumps(scans[-1]), flush=True)
-    return dict(accepted=True, native_scf_rerun=False, ao_moments_reintegrated=True,
+        for report_file in sorted((methods / "additional").glob("*.json")):
+            expected = json.loads(report_file.read_text())
+            if expected.get("comparison_kind") != "controlled-electronic-temperature":
+                continue
+            if len(expected["cases"]) != 2:
+                raise ValueError("A controlled comparison requires two cases")
+            for label in expected["cases"]:
+                if not label or Path(label).name != label or label in (".", ".."):
+                    raise ValueError("Invalid comparison case name")
+                if not (root / label).exists():
+                    archive, checksum = reference_archive(reference_bundles, label)
+                    manifests[str(archive)] = verify(archive, checksum)
+                    extract(archive, root / label)
+            script = methods / "scripts/compare_bismuth_basis.py"
+            if digest(script) != expected["methods"]["comparison"]:
+                raise ValueError("Changed controlled-comparison method")
+            output = root / ("replayed-" + report_file.name)
+            command = [sys.executable, str(script), str(methods),
+                       *(str(root / label) for label in expected["cases"]),
+                       str(output), "--control", "temperature"]
+            run(command, output.with_suffix(".log"))
+            controls.append(dict(report=report_file.name,
+                maximum_report_difference=compare(expected, json.loads(output.read_text()))))
+            print(json.dumps(controls[-1]), flush=True)
+    result = dict(accepted=True, native_scf_rerun=False, ao_moments_reintegrated=True,
                 verified_members=sum(len(m["files"]) for m in manifests.values()),
                 archive_sha256={entry["file"]: entry["sha256"] for entry in index["archives"]},
                 analysis=comparisons, scans=scans, replay_method_sha256=digest(Path(__file__)))
+    if controls:
+        result.update(temperature_comparisons=controls,
+                      reference_archive_sha256={name: digest(Path(name)) for name in manifests
+                                                if Path(name).is_absolute()})
+    return result
 
 
 def main():
@@ -107,10 +150,13 @@ def main():
     parser.add_argument("bundle", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--scratch", type=Path, required=True)
+    parser.add_argument("--reference-bundles", nargs="*", type=Path, default=[],
+                        help="Existing retained bundles used by a controlled temperature comparison")
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
-    result = replay(args.bundle.resolve(), args.scratch.resolve())
+    result = replay(args.bundle.resolve(), args.scratch.resolve(),
+                    [path.resolve() for path in args.reference_bundles])
     with args.output.open("x") as stream:
         json.dump(result, stream, indent=2, allow_nan=False)
         stream.write("\n")

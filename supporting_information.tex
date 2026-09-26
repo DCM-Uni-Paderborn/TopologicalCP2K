@@ -3518,6 +3518,93 @@ contractions. All moments, independent gaps and indices, native
 comparisons, frontier weights and both surveys reproduce without
 numerical change. No SCF is rerun in this reproduction check.
 
+\subsection{Electronic-temperature control in a common AO metric}
+Electronic smearing changes the scalar SCF potential, not just
+occupations in a fixed SOC spectrum. The inputs differ only in
+\texttt{ELECTRONIC\_TEMPERATURE}, with geometry, basis, grids,
+SCF threshold, pseudopotential and runtime fixed. Restart guesses
+are retained in the provenance. This is neither a finite-temperature
+invariant nor an ionic-disorder test.
+
+Let $S_s=\operatorname{diag}(S,S)$ and reconstruct each covariant
+Hamiltonian from its complete exported SOC frame,
+$H_T=S_s C_T\operatorname{diag}(\epsilon_T)C_T^\dagger S_s$.
+In addition to the absolute operator change, compare
+\begin{equation}
+ D_{12}=S_s^{-1/2}\left[H_{T_2}-H_{T_1}
+ -(E_{0,T_2}-E_{0,T_1})S_s\right]S_s^{-1/2},
+\end{equation}
+where $E_{0,T}$ is each spectrum's neutral midgap. Subtracting
+the energy shift times $S_s$, not the AO identity, removes a
+change of energy zero in the physical metric. The norm
+$\|D_{12}\|$ and physical principal angles compare complete
+occupied and frontier subspaces without choosing eigenvector
+phases or degenerate frames. Pure-shift and complex-AO-covariance
+controls pass. A same-export 48-atom control gives zero Hamiltonian
+change and principal-angle sines below $8.2\times10^{-8}$,
+the roundoff effect discussed above.
+
+The 100 K calculation starts from the converged 300 K scalar
+wavefunction and reaches $10^{-9}$ SCF convergence in 172 steps
+without warnings. SCF and full SOC export take 4609.68 s;
+4487 one-second samples give a process-tree RSS maximum of
+20.84 GiB. This is not an atomic-guess or factorization-only
+benchmark. The neutral SOC gap is $0.0013527905230$ hartree
+(36.8113 meV), 2.911\% below the 300 K result, but now
+$4.2718\,k_BT$. The frontier boundary weights become 65.86\%
+and 64.18\% for the occupied and empty Kramers doublets.
+
+The neutral midpoint shifts by $-1.12482\times10^{-5}$ hartree.
+The absolute physical Hamiltonian change has norm
+$8.76906\times10^{-4}$ hartree; after midpoint alignment,
+$\|D_{12}\|=8.65658\times10^{-4}$ hartree. The occupied
+projector distance is 0.0518126 and the mean retained occupied
+weight is 99.9955\%. The occupied and empty frontier projector
+distances are 0.0508407 and 0.0471875, respectively. Thus this is
+a resolved change of the SCF solution, not a phase-choice artifact.
+At each temperature's own neutral-gap energies, all 45 survey
+indices and all 20 centroid-scale indices agree. Agreement of
+these sampled integers is not by itself a gap bound between
+queries or a certificate of zero-temperature convergence.
+
+The three resolved 300 K boxes are therefore checked anew at
+100 K, retaining the same scale and position ranges but using
+the new neutral midpoint and relative energy half-width of 2\%.
+The joint bound of Sec.~\ref{sec:si-bismuth-regions} again resolves
+$[0.00025,0.0003]$, $[0.0015,0.002]$ and $[0.003,0.0035]$
+hartree/bohr with indices $(1,1,0)$. Their minimum gap lower
+bounds are $1.43645\times10^{-6}$, $5.02532\times10^{-5}$ and
+$7.67927\times10^{-4}$ hartree, respectively. The subdivisions
+use 13, 13 and five midpoint evaluations and cover seven, seven
+and three leaf boxes, with no unresolved leaves. All 51 independent
+full-spectrum anchor/corner checks agree. The Hamiltonian-change
+norm exceeds even the largest of the previous minimum box bounds;
+the old bounds alone would not justify this transfer. These are
+separate positive tests at two temperatures, not a bound along
+the entire intervening temperature path.
+
+A six-step native restart checks the original 100 K midpoint
+at the centroid and scales 0.0003, 0.0015 and 0.003 hartree/bohr.
+Independent full-AO reconstruction of its fresh spectrum gives gaps
+$1.7242936451\times10^{-4}$, $3.1851670764\times10^{-3}$ and
+$3.5885935729\times10^{-3}$ hartree, with indices $(1,1,0)$.
+All three lie inside the native MUMPS brackets, whose widths
+remain below $9.01\times10^{-11}$ hartree, at unchanged comparison
+tolerance $2\times10^{-8}$ hartree. The largest Tacho Pfaffian
+solve residual is $1.51\times10^{-13}$ with no workspace retries.
+The native run takes 553.13 s including SCF and export; the separate
+dense analysis takes 12.45 s, a different workload. The 539 successful
+RSS samples have maximum 18.95 GiB. The restart's electronic gap
+differs from the original spectrum by $2.74\times10^{-12}$ hartree.
+
+The development-validation directory retains the complete runs,
+controlled subspace comparison, unchanged-export control, two
+surveys and 37 method tests. The material bundle is
+\path{bismuth-temperature48-validation/}.
+
+The joint-box bundle is \path{bismuth-temperature-region-validation/}.
+The 300 K reference remains in its original archive.
+
 \subsection{Joint energy, position and scale neighborhoods}
 \label{sec:si-bismuth-regions}
 The preceding scale intervals keep energy and position fixed.
@@ -4107,6 +4194,7 @@ This block establishes local parallel consistency and collective
 error handling, not multi-node speedup or distributed sparse
 integer factorizations.
 
+\enlargethispage{2\baselineskip}
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

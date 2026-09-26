@@ -1,0 +1,23 @@
+{
+  "cases": [
+    "flake5-trim-dzvp100-spectrum",
+    "flake5-trim-dzvp100-native"
+  ],
+  "archives": [
+    {
+      "file": "flake5-trim-dzvp100-spectrum.tar.gz",
+      "bytes": 77485362,
+      "sha256": "eb62f9911c8d4fa701209a223d418e7fa1a0f92c440c3e79bf17b51ad9d7774a"
+    },
+    {
+      "file": "flake5-trim-dzvp100-native.tar.gz",
+      "bytes": 71991588,
+      "sha256": "076248dadc7fa072c715a3e49e1a52ff8558c9a19948646bfbae3e890967d9ab"
+    },
+    {
+      "file": "methods-results.tar.gz",
+      "bytes": 1058413,
+      "sha256": "10d1f161aa0e62602ea183b13597bf1d3b845c26c761bf9009ca5b395cc5afef"
+    }
+  ]
+}

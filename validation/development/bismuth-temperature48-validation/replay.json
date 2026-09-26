@@ -1,0 +1,51 @@
+{
+  "accepted": true,
+  "native_scf_rerun": false,
+  "ao_moments_reintegrated": true,
+  "verified_members": 227,
+  "archive_sha256": {
+    "flake5-trim-dzvp100-spectrum.tar.gz": "eb62f9911c8d4fa701209a223d418e7fa1a0f92c440c3e79bf17b51ad9d7774a",
+    "flake5-trim-dzvp100-native.tar.gz": "076248dadc7fa072c715a3e49e1a52ff8558c9a19948646bfbae3e890967d9ab",
+    "methods-results.tar.gz": "10d1f161aa0e62602ea183b13597bf1d3b845c26c761bf9009ca5b395cc5afef"
+  },
+  "analysis": [
+    {
+      "case": "flake5-trim-dzvp100-spectrum",
+      "reintegrated_moment_error": 0.0,
+      "maximum_report_difference": 0.0,
+      "native_queries": 0
+    },
+    {
+      "case": "flake5-trim-dzvp100-native",
+      "reintegrated_moment_error": 0.0,
+      "maximum_report_difference": 0.0,
+      "native_queries": 3
+    }
+  ],
+  "scans": [
+    {
+      "report": "flake5-trim-dzvp100-frontier.json",
+      "queries": 45,
+      "maximum_report_difference": 0.0
+    },
+    {
+      "report": "flake5-trim-dzvp100-scale.json",
+      "queries": 20,
+      "maximum_report_difference": 0.0
+    }
+  ],
+  "replay_method_sha256": "764cdba4624ee3d98526c48d3c5abb972bfc548f8c4b4e5b7e7df17f8641da97",
+  "temperature_comparisons": [
+    {
+      "report": "temperature-comparison.json",
+      "maximum_report_difference": 0.0
+    },
+    {
+      "report": "temperature-self-reference.json",
+      "maximum_report_difference": 0.0
+    }
+  ],
+  "reference_archive_sha256": {
+    "/Users/tkuehne/paper-repositories/TopologicalCP2K/validation/development/bismuth-flake48-validation/flake5-trim-dzvp300-one-rank-spectrum.tar.gz": "0b981a17abfab0bd4bd60ae64bac11aa164c3c8bd9ff8c04e045e362bf2d8712"
+  }
+}

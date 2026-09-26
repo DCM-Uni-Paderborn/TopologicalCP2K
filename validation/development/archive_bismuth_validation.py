@@ -103,6 +103,9 @@ def main():
                "diagnose_bismuth_operators.py", "verify_soc_print_export.py",
                "scan_bismuth_neutral_window.py", "replay_bismuth_neutral_window.py",
                "check_bismuth_window_pfaffians.py", "certify_bismuth_scale_window.py",
+               "compare_bismuth_basis.py", "test_bismuth_basis.py",
+               "replay_bismuth_material.py", "archive_bismuth_regions.py",
+               "check_bismuth_region.py", "localizer_region.py", "test_localizer_region.py",
                "archive_bismuth_validation.py", "archive_stanene_convergence.py",
                "archive_stanene_controls.py", "replay_stanene_controls.py", "run_stanene_controls.py")}
     for name in ("data/BASIS_MOLOPT_UZH", "data/GTH_SOC_POTENTIALS", "build-mpi/CMakeCache.txt",

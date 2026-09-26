@@ -243,6 +243,13 @@ in the larger DZVP patch. Numerically bounded scale intervals can have
 opposite indices at different sizes; a finer scan also finds a nontrivial
 region missed by the coarse scale grid. All these differences are retained
 as convergence evidence, not replaced by fitted reference values.
+The `bismuth-temperature48-validation/` evidence adds a controlled 300 to
+100 K comparison of the 48-atom patch. Its gap decreases by 2.91%, while
+the physical occupied-subspace projector distance is 0.05181. Both sampled
+index surveys agree; three joint parameter boxes are independently rechecked
+at 100 K in `bismuth-temperature-region-validation/`. Three native sparse
+queries match complete-AO references without changing comparison tolerances.
+These endpoint checks do not establish the zero-temperature limit.
 The source tree still has no full general EBR catalogue. Hall response,
 three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.

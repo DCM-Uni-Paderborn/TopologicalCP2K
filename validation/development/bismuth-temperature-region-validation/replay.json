@@ -1,0 +1,25 @@
+{
+  "accepted": true,
+  "native_scf_rerun": false,
+  "results": [
+    {
+      "report": "reports/low-scale.json",
+      "resolved": true,
+      "index": 1,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "report": "reports/middle-scale.json",
+      "resolved": true,
+      "index": 1,
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "report": "reports/high-scale.json",
+      "resolved": true,
+      "index": 0,
+      "maximum_absolute_difference": 0.0
+    }
+  ],
+  "verified_members": 34
+}

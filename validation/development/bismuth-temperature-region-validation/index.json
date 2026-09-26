@@ -1,0 +1,24 @@
+{
+  "archive": {
+    "file": "methods-results.tar.gz",
+    "bytes": 34005,
+    "sha256": "67e85fbc1884581a1045f34aa66862d798ec9b150bba6b34ae472a8e72aeacc8"
+  },
+  "cases": [
+    {
+      "report": "reports/low-scale.json",
+      "archive": "../bismuth-temperature48-validation/flake5-trim-dzvp100-spectrum.tar.gz",
+      "sha256": "eb62f9911c8d4fa701209a223d418e7fa1a0f92c440c3e79bf17b51ad9d7774a"
+    },
+    {
+      "report": "reports/middle-scale.json",
+      "archive": "../bismuth-temperature48-validation/flake5-trim-dzvp100-spectrum.tar.gz",
+      "sha256": "eb62f9911c8d4fa701209a223d418e7fa1a0f92c440c3e79bf17b51ad9d7774a"
+    },
+    {
+      "report": "reports/high-scale.json",
+      "archive": "../bismuth-temperature48-validation/flake5-trim-dzvp100-spectrum.tar.gz",
+      "sha256": "eb62f9911c8d4fa701209a223d418e7fa1a0f92c440c3e79bf17b51ad9d7774a"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-"""Physical cross-basis comparisons of complete finite SOC exports.
+"""Controlled basis or temperature comparisons of complete finite SOC exports.
 
 These diagnostics measure basis sensitivity, not agreement with a reference
 material. In particular, the two SCF Hamiltonians need not coincide.
@@ -13,7 +13,7 @@ import sys
 from types import SimpleNamespace
 
 import numpy as np
-from scipy.linalg import block_diag, eigh, solve, svdvals
+from scipy.linalg import block_diag, eigh, eigvalsh, solve, svdvals
 
 import analyze_bismuth_flakes as analysis
 
@@ -72,6 +72,63 @@ def subspace_overlap(left, right, sl, sr, cross):
         mean_retained_right_weight=float(np.sum(squared) / ranks[1]))
 
 
+def controlled_options(runs, control):
+    """Permit only the selected physical parameter and different restart guesses."""
+    if control not in ("basis", "temperature"):
+        raise ValueError("Unknown comparison control")
+    keys = ["source_commit", "executable_sha256", "library_sha256", "sources", "runtime"]
+    if control == "temperature":
+        keys.append("runner_sha256")
+    for key in keys:
+        if runs[0]["provenance"][key] != runs[1]["provenance"][key]:
+            raise ValueError("Uncontrolled change in native provenance: " + key)
+    ignored = {"root", "output", "restart", control}
+    for key in set(runs[0]["options"]) | set(runs[1]["options"]):
+        if key not in ignored and runs[0]["options"].get(key) != runs[1]["options"].get(key):
+            raise ValueError("Uncontrolled change in calculation options: " + key)
+
+
+def temperature_inputs(texts, temperatures):
+    """Audit the actual generated inputs, not only their command-line options."""
+    normalized = []
+    for text, expected in zip(texts, temperatures):
+        lines, count = [], 0
+        for line in text.splitlines():
+            tokens = line.split()
+            if tokens and tokens[0].upper() == "ELECTRONIC_TEMPERATURE":
+                if len(tokens) != 2 or float(tokens[1]) != expected:
+                    raise ValueError("Input temperature disagrees with run options")
+                count += 1
+                lines.append("ELECTRONIC_TEMPERATURE <controlled>")
+            else:
+                lines.append(line)
+        if count != 1:
+            raise ValueError("Exactly one electronic temperature is required")
+        normalized.append(lines)
+    if len(normalized) != 2 or normalized[0] != normalized[1]:
+        raise ValueError("Inputs differ beyond electronic temperature")
+
+
+def centered_hamiltonian_change(left, right, metric, midpoints):
+    """Measure the physical operator difference after aligning neutral midgaps.
+
+    AO matrices are covariant: subtracting c*S, not c*I, removes an energy
+    shift. Congruence with S**(-1/2) gives the physical operator norm.
+    """
+    if (left.shape != metric.shape or right.shape != metric.shape or
+            np.shape(midpoints) != (2,) or
+            not all(np.isfinite(a).all() for a in (left, right, midpoints)) or
+            max(np.max(abs(a-a.conj().T)) for a in (left, right)) > 1e-9):
+        raise ValueError("Invalid Hermitian Hamiltonians or energy centers")
+    inv = inverse_root(metric)
+    delta = inv @ (right-left) @ inv
+    shift = float(midpoints[1]-midpoints[0])
+    centered = inv @ (right-left-shift*metric) @ inv
+    return dict(energy_zero_shift_hartree=shift,
+        absolute_operator_change_hartree=float(np.max(abs(eigvalsh(delta)))),
+        midpoint_aligned_operator_change_hartree=float(np.max(abs(eigvalsh(centered)))))
+
+
 def load_case(work, read_snapshot, integral_hash):
     run = json.loads((work / "run.json").read_text())
     record = json.loads((work / "independent-localizers.json").read_text())
@@ -102,6 +159,7 @@ def main():
     parser.add_argument("left", type=Path)
     parser.add_argument("right", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--control", choices=["basis", "temperature"], default="basis")
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
@@ -112,18 +170,18 @@ def main():
     integral_hash = digest(root / "build-serial/gaussian_states.py")
     runs, snapshots, own = zip(*(load_case(p.resolve(), read_snapshot, integral_hash)
                                for p in (args.left, args.right)))
-    for key in ("source_commit", "executable_sha256", "library_sha256", "sources", "runtime"):
-        if runs[0]["provenance"][key] != runs[1]["provenance"][key]:
-            raise ValueError("Uncontrolled change in native provenance: " + key)
-    ignored = {"root", "output", "basis", "restart"}
-    for key in set(runs[0]["options"]) | set(runs[1]["options"]):
-        if key not in ignored and runs[0]["options"].get(key) != runs[1]["options"].get(key):
-            raise ValueError("Uncontrolled change in calculation options: " + key)
+    controlled_options(runs, args.control)
+    if args.control == "temperature":
+        temperature_inputs([(p / "input.inp").read_text() for p in (args.left, args.right)],
+                           [run["options"]["temperature"] for run in runs])
     left, right = snapshots
     ml, mr, cross = cross_moments(left, right, primitive_integrals)
     errors = [float(np.max(abs(a-b))) for a, b in zip(own, (ml, mr))]
     if max(errors) > 1e-10:
         raise ValueError("Combined integration differs from independently cached integrals")
+    if args.control == "temperature" and (ml.shape != mr.shape or
+            max(np.max(abs(ml-mr)), np.max(abs(ml-cross))) > 1e-10):
+        raise ValueError("Temperature comparison requires identical physical AO bases and positions")
     sl, sr = ml[0], mr[0]
     il, ir = inverse_root(sl), inverse_root(sr)
     embedding = solve(sr, cross[0].conj().T, assume_a="pos")
@@ -163,11 +221,20 @@ def main():
         ao_nesting=nesting, subspaces=subspaces,
         projected_scf_hamiltonian_change_hartree=projected_h_change,
         caution="Different self-consistent potentials: a nonzero projected Hamiltonian change is not an export error")
+    if args.control == "temperature":
+        gaps = [float(s.energies[0, occupied]-s.energies[0, occupied-1]) for s in snapshots]
+        midpoints = [float(np.mean(s.energies[0, occupied-1:occupied+1])) for s in snapshots]
+        report.update(comparison_kind="controlled-electronic-temperature",
+            interpretation="Temperature sensitivity at identical geometry and basis; not zero-temperature convergence",
+            temperatures_kelvin=[run["options"]["temperature"] for run in runs],
+            neutral_gaps_hartree=gaps, neutral_midpoints_hartree=midpoints,
+            aligned_hamiltonian_change=centered_hamiltonian_change(hl, hr, spin_sl, midpoints),
+            actual_inputs_differ_only_in_temperature=True)
     with args.output.open("x") as stream:
         json.dump(report, stream, indent=2, allow_nan=False)
         stream.write("\n")
-    print(json.dumps(dict(ao_nesting=nesting, subspaces=subspaces,
-                         projected_scf_hamiltonian_change_hartree=projected_h_change), indent=2))
+    print(json.dumps({key: value for key, value in report.items()
+                      if key not in ("inputs", "methods", "ao_nesting")}, indent=2))
 
 
 if __name__ == "__main__":
