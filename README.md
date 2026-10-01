@@ -1,20 +1,31 @@
 # Topological Systems with CP2K
 
-Working manuscript for Computer Physics Communications, started 24 September 2026.
+Manuscript and reproducibility data for Computer Physics Communications.
 
 Repository: https://github.com/DCM-Uni-Paderborn/TopologicalCP2K
-The repository is private during manuscript preparation. This is a manuscript
-and validation repository, not the CP2K implementation repository.
-The Dropbox/Overleaf project is the manuscript source of truth. Verified changes
-are mirrored to GitHub without rewriting history; divergent remote edits must be
-reconciled before publishing a new snapshot. The Git checkout is kept outside
-Dropbox to avoid synchronizing a live Git database through file storage.
+This is the public companion repository for the manuscript, Supporting
+Information and the calculation records underlying their results. It is not
+the CP2K development repository. Source snapshots are retained specifically
+to reproduce the reported calculations.
 
 Authors, in the requested order:
 Thomas D. Kuehne; Alexander Cerjan; Vladislav Efremkin;
 Hermann Schulz-Baldes; Emil Prodan.
 Corresponding author: Thomas D. Kuehne, tkuehne@cp2k.org.
 Affiliations and submission declarations remain subject to author approval.
+
+## Repository Scope
+
+The repository contains the manuscript sources and PDFs, figures, cited
+validation datasets, numerical reference readers, reproduction scripts and
+source/dependency fingerprints. Historical failures and superseded numerical
+records are retained where the paper or SI discusses the corresponding
+correction. The dated manuscript and SI define the current scientific results.
+
+Large material datasets and independent validation workflows belong here,
+not in the CP2K implementation PR. That PR retains its normal unit and
+regression tests and can link to this repository for the extended evidence.
+Build products, caches, credentials and unrelated projects are outside scope.
 
 ## Manuscript
 
@@ -54,10 +65,6 @@ installation providing `latexmk` on PATH. The generated PDFs are retained in the
 repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
-The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/work/topology-release-audit-20260930/manuscript-reproduction/tex-build/.
-The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
-of the byte-identical unused regression copies removed during cleanup.
 
 ## Evidence and boundaries
 
@@ -68,8 +75,8 @@ with two targeted corrections, and a separately instrumented native Pfaffian
 rebuild. The updated SI distinguishes fresh SCF calculations, regression
 checks, and reanalysis of archived matrices. The historical figure and
 numerical reference values are unchanged. These are method-specific source
-freezes, not a final release snapshot of every manuscript method or a
-multi-node scaling study.
+freezes. The consolidated closing source snapshot is described below, with
+historical run identities preserved.
 
 validation/topology contains the original Wilson, inversion and phason
 records. validation/development contains implementation notes and the
