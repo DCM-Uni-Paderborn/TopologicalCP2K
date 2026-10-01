@@ -365,8 +365,18 @@ OpenBLAS 0.3.26 SVE implementation. Its incorrect complex dot product is
 independently reproduced and retained alongside the passing controls.
 The Bi total energy is identical at printed precision, with a complete-AO
 Hamiltonian difference below 1.14e-13 hartree. These are single-host numerical
-checks, not material size convergence or multi-node scaling. The ongoing
-96-atom calculation is not included as a completed result.
+checks, not material size convergence or multi-node scaling.
+
+The completed concentric 96-atom DZVP calculation is recorded separately
+in `validation/development/bismuth-size96-validation/` and SI S12. Its
+neutral SOC gap is 17.875 meV, down from 37.915 meV at 48 atoms. The
+48-atom middle-scale nontrivial interval does not transfer uniformly.
+Shared-Gaussian-subspace comparisons detect a genuine finite-size change
+even in the central 16 atoms, with analytic and identical-export controls.
+Four native dense queries agree with independent complete-AO references
+within 1.31e-10 hartree at the unchanged 2e-8 hartree tolerance. The first
+transferred joint parameter box is numerically resolved as nontrivial. These
+results validate this finite calculation, not a converged material index.
 
 ## Application References
 

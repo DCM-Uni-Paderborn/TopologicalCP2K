@@ -1,0 +1,448 @@
+{
+  "archive_sha256": "4fad0127a2f5bdd54819f70b8f952b1eca36aeb1ecb06c5526e5c0f069b12582",
+  "archive_bytes": 475318061,
+  "chunks": [
+    {
+      "name": "bismuth-size96.tar.gz.part000",
+      "bytes": 41943040,
+      "sha256": "d4f3bfabb2c9f121f0ca1554d1b98137f05800a5a38736c6c122f0dab41254c4"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part001",
+      "bytes": 41943040,
+      "sha256": "1a5f48eee662ec754be028d52d315aff8c05eaf3565403d1f3b561a636d8dfa3"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part002",
+      "bytes": 41943040,
+      "sha256": "837cf41e3a3d82d5fc89505c06556987f89d46f5fccfa7cda3c06571281e7ece"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part003",
+      "bytes": 41943040,
+      "sha256": "9e52d5f04c11a6f96bacfd8faf1827b9ce7a2c76e27103893c6dd601d7e0da4e"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part004",
+      "bytes": 41943040,
+      "sha256": "5075f9c4d1b8ecdca6c5a68937db30ed7a4bb9a095e8d301fe5505466a6bdc49"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part005",
+      "bytes": 41943040,
+      "sha256": "d1c9b55aabf7a9bd79edd3882ed63fda16373f76f89ced4901c90314bfbadd3e"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part006",
+      "bytes": 41943040,
+      "sha256": "6ebd8f2ce56bea86c5beaff011cc13def4882ceafeccd2665f5821409ebb9caf"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part007",
+      "bytes": 41943040,
+      "sha256": "cc66bd1c067a6f959de46c3a4d2036559ca43aedff701a5d42e79180572a2847"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part008",
+      "bytes": 41943040,
+      "sha256": "ff24a93fc465e8b51b04c475237ac2f42049d270d143fbaf2af192753d4bd735"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part009",
+      "bytes": 41943040,
+      "sha256": "e7e5ee208f83af0905b0df04471b2618611ef68371e7b6c4490b0c0975ed90b8"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part010",
+      "bytes": 41943040,
+      "sha256": "d79aadcc11fb42820834d55f8316ba8b39a03cedb347398c6547c8dc662f901f"
+    },
+    {
+      "name": "bismuth-size96.tar.gz.part011",
+      "bytes": 13944621,
+      "sha256": "72989db5d4de96f0d30a33f0e9626d73184a16bc8083e9d8b35d494f9b15ff4d"
+    }
+  ],
+  "summary": {
+    "runs": {
+      "flake96-spectrum": {
+        "natoms": 96,
+        "nao": 1248,
+        "electronic_gap_hartree": 0.0006568775829448592,
+        "midpoint_hartree": -0.14710053171691204,
+        "queries": [
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.00025,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.0007063528903398967,
+            "z2": 1,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.0003,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.0010410311853383926,
+            "z2": 1,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.0005,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.002553202295014623,
+            "z2": 1,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.001,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.0028823255145659344,
+            "z2": 1,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.0015,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.0001367167993963839,
+            "z2": 1,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.002,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.0021502780632605047,
+            "z2": 0,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.0025,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.003974679926403506,
+            "z2": 0,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.003,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.00546053964523566,
+            "z2": 0,
+            "skew_residual": 1.27675647831893e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.0035,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.006701548266101566,
+            "z2": 0,
+            "skew_residual": 1.27675647831893e-15
+          }
+        ]
+      },
+      "flake96-native": {
+        "natoms": 96,
+        "nao": 1248,
+        "electronic_gap_hartree": 0.0006568775736061072,
+        "midpoint_hartree": -0.14710053201411927,
+        "queries": [
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.0003,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.0010410313795450763,
+            "z2": 1,
+            "skew_residual": 1.7763568394002505e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.0015,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.00013671677379690863,
+            "z2": 1,
+            "skew_residual": 1.7763568394002505e-15
+          },
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.003,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.005460539705033643,
+            "z2": 0,
+            "skew_residual": 1.7763568394002505e-15
+          }
+        ],
+        "native_comparison": {
+          "tolerance_hartree": 2e-08,
+          "accepted": true,
+          "queries": [
+            {
+              "query": 0,
+              "native": {
+                "z2": 1.0,
+                "position_bohr": [
+                  57.7642035669819,
+                  41.3371008926158,
+                  20.5413230644669
+                ],
+                "energy_hartree": -0.147100531716912,
+                "kappa_hartree_bohr": 0.0003,
+                "gap_hartree": 0.00104103124944771
+              },
+              "independent_gap_hartree": 0.0010410313795450763,
+              "distance_from_bracket_hartree": 1.300973662566457e-10,
+              "independent_z2": 1,
+              "accepted": true
+            },
+            {
+              "query": 1,
+              "native": {
+                "z2": 1.0,
+                "position_bohr": [
+                  57.7642035669819,
+                  41.3371008926158,
+                  20.5413230644669
+                ],
+                "energy_hartree": -0.147100531716912,
+                "kappa_hartree_bohr": 0.0015,
+                "gap_hartree": 0.000136716784784282
+              },
+              "independent_gap_hartree": 0.00013671677379690863,
+              "distance_from_bracket_hartree": 1.0987373364650457e-11,
+              "independent_z2": 1,
+              "accepted": true
+            },
+            {
+              "query": 2,
+              "native": {
+                "z2": 0.0,
+                "position_bohr": [
+                  57.7642035669819,
+                  41.3371008926158,
+                  20.5413230644669
+                ],
+                "energy_hartree": -0.147100531716912,
+                "kappa_hartree_bohr": 0.003,
+                "gap_hartree": 0.00546053967478986
+              },
+              "independent_gap_hartree": 0.005460539705033643,
+              "distance_from_bracket_hartree": 3.024378317229015e-11,
+              "independent_z2": 0,
+              "accepted": true
+            }
+          ]
+        }
+      },
+      "flake96-transition": {
+        "natoms": 96,
+        "nao": 1248,
+        "electronic_gap_hartree": 0.000656877573607384,
+        "midpoint_hartree": -0.14710053201411413,
+        "queries": [
+          {
+            "energy_hartree": -0.14710053171691204,
+            "kappa_hartree_bohr": 0.002,
+            "position_bohr": [
+              57.76420356698187,
+              41.337100892615815,
+              20.541323064466948
+            ],
+            "gap_hartree": 0.0021502781074453333,
+            "z2": 0,
+            "skew_residual": 1.4988010832439613e-15
+          }
+        ],
+        "native_comparison": {
+          "tolerance_hartree": 2e-08,
+          "accepted": true,
+          "queries": [
+            {
+              "query": 0,
+              "native": {
+                "z2": 0.0,
+                "position_bohr": [
+                  57.7642035669819,
+                  41.3371008926158,
+                  20.5413230644669
+                ],
+                "energy_hartree": -0.147100531716912,
+                "kappa_hartree_bohr": 0.002,
+                "gap_hartree": 0.00215027808575486
+              },
+              "independent_gap_hartree": 0.0021502781074453333,
+              "distance_from_bracket_hartree": 2.1690473202273797e-11,
+              "independent_z2": 0,
+              "accepted": true
+            }
+          ]
+        }
+      }
+    },
+    "exclusions": [
+      "Generated .mmn, .eig and .win files are not inputs to this finite localizer analysis.",
+      "Restart backups, independent AO-moment caches and build products are regenerable and omitted.",
+      "The independent analysis reconstructs Gaussian moments from the retained topology exports.",
+      "No pending TZVP calculation or incomplete parameter-box analysis is included."
+    ],
+    "scope": "Selected completed native and independent finite-size checks. Not bulk convergence.",
+    "source_symlinks_materialized_as_regular_files": {
+      "source/data/BASIS_MOLOPT_UZH": "source/data/BASIS_MOLOPT_UZH_2026.2"
+    },
+    "first_parameter_box": {
+      "status": "resolved",
+      "region_z2": 1,
+      "lower": [
+        -0.14711366926857095,
+        0.00025,
+        57.669717260337585,
+        41.24261458597153
+      ],
+      "upper": [
+        -0.14708739416525313,
+        0.0003,
+        57.858689873626155,
+        41.4315871992601
+      ],
+      "parameter_order": [
+        "energy_hartree",
+        "kappa_hartree_per_bohr",
+        "x_bohr",
+        "y_bohr"
+      ],
+      "minimum_gap_lower_bound_hartree": 0.00020727987626791144
+    }
+  },
+  "files": {
+    "analyze_bismuth_flakes.py": "3ff1826689eb6d2bbff220955ea6df60fc1779a3a43289be4151b2d82fa42d6e",
+    "analyze_material.py": "a5671d32e711a045a8ba9324a48c893d71fd1ef861ac10c4135980a6008969e0",
+    "analyze_material_regions.py": "6aeae468d80e4933a765e347f7c4615274abbad3b6d598a7e3cd1a2026c7776b",
+    "archive_size_checks.py": "0e4438541b1d5db11631537c259d63041c089c3cc7ef0129d9efb8ff58f621d6",
+    "bismuth_reference.py": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+    "build-mpi/CMakeCache.txt": "920dba0f015c0b5e29549c1fe3f610d4948f4bc426387f4b14c226f8326b64f1",
+    "build_terok.sh": "305bd213e5187baf387406690d8f06d81b19113e1636d1cc3b8f4f71c95e075e",
+    "check_bloch_localizer.py": "f88d26ae38f2ca6dcbefc7448d0a047a64296dda925e830afcc9966234f963e3",
+    "compare_nested_material.py": "d9c47aef5b3267c81c8fe6753861887c09a9fe45c7e4b1d20ce68834acc91a5f",
+    "flake96-native/analysis.json": "0a08d672992fc1b21de3b30cdc97bd250d0fda14ee36fc42016ddf51300d525d",
+    "flake96-native/bismuth-RESTART.wfn": "f0fd15a993be25542298a65ff88885b1ae73b5ebf4589654daef07e9046ca6f1",
+    "flake96-native/bismuth.topology": "c62880fb4dfb8f3d13675edec754eed56df64ada86019735ef1663889a4227b9",
+    "flake96-native/bismuth_reference.py": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+    "flake96-native/gamma.nnkp": "cab4dd92ac6d9614cd787a3affde2dbab9c130d879111f472db9e4d63120c4c0",
+    "flake96-native/host.txt": "b7944887511b1624e0e66191a366a4212061d0b944843063a0d7109ab8fd21b0",
+    "flake96-native/initial.wfn": "c83b24f42780ae334e26b2a151c2f17b7b76ea7ea3eab02f09b674f0ffd931ee",
+    "flake96-native/input.inp": "22fdd449ed8daea69a1f999748d73a7e4de78cbc2229a3f5920f82780e46d2fc",
+    "flake96-native/linked-libraries.txt": "9aa8d3dbeabcad94ec77b88544782470265e6ac5c8fcc5ff43e0a5d5616945e5",
+    "flake96-native/output.out": "2a4cbda13fbeebc5317f332c698874e98481f8c50ea8c4dfb14208df021e41b7",
+    "flake96-native/run.json": "948ca93a6b14a54447be72986ad716b05b8943f622e07311ee44e34b98686be9",
+    "flake96-native/run_material.py": "f4615886e3dc129ed7f1bcc819036d3112ddfd4aacf43ca0047fb053ac645eab",
+    "flake96-native/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "flake96-regions/box-0.json": "1bf3fb4367602e9da038908529c4d629578b586c8cd572c597983d1733977492",
+    "flake96-spectrum/analysis.json": "62e20701a6cabe72a3d00080a05e1f150a3f434eeb6a12e035366ea860da8ef1",
+    "flake96-spectrum/bismuth-RESTART.wfn": "c83b24f42780ae334e26b2a151c2f17b7b76ea7ea3eab02f09b674f0ffd931ee",
+    "flake96-spectrum/bismuth.topology": "daf4c80eff844bfb026e6b19c850e39a2d086d0b33a2cca63092b34ccc9dcfc7",
+    "flake96-spectrum/bismuth_reference.py": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+    "flake96-spectrum/gamma.nnkp": "cab4dd92ac6d9614cd787a3affde2dbab9c130d879111f472db9e4d63120c4c0",
+    "flake96-spectrum/host.txt": "b7944887511b1624e0e66191a366a4212061d0b944843063a0d7109ab8fd21b0",
+    "flake96-spectrum/input.inp": "1213c8921c286c023e319e91e76b6ce3add06337eadd386fbfcb8fd0f34bc9f3",
+    "flake96-spectrum/linked-libraries.txt": "d9b85047b826a4fd90a33d8b2dfe9ac65ab932d13c8e149d511554bb3acaaff5",
+    "flake96-spectrum/output.out": "373d4086ddae76dea6c0e1a1568e5e599323360b8a37f8c448ecd5a286886ea7",
+    "flake96-spectrum/run.json": "8221f7e6666982d04a10658505db21b35925986c726cddeaccd9c3441934537a",
+    "flake96-spectrum/run_material.py": "f4615886e3dc129ed7f1bcc819036d3112ddfd4aacf43ca0047fb053ac645eab",
+    "flake96-spectrum/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "flake96-transition/analysis.json": "7e990174ae14c33c3a58e577c31015755766d1b4cfc391b190b4cb5eb11482a9",
+    "flake96-transition/bismuth-RESTART.wfn": "738a7d207a8c9abed20b7be3bd83c6dc2c83f6b2c35a33deabc1f9f689a6d0aa",
+    "flake96-transition/bismuth.topology": "ec432bb359f4bf34e4eefe254e80c1db7002111baff8d75c7d076881285f076d",
+    "flake96-transition/bismuth_reference.py": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+    "flake96-transition/gamma.nnkp": "cab4dd92ac6d9614cd787a3affde2dbab9c130d879111f472db9e4d63120c4c0",
+    "flake96-transition/host.txt": "b7944887511b1624e0e66191a366a4212061d0b944843063a0d7109ab8fd21b0",
+    "flake96-transition/initial.wfn": "c83b24f42780ae334e26b2a151c2f17b7b76ea7ea3eab02f09b674f0ffd931ee",
+    "flake96-transition/input.inp": "fa0632b462832b5870a466ad879480fadfc7b9da75438aadf07a448308b7a18a",
+    "flake96-transition/linked-libraries.txt": "4790104947140f58858620d0c259e33a10430eb145f97f8598cbed6f6fe72221",
+    "flake96-transition/output.out": "4341515456b29c7e815688ca88f0a8792e20c77af51f329cd9de8dfea71e79bf",
+    "flake96-transition/run.json": "b242525a4400be6dc57836d6e3e6e77c9dde6c50f247453a89841ee160d317c2",
+    "flake96-transition/run_material.py": "5dab03f3b09f737d5de2bb0ef2175ff3fa66de5244f14becae44fa4bbf9f4256",
+    "flake96-transition/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gaussian_states.py": "7acce98e64cb159b7be871793ef19913fdbebb931bc9b59e19575359e04d4ae5",
+    "localizer_region.py": "f37185a3d03c22e0ab0006a97697eff79180c09f6c65e12d96209d666e6e6bf2",
+    "material_workflow.py": "4493ecc72335db52f0129395c19a00eb5f0416443394abdd942b7cc59ab5db67",
+    "native-qualification-verified/passed.json": "99d3ca7491f833575f3f121edb2d13aa0239547d896d174a69eece45c4cc4559",
+    "native-qualification-verified/source-hashes.json": "17f4303aa059ad14833a7eb0fc038e5d037176048382c765ec6f100c2cdbb238",
+    "nested-identity-control/comparison.json": "00cd574637a8d3453a9b04df08ed80622eaaf73a34e6512fb0c7aeca78456762",
+    "nested-size-comparison/comparison.json": "1a6897108961bcc0e036425831f9a55676d95571fea26a07828757c9ea2d5844",
+    "nested-unit-final.log": "ef8347ae44a987f55c043c093059c3b229becb2fea5d82e8fe170304a173dac8",
+    "nested_subspace.py": "c0b5cb125c7bd24a51289706b49d7c80fe89ce52be4439cfac8b85f25a32b343",
+    "reference48/bismuth.topology": "707dec4f6c1d409d7b2042d230d50bce64708de7a625d16df31ae0eed8b0da3e",
+    "reference48/bismuth_reference.py": "76f685dc8ff1a279581e37a2c80ce039556643a01547129bf3245cd6af4833c9",
+    "reference48/gamma.nnkp": "cca314d913356183f21a19a3911df8de952722cbf390142b938c27cec5c0e7e3",
+    "reference48/host.txt": "b7944887511b1624e0e66191a366a4212061d0b944843063a0d7109ab8fd21b0",
+    "reference48/input.inp": "3c58ac771c64c51fd28fbf751a25198c9ff594110e88e9ea5b848f8c294b8263",
+    "reference48/linked-libraries.txt": "fdd46c921e7d93aeba5264f1f05284d38d4634ea06cd84640c36ecf662db4ac8",
+    "reference48/output.out": "51f5ce396b0fdf1f29c700f4d4dac082c063b282364cb332945411998d7a3a48",
+    "reference48/run.json": "8aeb85d72a87f60f755ff459f5a5a7feae831a04649b11a8b0fb97ee46f5d27e",
+    "reference48/run_material.py": "3dba50dbb41bfdb86f51ce9dc91995e5f52c7cd7d3c6640054830c79ed4d23eb",
+    "reference48/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "replay_size_checks.py": "5d178e1fb7a879ceba15a69e2093ca3951da69523fc13846075bbd09a3850ed3",
+    "run_material.py": "5dab03f3b09f737d5de2bb0ef2175ff3fa66de5244f14becae44fa4bbf9f4256",
+    "scan_bismuth_neutral_window.py": "fb423c79a1ead1e877db3281d208d275048b7739b241432175d2e045a15aae3c",
+    "size-comparison-plan.json": "f85ea9b331b82ac84b310615e0d208a3ca73491b050d383a73b4c70613caa01a",
+    "source/data/BASIS_MOLOPT_UZH": "dd2a387f4f1ed8ac84696bea7472a5ffb63a7dc8f5d948872d137089e78c38ed",
+    "source/data/GTH_SOC_POTENTIALS": "cb8671959ad5dd1c0f403786a69af3f155157ed1af8e5701e63de23ec4b0742e",
+    "test_nested_subspace.py": "1602a1070411a79fc6f944cd4ebd3871e3aca3f64c44f17c64d94e8bbe7bdc82",
+    "test_size_archive.py": "46c8e9255cf38101c83c91a4fa15acd35321c0a173d389ded6948fa82e46287e",
+    "transition-workflow-state.json": "4b95808673b113e9be235a3e7ef7e1b34ef41d3187481c28e3109d1b7fc38320",
+    "transition_workflow.py": "782d72122d98f86f66b1610c15566727f5aeb5eae9cf19027ca33bda5ad4e07d",
+    "verify_size_checks.py": "2c901b5e1a15aa4d1f9826117e3c2052beb0ca57bb73c21ae641dc931ebaf8f4",
+    "workflow-state.json": "432d401f28004ed939246d1538691623e356d777c5377fa36a65620f6504c06c"
+  }
+}

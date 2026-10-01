@@ -1,0 +1,158 @@
+{
+  "accepted": true,
+  "integrity": {
+    "accepted": true,
+    "verified_files": 79,
+    "archive_sha256": "4fad0127a2f5bdd54819f70b8f952b1eca36aeb1ecb06c5526e5c0f069b12582",
+    "scope": "Archive integrity and recorded-run consistency, not fresh numerical replay"
+  },
+  "runs": [
+    {
+      "run": "flake96-spectrum",
+      "queries": 9,
+      "maximum_gap_replay_error_hartree": 0.0,
+      "diagnostics": {
+        "metric_minimum": 0.02120984349341587,
+        "metric_ratio": 0.003997277671046737,
+        "frame_residual": 1.0599332822109709e-13,
+        "time_reversal_residual": 2.5535186077141824e-15
+      },
+      "first_parameter_box": {
+        "resolved": true,
+        "z2": 1,
+        "replayed_bound_evaluations": 3,
+        "minimum_gap_lower_bound_hartree": 0.00020727987626791144,
+        "scope": "Replayed norm, complete cover and anchor index; original 17 full-spectrum audits retained"
+      }
+    },
+    {
+      "run": "flake96-native",
+      "queries": 3,
+      "maximum_gap_replay_error_hartree": 0.0,
+      "diagnostics": {
+        "metric_minimum": 0.02120984349341587,
+        "metric_ratio": 0.003997277671046737,
+        "frame_residual": 1.034648660647161e-13,
+        "time_reversal_residual": 3.552715011279428e-15
+      },
+      "native_comparison": {
+        "tolerance_hartree": 2e-08,
+        "accepted": true,
+        "queries": [
+          {
+            "query": 0,
+            "native": {
+              "z2": 1.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.147100531716912,
+              "kappa_hartree_bohr": 0.0003,
+              "gap_hartree": 0.00104103124944771
+            },
+            "independent_gap_hartree": 0.0010410313795450763,
+            "distance_from_bracket_hartree": 1.300973662566457e-10,
+            "independent_z2": 1,
+            "accepted": true
+          },
+          {
+            "query": 1,
+            "native": {
+              "z2": 1.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.147100531716912,
+              "kappa_hartree_bohr": 0.0015,
+              "gap_hartree": 0.000136716784784282
+            },
+            "independent_gap_hartree": 0.00013671677379690863,
+            "distance_from_bracket_hartree": 1.0987373364650457e-11,
+            "independent_z2": 1,
+            "accepted": true
+          },
+          {
+            "query": 2,
+            "native": {
+              "z2": 0.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.147100531716912,
+              "kappa_hartree_bohr": 0.003,
+              "gap_hartree": 0.00546053967478986
+            },
+            "independent_gap_hartree": 0.005460539705033643,
+            "distance_from_bracket_hartree": 3.024378317229015e-11,
+            "independent_z2": 0,
+            "accepted": true
+          }
+        ]
+      }
+    },
+    {
+      "run": "flake96-transition",
+      "queries": 1,
+      "maximum_gap_replay_error_hartree": 0.0,
+      "diagnostics": {
+        "metric_minimum": 0.02120984349341587,
+        "metric_ratio": 0.003997277671046737,
+        "frame_residual": 1.0318487999605133e-13,
+        "time_reversal_residual": 2.9421060758846806e-15
+      },
+      "native_comparison": {
+        "tolerance_hartree": 2e-08,
+        "accepted": true,
+        "queries": [
+          {
+            "query": 0,
+            "native": {
+              "z2": 0.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.147100531716912,
+              "kappa_hartree_bohr": 0.002,
+              "gap_hartree": 0.00215027808575486
+            },
+            "independent_gap_hartree": 0.0021502781074453333,
+            "distance_from_bracket_hartree": 2.1690473202273797e-11,
+            "independent_z2": 0,
+            "accepted": true
+          }
+        ]
+      }
+    }
+  ],
+  "shared_subspace_replay_errors": {
+    "whole_shared_patch/dimension": 0,
+    "whole_shared_patch/hamiltonian_norm_hartree": 0.0,
+    "whole_shared_patch/mean_hamiltonian_shift_hartree": 0.0,
+    "whole_shared_patch/shift_removed_hamiltonian_norm_hartree": 0.0,
+    "whole_shared_patch/neutral_projector_norm": 0.0,
+    "whole_shared_patch/left_projected_occupation": 0.0,
+    "whole_shared_patch/right_projected_occupation": 0.0,
+    "whole_shared_patch/metric_maximum_difference": 0.0,
+    "central_16_atoms/dimension": 0,
+    "central_16_atoms/hamiltonian_norm_hartree": 0.0,
+    "central_16_atoms/mean_hamiltonian_shift_hartree": 0.0,
+    "central_16_atoms/shift_removed_hamiltonian_norm_hartree": 0.0,
+    "central_16_atoms/neutral_projector_norm": 0.0,
+    "central_16_atoms/left_projected_occupation": 0.0,
+    "central_16_atoms/right_projected_occupation": 0.0,
+    "central_16_atoms/metric_maximum_difference": 0.0
+  },
+  "elapsed_seconds": 908.4883662336506,
+  "numpy_version": "2.4.2",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "openblas_threads": "4",
+  "scope": "Archive-only AO reintegration and mathematical replay. No SCF or fresh native CP2K execution."
+}

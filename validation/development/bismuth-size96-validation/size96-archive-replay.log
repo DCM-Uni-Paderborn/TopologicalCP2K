@@ -1,0 +1,67 @@
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.00025, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0007063528903398967, "z2": 1, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.0003, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0010410311853383926, "z2": 1, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.0005, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.002553202295014623, "z2": 1, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.001, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0028823255145659344, "z2": 1, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.0015, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0001367167993963839, "z2": 1, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.002, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0021502780632605047, "z2": 0, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.0025, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.003974679926403506, "z2": 0, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.003, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.00546053964523566, "z2": 0, "skew_residual": 1.27675647831893e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.0035, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.006701548266101566, "z2": 0, "skew_residual": 1.27675647831893e-15}
+{"run": "flake96-spectrum", "queries": 9, "maximum_gap_replay_error_hartree": 0.0, "diagnostics": {"metric_minimum": 0.02120984349341587, "metric_ratio": 0.003997277671046737, "frame_residual": 1.0599332822109709e-13, "time_reversal_residual": 2.5535186077141824e-15}}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.00027499999999999996, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0008710885100795445, "z2": 1, "skew_residual": 1.27675647831893e-15}
+{"resolved": true, "z2": 1, "replayed_bound_evaluations": 3, "minimum_gap_lower_bound_hartree": 0.00020727987626791144, "scope": "Replayed norm, complete cover and anchor index; original 17 full-spectrum audits retained"}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.0003, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0010410313795450763, "z2": 1, "skew_residual": 1.7763568394002505e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.0015, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.00013671677379690863, "z2": 1, "skew_residual": 1.7763568394002505e-15}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.003, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.005460539705033643, "z2": 0, "skew_residual": 1.7763568394002505e-15}
+{"run": "flake96-native", "queries": 3, "maximum_gap_replay_error_hartree": 0.0, "diagnostics": {"metric_minimum": 0.02120984349341587, "metric_ratio": 0.003997277671046737, "frame_residual": 1.034648660647161e-13, "time_reversal_residual": 3.552715011279428e-15}, "native_comparison": {"tolerance_hartree": 2e-08, "accepted": true, "queries": [{"query": 0, "native": {"z2": 1.0, "position_bohr": [57.7642035669819, 41.3371008926158, 20.5413230644669], "energy_hartree": -0.147100531716912, "kappa_hartree_bohr": 0.0003, "gap_hartree": 0.00104103124944771}, "independent_gap_hartree": 0.0010410313795450763, "distance_from_bracket_hartree": 1.300973662566457e-10, "independent_z2": 1, "accepted": true}, {"query": 1, "native": {"z2": 1.0, "position_bohr": [57.7642035669819, 41.3371008926158, 20.5413230644669], "energy_hartree": -0.147100531716912, "kappa_hartree_bohr": 0.0015, "gap_hartree": 0.000136716784784282}, "independent_gap_hartree": 0.00013671677379690863, "distance_from_bracket_hartree": 1.0987373364650457e-11, "independent_z2": 1, "accepted": true}, {"query": 2, "native": {"z2": 0.0, "position_bohr": [57.7642035669819, 41.3371008926158, 20.5413230644669], "energy_hartree": -0.147100531716912, "kappa_hartree_bohr": 0.003, "gap_hartree": 0.00546053967478986}, "independent_gap_hartree": 0.005460539705033643, "distance_from_bracket_hartree": 3.024378317229015e-11, "independent_z2": 0, "accepted": true}]}}
+{"energy_hartree": -0.14710053171691204, "kappa_hartree_bohr": 0.002, "position_bohr": [57.76420356698187, 41.337100892615815, 20.541323064466948], "gap_hartree": 0.0021502781074453333, "z2": 0, "skew_residual": 1.4988010832439613e-15}
+{"run": "flake96-transition", "queries": 1, "maximum_gap_replay_error_hartree": 0.0, "diagnostics": {"metric_minimum": 0.02120984349341587, "metric_ratio": 0.003997277671046737, "frame_residual": 1.0318487999605133e-13, "time_reversal_residual": 2.9421060758846806e-15}, "native_comparison": {"tolerance_hartree": 2e-08, "accepted": true, "queries": [{"query": 0, "native": {"z2": 0.0, "position_bohr": [57.7642035669819, 41.3371008926158, 20.5413230644669], "energy_hartree": -0.147100531716912, "kappa_hartree_bohr": 0.002, "gap_hartree": 0.00215027808575486}, "independent_gap_hartree": 0.0021502781074453333, "distance_from_bracket_hartree": 2.1690473202273797e-11, "independent_z2": 0, "accepted": true}]}}
+{
+  "geometry_maximum_error_bohr": 4.819135301037582e-14,
+  "shared_subspaces": {
+    "whole_shared_patch": {
+      "dimension": 1248,
+      "hamiltonian_norm_hartree": 0.25781793747990833,
+      "mean_hamiltonian_shift_hartree": -0.014328663001161908,
+      "shift_removed_hamiltonian_norm_hartree": 0.24348927447874624,
+      "neutral_projector_norm": 0.8023014331061535,
+      "left_projected_occupation": 240.00000000000006,
+      "right_projected_occupation": 274.2781104450854,
+      "metric_maximum_difference": 6.221085469020218e-14
+    },
+    "central_16_atoms": {
+      "dimension": 416,
+      "hamiltonian_norm_hartree": 0.0038895553874550683,
+      "mean_hamiltonian_shift_hartree": 0.0006977901878651726,
+      "shift_removed_hamiltonian_norm_hartree": 0.004322347927761326,
+      "neutral_projector_norm": 0.1958377220360694,
+      "left_projected_occupation": 99.15899845291791,
+      "right_projected_occupation": 99.2024674596708,
+      "metric_maximum_difference": 6.221085469020218e-14
+    }
+  },
+  "elapsed_seconds": 57.651618676725775
+}
+test_changed_shell_rejected (test_nested_subspace.RegistrationTests.test_changed_shell_rejected) ... ok
+test_nonnested_geometry_rejected (test_nested_subspace.RegistrationTests.test_nonnested_geometry_rejected) ... ok
+test_translated_permuted_nested_geometry (test_nested_subspace.RegistrationTests.test_translated_permuted_nested_geometry) ... ok
+test_decoupled_extension_and_permutation (test_nested_subspace.SharedSpaceTests.test_decoupled_extension_and_permutation) ... ok
+test_different_metrics_rejected (test_nested_subspace.SharedSpaceTests.test_different_metrics_rejected) ... ok
+test_entangled_projector_is_not_idempotent (test_nested_subspace.SharedSpaceTests.test_entangled_projector_is_not_idempotent) ... ok
+test_exact_nonorthogonal_embedding (test_nested_subspace.SharedSpaceTests.test_exact_nonorthogonal_embedding) ... ok
+test_identical_with_degenerate_rotation (test_nested_subspace.SharedSpaceTests.test_identical_with_degenerate_rotation) ... ok
+test_invalid_selection (test_nested_subspace.SharedSpaceTests.test_invalid_selection) ... ok
+test_nonorthonormal_and_unresolved_inputs (test_nested_subspace.SharedSpaceTests.test_nonorthonormal_and_unresolved_inputs) ... ok
+test_nonzero_difference_is_basis_covariant (test_nested_subspace.SharedSpaceTests.test_nonzero_difference_is_basis_covariant) ... ok
+test_uniform_shift_is_reported_not_hidden (test_nested_subspace.SharedSpaceTests.test_uniform_shift_is_reported_not_hidden) ... ok
+test_arbitrary_chunk_boundaries (test_size_archive.ArchiveTests.test_arbitrary_chunk_boundaries) ... ok
+test_changed_byte_rejected (test_size_archive.ArchiveTests.test_changed_byte_rejected) ... ok
+test_manifest_mismatch_rejected (test_size_archive.ArchiveTests.test_manifest_mismatch_rejected) ... ok
+test_reordered_parts_rejected (test_size_archive.ArchiveTests.test_reordered_parts_rejected) ... ok
+test_unsafe_part_path_rejected (test_size_archive.ArchiveTests.test_unsafe_part_path_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.019s
+
+OK
+{"accepted": true, "elapsed_seconds": 908.4883662336506}

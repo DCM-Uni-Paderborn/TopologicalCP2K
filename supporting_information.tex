@@ -4523,6 +4523,166 @@ reproducer, raw exports, comparison reader and archive checks are
 in \nolinkurl{validation/development/platform-validation/}.
 
 \clearpage
+\section{Concentric 96-Atom Bi Size Control}
+\label{sec:si-bismuth96}
+\subsection{Larger patch and sampled localizer indices}
+The next bare Bi patch contains seven primitive cells in each
+in-plane direction with the two singly coordinated corners removed.
+It has 96 atoms, 480 electrons, 1,248 UZH DZVP scalar AOs and
+2,496 post-SCF SOC spinors. The complete scalar space is retained.
+The PBE functional, GTH SOC potential, 400/40 Ry grids, 20~\AA{}
+padding, 300 K scalar electronic temperature and $10^{-9}$ SCF
+criterion are unchanged from the 48-atom control.
+After translation to a common centroid, all 48 atoms of the
+smaller patch occur in the larger patch with a maximum position
+discrepancy below $4.9\times10^{-14}$ bohr. Shared Gaussian
+contractions and their ordering are checked explicitly.
+
+The eight-rank calculation, with two OpenMP threads per rank,
+converges from an atomic guess in 225 SCF steps. SCF and full
+SOC export take 3609.93 s. The neutral SOC gap is
+$0.000656877583$ hartree, approximately 17.875 meV, compared
+with 37.915 meV in the matched 48-atom calculation.
+The occupied and empty frontier Kramers doublets carry
+63.42\% and 59.57\% of their Lowdin weight on the 26 atoms
+with coordination below three, using the same 3.3~\AA{}
+bond cutoff. Those atoms make up 27.08\% of the patch.
+These weights remain basis dependent and do not define a
+sharp spatial population. The size dependence is not evidence
+of a converged periodic bulk gap.
+
+The scale samples below were fixed before the larger SCF run.
+Each query uses the centroid and the neutral midpoint of the
+complete exported SOC spectrum,
+$E_0=-0.14710053171691204$ hartree.
+The localizer gaps and indices are independent complete-AO
+reconstructions, not fitted native regression references.
+\begin{center}
+\begin{tabular}{rrr}
+\hline
+$\kappa$ (hartree/bohr) & Localizer gap (hartree) & $\nu$ \\
+\hline
+0.00025 & $7.06353\times10^{-4}$ & 1 \\
+0.00030 & $1.04103\times10^{-3}$ & 1 \\
+0.00050 & $2.55320\times10^{-3}$ & 1 \\
+0.00100 & $2.88233\times10^{-3}$ & 1 \\
+0.00150 & $1.36717\times10^{-4}$ & 1 \\
+0.00200 & $2.15028\times10^{-3}$ & 0 \\
+0.00250 & $3.97468\times10^{-3}$ & 0 \\
+0.00300 & $5.46054\times10^{-3}$ & 0 \\
+0.00350 & $6.70155\times10^{-3}$ & 0 \\
+\hline
+\end{tabular}
+\end{center}
+In particular, the previously resolved 48-atom interval
+$[0.0015,0.002]$ hartree/bohr has different gapped endpoint
+indices at 96 atoms. It cannot be transferred as a uniform
+nontrivial interval. Agreement of other sampled endpoints
+does not by itself bound the intervening gap.
+
+The first transferred joint parameter box has
+$\kappa\in[0.00025,0.0003]$ hartree/bohr,
+$|E-E_0|\leq0.02\Delta_{\mathrm{SOC}}$ and centroid-relative
+$x$ and $y$ offsets of at most 0.05~\AA{}, where
+$\Delta_{\mathrm{SOC}}$ is the neutral SOC gap above.
+The numerical Weyl bound of Sec.~\ref{sec:si-bismuth-regions}
+resolves this whole box with $\nu=1$. Three midpoint
+evaluations produce two covered subboxes and a minimum gap
+lower bound of $2.07280\times10^{-4}$ hartree, including the
+unchanged $10^{-10}$ hartree numerical margin.
+Separate complete-spectrum checks at the box center and all
+16 corners confirm the index and the middle-eigenvalue gap
+selection. This is a bound for the fixed 96-atom Hamiltonian,
+not interval arithmetic or a bound on the change of the SCF
+Hamiltonian with system size.
+The high-scale box $[0.003,0.0035]$ hartree/bohr is likewise
+resolved, now with $\nu=0$, five midpoint evaluations and
+minimum gap lower bound $5.03905\times10^{-4}$ hartree.
+The middle box contains both gapped indices and receives no
+uniform-index bound. In total, 51 complete-spectrum center
+and corner checks support the three box tests.
+
+\clearpage
+\subsection{Comparison in exactly shared physical AO spaces}
+The comparison uses shared Gaussian functions rather than unrelated
+orthonormal gauges. Let $S$ be the full spinor AO overlap of one patch,
+$C$ its complete frame with $C^\dagger SC=I$, and
+$\epsilon$ its ordered SOC eigenvalues. Let $\mathcal I$
+select exactly the same Gaussian spinor functions in the two
+patches. In the orthonormalized shared space define
+\begin{align}
+ U_{\mathcal I}&=S_{\mathcal I\mathcal I}^{-1/2}
+                    S_{\mathcal I,:}C,\\
+ H_{\mathcal I}&=U_{\mathcal I}\operatorname{diag}(\epsilon)
+                    U_{\mathcal I}^{\dagger},\\
+ P_{\mathcal I}&=U_{\mathcal I,\mathrm{occ}}
+                    U_{\mathcal I,\mathrm{occ}}^{\dagger}.
+\end{align}
+The positive inverse square root uses the shared overlap.
+The subscript $\mathrm{occ}$ selects the lowest $5N$ spinors
+for a neutral $N$-atom patch. Thus $P_{\mathcal I}$ is the
+compression of the zero-temperature SOC spectral projector,
+not the thermal SCF density. It is a positive contraction but
+need not be idempotent. Its trace measures occupation projected
+onto this Gaussian subspace, not an atom-assigned charge or the
+electron count inside a sharp spatial boundary.
+
+For each shared space of dimension $d$, write
+$\Delta H=H_{\mathcal I}^{(96)}-H_{\mathcal I}^{(48)}$,
+$\delta=\operatorname{tr}(\Delta H)/d$, and
+$\Delta P=P_{\mathcal I}^{(96)}-P_{\mathcal I}^{(48)}$.
+The norms below are spectral norms. Removing $\delta I$ tests
+a uniform energy shift without hiding it in the raw comparison.
+\begin{center}
+\begin{tabular}{lrr}
+\hline
+Quantity & Shared 48 atoms & Central 16 atoms \\
+\hline
+$d$ & 1248 & 416 \\
+$\|\Delta H\|$ (hartree) & 0.257818 & 0.00388956 \\
+$\delta$ (hartree) & $-0.0143287$ & 0.000697790 \\
+$\|\Delta H-\delta I\|$ (hartree) & 0.243489 & 0.00432235 \\
+$\|\Delta P\|$ & 0.802301 & 0.195838 \\
+\hline
+\end{tabular}
+\end{center}
+The shared overlaps agree within $6.3\times10^{-14}$.
+Twelve analytic/unit controls cover complex nonorthogonal
+basis changes, degenerate-frame rotations, nested extensions,
+AO permutations, pure energy shifts, nonidempotent projector
+compressions and rejection of mismatched geometry or basis data.
+A same-export 48-atom control gives zero Hamiltonian and
+projector differences in both spaces. The nonzero central
+differences above therefore resolve a finite-size change of
+the electronic operators, not merely an eigenvector gauge.
+Neither their magnitude nor the finite localizer index supplies
+a bulk-convergence certificate.
+
+\subsection{Native calculation and independent verification}
+A seven-step restart evaluates the native dense two-dimensional
+AII localizer, of order 4,992, at the original $E_0$ and
+$\kappa=0.0003$, 0.0015 and 0.003 hartree/bohr.
+Native and independent indices are $(1,1,0)$, with maximum
+gap discrepancy $1.31\times10^{-10}$ hartree at the unchanged
+$2\times10^{-8}$ hartree tolerance. The reference uses this
+restart's complete SOC export, whose neutral gap changes by
+$9.34\times10^{-12}$ hartree. A separate native query at
+$\kappa=0.002$ hartree/bohr, from the same initial restart,
+confirms the trivial endpoint. Its gap is $0.002150278086$
+hartree, within $2.17\times10^{-11}$ hartree of its independent
+reference. Both indices are zero.
+
+The spectrum run's sampled process-tree RSS maximum is about
+154 GiB. Shared pages may be counted repeatedly, so this is
+not factorization-only memory. Brief debugger sampling of the
+three-query run precludes treating its elapsed time as a clean
+benchmark. Inputs, exports, restarts, tests and methods are in
+\nolinkurl{validation/development/bismuth-size96-validation/}.
+Numbered archive parts have individual and concatenated SHA-256
+hashes. Unused Wannier overlaps, regenerable moment caches and
+build products are omitted.
+
+\clearpage
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

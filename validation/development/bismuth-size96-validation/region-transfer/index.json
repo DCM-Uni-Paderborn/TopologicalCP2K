@@ -1,0 +1,47 @@
+{
+  "archive_sha256": "3602bf40cf58eb1ef9a3a2970a8c38e4d17d8e81e6c047d87a2f2eb11f8f80ac",
+  "archive_bytes": 11696,
+  "files": {
+    "archive_region_checks.py": "7c2314bb43d27836d2a583316bd9052fa4a9fef4e976363dfc8681d129e889dd",
+    "size-validation-state.json": "ed570b94bcac5ebbf68edb978f586f3c01bb8218dde4406d2a31318713c3857e",
+    "post_material_workflow.py": "a843aa3bc50e69f8a769c64e9eb8a62759ddd80d7bbf2e4a9671260c80a398a6",
+    "analyze_material_regions.py": "6aeae468d80e4933a765e347f7c4615274abbad3b6d598a7e3cd1a2026c7776b",
+    "localizer_region.py": "f37185a3d03c22e0ab0006a97697eff79180c09f6c65e12d96209d666e6e6bf2",
+    "size-comparison-plan.json": "f85ea9b331b82ac84b310615e0d208a3ca73491b050d383a73b4c70613caa01a",
+    "flake96-regions/box-0.json": "1bf3fb4367602e9da038908529c4d629578b586c8cd572c597983d1733977492",
+    "flake96-regions/box-1.json": "a433aba16eb4addf44a2e8a920395acc9eae6d751521a1b25f6d2ad92c08b509",
+    "flake96-regions/box-2.json": "36e205a007f59e69f4bf790c18a99df0ea1f94be955df36df7431cba4e968acc"
+  },
+  "summary": {
+    "base_archive_sha256": "4fad0127a2f5bdd54819f70b8f952b1eca36aeb1ecb06c5526e5c0f069b12582",
+    "boxes": [
+      {
+        "box": 0,
+        "status": "resolved",
+        "z2": 1,
+        "minimum_gap_lower_bound_hartree": 0.00020727987626791144,
+        "bound_evaluations": 3
+      },
+      {
+        "box": 1,
+        "status": "nonuniform",
+        "z2": null
+      },
+      {
+        "box": 2,
+        "status": "resolved",
+        "z2": 0,
+        "minimum_gap_lower_bound_hartree": 0.0005039048317063833,
+        "bound_evaluations": 5
+      }
+    ],
+    "scope": "Completed fixed-H parameter-box analyses. The main archive replays the first box only."
+  },
+  "chunks": [
+    {
+      "name": "region-transfer.tar.gz",
+      "bytes": 11696,
+      "sha256": "3602bf40cf58eb1ef9a3a2970a8c38e4d17d8e81e6c047d87a2f2eb11f8f80ac"
+    }
+  ]
+}
