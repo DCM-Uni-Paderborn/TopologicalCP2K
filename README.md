@@ -265,7 +265,7 @@ the existing projected-AO/Bloch currents, using scalar relaxation.
 Its nonzero model checks and native time-reversal controls are separate:
 it does not introduce magnetic order or constitute a magnetic-material benchmark.
 The source tree still has no full general EBR catalogue. Spin Hall response,
-three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
+periodic/sparse three-dimensional AII localizers, Gaussian band unfolding and multi-node scaling
 remain open. The working draft is not submission-ready.
 
 The stanene localizer data were subsequently corrected after a complete
@@ -355,6 +355,18 @@ are in `localizer-3d-evidence.json`. After extracting the archive, run
 `python verify_evidence.py .` with NumPy and SciPy to check its contents and
 repeat all six AO-matrix comparisons without a CP2K installation. The retained
 `localizer-3d-replay.json` is the result of replaying a fresh extraction.
+
+The separate `validation/development/platform-validation/` bundle records
+fresh Linux ARM64 and x86-64 builds of one source archive, 10 unit executions
+and 81 regression checks on each host, and a matched-restart 48-atom Bi
+comparison against the retained macOS calculation. The ARM64 tests require
+a process-scoped `OPENBLAS_CORETYPE=ARMV8` workaround for the installed
+OpenBLAS 0.3.26 SVE implementation. Its incorrect complex dot product is
+independently reproduced and retained alongside the passing controls.
+The Bi total energy is identical at printed precision, with a complete-AO
+Hamiltonian difference below 1.14e-13 hartree. These are single-host numerical
+checks, not material size convergence or multi-node scaling. The ongoing
+96-atom calculation is not included as a completed result.
 
 ## Application References
 

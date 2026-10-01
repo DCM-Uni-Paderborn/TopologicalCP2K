@@ -4483,6 +4483,45 @@ AO-matrix controls with NumPy and SciPy without requiring CP2K.
 The archive supplements the earlier frozen-source checks rather
 than replacing their historical source or results.
 
+\subsection{Linux platform and matched-restart controls}
+The same archived source was subsequently built on Linux ARM64
+and x86-64 systems. File contents, executable bits and symbolic-link
+targets were verified against the source archive on each host.
+The five localizer/quadratic unit programs each pass with one MPI
+rank and two OpenMP threads, and with four ranks and one thread.
+The selected regression directories give 81 correct checks on
+each host. These builds do not include MUMPS or Tacho, and the
+counts are not results for the complete CP2K suite or multi-node
+scaling.
+
+The ARM64 qualification exposed a numerical-library failure before
+the material comparison. With the installed OpenBLAS 0.3.26 library,
+automatic selection of its \texttt{armv8sve} implementation gives
+$46-8i$ instead of $70-8i$ for the conjugated scalar product of
+$(1+2i,3+4i)$ and $(5+6i,7+8i)$. A standalone C-interface test
+reproduces this discrepancy without CP2K or NumPy.
+Setting \texttt{OPENBLAS\_CORETYPE=ARMV8} for the tested processes
+restores the correct result and all reported unit/regression checks.
+The failed automatic-dispatch controls are retained. No CP2K
+formula, numerical reference, tolerance or machine-wide environment
+setting was changed to obtain the passing results.
+
+On x86-64, a fresh 48-atom Bi calculation also reproduces the
+retained macOS calculation when initialized with exactly the same
+wavefunction restart. Geometry, basis and potential contents,
+cutoffs, temperature and convergence settings are checked explicitly.
+The total energies agree at all printed digits, the maximum spinor
+eigenvalue difference is $3.42\times10^{-14}$ hartree, and the
+spectral norm of the independently reconstructed complete-AO
+Hamiltonian difference is $1.14\times10^{-13}$ hartree.
+The neutral-gap difference is $5.56\times10^{-16}$ hartree.
+A comparison against an earlier, different restart stage was
+rejected and is retained separately. These controls establish
+reproducibility of this finite calculation, not convergence with
+flake size, basis or temperature. The build records, library
+reproducer, raw exports, comparison reader and archive checks are
+in \nolinkurl{validation/development/platform-validation/}.
+
 \clearpage
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged

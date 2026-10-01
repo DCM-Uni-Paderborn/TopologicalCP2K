@@ -1,0 +1,54 @@
+{
+  "archive": "terok-platform-checks.tar.gz",
+  "sha256": "ca77fca44b6ae45a1446cddf17b7ca48bcb137f5d0fc7946bff581d3f8d0e436",
+  "bytes": 62319566,
+  "summary": {
+    "host": "terok",
+    "architecture": "x86_64",
+    "source_archive_sha256": "13286f5dacc4f69265d333f0dd55ac4bc8ffbfbeb2937b6231ccb681056b466e",
+    "source_files_verified": 9787,
+    "unit_executions": 10,
+    "regression_checks": {
+      "FAILED": 0,
+      "WRONG": 0,
+      "CORRECT": 81
+    },
+    "openblas_coretype": null,
+    "scope": "Single-host serial/MPI qualification. Not multi-node scaling or size convergence.",
+    "same_restart_platform_comparison": {
+      "accepted": true,
+      "differences": {
+        "total_energy_hartree": 0.0,
+        "eigenvalue_hartree": 3.419486915845482e-14,
+        "physical_operator_hartree": 1.134002989896102e-13,
+        "electronic_gap_hartree": 5.551115123125783e-16
+      },
+      "tolerances": {
+        "total_energy_hartree": 1e-08,
+        "eigenvalue_hartree": 1e-07,
+        "physical_operator_hartree": 1e-07,
+        "electronic_gap_hartree": 1e-08
+      },
+      "reference_diagnostics": {
+        "metric_minimum": 0.02146088498015718,
+        "metric_ratio": 0.004104539558345256,
+        "frame_residual": 1.1768364061259862e-13,
+        "time_reversal_residual": 2.997642967512056e-15
+      },
+      "new_diagnostics": {
+        "metric_minimum": 0.02146088498015718,
+        "metric_ratio": 0.004104539558345256,
+        "frame_residual": 1.1612932839786577e-13,
+        "time_reversal_residual": 2.9976079073653507e-15
+      },
+      "reference_gap_hartree": 0.0013933545164971084,
+      "new_gap_hartree": 0.0013933545164965533,
+      "reference_export_sha256": "c466153e97717db4f42f886738f7893f41d0d4396b72fc892dff2b06b0f04275",
+      "reference_record_sha256": "962a5929eebca6e23ac063de09726c9dd13f05771987abeaf429df5d5055faff",
+      "same_restart_sha256": "2f50e44f680c9a440c622de72f5d79bba3acf7cc1798eef9c2936288712be680",
+      "new_export_sha256": "707dec4f6c1d409d7b2042d230d50bce64708de7a625d16df31ae0eed8b0da3e",
+      "comparison_sha256": "5b9f7e68761f009dc5fc870cde15d9ef07685df295797f953f74b963b7dcd5fe"
+    },
+    "retained_rejected_control": "The first comparison used an earlier SCF checkpoint and was rejected at unchanged tolerance. The accepted comparison explicitly verifies identical initial restart hashes."
+  }
+}

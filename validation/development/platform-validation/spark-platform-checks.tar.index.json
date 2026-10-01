@@ -1,0 +1,35 @@
+{
+  "archive": "spark-platform-checks.tar.gz",
+  "sha256": "51caf569e99984c5e1bc46ef94c1cc2deee29514803be2dd1fa67f90cb4b7d5b",
+  "bytes": 504602,
+  "summary": {
+    "host": "spark",
+    "architecture": "aarch64",
+    "source_archive_sha256": "13286f5dacc4f69265d333f0dd55ac4bc8ffbfbeb2937b6231ccb681056b466e",
+    "source_files_verified": 9787,
+    "unit_executions": 10,
+    "regression_checks": {
+      "FAILED": 0,
+      "WRONG": 0,
+      "CORRECT": 81
+    },
+    "openblas_coretype": "ARMV8",
+    "scope": "Single-host serial/MPI qualification. Not multi-node scaling or size convergence.",
+    "blas_negative_control": {
+      "library_config": "OpenBLAS 0.3.26 NO_LAPACKE DYNAMIC_ARCH NO_AFFINITY armv8sve MAX_THREADS=64",
+      "expected_dotc": [
+        70.0,
+        -8.0
+      ],
+      "automatic_sve_dotc": [
+        46.0,
+        -8.0
+      ],
+      "scoped_armv8_dotc": [
+        70.0,
+        -8.0
+      ],
+      "global_environment_changed": false
+    }
+  }
+}
