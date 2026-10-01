@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "baseline_accepted": true,
+  "negative_controls": [
+    {
+      "case": "wrong-synthetic-sign",
+      "rejected": true,
+      "diagnostic": "Wrong Pfaffian sign"
+    },
+    {
+      "case": "accepted-singularity",
+      "rejected": true,
+      "diagnostic": "Singular query was accepted"
+    },
+    {
+      "case": "missing-synthetic-query",
+      "rejected": true,
+      "diagnostic": "Synthetic query count"
+    },
+    {
+      "case": "material-nu",
+      "rejected": true,
+      "diagnostic": "Material mismatch: mesh3 nu"
+    },
+    {
+      "case": "material-gap",
+      "rejected": true,
+      "diagnostic": "Changed material gap"
+    },
+    {
+      "case": "material-factor_residual",
+      "rejected": true,
+      "diagnostic": "Material factor residual"
+    },
+    {
+      "case": "material-eigen_residual",
+      "rejected": true,
+      "diagnostic": "Material eigen residual"
+    },
+    {
+      "case": "material-dense_nu",
+      "rejected": true,
+      "diagnostic": "Independent dense check failed"
+    },
+    {
+      "case": "changed-gap",
+      "rejected": true,
+      "diagnostic": "Changed material gap"
+    },
+    {
+      "case": "extra-ordering",
+      "rejected": true,
+      "diagnostic": "Material needed extra orderings"
+    },
+    {
+      "case": "roundoff-sign",
+      "rejected": true,
+      "diagnostic": "Roundoff pattern failed"
+    },
+    {
+      "case": "api-status",
+      "rejected": true,
+      "diagnostic": "ABI expectation failed"
+    },
+    {
+      "case": "source-patch",
+      "rejected": true,
+      "diagnostic": "Source patch mismatch"
+    },
+    {
+      "case": "historical-reference",
+      "rejected": true,
+      "diagnostic": "Historical reference was replaced"
+    },
+    {
+      "case": "runtime-diagnostic-even-with-matching-log-hash",
+      "rejected": true,
+      "diagnostic": "Runtime failure in native/mesh3.command.json"
+    }
+  ],
+  "archive_sha256": "fc88e2c4098e45fe9276354b721fc91e7c0fb4fb1ce539e621c3ac755dbaaaa3",
+  "verifier_sha256": "c5953f99374dcb3ad44c5d1feffa4fa48b13d785fca24eedf0fb9a2930721706",
+  "scope": "Numerical fault injection bypasses envelope checks deliberately, so rejection must come from the content checks rather than a stale payload hash."
+}

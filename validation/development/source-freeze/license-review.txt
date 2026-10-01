@@ -1,0 +1,104 @@
+TopologicalCP2K retained-source provenance and notice review
+1 October 2026
+
+Scope
+
+This is a local companion to the manuscript checkout at
+3b27a33dbf1cef25752ae01bb1239482de8e3e90. It does not change the manuscript,
+the 115 retained scientific archives, any CP2K source, or repository visibility.
+It records existing notices and source identity. It does not grant new rights,
+assign a blanket license, or constitute legal clearance for publication.
+
+The revised inventory includes Fortran, C/C++, Python, shell, CMake, Makefiles,
+included source fragments, configuration templates and CP2K input includes.
+It contains 2,455 file occurrences and 1,141 distinct SHA-256 hashes. Repeated
+occurrences in historical archives are intentional evidence, not extra code
+implementations. Apple resource-fork metadata is not treated as source.
+
+Dependency correspondence
+
+The copied dependency tree is compared with immutable Git objects at
+iyamazaki/Trilinos revision 02ef047cb4e1e16959714ce50462bb09511d0e9a.
+The local working-tree modification to Tacho_SkLDL_Internal.hpp is not used
+as an upstream reference and is left untouched.
+
+1,384 archived dependency-file occurrences are byte-identical to that tree.
+They comprise Tacho, Kokkos, vendored DESUL and mdspan, one ShyLU header,
+and legacy SuiteSparse components. Their notice families remain distinct.
+
+Twelve modified Tacho-header occurrences represent eight distinct variants.
+Their original leading notice blocks are preserved. Each generated unified
+diff has been applied to its pinned upstream source in a temporary directory.
+All eight reconstructed hashes match the archived variants exactly. These
+patches identify historical research variants. They do not apply those
+variants to the currently installed dependency.
+
+Twenty generated-header/configuration occurrences represent ten distinct
+files. They are traced to the pinned CMake templates. Real CMake configure_file
+runs, with the recorded substitutions and conditional definitions, reproduce
+all ten hashes exactly. TrilinosConfig.cmake is the compatibility include
+generated from TribitsConfigInclude.cmake.in, not the full project-config
+template. Five additional tests check literal changes, repeated-variable
+consistency, conditional definitions and preservation of runtime variables.
+
+The three Tacho_SkLDL_*_Research.hpp headers already declare GPL-2.0-or-later.
+They are local research additions, not unchanged upstream Tacho files.
+research_skew_pivot.hpp also matches the local research source but contains
+no license statement. That absence remains explicitly recorded.
+
+Notice handling
+
+The notices directory contains 22 verbatim texts. Their original locations
+and SHA-256 hashes are recorded in dependency-provenance.json and
+notice-sources.tsv. These include CP2K, Tacho, Kokkos, ShyLU, Trilinos,
+TriBITS, DESUL, the legacy SuiteSparse component notices, GPLv3 and LGPLv2.1.
+The UFconfig header is retained as notice evidence because it contains its
+own copyright and no-licensing-restrictions statement. COLAMD and CCOLAMD
+retain their own terms rather than being relabeled with AMD's terms.
+
+DESUL notice texts come from a separately pinned upstream revision. They
+agree with the identifiers in the archived DESUL headers, but the original
+vendoring revision of DESUL was not independently established. The exact
+copied source files are independently tied to the pinned Trilinos tree.
+Similarly, mdspan files are identified as the copy vendored into Kokkos,
+not as an independently identified mdspan release.
+
+The 270 retained external reference-table files are byte-identical to the
+published irreptables 3.1.0 source distribution, with SHA-256
+adcf3cc1bf78419ca23319b112343e1dbf41e1bdb7cccc8673159c8cf4c60773.
+That distribution declares GPLv3 in package metadata but has no standalone
+LICENSE member. The companion retains the GPLv3 text from separately pinned
+IrRep upstream. It does not claim that this newer IrRep source is the original
+irreptables 3.1.0 implementation.
+
+Other retained material
+
+335 non-dependency occurrences contain explicit SPDX statements. A further
+195 match current package source files, and 30 occur in archives containing
+a package LICENSE. These are separate kinds of evidence. A package notice
+or identity match alone is not proof that there are no per-file exceptions.
+
+439 script/patch occurrences, corresponding to 177 distinct hashes, still
+have no explicit file-level notice or established package-notice attribution
+in this review. Thirty-five input-include occurrences, representing 15 hashes,
+are listed separately. The small research_skew_pivot.hpp file appears twice.
+See unassigned-license-files.tsv for exact paths and hashes. This list is not
+an allegation of license infringement or a claim that these files cannot be
+published. It identifies material for which this audit must not invent terms.
+Author licensing decisions for the manuscript and original analysis code
+remain separate from third-party attribution.
+
+Validation and limits
+
+provenance-validation.json records the eight patch reconstructions, ten
+CMake reconstructions, 22 notice hashes, five control tests, complete inventory
+coverage, and unchanged hashes of all 115 original archives. All pass.
+This is source-provenance validation, not a new numerical validation.
+
+The earlier Wilson frozen-build work separately validates the original Neon
+and Stanene examples. Its scalar-space/degeneracy caveat for five-state Neon
+still applies. This notice companion neither replaces those numerical records
+nor completes a source/build freeze for every other manuscript method.
+
+No public upload, remote push, repository-visibility change, scientific claim
+update, or assignment of a license to the manuscript was performed here.

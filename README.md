@@ -55,11 +55,21 @@ repository; temporary build files stay in the ignored `.build` directory.
 Alternatively, run latexmk -pdf main.tex and, separately,
 latexmk -pdf supporting_information.tex.
 The latest checked local build directory is outside the Dropbox project at
-/Users/tkuehne/paper-revisions/topology-progress-20260925/bismuth-neutral-window/.
+/Users/tkuehne/work/topology-release-audit-20260930/manuscript-reproduction/tex-build/.
 The earlier topology-progress-20260924 directory retains the pre-update manuscript and a compressed audit
 of the byte-identical unused regression copies removed during cleanup.
 
 ## Evidence and boundaries
+
+The 1 October 2026 source-frozen reproduction checks are collected in
+`validation/development/source-freeze/`. They include independent Wilson
+reruns, the Neon incomplete-multiplet diagnosis, a cold MPI localizer build
+with two targeted corrections, and a separately instrumented native Pfaffian
+rebuild. The updated SI distinguishes fresh SCF calculations, regression
+checks, and reanalysis of archived matrices. The historical figure and
+numerical reference values are unchanged. These are method-specific source
+freezes, not a final release snapshot of every manuscript method or a
+multi-node scaling study.
 
 validation/topology contains the original Wilson, inversion and phason
 records. validation/development contains implementation notes and the

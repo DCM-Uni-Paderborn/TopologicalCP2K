@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "files": 470,
+  "source_paths_verified": 9746,
+  "changed_source_files": [
+    "src/qs_rho_atom_methods.F",
+    "src/quadratic_pseudospectrum.F",
+    "src/quadratic_pseudospectrum_unittest.F"
+  ],
+  "corrected_unit_runs": 12,
+  "corrected_regression_checks": [
+    124,
+    124
+  ],
+  "scope": "Integrity and consistency of retained execution evidence, not an independent rerun or scaling claim."
+}

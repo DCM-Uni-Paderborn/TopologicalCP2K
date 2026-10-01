@@ -1,0 +1,59 @@
+{
+  "archive_sha256": "70273f5a0b07f3deba4ff0ee02d223bc9125c5bead5975c10a86e6ed071c40c6",
+  "baseline_passed": true,
+  "all_negative_controls_rejected": true,
+  "controls": [
+    {
+      "case": "false-success",
+      "rejected": true
+    },
+    {
+      "case": "failed-unit",
+      "rejected": true
+    },
+    {
+      "case": "duplicated-unit",
+      "rejected": true
+    },
+    {
+      "case": "wrong-mpi-size",
+      "rejected": true
+    },
+    {
+      "case": "wrong-openmp-size",
+      "rejected": true
+    },
+    {
+      "case": "runtime-in-successful-log",
+      "rejected": true
+    },
+    {
+      "case": "unrelated-source-change",
+      "rejected": true
+    },
+    {
+      "case": "replaced-fixed-source",
+      "rejected": true
+    },
+    {
+      "case": "lost-original-failure",
+      "rejected": true
+    },
+    {
+      "case": "lost-ritz-negative-control",
+      "rejected": true
+    },
+    {
+      "case": "lost-pointer-negative-control",
+      "rejected": true
+    },
+    {
+      "case": "replaced-pointer-log",
+      "rejected": true
+    },
+    {
+      "case": "duplicated-pointer-configuration",
+      "rejected": true
+    }
+  ]
+}

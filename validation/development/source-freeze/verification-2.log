@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "synthetic": [
+    {
+      "queries": 600,
+      "resolved": 468,
+      "singular": 132
+    },
+    {
+      "queries": 636,
+      "resolved": 336,
+      "singular": 300
+    }
+  ],
+  "roundoff_patterns": 930,
+  "api_queries": 63,
+  "material_cases": 10,
+  "material_queries": 33,
+  "max_gap_error": 0.0,
+  "max_factor_residual": 2.056248991472289e-11,
+  "max_eigen_residual": 3.030975173539199e-11,
+  "independent_dense_queries": 3,
+  "max_dense_gap_error": 1.6653345369377348e-15,
+  "scope": "Archive integrity and independent re-evaluation of retained numerical comparisons. No native executable, SCF, factorization or MPI process is rerun by this checker.",
+  "archive_sha256": "fc88e2c4098e45fe9276354b721fc91e7c0fb4fb1ce539e621c3ac755dbaaaa3",
+  "verified_files": 74
+}

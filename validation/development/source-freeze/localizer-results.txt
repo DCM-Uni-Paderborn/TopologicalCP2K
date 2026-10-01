@@ -1,0 +1,63 @@
+Cold CP2K localizer build and targeted corrections
+================================================
+
+Scope
+-----
+The original source is the reconstructed 851fe2178997f1fbb2a8c2141a1da5fff40e644d
+snapshot. All 9746 tracked file/symlink contents were verified against its Git
+tree. The corrected snapshot changes only the three files listed in its source
+provenance, not the unrelated in-progress research checkout.
+
+The MPI build uses the pre-existing numerical dependencies, GCC 16.1.0 and
+Fortran bounds checking. CP2K appends -O3 after the requested Release flags.
+It is not an -O1-only build, a dependency rebuild, a pure ssmp build, or a
+multi-node performance study.
+
+Two distinct findings
+---------------------
+1. A premature block-Ritz restart discarded usable residual-space slots. The
+   fix fills a partial block before restarting. Regression fixtures cover one
+   and two remaining slots and a complex nonorthogonal metric. New tests fail
+   with the original solver and pass with the correction at -O0 and -O3 with
+   all Fortran runtime checks. The 8-dimensional quantitative probe converges
+   in two iterations with eigenvalue error 2.22e-15. The original cold build
+   fails the original periodic unit fixture at its unchanged 100-iteration
+   limit. Other compilation variants can converge, so this is not a universal
+   claim that the old solver always failed after 100 iterations.
+
+2. The cold build exposes a GCC 16.1.0 component-slice bounds-check failure in
+   GAPW startup. A self-contained Fortran program reproduces it without CP2K
+   or BLAS. Scalar list-entry aliases preserve the same array sections and
+   avoid the incorrect bounds-check temporaries. Bounds checking remains on.
+   Eight original probe configurations fail and eight alias configurations
+   pass across -O0/-O3, with and without OpenMP and with one/two/four threads.
+   The H2 GAPW control also passes four one/two-rank/thread combinations.
+
+Integrated validation
+---------------------
+The corrected snapshot passes 12 unit executions, including sparse Pfaffian
+tests with four MPI ranks and with two ranks/two OpenMP threads. The five
+unchanged regression directories contain 72 input files. Both selected
+runs pass 124/124 reported checks: two MPI ranks/one OpenMP thread and one MPI
+rank/two OpenMP threads. This includes GPW, GAPW, all-electron, periodic,
+spin-orbit, MUMPS and Tacho cases. No reference values or tolerances changed.
+The original failures remain in the original/ records: two failed periodic
+unit executions, plus 19 GAPW startup failures in each regression run.
+
+Reproduction and verification
+-----------------------------
+The original full source patch, original and corrected source fingerprints,
+the targeted correction patch, compiler/dependency configuration, command
+records and raw CP2K outputs are retained. Reconstruct the original CP2K tree
+from its base commit and source patch, then apply corrected/combined-fix.patch.
+The local orchestration scripts document the exact invocations and dependency
+locations. No binaries or object files are needed in this archive. Dependencies
+must be installed separately. The separate dependency-notice audit applies.
+
+The standalone standard-library verifier checks archive hashes, the three-file
+change boundary, successful and deliberately failed controls, and retained
+regression summaries. It does not independently execute CP2K or establish
+material convergence, all-code-path coverage or distributed Pfaffian scaling.
+
+No remote branch, pull request, repository visibility or manuscript was changed
+by this validation. These corrections are separate local commits.

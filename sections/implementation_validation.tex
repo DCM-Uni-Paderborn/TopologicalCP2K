@@ -67,6 +67,20 @@ They were produced with their recorded executable and sampling.
 They are not relabelled as localizer or Kubo calculations merely
 because the underlying operators are now shared.
 
+Separate source-frozen checks completed on 1 October 2026 reproduce the
+original Wilson examples and rebuild the localizer and quadratic paths
+from recorded sources. After two targeted corrections, the latter pass
+12 unit-test executions and all 124 regression checks in each of two
+MPI/OpenMP configurations. The corrections retain numerical references
+and bounds checking. They address premature iterative-subspace restarts
+and a compiler-dependent GAPW array-section failure.
+A separately rebuilt native Pfaffian adapter reproduces 33 archived
+material-matrix queries without rerunning their SCF calculations.
+The Supporting Information records the source boundaries, initial
+failures, independent controls, and dependency fingerprints.
+Neither the single-node runs nor the matrix replays establish multi-node
+scaling or additional material convergence.
+
 \subsection{Quantitative test and demonstration calculations}
 Table~\ref{tab:operator-validation} records representative comparisons
 from the retained development runs. Agreement is measured between

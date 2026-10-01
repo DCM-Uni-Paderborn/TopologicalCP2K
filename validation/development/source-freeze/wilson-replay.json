@@ -1,0 +1,271 @@
+{
+  "reference_sha256": "148d6ce8fb45c759ef130a17751aaed7c2c78971be3986f6e7a7595638708f19",
+  "fresh_sha256": "cf6cb4d96a70d0ea35ada1282986f69d2a5b13d8dc688faac7214705ebf3b616",
+  "tolerances": {
+    "total_energy_hartree": 1e-08,
+    "eigenvalues_eV": 1e-06,
+    "wilson_eigenvalue_chord": 1e-08,
+    "link_singular_value": 1e-08
+  },
+  "materials": {
+    "neon": {
+      "maximum_differences": {
+        "total_energy_hartree": 0.0,
+        "eigenvalues_eV": 0.0,
+        "wilson_eigenvalue_chord": 4.002966042486721e-15,
+        "link_singular_value": 9.992007221626409e-16
+      },
+      "reference_replay": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.5982970556924733e-14,
+        "maximum_singular_value_error": 5.440092820663267e-15,
+        "minimum_link_singular_value": 0.9982577799087168
+      },
+      "fresh_replay": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.6893275538371625e-14,
+        "maximum_singular_value_error": 4.440892098500626e-15,
+        "minimum_link_singular_value": 0.9982577799087168
+      }
+    },
+    "stanene": {
+      "maximum_differences": {
+        "total_energy_hartree": 2.4914292851008213e-11,
+        "eigenvalues_eV": 7.720100114738671e-10,
+        "wilson_eigenvalue_chord": 4.090769961447164e-11,
+        "link_singular_value": 3.711142504414511e-12
+      },
+      "reference_replay": {
+        "loops": 193,
+        "points_per_loop": 192,
+        "raw_z2": 1,
+        "polar_z2": 1,
+        "maximum_wilson_eigenvalue_error": 7.948953724803516e-14,
+        "maximum_singular_value_error": 5.329070518200751e-15,
+        "minimum_link_singular_value": 0.9524814244559853
+      },
+      "fresh_replay": {
+        "loops": 193,
+        "points_per_loop": 192,
+        "raw_z2": 1,
+        "polar_z2": 1,
+        "maximum_wilson_eigenvalue_error": 5.018879080425556e-14,
+        "maximum_singular_value_error": 5.995204332975845e-15,
+        "minimum_link_singular_value": 0.9524814244542438
+      }
+    }
+  },
+  "new_dft_calculations_during_replay": 0,
+  "source": {
+    "commit": "03986b589953df8be9f17e78fc6bb33fdd1e8d11",
+    "tree": "2ec290f0c66db8086bf5b3a695251aca9000dd17",
+    "submodules": ""
+  },
+  "files_verified": 425,
+  "diagnostics": {
+    "cases": {
+      "omp1-repeat1": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.6893275538371625e-14,
+        "maximum_singular_value_error": 4.440892098500626e-15,
+        "minimum_link_singular_value": 0.9982577799087168,
+        "historical_differences": {
+          "total_energy_hartree": 0.0,
+          "eigenvalues_eV": 0.0,
+          "wilson_eigenvalue_chord": 4.002966042486721e-15,
+          "link_singular_value": 9.992007221626409e-16
+        }
+      },
+      "omp2-repeat1": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.9539925233402755e-14,
+        "maximum_singular_value_error": 3.552713678800501e-15,
+        "minimum_link_singular_value": 0.998257901652821,
+        "historical_differences": {
+          "total_energy_hartree": 2.842170943040401e-14,
+          "eigenvalues_eV": 3.5845992840677354e-10,
+          "wilson_eigenvalue_chord": 1.0716187060911815e-08,
+          "link_singular_value": 1.2174410624066212e-07
+        }
+      },
+      "omp1-repeat2": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.6893275538371625e-14,
+        "maximum_singular_value_error": 4.440892098500626e-15,
+        "minimum_link_singular_value": 0.9982577799087168,
+        "historical_differences": {
+          "total_energy_hartree": 0.0,
+          "eigenvalues_eV": 0.0,
+          "wilson_eigenvalue_chord": 4.002966042486721e-15,
+          "link_singular_value": 9.992007221626409e-16
+        }
+      },
+      "omp2-repeat2": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.594475081682869e-14,
+        "maximum_singular_value_error": 2.7755575615628914e-15,
+        "minimum_link_singular_value": 0.9982579135698765,
+        "historical_differences": {
+          "total_energy_hartree": 1.4210854715202004e-14,
+          "eigenvalues_eV": 2.935287568561762e-10,
+          "wilson_eigenvalue_chord": 2.917902941027219e-08,
+          "link_singular_value": 1.33661161805243e-07
+        }
+      },
+      "initial-omp2": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 2.4424906541753444e-14,
+        "maximum_singular_value_error": 2.886579864025407e-15,
+        "minimum_link_singular_value": 0.998257821292466
+      },
+      "neon-scalar-space-controls/soc-full-omp1-repeat1": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.3322676295501878e-14,
+        "maximum_singular_value_error": 3.4416913763379853e-15,
+        "minimum_link_singular_value": 0.9982581021957763,
+        "same_space_differences": {
+          "total_energy_hartree": 0.0,
+          "eigenvalues_eV": 0.0,
+          "wilson_eigenvalue_chord": 0.0,
+          "link_singular_value": 0.0
+        }
+      },
+      "neon-scalar-space-controls/soc-full-omp2-repeat1": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.1102230246251565e-14,
+        "maximum_singular_value_error": 1.9984014443252818e-15,
+        "minimum_link_singular_value": 0.9982581021957762,
+        "same_space_differences": {
+          "total_energy_hartree": 2.842170943040401e-14,
+          "eigenvalues_eV": 2.2026824808563106e-13,
+          "wilson_eigenvalue_chord": 3.1086244689504383e-15,
+          "link_singular_value": 1.3322676295501878e-15
+        }
+      },
+      "neon-scalar-space-controls/soc-full-omp1-repeat2": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.3322676295501878e-14,
+        "maximum_singular_value_error": 3.4416913763379853e-15,
+        "minimum_link_singular_value": 0.9982581021957763,
+        "same_space_differences": {
+          "total_energy_hartree": 0.0,
+          "eigenvalues_eV": 0.0,
+          "wilson_eigenvalue_chord": 0.0,
+          "link_singular_value": 0.0
+        }
+      },
+      "neon-scalar-space-controls/soc-full-omp2-repeat2": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.554312234475219e-14,
+        "maximum_singular_value_error": 4.9960036108132044e-15,
+        "minimum_link_singular_value": 0.9982581021957727,
+        "same_space_differences": {
+          "total_energy_hartree": 2.1316282072803006e-14,
+          "eigenvalues_eV": 2.4158453015843406e-13,
+          "wilson_eigenvalue_chord": 3.1086244689504383e-15,
+          "link_singular_value": 7.771561172376096e-16
+        }
+      },
+      "neon-triplet-space-controls/soc-triplet-omp1-repeat1": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.687538997430238e-14,
+        "maximum_singular_value_error": 3.1086244689504383e-15,
+        "minimum_link_singular_value": 0.9982580815569878,
+        "same_space_differences": {
+          "total_energy_hartree": 0.0,
+          "eigenvalues_eV": 0.0,
+          "wilson_eigenvalue_chord": 0.0,
+          "link_singular_value": 0.0
+        }
+      },
+      "neon-triplet-space-controls/soc-triplet-omp2-repeat1": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.4654943925052066e-14,
+        "maximum_singular_value_error": 4.3298697960381105e-15,
+        "minimum_link_singular_value": 0.9982580815569879,
+        "same_space_differences": {
+          "total_energy_hartree": 2.842170943040401e-14,
+          "eigenvalues_eV": 1.5631940186722204e-13,
+          "wilson_eigenvalue_chord": 5.773159728050814e-15,
+          "link_singular_value": 1.4432899320127035e-15
+        }
+      },
+      "neon-triplet-space-controls/soc-triplet-omp1-repeat2": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.687538997430238e-14,
+        "maximum_singular_value_error": 3.1086244689504383e-15,
+        "minimum_link_singular_value": 0.9982580815569878,
+        "same_space_differences": {
+          "total_energy_hartree": 0.0,
+          "eigenvalues_eV": 0.0,
+          "wilson_eigenvalue_chord": 0.0,
+          "link_singular_value": 0.0
+        }
+      },
+      "neon-triplet-space-controls/soc-triplet-omp2-repeat2": {
+        "loops": 5,
+        "points_per_loop": 8,
+        "raw_z2": 0,
+        "polar_z2": 0,
+        "maximum_wilson_eigenvalue_error": 1.687538997430238e-14,
+        "maximum_singular_value_error": 4.9960036108132044e-15,
+        "minimum_link_singular_value": 0.9982580815569878,
+        "same_space_differences": {
+          "total_energy_hartree": 1.4210854715202004e-14,
+          "eigenvalues_eV": 2.0605739337042905e-13,
+          "wilson_eigenvalue_chord": 4.84698502510718e-15,
+          "link_singular_value": 1.2212453270876722e-15
+        }
+      }
+    },
+    "minimum_scalar_cutoff_gaps_eV": {
+      "5": 3.019806626980426e-14,
+      "7": 3.2580461191908903
+    },
+    "scope": "Historical five-state thread sensitivity retained, not hidden or retoleranced. Seven- and thirteen-state controls are separate changed-input diagnostics."
+  },
+  "all_passed": true,
+  "scope": "Archive-only replay of fresh pinned-build runs versus retained finite-basis inputs. No material-convergence claim and no recovery of the historical executable. Build provenance is retained evidence, not a new build performed by this verifier."
+}

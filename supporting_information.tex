@@ -25,8 +25,10 @@ transport, localizer, and quadratic-pseudospectrum developments.
 The original results are not recomputed or relabelled by moving
 the manuscript text.
 The development status is recorded as of 26 September 2026.
-A source freeze and complete public reproduction archive remain
-submission requirements.
+Section~\ref{sec:si-frozen-reproduction} adds source-specific reproduction
+checks completed on 1 October 2026. A final source freeze covering all
+manuscript methods and a complete public archive remain submission
+requirements.
 
 \subsection*{Applications versus test calculations}
 TopoHSE-DB and the submitted generative--predictive discovery study
@@ -59,7 +61,8 @@ The topology examples form a separate calculation set from the Si/Al
 mainline tests. The native extension supplies directed Gaussian-basis
 overlaps, second-variational spinors, and the Wilson-loop analysis described
 in the main text. The retained calculations were completed on
-17 September 2026 with one MPI process and one OpenMP thread. Source
+17 September 2026 with one MPI process. Neon uses one OpenMP thread
+and stanene two, as confirmed by their retained run logs. Source
 provenance and artifact checksums are recorded in
 \texttt{validation/topology/README.md} and the figure manifest.
 
@@ -86,7 +89,9 @@ settings, rather than constitute a new structural or band-gap prediction.
 Eight occupied spinors are retained in each case. The stanene
 second-variational calculation includes all 26 scalar basis states, giving
 52 spinor states before occupied-band selection. For neon, five scalar
-states produce ten spinors. The selected half-plane is
+states produce ten spinors. This historical truncation cuts a degenerate
+multiplet, examined separately in Section~\ref{sec:si-frozen-reproduction}.
+The selected half-plane is
 $\mathbf k(s,t)=(t,s/2,0)$ in fractional reciprocal coordinates, with
 $0\leq s,t\leq1$. The loop closes with reciprocal shift $(1,0,0)$.
 Starting meshes contain four points on each of three loops for neon and
@@ -4194,7 +4199,6 @@ This block establishes local parallel consistency and collective
 error handling, not multi-node speedup or distributed sparse
 integer factorizations.
 
-\clearpage
 \section{Antisymmetric Kubo Charge Response}
 \label{sec:si-kubo-hall}
 The optional \texttt{HALL\_RESPONSE} uses the same projected-AO or
@@ -4258,6 +4262,129 @@ diagonal averages agree exactly and the largest full-tensor
 difference is $3.913\times10^{-12}$ S/m.
 The frozen archive and standalone mathematical replay are in
 \nolinkurl{validation/development/kubo-hall/}.
+
+\clearpage
+\section{Source-Frozen Reproduction Checks}
+\label{sec:si-frozen-reproduction}
+
+The following checks were completed on 1 October 2026. They connect
+retained numerical results to explicit source snapshots and distinguish
+new CP2K runs from reanalysis of previously exported matrices. The
+archives in \nolinkurl{validation/development/source-freeze/} include
+source patches, file hashes, compiler and dependency records, commands,
+raw outputs, and independent verification scripts. Historical failures
+remain available alongside the corrected results. No numerical reference
+or acceptance threshold is changed by these checks.
+
+\subsection{Wilson reproduction and scalar-space truncation}
+Fresh calculations from the pinned Wilson source reproduce the original
+neon and stanene inputs with their respective one- and two-thread
+settings, both on one MPI rank. The maximum Wilson-eigenvalue chord
+differences are $4.00\times10^{-15}$ and $4.09\times10^{-11}$.
+Here the chord is the distance between matched eigenvalues on the unit
+circle, not a difference between their phase branches.
+Total-energy differences are zero and $2.49\times10^{-11}$ hartree,
+and the largest band-energy difference is $7.72\times10^{-10}$ eV.
+Native and independent Z2Pack analysis retain indices zero and one.
+Comparison limits were fixed before these runs at $10^{-8}$ hartree
+for total energy, $10^{-6}$ eV for band energies, and $10^{-8}$ for
+Wilson chords and link singular values.
+
+The historical neon model uses five scalar states before the
+second-variational SOC calculation. At Gamma, scalar states five
+through seven form a virtual triplet near 10.903004 eV. The separation
+above the fifth state is only $3.02\times10^{-14}$ eV, so this
+truncation retains only part of the multiplet. Changing the OpenMP
+thread count from one to two changes its fine Wilson spectra beyond
+the preselected comparison limit, although the index remains zero.
+This failed comparison is retained rather than hidden by a looser
+tolerance.
+
+Two distinct controls include seven scalar states, completing the
+triplet, and all 13 scalar basis states. Both retain the same eight
+occupied spinors. The seven-state cutoff has a minimum separation of
+3.258 eV on the tested mesh. In two repetitions for each enlarged
+space, one- versus two-thread comparisons give occupied-band
+differences below $2.5\times10^{-13}$ eV, Wilson chords below
+$5.8\times10^{-15}$, and link-singular-value differences below
+$1.5\times10^{-15}$. All three scalar spaces give index zero, but
+their detailed spectra need not agree. Enlarging the scalar space
+changes the physical approximation. These controls establish the
+importance of complete multiplets, not basis or material convergence.
+The original figure and five-state records remain unchanged.
+
+\subsection{Cold localizer build and targeted corrections}
+An independent MPI build reconstructs the archived localizer source
+and verifies all 9,746 tracked file and symbolic-link contents.
+Existing numerical dependencies are reused. The build uses GNU
+Fortran 16.1.0 with bounds checking and effective optimization level
+\texttt{-O3}. The corrected snapshot differs in only three source
+files, consisting of two fixes and the associated quadratic unit tests.
+It does not incorporate unrelated work from the current research tree.
+
+The first fix concerns the iterative quadratic pseudospectrum.
+A restart was triggered when the remaining subspace capacity was
+smaller than a full residual block, discarding usable expansion slots.
+Allowing a partial block fills those slots before restarting.
+Tests cover one and two remaining slots and a complex nonorthogonal
+metric. The eight-dimensional probe then converges in two iterations
+with eigenvalue error $2.22\times10^{-15}$ in model units. New unit
+fixtures fail with the original solver and pass with the correction
+at \texttt{-O0} and \texttt{-O3}, with runtime checking enabled.
+
+The second fix addresses a GCC component-slice bounds-check failure
+during GAPW initialization. A standalone Fortran reproducer exhibits
+the failure without CP2K, BLAS, or MPI. Scalar aliases for the list
+entries preserve the mathematical array sections and avoid the failing
+compiler-generated temporaries. Eight original configurations fail
+and eight alias configurations pass across optimization and thread
+settings. Bounds checking remains enabled in the corrected CP2K build.
+
+The corrected build passes 12 unit-test executions, including sparse
+tests on four MPI ranks and on two ranks with two threads each.
+Five unchanged regression directories contain 72 inputs and yield
+124 successful checks with two MPI ranks and one thread per rank.
+The same 124 checks pass with one rank and two threads. They cover
+GPW, GAPW, all-electron, periodic, SOC, MUMPS, and Tacho cases.
+The original build's two failed periodic unit executions and 19 GAPW
+startup failures in each regression run are preserved.
+These are selected integration suites, not a complete CP2K test run,
+a new pure-serial build, or a multi-node performance comparison.
+
+\subsection{Native Pfaffian rebuild and matrix replay}
+The native C++ adapter is rebuilt separately with undefined-behavior
+instrumentation and standard-library assertions. The pre-existing
+Tacho, Kokkos, Boost, and BLAS dependencies are fingerprinted but are
+not rebuilt or instrumented by this check.
+Of 1,236 synthetic queries, all 804 nonsingular cases return the
+expected sign and all 432 singular cases are rejected. All 930
+one-sided-roundoff perturbations of a 32-site chain return the expected
+sign. Another 63 native-interface tests check invalid data, signs,
+scales, time-reversal structure, and memory-limit boundaries.
+
+All 33 queries from ten archived stanene matrix sets reproduce their
+stored indices and gaps. The largest factor-solve and near-zero
+eigenpair residuals are $2.06\times10^{-11}$ and
+$3.03\times10^{-11}$. Three small cases also agree with independent
+dense references, with maximum gap difference
+$1.67\times10^{-15}$ hartree.
+This replay uses unchanged complete-band exports and one original
+external ordering per query. It does not repeat the material SCF
+calculations. Residual-checked near-zero eigenvalues are not certified
+inertia brackets, and the factorization remains local to one rank.
+
+\subsection{Verification and availability boundaries}
+Portable readers verify archive contents and source fingerprints
+without a CP2K installation. The Wilson reader additionally reruns
+the overlap analysis with Z2Pack. The localizer evidence reader
+rejects 13 deliberately altered evidence sets, including missing
+failures, inconsistent rank or thread counts, and changed source or
+log contents. These checks detect the tested inconsistencies, not
+arbitrary falsification of a self-consistent archive.
+A separate notice inventory preserves dependency licenses and
+records unassigned analysis-script notices without inventing terms.
+These source-specific archives do not replace the final release and
+licensing review for the complete manuscript.
 
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged

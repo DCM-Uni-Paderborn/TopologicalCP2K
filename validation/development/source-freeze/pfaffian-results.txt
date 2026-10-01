@@ -1,0 +1,72 @@
+Frozen native Pfaffian source/build reproduction
+1 October 2026
+
+Source identity
+
+The archived native C++ implementation at CP2K commit
+851fe2178997f1fbb2a8c2141a1da5fff40e644d was rebuilt in an empty build directory.
+The archived standalone CMake file and all numerical validation scripts were
+used unchanged. The seven source/document/input fingerprints in the original
+index agree with the corresponding immutable Git objects.
+
+source-reproduction/source.patch applied to the public-base commit
+92574dc7b41b039d88f32e23bbd59a71b0eb8836 reconstructs the complete Git tree
+285e846d4fea260fe14e4790c25ff978d4c1bdbe. A separate temporary Git index was used
+for this check. The existing dirty research checkout was not changed.
+
+Build
+
+The standalone native adapter was compiled with GCC 16.1.0, -O1 -g,
+-fsanitize=undefined, -fno-sanitize-recover=all and _GLIBCXX_ASSERTIONS. The
+resulting library contains eleven UBSan handler references. Its SHA-256 is
+0f27407d575cf9e816ce321ff02aec86f24d3b311316c5488d1f3ad2462b4c7e.
+
+Existing Tacho/Kokkos/Boost/BLAS dependencies were reused, not rebuilt or
+sanitizer-instrumented. The installed Tacho prefix is fingerprinted. The actual
+compiler dependency closure additionally records 1,726 files, including 1,116
+Boost headers, together with direct linked-library hashes and OS identification.
+No runtime sanitizer errors were found in the retained native test logs.
+
+Independent numerical tests
+
+The 600-query synthetic suite resolves all 468 nonsingular queries and rejects
+all 132 singular queries. The 636-query stress suite resolves all 336 nonsingular
+queries and rejects all 300 singular queries. Each fixture, scale and expected
+sign is checked individually, not only the aggregate counts. There are no wrong
+accepted signs. All 930 one-sided-roundoff perturbations of the 32-site chain
+resolve with the expected positive sign. The maximum solve residual is
+4.79176328310641e-16 for that roundoff sweep.
+
+An additional 63 native C ABI checks cover invalid dimensions, coordinates,
+tolerances, nonfinite/overflowing matrix entries, additive coordinates, singular
+matrices, permutation signs, scaling, memory limits and physical-TR structure
+checks for the Z2 interface. A connected Pfaffian-three fixture requests 4,400
+bytes of tracked numerical workspace. That exact budget passes; one byte less
+is rejected with status -6 and zero output sign. A small tolerated TR defect is
+accepted at a safely positive gap and rejected when the supplied gap becomes
+too small to certify its removal. These are native C tests, not MPI-wrapper tests.
+
+All ten archived stanene export sets are replayed, including 18x18 DZVP and
+12x12 TZVP meshes. All 33 queries reproduce the stored index and gap values.
+The largest absolute gap difference is zero for these runs. Each query uses
+one original external ordering. Maximum factor and eigen residuals are
+2.056248991472289e-11 and 3.030975173539199e-11, respectively. Three small-mesh
+queries also pass independent dense sign and gap checks; their largest dense
+gap difference is 1.6653345369377348e-15.
+
+Reproduction boundaries
+
+The material replay uses the unchanged archived complete-band topology and
+overlap exports. It does not rerun SCF or establish new material convergence.
+Its gaps are near-zero Ritz estimates checked by residuals, not independently
+certified MUMPS inertia brackets. A local factor residual is not a rigorous
+global error bound. The tracked numerical-buffer cap excludes sparse input,
+symbolic ordering, dependency storage and whole-process memory. Timings are
+not controlled scaling benchmarks. Pfaffian factors remain local to one rank.
+
+The separate localizer-frozen-mpi directory contains the ongoing full CP2K
+rebuild and integration validation. Those results are deliberately not claimed
+by this standalone adapter evidence bundle.
+
+No manuscript overwrite, reference-value change, remote push, PR creation,
+repository-visibility change or new blanket license assignment was performed.

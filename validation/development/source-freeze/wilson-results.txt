@@ -1,0 +1,105 @@
+Wilson source-freeze and numerical reproduction
+Completed 1 October 2026, Europe/Berlin
+
+Status
+
+The retained Neon and Stanene Wilson examples were rerun from a clean pinned
+CP2K source tree. Both reproduce the historical evidence with the original
+per-material MPI/OpenMP settings and the preselected numerical tolerances.
+No reference values or tolerances were changed. The native Fortran Wilson
+unit test and all 11 portable verifier tests pass.
+
+Source: 03986b589953df8be9f17e78fc6bb33fdd1e8d11
+Tree:   2ec290f0c66db8086bf5b3a695251aca9000dd17
+The source patch reconstructs this exact tree from the recorded base commit.
+Build settings, direct library checksums, basis/potential checksums, and actual
+input/output hashes are retained. The executable is not included in archives.
+
+Fixed-input reproduction
+
+Neon, one MPI rank and one OpenMP thread
+  Total energy difference:              0 hartree
+  Maximum eigenvalue difference:        0 eV
+  Maximum Wilson-eigenvalue chord:      4.003e-15
+  Maximum link-singular-value difference: 9.992e-16
+  Native and raw/polar Z2Pack index:     0
+
+Stanene, one MPI rank and two OpenMP threads
+  Total energy difference:              2.492e-11 hartree
+  Maximum eigenvalue difference:        7.721e-10 eV
+  Maximum Wilson-eigenvalue chord:      4.091e-11
+  Maximum link-singular-value difference: 3.712e-12
+  Native and raw/polar Z2Pack index:     1
+
+The comparison limits, fixed before the reruns, were 1e-8 hartree for total
+energy, 1e-6 eV for eigenvalues, and 1e-8 for Wilson-eigenvalue chords and link
+singular values. Full-precision values are in matched-comparison.json.
+
+Neon scalar-space diagnosis
+
+The initial validation mistakenly used two OpenMP threads for Neon too. It
+exceeded the fixed 1e-8 Wilson/link comparison threshold, despite retaining
+the correct topological index. This failure and all control outputs remain
+in the evidence archive.
+
+The historical input uses five scalar states for second-variational SOC. At
+Gamma, states 5 through 7 form a degenerate virtual triplet at approximately
+10.90300406138 eV. The minimum separation above state 5 is 3.020e-14 eV.
+Thus the scalar truncation includes only part of a degenerate multiplet.
+Changing floating-point ordering can select a different component of it.
+
+Two repeated one-thread runs reproduce the original five-state result at
+roundoff. Repeated two-thread runs exhibit small variations. Including seven
+scalar states (ADDED_MOS 3) completes the triplet and leaves a minimum scalar
+cutoff separation of 3.25804611919 eV on the tested mesh. All 13 AO basis
+states (ADDED_MOS 9) provide a full-scalar-space control. EXCLUDE_BANDS is
+adjusted in both controls to keep the same eight occupied spinors.
+
+Seven-state one-/two-thread differences in two repetitions
+  Occupied eigenvalues:                 at most 2.061e-13 eV
+  Wilson-eigenvalue chord:               at most 5.774e-15
+  Link singular values:                 at most 1.444e-15
+
+Thirteen-state one-/two-thread differences in two repetitions
+  Occupied eigenvalues:                 at most 2.416e-13 eV
+  Wilson-eigenvalue chord:               at most 3.109e-15
+  Link singular values:                 at most 1.333e-15
+
+The 5-, 7-, and 13-state models all give Z2=0, but their precise spectra are
+not identical. Scalar-space enlargement is a changed physical approximation,
+not a reference-value correction. These controls do not demonstrate basis,
+cutoff, or bulk material convergence. For a new robust demonstration fixture,
+prefer the full 13-state scalar space; retain the old five-state data with
+its provenance when discussing the historical figure.
+
+Archive-only verification
+
+Reference overlap archive:
+  ../wilson-replay/wilson-overlap-evidence.tar.gz
+  SHA256 148d6ce8fb45c759ef130a17751aaed7c2c78971be3986f6e7a7595638708f19
+
+New frozen-build evidence:
+  wilson-frozen-build-evidence.tar.gz
+  46,741,848 bytes, 113 payload files
+  SHA256 cf6cb4d96a70d0ea35ada1282986f69d2a5b13d8dc688faac7214705ebf3b616
+
+The portable verifier was extracted from the new archive and executed using
+only the two archives, with fresh temporary extraction directories. It
+verified 425 payload files, both native reference/rebuild comparisons, and
+13 diagnostic SOC cases. New .mmn matrices were independently analyzed with
+Z2Pack. The exact result is in archive-replay.json. Temporary files were
+removed after the completed run.
+
+No manuscripts, original numerical evidence, reference values, CP2K source,
+repository visibility, or remote branches were changed in this work.
+No claim is made that the exact historical executable was recovered.
+
+Remaining publication work
+
+This closes the fixed-source rerun gap for the two original Wilson figure
+examples only. It is not the complete source/build freeze for the other
+methods in the TopologicalCP2K manuscript. Their distinct archived code
+snapshots, external-library licenses and source correspondence still require
+the release review described by the separate repository audit. Integration
+into the authoritative Overleaf sources and public deposition is not done.
+The five-state Neon caveat should be included when preparing that update.
