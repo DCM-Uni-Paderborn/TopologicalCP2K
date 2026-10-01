@@ -146,6 +146,61 @@ The motivating photonic and aperiodic examples
 \cite{Dixon2023,Wong2026} provide methodological context, not
 first-principles material validation for the CP2K path.
 
+\subsection{Finite three-dimensional class AII}
+For three Cartesian positions, the finite AII construction uses
+a real determinant rather than the two-dimensional Pfaffian
+\cite{Loring2015}. In auxiliary-index-first ordering, define
+\begin{equation}
+ \begin{split}
+ A_3&=I_2\otimes(H-ES)
+       -\ii\kappa\sum_{j=1}^{3}\sigma_j\otimes(X_j-x_jS),\\
+ B_3&=I_2\otimes S,\qquad
+ L_3=\begin{pmatrix}0&A_3\\A_3^\dagger&0\end{pmatrix},\qquad
+ \mathcal B_3=\operatorname{diag}(B_3,B_3).
+ \end{split}
+ \label{eq:finite-three-dimensional-localizer}
+\end{equation}
+Here $X_j$ are the covariant Cartesian moments, $x_j$ are the
+query coordinates, and the Pauli matrices $\sigma_j$ act only
+in the auxiliary space. The physical-spin Hamiltonian, metric
+and all three positions must obey the fixed fermionic
+time-reversal representation. With $C=J_{\mathrm{aux}}\otimes J$
+and $Q=(I-\ii C)/\sqrt2$, the chiral block
+$R_3=Q^\dagger A_3Q$ is real but need not be symmetric.
+For a resolved gap, the local index is
+\begin{equation}
+ \nu_3=\frac{1-\operatorname{sgn}\det R_3}{2},\qquad
+ \mu_3=\min_\ell|\lambda_\ell|,\qquad
+ L_3v_\ell=\lambda_\ell\mathcal B_3v_\ell .
+ \label{eq:finite-three-dimensional-index}
+\end{equation}
+Equivalently, $\mu_3$ is the smallest singular value of
+$B_3^{-1/2}A_3B_3^{-1/2}$. Nonsingular AO congruences
+multiply the determinant by a positive factor and preserve
+the metric gap. A basis change must also preserve or
+consistently transform the time-reversal representation.
+
+The dense implementation accumulates triangular-pivot and
+permutation signs without forming a determinant product.
+The factor reconstruction residual and a rounding allowance
+are compared with the independently calculated metric gap.
+If excessive pivot growth prevents acceptance of the triangular
+factorization, a Householder factorization supplies orthogonal
+and upper triangular factors instead. The determinant sign
+includes every nonidentity reflection. The discarded imaginary
+part of $R_3$ is included in the perturbation budget, and an
+unresolved calculation returns no topological label.
+
+The Hermitian pencil has order eight times the scalar AO count.
+Its current solver is a dense finite-system reference, including
+GPW/GAPW and post-SCF GTH SOC, not a sparse or periodic
+three-dimensional implementation. This strong local index is
+not a collection of weak or two-dimensional slice indices.
+Agreement with a bulk invariant requires separate volume,
+basis and scale convergence. The Supporting Information
+includes an explicit finite-box counterexample to automatic
+identification with the bulk parity.
+
 \subsection{Periodic positions and the torus construction}
 A Cartesian coordinate truncated to a primitive cell is discontinuous
 at the periodic seam. Using it in the open-boundary localizer is not
@@ -188,8 +243,9 @@ complete mesh. Periodic exponentials shift between mesh sectors,
 so their cross-k links must be retained.
 A symmetry-reduced SCF can supply the potential, but scalar SCF
 weights cannot replace the full torus operator.
-The present periodic localizer covers two-dimensional periodic planes;
-a general three-dimensional AII implementation is not claimed.
+The present periodic localizer covers two-dimensional periodic planes.
+The finite three-dimensional construction above does not supply
+a periodic three-dimensional extension.
 
 Spectral flattening provides a separate way to examine the large
 bandwidth-to-gap ratio of a DFT Hamiltonian. For positive $S$ and

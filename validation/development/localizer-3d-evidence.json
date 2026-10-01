@@ -1,0 +1,22 @@
+{
+  "archive": "localizer-3d-evidence.tar.gz",
+  "sha256": "e989701c9858b8512bad6737047e7404d04d757d1782c2ece6d2eda689755612",
+  "bytes": 2528722,
+  "files": 355,
+  "provenance": {
+    "source_base": "f2099e58543d41b9fa86409ce7ed94927378ad0a",
+    "source_head": "c4fa12b8bd2001b390a92fdfcd12e56a25ba999f",
+    "shared_libraries": {
+      "build-serial/src/libcp2k.2026.2.dylib": {
+        "sha256": "1dc96baa40ac918ca1361b7231423a24ca566d5e0b79947b81460828dc88ad6b",
+        "bytes": 63056808
+      },
+      "build-mpi/src/libcp2k.2026.2.dylib": {
+        "sha256": "0f8a3eb1ebd63e2d7347ab80e35566d5fe7549c0ff7dd41aaa7549728b472b52",
+        "bytes": 65303800
+      }
+    },
+    "compiler": "GNU Fortran (Homebrew GCC 16.1.0) 16.1.0",
+    "proof_scope": "Native local rebuilds and reruns, independent AO/SVD replay. No periodic/sparse 3D or material convergence claim."
+  }
+}

@@ -4386,6 +4386,104 @@ records unassigned analysis-script notices without inventing terms.
 These source-specific archives do not replace the final release and
 licensing review for the complete manuscript.
 
+\section{Finite Three-Dimensional AII Validation}
+\label{sec:si-finite-three-dimensional}
+The finite three-dimensional extension is tested separately from
+the earlier frozen-source reproduction. Its chiral determinant
+and metric gap are not inferred from two-dimensional slice
+indices or from inertia of the non-Hermitian chiral block.
+
+\subsection{Model, metric and numerical controls}
+An open $3\times3\times3$ Wilson--Dirac cube has two orbital
+and two physical-spin components per site. Its periodic parent is
+\begin{equation}
+ H_D(\bm k)=I_s\otimes\tau_z
+       \left(m+\sum_{j=1}^3\cos k_j\right)
+       +\sum_{j=1}^3 s_j\otimes\tau_x\sin k_j ,
+\end{equation}
+where $s_j$ and $\tau_j$ are the physical-spin and orbital
+Pauli matrices, respectively, and $I_s$ is the spin identity.
+Lattice spacing and hopping energy are unity.
+At the box center, $E=0$ and $\kappa=0.5$, the masses
+$m=0,2,4$ give strong local indices $0,1,0$ and gaps
+$0.456673548$, $0.06044149945$, and $1.891561079$.
+The strong parity of the periodic parent is independently
+obtained from the eight signs of
+$m+\cos k_x+\cos k_y+\cos k_z$ at the time-reversal-invariant
+momenta. The $m=0$ parent is a weak phase with zero strong
+index, not a test of weak-index extraction by the localizer.
+
+An independent complex singular-value decomposition checks the
+chiral gaps. Further controls apply a nonsingular quaternionic
+AO congruence with complex spin mixing, joint coordinate/query
+and Hamiltonian/energy shifts, and spatial rotations/reflections.
+Broken time reversal, indefinite metrics and nonfinite inputs
+are rejected. For the same $m=2$ box, $\kappa=0.3$ instead
+gives a trivial local index. A gap closing near
+$\kappa=0.4143816353$ separates the two results.
+This is a deliberate finite-volume/scale counterexample, not
+a changed bulk phase.
+
+A separate 64-dimensional real chiral block uses a Wilkinson
+pivot-growth matrix with exactly representable entries. Both
+determinant orientations retain a large singular gap but require
+the orthogonal-factor fallback when the triangular-factor error
+bound is tested. Disabling that fallback makes the control fail.
+Instrumented execution verifies both factorization paths.
+The full unit program passes with unoptimized and optimized
+GNU Fortran builds, array checks and floating-point traps enabled.
+The caller's floating-point exception settings are unchanged.
+These checks validate finite-matrix arithmetic, not large-system
+material topology or multi-node performance.
+
+\subsection{Fresh GPW/GAPW integration and independent AO replay}
+Fresh restricted PBE calculations use two neon atoms at
+$(2.3,2.7,3.1)$ and $(3.6,3.2,2.4)$~\AA\ in an isolated
+6~\AA\ cubic cell. The DZVP-MOLOPT-GGA-GTH-q8 basis from
+\texttt{BASIS\_MOLOPT\_UZH} gives 26 scalar AOs, and
+\texttt{GTH\_SOC\_POTENTIALS} supplies the physical SOC terms.
+The cutoffs are 200/40 Ry, the SCF tolerance is $10^{-12}$,
+and the nonlocal-projector threshold is $10^{-14}$.
+The query is at $(3.0,2.9,3.2)$~\AA, with
+$E=-0.1$ hartree and $\kappa=0.1$ hartree/bohr.
+The strong local index is zero in all three controls.
+The serial generalized gaps are $0.290480629537629$ hartree
+for GPW, $0.287470809650523$ hartree for GAPW, and
+$0.917570046404457$ hartree after GPW spectral flattening
+to unit-magnitude energies in hartree.
+
+An independent reader builds the complete physical-spin Hamiltonian
+and all three positions from printed AO matrices. It orthonormalizes
+with the overlap and computes complex singular values and a
+complex determinant phase, independently of the native real-basis
+factorization. The Hamiltonian immediately preceding the final
+post-SCF refresh is used, matching the localizer evaluation point.
+Across three serial and three two-rank MPI calculations, the maximum
+gap discrepancy is $3.27\times10^{-13}$ hartree and every index agrees.
+These neon systems are integration fixtures, not nontrivial material
+topology examples.
+
+The current serial and MPI research builds pass 22 unit-program
+executions. The six selected localizer/quadratic regression
+directories yield 81 numerical checks in each serial configuration
+with one or two OpenMP threads, and 133 checks in each MPI
+configuration with one rank/two threads or two ranks/one thread.
+The MPI suite includes MUMPS and Tacho, which are unavailable in
+the serial build. Eight unsupported input combinations are rejected
+with their expected diagnostics. Existing numerical references
+are unchanged, and 9,804 source-file fingerprints are unchanged
+throughout the validation. These counts concern the selected
+directories, not the complete CP2K test suite.
+
+The source changes, build records, negative control, native AO
+outputs and a portable replay reader are retained in
+\nolinkurl{validation/development/localizer-3d-evidence.tar.gz}.
+The reader verifies file fingerprints and re-evaluates the six
+AO-matrix controls with NumPy and SciPy without requiring CP2K.
+The archive supplements the earlier frozen-source checks rather
+than replacing their historical source or results.
+
+\clearpage
 \section{Submission Validation Still Required}
 The current record does not establish a nontrivial, size-converged
 DFT localizer classification for a large SOC flake, multi-node sparse

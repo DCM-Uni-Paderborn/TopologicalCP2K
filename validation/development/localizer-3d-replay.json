@@ -1,0 +1,79 @@
+{
+  "verified_files": 355,
+  "unit_runs": 22,
+  "regressions": [
+    "Summary: correct: 81 / 81; 2min",
+    "Summary: correct: 81 / 81; 2min",
+    "Summary: correct: 133 / 133; 3min",
+    "Summary: correct: 133 / 133; 3min"
+  ],
+  "rejected_inputs": 8,
+  "independent_ao_replays": {
+    "serial-gpw": {
+      "nao": 26,
+      "native_index": 0,
+      "native_gap": 0.290480629537629,
+      "source_hamiltonian": "localizer-3d-ao-1_0_13.Log",
+      "post_scf_refresh_max": 1.247890679678676e-12,
+      "oracle_gap": 0.2904806295377438,
+      "difference": 1.1479706074624119e-13,
+      "determinant_imaginary": 8.28606021835266e-17,
+      "metric_ratio": 0.04623771816857287
+    },
+    "serial-gapw": {
+      "nao": 26,
+      "native_index": 0,
+      "native_gap": 0.287470809650523,
+      "source_hamiltonian": "localizer-3d-ao-1_0_12.Log",
+      "post_scf_refresh_max": 5.702105454474804e-13,
+      "oracle_gap": 0.287470809650197,
+      "difference": 3.260169911811772e-13,
+      "determinant_imaginary": 1.6934437415847073e-16,
+      "metric_ratio": 0.04623771816857287
+    },
+    "serial-flattened": {
+      "nao": 26,
+      "native_index": 0,
+      "native_gap": 0.917570046404457,
+      "source_hamiltonian": "localizer-3d-ao-1_0_13.Log",
+      "post_scf_refresh_max": 1.2594369991347776e-12,
+      "oracle_gap": 0.9175700464044808,
+      "difference": 2.375877272697835e-14,
+      "determinant_imaginary": 5.483869409638413e-16,
+      "metric_ratio": 0.04623771816857287
+    },
+    "mpi-gpw": {
+      "nao": 26,
+      "native_index": 0,
+      "native_gap": 0.290480629536276,
+      "source_hamiltonian": "localizer-3d-ao-1_0_13.Log",
+      "post_scf_refresh_max": 1.1075584893660562e-12,
+      "oracle_gap": 0.29048062953642906,
+      "difference": 1.5304424394457783e-13,
+      "determinant_imaginary": 5.206786176546054e-16,
+      "metric_ratio": 0.04623771816857287
+    },
+    "mpi-gapw": {
+      "nao": 26,
+      "native_index": 0,
+      "native_gap": 0.287470809649452,
+      "source_hamiltonian": "localizer-3d-ao-1_0_12.Log",
+      "post_scf_refresh_max": 6.608047442568932e-13,
+      "oracle_gap": 0.2874708096491373,
+      "difference": 3.146927163300006e-13,
+      "determinant_imaginary": 4.211205173177529e-16,
+      "metric_ratio": 0.04623771816857287
+    },
+    "mpi-flattened": {
+      "nao": 26,
+      "native_index": 0,
+      "native_gap": 0.91757004640447,
+      "source_hamiltonian": "localizer-3d-ao-1_0_13.Log",
+      "post_scf_refresh_max": 1.1075584893660562e-12,
+      "oracle_gap": 0.9175700464044924,
+      "difference": 2.2315482794965646e-14,
+      "determinant_imaginary": 2.317550938256024e-16,
+      "metric_ratio": 0.04623771816857287
+    }
+  }
+}

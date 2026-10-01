@@ -338,6 +338,24 @@ The pre-split manuscript sources are backed up at
 /Users/tkuehne/paper-revisions/topology-split-20260924/.
 No journal submission or CP2K implementation push is implied by a manuscript update.
 
+## Finite Three-Dimensional Localizer
+
+The finite AII reference now includes all three Cartesian AO moments with
+post-SCF GTH SOC. The manuscript describes the real chiral determinant and
+independent metric gap, including a residual-checked QR fallback for excessive
+LU pivot growth. The SI records Wilson-Dirac, basis-covariance and gap-closing
+controls plus fresh GPW/GAPW/flattened neon calculations. This is not a periodic
+or sparse 3D implementation and does not establish material convergence.
+
+`validation/development/localizer-3d-evidence.tar.gz` contains the source patch,
+build records, native AO matrices, 22 passing unit runs, four passing regression
+configurations (81/81 serial and 133/133 MPI, twice each), eight rejected input
+combinations, and the deliberately failing no-QR control. Archive fingerprints
+are in `localizer-3d-evidence.json`. After extracting the archive, run
+`python verify_evidence.py .` with NumPy and SciPy to check its contents and
+repeat all six AO-matrix comparisons without a CP2K installation. The retained
+`localizer-3d-replay.json` is the result of replaying a fresh extraction.
+
 ## Application References
 
 TopoHSE-DB is cited with its published title and bibliographic record:
