@@ -340,6 +340,20 @@ These two temperatures alone do not establish the zero-temperature
 limit; the physical-metric comparison is detailed in the
 Supporting Information.
 
+The concentric 96-atom control extends the quantitative validation to a
+larger finite system and measures its fixed-geometry basis dependence.
+Its neutral SOC gap is 17.87 meV with UZH DZVP and
+21.87 meV with UZH TZVP. The occupied 480-spinor subspaces have
+projector distance 0.1511 despite a mean retained weight of 99.70\%.
+At the centroid and each calculation's own neutral midpoint,
+eight of nine sampled localizer indices agree between the bases.
+At $\kappa=0.002$ hartree/bohr the index instead changes from zero
+to one. Four native TZVP controls agree with the independent
+complete-AO reconstruction within $3.02\times10^{-11}$ hartree,
+including this changed index. The TZVP result is thus independently
+validated at the chosen basis and geometry, and the comparison quantifies
+the sensitivity of the finite-flake classification to the orbital basis.
+
 This contrast persists in joint parameter neighborhoods, not only
 along a line in $\kappa$. A norm bound for simultaneous changes in
 energy, both in-plane positions and scale keeps the finite localizer
@@ -589,11 +603,14 @@ full-cubic-symmetry reference. Details and the separate quadrature
 convergence checks are given in the Supporting Information.
 
 \subsection{Convergence and material validation}
-Before submission, the material set should include matched crystalline
-band and real-space indices, finite-size SOC flakes, disordered
-configurations, and controlled transitions. Transport studies need
-independent convergence of basis, mesh or size, temperature, and
-dissipation. Localizer studies need a stable scale interval and a
-spatial map of both the index and its protection gap.
-The paper should report failed or unresolved parameter regions rather
-than select only points with the desired integer.
+This methods study assesses implementation correctness through independent
+reference calculations, operator identities, covariance tests and agreement
+between numerical backends and parallel configurations. Increasing the
+basis or system size supplies additional robustness tests, but convergence
+of a material observable is not itself a test of implementation correctness.
+The TZVP controls extend the tested basis and state spaces and reproduce
+the independent reference results at the specified settings.
+Systematic material-specific convergence of basis, size, sampling,
+temperature and dissipation belongs to subsequent application studies.
+The retained parameter scans document both resolved results and transitions,
+providing reproducible starting points for those studies.

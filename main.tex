@@ -72,7 +72,7 @@ topological properties remain development targets.
 spectral localizer, topological quantum chemistry, spin--orbit coupling
 \par\medskip
 \noindent\textit{Working manuscript for Computer Physics Communications.
-Implementation status: 26 September 2026.
+Implementation status: 1 October 2026.
 Source-specific reproduction checks: 1 October 2026.}
 \clearpage
 \section{Introduction}
@@ -142,26 +142,38 @@ joint approximate states. Sparse assembly and factorization address
 their numerical cost without replacing the physical assumptions of
 each construction.
 
-The present evidence establishes operator and solver consistency for
-the tested models and small GPW/GAPW/SOC calculations, alongside the
-retained neon and stanene band-topology demonstrations and the Si/Al
-k-point tests of the companion study. The TopoHSE-DB and
-generative--predictive discovery studies illustrate the materials-science
-applications motivating this infrastructure; their published or submitted
-results are not new CP2K validation data. The present tests do not establish
-all-space-group TQC, a general Hall-response implementation, or
-size-converged first-principles localizer classifications.
-Those boundaries are part of the method specification.
+The numerical validation combines independent operator reconstructions,
+dense and sparse solver comparisons, and serial and MPI calculations
+for model systems and GPW/GAPW/SOC electronic structures. The
+96-atom Bi flake provides a larger finite-system benchmark with a
+complete 3,264-spinor TZVP space. All four native localizer controls
+reproduce the independently reconstructed indices, with gap differences
+below $3.02\times10^{-11}$ hartree. Together with the neon and stanene
+band-topology demonstrations and the Si/Al k-point tests of the companion
+study, these results establish a quantitatively validated implementation
+for the methods and parameter ranges examined here.
+
+The fixed-geometry DZVP/TZVP comparison also measures the physical
+basis dependence of the Bi flake. Eight of nine sampled indices agree,
+while the remaining change is reproduced by both numerical paths.
+The TZVP calculation therefore provides a validated reference for this
+finite system, with its basis sensitivity explicitly quantified.
+Bulk limits and complete-basis extrapolations are separate from these
+implementation tests and belong to subsequent material-specific studies.
+The TopoHSE-DB and generative--predictive
+discovery studies illustrate the broader materials-science applications
+motivating the infrastructure, rather than additional validation data
+generated in this work.
 
 The crystalline framework now resolves projective unitary irreps,
 antiunitary pairing and doubling, and their restrictions along explicit
 reciprocal-space segments. Its algebraic coverage across conventional
 cell settings and supplied magnetic groups is distinct from a magnetic
 electronic-structure implementation or a complete EBR catalogue.
-The next material studies must converge the electronic structure,
-geometry or torus size, analysis sampling, and numerical scales
-independently, rather than interpreting a stable integer from a single
-small matrix as a bulk-material result.
+The shared operator representation and reproducible validation records
+provide a basis for applying these complementary analyses to further
+materials and for separating electronic-structure effects from numerical
+and finite-size effects.
 
 \section*{Code and Data Availability}
 The manuscript sources, Supporting Information, and retained validation
@@ -178,8 +190,14 @@ upstream release. Source-reconstruction patches, build configurations,
 dependency fingerprints, and repeat calculations for the Wilson,
 localizer, and Pfaffian paths accompany the Supporting Information.
 These records distinguish new builds from reanalysis of existing matrices.
-A final source snapshot covering all manuscript methods, external-library
-notices, and a public data archive must accompany submission.
+A consolidated snapshot of the current tracked \CPtwoK{} source is
+provided as a patch against a public upstream base. Reapplying it
+reproduces the exact source-tree identity without modifying the
+verification checkout. Historical calculations retain their own source
+versions and dependency fingerprints. External-library notices are
+retained separately, with unresolved licensing assignments explicitly
+identified. Public archival availability and the final licensing review
+must be completed before submission.
 The present draft does not assign an archival DOI or imply that the
 development branch has already been released.
 

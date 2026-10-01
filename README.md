@@ -396,6 +396,31 @@ torus-closure-evidence.index.json REPLAY_DIRECTORY` with NumPy and SciPy.
 The destination must not exist. This checks fingerprints and recomputes the
 eight native/export comparisons, not the model calculations or the SCF runs.
 
+## 96-Atom Basis Closure
+
+The final fixed-geometry 96-atom DZVP/TZVP control is recorded in
+`validation/development/bismuth-basis96-validation/` and SI S12.4--S12.5.
+It retains the original native failure, the bounded skew-projection fix,
+and the independently validated four-query corrected control. Its native
+indices are (1, 1, 1, 0), with a maximum reference-gap discrepancy of
+3.02e-11 hartree. The TZVP calculation is the validated finite-system
+reference for this closure. The changed index at kappa=0.002 quantifies
+its basis sensitivity and is independently reproduced. The archive-only replay reproduces
+22 localizer queries and the physical cross-basis comparison and passes
+15 tests. See the bundle's README.txt for its required size-control archive,
+module-override provenance and reproducible commands.
+
+## Consolidated Source Snapshot
+
+The complete current tracked CP2K source is preserved in
+`validation/development/closing-source/` as a binary-safe patch against
+a public upstream base. A separate temporary Git index reproduces the exact
+target tree across all 296 changed files without modifying the verification
+checkout or its real index. Earlier calculation archives keep their own
+source identities. This verifies source reproducibility, complementing
+the numerical validation documented above. It is a research snapshot,
+not an upstream release.
+
 ## Application References
 
 TopoHSE-DB is cited with its published title and bibliographic record:

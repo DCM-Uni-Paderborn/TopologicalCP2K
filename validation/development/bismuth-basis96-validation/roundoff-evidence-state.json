@@ -1,0 +1,58 @@
+{
+  "pid": 4106647,
+  "started_epoch": 1790831663.6501787,
+  "completed": true,
+  "stage": "roundoff-archive-replay",
+  "methods": {
+    "archive_basis_roundoff.py": "27504e274c5ae647fb5266804748ae449888b626971a0e3af50bd6401db484d2",
+    "replay_basis_roundoff.py": "a398f19a369514cbefa7b8a3a9fbc6be922b112dcc0bb82a3909277705354ff2",
+    "verify_size_checks.py": "2c901b5e1a15aa4d1f9826117e3c2052beb0ca57bb73c21ae641dc931ebaf8f4",
+    "test_basis_covariance.py": "ca7fe363902e8e9421f969ef9514c2a7752390aa1c42d8d9e0629b962b2aaf6a",
+    "test_material_basis.py": "05b98031369e9d415e9fd554458c4480959f3edbe51472da2c306b9d2ed6e3b8",
+    "test_size_archive.py": "46c8e9255cf38101c83c91a4fa15acd35321c0a173d389ded6948fa82e46287e",
+    "post_roundoff_evidence.py": "22e99d0e89468891d27bfbf32d7c0ef0d8eeb77075fe275adf3d156bf86e8111"
+  },
+  "steps": [
+    {
+      "name": "roundoff-archive",
+      "command": [
+        "/home/kuehne88/cp2k-topology-material-20261001/analysis-env/bin/python",
+        "archive_basis_roundoff.py"
+      ],
+      "started_epoch": 1790833013.6818604,
+      "pid": 4120684,
+      "returncode": 0,
+      "finished_epoch": 1790833190.2608678
+    },
+    {
+      "name": "roundoff-archive-integrity",
+      "command": [
+        "/home/kuehne88/cp2k-topology-material-20261001/analysis-env/bin/python",
+        "verify_size_checks.py",
+        "bismuth-basis96-roundoff-evidence"
+      ],
+      "started_epoch": 1790833190.2617812,
+      "pid": 4122032,
+      "returncode": 0,
+      "finished_epoch": 1790833197.046657
+    },
+    {
+      "name": "roundoff-archive-replay",
+      "command": [
+        "/home/kuehne88/cp2k-topology-material-20261001/analysis-env/bin/python",
+        "replay_basis_roundoff.py",
+        "bismuth-size96-evidence",
+        "bismuth-basis96-roundoff-evidence",
+        "basis96-roundoff-replay"
+      ],
+      "started_epoch": 1790833197.0475194,
+      "pid": 4122085,
+      "returncode": 0,
+      "finished_epoch": 1790834596.1748095
+    }
+  ],
+  "upstream_pids": {
+    "tzvp-roundoff-state.json": 4079438,
+    "basis-comparison-state.json": 4042885
+  }
+}

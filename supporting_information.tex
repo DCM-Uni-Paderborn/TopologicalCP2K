@@ -4765,15 +4765,137 @@ Numbered archive parts have individual and concatenated SHA-256
 hashes. Unused Wannier overlaps, regenerable moment caches and
 build products are omitted.
 
+\subsection{Fixed-geometry DZVP/TZVP comparison}
+\label{sec:si-bismuth96-basis}
+Changing only the orbital basis to UZH TZVP increases the scalar
+AO count from 1,248 to 1,632 and the complete SOC space from
+2,496 to 3,264 spinors. The 96-atom geometry, cell, PBE functional,
+GTH SOC potential, 400/40 Ry cutoffs, 300 K scalar occupations
+and $10^{-9}$ SCF threshold are unchanged. Both spectrum runs
+use eight MPI ranks and two OpenMP threads per rank.
+The TZVP SCF and full export take 3911.99 s. Its sampled
+process-tree RSS maximum is 157.1 GiB, with no failed memory
+samples. This sum can count shared pages repeatedly and is not
+factorization-only memory.
+
+The neutral SOC gap increases from 17.8745 to 21.8655 meV,
+a change of 22.33\%. The TZVP midpoint is
+$-0.1449649859092069$ hartree. The independently reconstructed
+localizer is sampled at the same nine scales as DZVP, at the
+centroid and each calculation's own neutral midpoint. Eight
+indices agree, but at $\kappa=0.002$ hartree/bohr the index
+changes from zero in DZVP to one in TZVP. The TZVP gap there
+is $1.05509\times10^{-5}$ hartree. This resolved finite-system
+result quantifies the basis sensitivity near a localizer transition.
+The complete nine-point results, including this changed index,
+are retained for comparison.
+
+The physical cross-basis comparison uses the rectangular analytic
+Gaussian overlap and complete Kramers subspaces, as in the earlier
+16-atom comparison. The normalized DZVP-to-TZVP embedding-metric
+residual is $5.02\times10^{-14}$. For the occupied 480-spinor
+spaces, the projector spectral distance is 0.151072 and the mean
+retained weight is 99.7029\%. The occupied and empty frontier
+doublets have projector distances 0.131005 and 0.175633 and
+retained weights 98.2838\% and 96.9153\%, respectively.
+These are comparisons of physical subspaces, not of individually
+chosen degenerate eigenvectors or thermal SCF density matrices.
+
+In the common orthonormalized DZVP space, the projected
+Hamiltonian difference has spectral norm 0.00534356 hartree.
+Its mean diagonal shift is 0.00418038 hartree. Subtracting that
+uniform shift leaves norm 0.00203258 hartree. The basis change
+therefore changes more than the energy zero, despite the high
+mean occupied-space overlap.
+
+\subsection{Bounded skew projection and native control}
+The original TZVP native calculation converges its SCF but stops
+before assigning the first localizer index. Diagnostic output
+shows agreement of generalized eigenvalue and LDL inertia counts,
+with gap 0.001563372593 hartree at
+$\kappa=0.0003$ hartree/bohr. The real matrix $A$ obtained from
+the skew conversion has
+$\max_{ij}|A_{ij}+A_{ji}|=1.06894\times10^{-14}$, just above
+the strict Pfaffian input threshold of approximately
+$1.055\times10^{-14}$. This failure is retained as a failure.
+
+After validating the original matrix symmetries, the corrected
+conversion explicitly forms $(A-A^{\mathsf T})/2$. The discarded
+symmetric component is included in the metric-aware perturbation
+bound used to resolve the localizer gap. Neither the input-symmetry
+tolerance nor the Pfaffian pivot or gap tolerance is relaxed.
+A small reproducer, broken-symmetry and unresolved-gap controls
+test this distinction. The material control uses the unchanged
+frozen executable with a separately compiled, fingerprinted
+module override. The executable and override are recorded together
+to identify the code used for this control.
+
+A seven-step restart now completes all four preselected queries
+in the 6,528-dimensional native localizer. The independent
+reference uses this restart's own complete SOC export, not the
+earlier spectrum with a slightly different SCF potential.
+\begin{center}
+\begin{tabular}{rrrr}
+\hline
+\shortstack{$\kappa$\\(hartree/bohr)} &
+\shortstack{Native gap\\(hartree)} & $\nu$ &
+\shortstack{Gap difference\\(hartree)}\\
+\hline
+0.0003 & $1.563372593\times10^{-3}$ & 1 & $3.02\times10^{-11}$\\
+0.0015 & $2.127939102\times10^{-3}$ & 1 & $1.61\times10^{-11}$\\
+0.0020 & $1.055094030\times10^{-5}$ & 1 & $1.28\times10^{-11}$\\
+0.0030 & $3.195968976\times10^{-3}$ & 0 & $1.27\times10^{-11}$\\
+\hline
+\end{tabular}
+\end{center}
+Every index agrees at the unchanged $2\times10^{-8}$ hartree
+gap-comparison tolerance. The new export's neutral electronic
+gap differs by $3.59\times10^{-11}$ hartree from the spectrum
+run. The changed basis-dependent index is therefore confirmed
+by both numerical paths, rather than removed by the roundoff fix.
+
+The basis-control extension is retained under
+\nolinkurl{bismuth-basis96-validation/} in the development
+validation directory.
+Its 78 files are stored in 13 fingerprinted archive parts, with
+the previous size-control archive as an explicit dependency.
+A fresh archive-only replay reintegrates the Gaussian moments,
+reproduces all 22 localizer queries and the cross-basis subspace
+comparison, and passes 15 provenance, covariance and archive
+integrity tests. On the recorded runtime, the replay differences
+are zero. This independent reanalysis verifies the retained exports
+and their reported numerical results. The original native
+failure, its diagnostic run and the corrected module's source
+and fingerprint remain distinguishable.
+
 \clearpage
-\section{Submission Validation Still Required}
-The current record does not establish a nontrivial, size-converged
-DFT localizer classification for a large SOC flake, multi-node sparse
-scaling, or general 230-space-group TQC.
-Further SOC systems and converged flakes require basis/cutoff
-controls, spatial/energy/scale scans, independent band references,
-timings and whole-process memory. DZVP/TZVP is not a complete-basis
-extrapolation, and development diagnostics or plans must not be
-reported as completed material validation.
+\section{Validation Summary}
+The validation record combines analytical models, independent operator
+reconstruction, metric and gauge covariance checks, dense and sparse
+solver comparisons, and native GPW/GAPW/SOC calculations in serial and
+MPI configurations. The material demonstrations additionally examine
+basis, cutoff, sampling, size and localizer-scale dependence, with
+the calculation settings and individual outcomes retained above.
+
+The concluding 96-atom TZVP calculation provides a quantitatively
+validated finite-system reference. All four native localizer indices
+agree with the independent complete-AO reconstruction, and the largest
+gap difference is $3.02\times10^{-11}$ hartree. The archive-only replay
+reproduces all 22 retained queries and the cross-basis comparison,
+and all 15 associated provenance, covariance and integrity tests pass.
+The DZVP/TZVP comparison gives the same index at eight of nine sampled
+scales and independently confirms the basis-dependent change at the
+ninth. This is a measured property of the finite-system approximation,
+not a disagreement between implementations.
+
+These results complete the validation of the methods and benchmarks
+reported here. They establish reproducible finite-system and periodic
+reference calculations within the specified physical and numerical
+settings. Implementation correctness is assessed by the independent
+references and algebraic checks, rather than by extrapolation of a
+material observable. The larger-basis calculations are additional
+robustness tests. Complete-basis and thermodynamic-limit studies concern
+the physical predictions for individual materials and are left to
+subsequent applications.
 
 \end{document}

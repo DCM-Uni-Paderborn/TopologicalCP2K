@@ -1,0 +1,153 @@
+{
+  "accepted": true,
+  "integrity": [
+    {
+      "accepted": true,
+      "verified_files": 79,
+      "archive_sha256": "4fad0127a2f5bdd54819f70b8f952b1eca36aeb1ecb06c5526e5c0f069b12582",
+      "scope": "Archive integrity and recorded-run consistency, not fresh numerical replay"
+    },
+    {
+      "accepted": true,
+      "verified_files": 78,
+      "archive_sha256": "2044f7413ca9543e34d10050e67e480bcd297baa2900e8de31001af635efbe12",
+      "scope": "Archive integrity and recorded-run consistency, not fresh numerical replay"
+    }
+  ],
+  "runs": [
+    {
+      "run": "flake96-spectrum",
+      "queries": 9,
+      "maximum_gap_replay_error_hartree": 0.0,
+      "diagnostics": {
+        "metric_minimum": 0.02120984349341587,
+        "metric_ratio": 0.003997277671046737,
+        "frame_residual": 1.0599332822109709e-13,
+        "time_reversal_residual": 2.5535186077141824e-15
+      }
+    },
+    {
+      "run": "flake96-tzvp-spectrum",
+      "queries": 9,
+      "maximum_gap_replay_error_hartree": 0.0,
+      "diagnostics": {
+        "metric_minimum": 0.010078630786571494,
+        "metric_ratio": 0.0009181462762824018,
+        "frame_residual": 2.3259172365899453e-13,
+        "time_reversal_residual": 5.329156522852687e-15
+      }
+    },
+    {
+      "run": "flake96-tzvp-roundoff",
+      "queries": 4,
+      "maximum_gap_replay_error_hartree": 0.0,
+      "diagnostics": {
+        "metric_minimum": 0.010078630786571494,
+        "metric_ratio": 0.0009181462762824018,
+        "frame_residual": 2.2715163083889891e-13,
+        "time_reversal_residual": 4.662947094776946e-15
+      },
+      "native_comparison": {
+        "tolerance_hartree": 2e-08,
+        "accepted": true,
+        "queries": [
+          {
+            "query": 0,
+            "native": {
+              "z2": 1.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.144964985909207,
+              "kappa_hartree_bohr": 0.0003,
+              "gap_hartree": 0.00156337259315485
+            },
+            "independent_gap_hartree": 0.001563372623324144,
+            "distance_from_bracket_hartree": 3.016929392939127e-11,
+            "independent_z2": 1,
+            "accepted": true
+          },
+          {
+            "query": 1,
+            "native": {
+              "z2": 1.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.144964985909207,
+              "kappa_hartree_bohr": 0.0015,
+              "gap_hartree": 0.0021279391020978
+            },
+            "independent_gap_hartree": 0.0021279391181684114,
+            "distance_from_bracket_hartree": 1.6070611421475922e-11,
+            "independent_z2": 1,
+            "accepted": true
+          },
+          {
+            "query": 2,
+            "native": {
+              "z2": 1.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.144964985909207,
+              "kappa_hartree_bohr": 0.002,
+              "gap_hartree": 1.0550940296877e-05
+            },
+            "independent_gap_hartree": 1.0550953077487674e-05,
+            "distance_from_bracket_hartree": 1.2780610674528628e-11,
+            "independent_z2": 1,
+            "accepted": true
+          },
+          {
+            "query": 3,
+            "native": {
+              "z2": 0.0,
+              "position_bohr": [
+                57.7642035669819,
+                41.3371008926158,
+                20.5413230644669
+              ],
+              "energy_hartree": -0.144964985909207,
+              "kappa_hartree_bohr": 0.003,
+              "gap_hartree": 0.00319596897561969
+            },
+            "independent_gap_hartree": 0.003195968962916836,
+            "distance_from_bracket_hartree": 1.2702853959684068e-11,
+            "independent_z2": 0,
+            "accepted": true
+          }
+        ]
+      }
+    }
+  ],
+  "basis_comparison_replay_errors": {
+    "neutral_gaps_hartree": 0.0,
+    "combined_moment_errors": 0.0,
+    "embedding_metric_error": 0.0,
+    "projected_hamiltonian_change_hartree": 0.0,
+    "mean_projected_hamiltonian_shift_hartree": 0.0,
+    "shift_removed_hamiltonian_change_hartree": 0.0,
+    "occupied/overlap_singular_values": 0.0,
+    "occupied/projector_frobenius_squared": 0.0,
+    "occupied/projector_spectral_distance": 0.0,
+    "occupied_frontier/overlap_singular_values": 0.0,
+    "occupied_frontier/projector_frobenius_squared": 0.0,
+    "occupied_frontier/projector_spectral_distance": 0.0,
+    "empty_frontier/overlap_singular_values": 0.0,
+    "empty_frontier/projector_frobenius_squared": 0.0,
+    "empty_frontier/projector_spectral_distance": 0.0
+  },
+  "elapsed_seconds": 1398.9339809962548,
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "numpy_version": "2.4.2",
+  "scipy_version": "1.17.0",
+  "openblas_threads": "4",
+  "scope": "Archive-only AO reintegration and cross-basis comparison, not a fresh SCF calculation"
+}
