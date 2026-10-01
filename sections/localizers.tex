@@ -192,9 +192,10 @@ part of $R_3$ is included in the perturbation budget, and an
 unresolved calculation returns no topological label.
 
 The Hermitian pencil has order eight times the scalar AO count.
-Its current solver is a dense finite-system reference, including
-GPW/GAPW and post-SCF GTH SOC, not a sparse or periodic
-three-dimensional implementation. This strong local index is
+Its current solver is a dense reference, including
+GPW/GAPW and post-SCF GTH SOC. The periodic extension is given
+below, while a sparse three-dimensional solver is not provided.
+This strong local index is
 not a collection of weak or two-dimensional slice indices.
 Agreement with a bulk invariant requires separate volume,
 basis and scale convergence. The Supporting Information
@@ -243,9 +244,28 @@ complete mesh. Periodic exponentials shift between mesh sectors,
 so their cross-k links must be retained.
 A symmetry-reduced SCF can supply the potential, but scalar SCF
 weights cannot replace the full torus operator.
-The present periodic localizer covers two-dimensional periodic planes.
-The finite three-dimensional construction above does not supply
-a periodic three-dimensional extension.
+For three periodic directions, the corresponding chiral block is
+\begin{equation}
+ \begin{split}
+ A_{3,\mathrm{per}}={}&I_2\otimes
+   \left[H-ES-\eta\left(3S-\sum_{j=1}^3C_j\right)\right]\\
+ &-\ii\eta\sum_{j=1}^3\sigma_j\otimes T_j .
+ \end{split}
+ \label{eq:periodic-three-dimensional-localizer}
+\end{equation}
+The phase-shifted $C_j,T_j$ are the analytic AO integrals defined
+above, and $\eta>0$ has energy units. Replacing $A_3$ by
+$A_{3,\mathrm{per}}$ in Eqs.~\eqref{eq:finite-three-dimensional-localizer}
+and \eqref{eq:finite-three-dimensional-index} gives the Hermitian
+metric pencil, real determinant sign and gap. In this orientation
+the chiral block is an energy-scaled adjoint of the odd-dimensional
+periodic construction of Ref.~\cite{Doll2025}. Taking the adjoint
+preserves the sign of its real determinant.
+The native three-dimensional path uses all three torus directions
+with fully periodic cell and Poisson boundaries, fermionic time
+reversal and the dense AII solver. Its finite-AO validation includes
+skew cells, origin periodicity and GPW/GAPW comparisons. It is not
+a sparse implementation or a bulk-convergence certificate.
 
 Spectral flattening provides a separate way to examine the large
 bandwidth-to-gap ratio of a DFT Hamiltonian. For positive $S$ and

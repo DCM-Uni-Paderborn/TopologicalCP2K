@@ -1,0 +1,111 @@
+{
+  "accepted": true,
+  "runs": [
+    {
+      "mode": "serial",
+      "case": "gpw",
+      "native_gap_difference_hartree": 1.6653345369377348e-16,
+      "reference": {
+        "gap_hartree": 0.37706004429287915,
+        "z2": 0,
+        "real_structure_residual": 3.660208200570571e-15,
+        "fourier_unitarity": 4.329869799847655e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    },
+    {
+      "mode": "serial",
+      "case": "shifted",
+      "native_gap_difference_hartree": 3.608224830031759e-15,
+      "reference": {
+        "gap_hartree": 0.3770600442928786,
+        "z2": 0,
+        "real_structure_residual": 3.438682774145958e-15,
+        "fourier_unitarity": 4.329869799847655e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    },
+    {
+      "mode": "serial",
+      "case": "gapw",
+      "native_gap_difference_hartree": 1.1657341758564144e-15,
+      "reference": {
+        "gap_hartree": 0.3772200088639432,
+        "z2": 0,
+        "real_structure_residual": 3.0727636936877023e-15,
+        "fourier_unitarity": 3.2196468172375207e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    },
+    {
+      "mode": "serial",
+      "case": "flattened",
+      "native_gap_difference_hartree": 1.6653345369377348e-16,
+      "reference": {
+        "gap_hartree": 0.31322383425700584,
+        "z2": 0,
+        "real_structure_residual": 2.7592708885268096e-15,
+        "fourier_unitarity": 4.329869799847655e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    },
+    {
+      "mode": "mpi",
+      "case": "gpw",
+      "native_gap_difference_hartree": 1.3322676295501878e-15,
+      "reference": {
+        "gap_hartree": 0.37706004429287765,
+        "z2": 0,
+        "real_structure_residual": 3.5133660932406142e-15,
+        "fourier_unitarity": 5.551115665787207e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    },
+    {
+      "mode": "mpi",
+      "case": "shifted",
+      "native_gap_difference_hartree": 1.6653345369377348e-15,
+      "reference": {
+        "gap_hartree": 0.37706004429287865,
+        "z2": 0,
+        "real_structure_residual": 3.542431023133999e-15,
+        "fourier_unitarity": 5.551115665787207e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    },
+    {
+      "mode": "mpi",
+      "case": "gapw",
+      "native_gap_difference_hartree": 1.1657341758564144e-15,
+      "reference": {
+        "gap_hartree": 0.37722000886393114,
+        "z2": 0,
+        "real_structure_residual": 2.898600690226378e-15,
+        "fourier_unitarity": 3.774758498051931e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    },
+    {
+      "mode": "mpi",
+      "case": "flattened",
+      "native_gap_difference_hartree": 3.3306690738754696e-16,
+      "reference": {
+        "gap_hartree": 0.31322383425700534,
+        "z2": 0,
+        "real_structure_residual": 2.9017611741686276e-15,
+        "fourier_unitarity": 5.551115665787207e-15,
+        "scalar_aos": 13,
+        "full_spinor_dimension": 208
+      }
+    }
+  ],
+  "archive_sha256": "df8eca85d6b383edef128be23f7491e8d2aff88da090d95b1a897829d3e33dce",
+  "scope": "Archive-only full-band reconstruction, not a new SCF or model calculation"
+}

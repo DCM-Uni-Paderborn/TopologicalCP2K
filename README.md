@@ -344,8 +344,9 @@ The finite AII reference now includes all three Cartesian AO moments with
 post-SCF GTH SOC. The manuscript describes the real chiral determinant and
 independent metric gap, including a residual-checked QR fallback for excessive
 LU pivot growth. The SI records Wilson-Dirac, basis-covariance and gap-closing
-controls plus fresh GPW/GAPW/flattened neon calculations. This is not a periodic
-or sparse 3D implementation and does not establish material convergence.
+controls plus fresh GPW/GAPW/flattened neon calculations. This first archive
+is finite-only. The periodic extension below remains a dense reference and
+does not establish material convergence.
 
 `validation/development/localizer-3d-evidence.tar.gz` contains the source patch,
 build records, native AO matrices, 22 passing unit runs, four passing regression
@@ -377,6 +378,23 @@ Four native dense queries agree with independent complete-AO references
 within 1.31e-10 hartree at the unchanged 2e-8 hartree tolerance. The first
 transferred joint parameter box is numerically resolved as nontrivial. These
 results validate this finite calculation, not a converged material index.
+
+## Periodic Three-Dimensional Closure Checks
+
+`validation/development/torus-closure-validation/` retains the subsequent
+dense periodic AII extension with all three analytic trigonometric AO
+directions. Eight GPW/GAPW/flattened serial and two-rank MPI comparisons
+against full-band SOC exports and neighbour overlaps agree within
+3.61e-15 hartree. A fresh archive-only replay reproduces all eight cases.
+The model controls preserve small-volume counterexamples as well as the
+nontrivial side-eight Wilson-Dirac result. None is a material-convergence
+claim. Gamma equivalence, nine rejected inputs, four regression configurations
+and the bounded skew-projection correction are recorded separately.
+
+Run `python replay_torus_closure.py torus-closure-evidence.tar.gz
+torus-closure-evidence.index.json REPLAY_DIRECTORY` with NumPy and SciPy.
+The destination must not exist. This checks fingerprints and recomputes the
+eight native/export comparisons, not the model calculations or the SCF runs.
 
 ## Application References
 

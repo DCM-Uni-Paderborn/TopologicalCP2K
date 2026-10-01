@@ -4522,6 +4522,89 @@ flake size, basis or temperature. The build records, library
 reproducer, raw exports, comparison reader and archive checks are
 in \nolinkurl{validation/development/platform-validation/}.
 
+\subsection{Periodic three-dimensional extension}
+The subsequent periodic extension uses the chiral block of
+Eq.~\eqref{eq:si-periodic-chiral} below, rather than substituting
+a cell-truncated position in the finite construction.
+With $C_j$ and $T_j$ denoting the covariant cosine and sine
+integrals at the query origin, its auxiliary-index-first form is
+\begin{equation}
+ A_{3,\mathrm{per}}=I_2\otimes
+ \left[H-ES-\eta\left(3S-\sum_{j=1}^3C_j\right)\right]
+ -\mathrm{i}\eta\sum_{j=1}^3\sigma_j\otimes T_j .
+ \label{eq:si-periodic-chiral}
+\end{equation}
+Here $\sigma_j$ are auxiliary Pauli matrices and $\eta$ is an
+energy scale. The Hermitian doubling has metric
+$\operatorname{diag}(I_2\otimes S,I_2\otimes S)$.
+All three reciprocal torus directions are retained.
+
+For the Wilson--Dirac parent above, periodic cubes of sides
+3, 4 and 6 and masses $m=-4,-2,0,2,4$ give 15 dense model
+controls. Exact spectral flattening to unit-magnitude energies,
+$E=0$ and $\eta=1$ still give zero local indices at all these
+small sizes, including the strong parent phases. These
+finite-volume counterexamples are retained.
+At side 8 and $m=-2$, the local index instead agrees with the
+nontrivial strong parent index, with gap 0.147976499382435
+in the model energy units. Independent complex singular values
+agree with the doubled metric pencil within $9.5\times10^{-16}$.
+Full-period origin translations, a nonorthogonal congruence and
+a joint Hamiltonian/energy shift change the gap by less than
+$4.2\times10^{-16}$. This is a model test, not an atomistic
+material-convergence result.
+
+The native integration controls use one neon atom with UZH
+DZVP-MOLOPT-GGA-GTH-q8 and GTH SOC in the skew primitive cell
+\begin{equation}
+ \bm a_1=(6,0,0),\qquad \bm a_2=(1.2,6,0),\qquad
+ \bm a_3=(0.8,0.4,6)\quad\text{\AA}.
+\end{equation}
+Both SCF and analysis use a Gamma-centered $2\times2\times2$
+mesh. The cutoffs are 200/40 Ry, the SCF tolerance is $10^{-11}$,
+and the query has $E=-0.1$ hartree, $\eta=0.5$ hartree and
+origin $(1.2,2.3,3.1)$~\AA. Thirteen scalar AOs per primitive
+cell give 208 torus spinors and a doubled Hermitian order of 832.
+All four controls have local index zero.
+\begin{center}
+\begin{tabular}{lr}
+\hline
+Control & Independent gap (hartree)\\
+\hline
+GPW & 0.377060044292879\\
+GPW, origin shifted by $2(\bm a_1+\bm a_2+\bm a_3)$ & 0.377060044292879\\
+GAPW & 0.377220008863943\\
+GPW, flattened to unit energies in hartree & 0.313223834257006\\
+\hline
+\end{tabular}
+\end{center}
+The independent reconstruction uses complete SOC eigenframes,
+analytic Gaussian neighbour overlaps and the full Fourier frame.
+Across four serial and four two-rank MPI controls, complex
+singular values and determinant signs reproduce the native
+results with maximum gap difference $3.61\times10^{-15}$ hartree.
+The flattened input enables SCF symmetry, but all points of this
+particular mesh are time-reversal invariant. It is not evidence
+of a reduced irreducible-point count.
+
+Implicit Gamma and explicit \texttt{SCHEME GAMMA} calculations
+agree on a gap of 0.425622403309 hartree within
+$2.32\times10^{-13}$ hartree. Nine unsupported input combinations
+are rejected with their expected diagnostics. The selected
+localizer/quadratic regression directories now give 89 passing
+checks in each serial thread configuration and 141 in each MPI
+rank/thread configuration, together with 22 unit-program runs.
+These counts are not results for the complete CP2K test suite.
+The subsequent bounded AII skew-projection correction passes
+62 serial and 91 MPI checks in the selected localizer-only
+directories, without altering existing references or tolerances.
+
+The eight native export comparisons were independently replayed
+from a fresh archive extraction. Sources, raw exports, model
+controls, logs and replay reader are retained in
+\nolinkurl{validation/development/torus-closure-validation/}.
+The original finite-only and platform archives remain unchanged.
+
 \clearpage
 \section{Concentric 96-Atom Bi Size Control}
 \label{sec:si-bismuth96}
