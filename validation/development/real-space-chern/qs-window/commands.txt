@@ -1,0 +1,82 @@
+Physical Gaussian QS window controls, 2 October 2026
+CP2K source commit: 54b8903eefd8b5b031a7ee7e2855c195f41a71e1
+Branch: feature/kubo-chern-response, local only
+Merged dense-localizer base: cdd058bab433ee4035dd47e5cd2e2d6a27519e6f
+The binaries were built and tested before committing the identical source files.
+
+Scope
+Isolated GPW/GAPW, explicit sharp projector energy, ordered Cartesian plane,
+analytically integrated two-dimensional Gaussian window and physical area.
+Scalar markers are per spin channel, without a degeneracy factor.
+Post-SCF GTH SOC includes both spinor components. No periodic real-space
+marker, automatic bulk-window choice or additional Z2 classifier is claimed.
+
+Build in the matching CP2K checkout
+cmake --build build-serial --target cp2k kubo_unittest -j6
+cmake --build build-mpi --target cp2k kubo_unittest -j6
+
+Focused regression commands, both passed 27/27 checks
+env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 tests/do_regtest.py --restrictdir '^(UNIT/(kubo_unittest|topology_(wilson|symmetry|curvature|snapshot)_unittest)|QS/regtest-(topology|kubo-hall))$' --mpiranks 1 --ompthreads 2 --maxtasks 1 --workbasedir build-serial/window-crosscheck build-serial/bin ssmp
+env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 tests/do_regtest.py --restrictdir '^(UNIT/(kubo_unittest|topology_(wilson|symmetry|curvature|snapshot)_unittest)|QS/regtest-(topology|kubo-hall))$' --mpiranks 2 --ompthreads 2 --maxtasks 1 --workbasedir build-mpi/window-crosscheck build-mpi/bin psmp
+
+The archived mathematical and QS outputs come from
+build-serial/window-crosscheck/TEST-2026-10-02_21-07-38
+build-mpi/window-crosscheck/TEST-2026-10-02_21-10-05
+GPW H2 window weight: 0.684673784725126, one occupied scalar state.
+GAPW Ne/GTH-SOC window weight: 6.40367061171730, eight occupied spinors.
+Their charge markers vanish within 1e-10. These are operator/interface
+controls, not nontrivial topological-material results. The nonzero QWZ
+marker and native Wilson comparison remain in the consolidated unit test.
+
+Additional controls
+python3 scripts/window-controls.py CP2K_CHECKOUT CP2K_CHECKOUT/build-serial/bin/cp2k.ssmp WORK_DIRECTORY
+Reverse-plane and broad-window controls pass. Broad-window occupied weight
+approaches one within 1.06e-10. Negative widths, missing ENERGY, an unresolved
+energy cutoff and periodic input are rejected. Inputs and complete outputs
+are retained here. The script takes checkout, binary and work directory.
+
+Checked mathematical replay
+In a separate build-serial/window-checked directory, compile the existing
+preprocessed ai_gaussian_window and kubo_unittest sources together with
+src/topology_real_space.F using GNU Fortran flags
+-O0 -g -fcheck=all -ffpe-trap=invalid,zero,overflow -fbacktrace -ffree-form -fopenmp
+Include build-serial/src/mod_files and link the existing CP2K shared library
+and build-serial/openblas-thread-safe/lib/libopenblas.a. Use the matching
+runtime library path. Run with two OpenMP threads and one BLAS thread.
+outputs/checked.out records the successful replay. Only the integral,
+matrix kernel and test driver are instrumented, not the full shared library.
+
+External Z2Pack compatibility control
+Z2Pack version 2.2.1 with the existing optional CP2K overlap-system adapter.
+python scripts/z2pack-window-crosscheck.py CP2K_CHECKOUT CP2K_CHECKOUT/build-serial/bin/cp2k.ssmp WORK_DIRECTORY
+The archived script retains the local adapter import path used in this run.
+The adapter is not bundled or modified by this snapshot. Its two relevant
+module hashes at /Users/tkuehne/work/cp2k-topology-tools-phasons are
+3f3f2a1d4205d1edf4172c53b30733b3fa2ff6b1a0c8bb3261d5feec1c4e03ce cp2k_z2pack.py
+4db0c7e66115f09c2db9190b60d0789e3fb91a3f988a6fc0c3025aa58b4fbcca cp2k_overlap.py
+The one-band periodic He control uses reduced atomic position (0.3,0.5,0.5).
+8- and 16-point directed line grids pass Z2Pack's PosCheck. These include
+the repeated endpoint, so CP2K exports 7 and 15 distinct k-points.
+The Wilson center
+0.6999999990616537 agrees modulo one with the native CP2K phases.
+outputs/loop-8 and outputs/loop-16 contain CP2K input, directed neighbour
+list, exported overlap matrices, native Wilson phase and complete log.
+outputs/z2pack-control.out records the external analysis. This does not
+validate the separate linked native-Z2Pack integration or SOC materials.
+
+Broader inherited Diamond controls
+The initial serial run timed out on two existing Diamond inputs. The initial
+MPI run hit an OpenMP worker-stack protection fault before the first SCF
+iteration, outside the new finite-window path. Both inputs pass unchanged
+with OMP_STACKSIZE=128M, two OpenMP threads, one BLAS thread and a longer
+driver timeout. The targeted directory passes 9/9 checks in SSMP and 9/9
+on two MPI ranks. No reference value or global environment was changed.
+
+Sources and provenance
+sources/ contains the tested integral, QS helpers, interface, matrix kernel,
+consolidated test driver and the exact interface commit patch.
+The earlier matrix-only archive in the parent directory remains unchanged.
+Dependencies not repeated here are CP2K sources/data from the matching
+checkout, LAPACK/BLAS and the optional external adapter/Z2Pack environment.
+No binary, cache, restart or build directory is included.
+SHA256SUMS covers all retained files except itself.

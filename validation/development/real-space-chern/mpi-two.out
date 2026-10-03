@@ -1,0 +1,28 @@
+ Projected spinor current, metric and gauge tests passed.
+ Projected spinor current, metric and gauge tests passed.
+ Bloch metric/connection, band velocity, gauge, degeneracy and Drude tests passed.
+ Bloch metric/connection, band velocity, gauge, degeneracy and Drude tests passed.
+Hall Liouvillian residual:   4.635181E-15
+Hall Liouvillian residual:   4.635181E-15
+Hall Chern model mass, sigma, Chern, residual:  -1.0 -9.9999976562E-01  1.0000000000E+00  7.2164496601E-16
+Hall k-dependent nonorthogonal AO residual:   1.932315E-15
+Hall Chern model mass, sigma, Chern, residual:  -1.0 -9.9999976562E-01  1.0000000000E+00  7.2164496601E-16
+Hall k-dependent nonorthogonal AO residual:   1.932315E-15
+Hall Chern model mass, sigma, Chern, residual:   1.0  9.9999976562E-01 -1.0000000000E+00  6.1062266354E-16
+Hall k-dependent nonorthogonal AO residual:   2.331468E-15
+Hall Chern model mass, sigma, Chern, residual:   1.0  9.9999976562E-01 -1.0000000000E+00  6.1062266354E-16
+Hall k-dependent nonorthogonal AO residual:   2.331468E-15
+Hall Chern model mass, sigma, Chern, residual:   3.0  9.6514918879E-09  5.2819619338E-15  3.3306690739E-16
+Hall k-dependent nonorthogonal AO residual:   5.551115E-16
+ Hall sign, Liouvillian, gauge, time reversal, degeneracy and Chern tests passed.
+Hall Chern model mass, sigma, Chern, residual:   3.0  9.6514918879E-09  5.2819619338E-15  3.3306690739E-16
+Hall k-dependent nonorthogonal AO residual:   5.551115E-16
+ Hall sign, Liouvillian, gauge, time reversal, degeneracy and Chern tests passed.
+Real-space Chern mass / marker / Wilson / full trace / AO residual: -1.0   9.985290089E-01   1.000000000E+00  -8.698141193E-15   1.110223025E-16
+Real-space Chern mass / marker / Wilson / full trace / AO residual: -1.0   9.985290089E-01   1.000000000E+00  -8.698141193E-15   1.110223025E-16
+Real-space Chern mass / marker / Wilson / full trace / AO residual:  1.0  -9.985290089E-01  -1.000000000E+00  -3.780677211E-15   6.661338148E-16
+Real-space Chern mass / marker / Wilson / full trace / AO residual:  1.0  -9.985290089E-01  -1.000000000E+00  -3.780677211E-15   6.661338148E-16
+Real-space Chern mass / marker / Wilson / full trace / AO residual:  3.0  -3.515972112E-04   5.551115123E-17   2.676139264E-16   4.282598581E-18
+Real-space Chern mass / marker / Wilson / full trace / AO residual:  3.0  -3.515972112E-04   5.551115123E-17   2.676139264E-16   4.282598581E-18
+ Finite-window Chern, native Wilson, metric, gauge, orientation and boundary tests passed.
+ Finite-window Chern, native Wilson, metric, gauge, orientation and boundary tests passed.

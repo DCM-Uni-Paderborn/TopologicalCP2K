@@ -4219,6 +4219,7 @@ The lattice Hamiltonian
 \begin{equation}
  H(\bk)=\sin k_x\,\sigma_x+\sin k_y\,\sigma_y+
  (m+\cos k_x+\cos k_y)\sigma_z
+ \label{eq:si-hall-model}
 \end{equation}
 provides nonzero Hall controls independent of the native
 time-reversal fixtures. With $48^2$ points, $k_BT=0.01$ and
@@ -4262,6 +4263,102 @@ diagonal averages agree exactly and the largest full-tensor
 difference is $3.913\times10^{-12}$ S/m.
 The frozen archive and standalone mathematical replay are in
 \nolinkurl{validation/development/kubo-hall/}.
+
+\section{Finite-Window Real-Space Chern Crosscheck}
+\label{sec:si-real-space-chern}
+The real-space matrix evaluator applies the finite-window formula
+from the main text to an open $9\times9$ realization
+of Eq.~\eqref{eq:si-hall-model}. Each lattice site carries two
+orbitals. The occupied space contains 81 states, and the physical
+window selects the central $3\times3$ sites with area $A_w=9$ in
+squared lattice units. The orbital multiplicity does not multiply
+this area.
+
+The reference uses the existing native Wilson-step, Wilson-spectrum
+and Chern-winding routines on a $32\times32$ reciprocal mesh.
+Loops run along increasing $k_x$ and the transverse coordinate
+increases along $k_y$, matching the ordered real-space plane $(x,y)$
+and the Berry connection $\mathrm{i}\langle u|\nabla_{\bk}u\rangle$.
+No new Wilson or external Z2Pack solver is introduced.
+The serial calculation gives
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$m$ & Bulk-window $C_w$ & Native Wilson $C_1$ & Whole-sample marker\\
+\midrule
+$-1$ & $+0.998529009$ & $+1$ & $+7.46\times10^{-15}$\\
+$+1$ & $-0.998529009$ & $-1$ & $-9.40\times10^{-15}$\\
+$+3$ & $-0.000351597$ & $0$ & $+1.62\times10^{-16}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The bulk-window values are finite-size markers, not rounded indices.
+The whole-sample cancellation checks the commuting lattice-position
+identity and is not imposed on projected continuum AO positions.
+
+Complex nonsingular, nonunitary basis changes transform the overlap,
+position and window matrices covariantly and the occupied
+coefficients contravariantly. The largest change in $C_w$ is
+$6.67\times10^{-16}$ in the serial control. Occupied-subspace
+unitary rotations and origin translations preserve the marker.
+Time reversal and exchange of the two plane axes reverse its sign.
+Rescaling lengths together with the physical area leaves it
+unchanged. Invalid overlap metrics, unnormalized occupied spaces,
+windows outside $0\leq W\leq S$ and invalid areas are rejected.
+
+These checks extend the existing consolidated Kubo mathematical
+suite rather than adding another test executable. The kernel,
+Gaussian-integral routine and test driver also pass bounds and
+floating-point exception checks. The unchanged shared library is
+not a fully instrumented CP2K build.
+
+The opt-in \texttt{REAL\_SPACE\_CHERN} Quickstep interface uses
+\texttt{CELL} and \texttt{POISSON PERIODIC NONE}, without k-points.
+For the ordered Cartesian plane $(r_1,r_2)$, the physical window is
+\begin{equation}
+ w(\mathbf r)=\exp\!\left[-\sum_{a=1}^2
+       \frac{(r_a-c_a)^2}{2\sigma_a^2}\right],\qquad
+ A_w=2\pi\sigma_1\sigma_2.
+\end{equation}
+Here $c_a$ and the positive $\sigma_a$ are the window center and
+widths. The window is independent of the normal coordinate.
+Its AO matrix is integrated analytically using the existing
+Gaussian overlap recurrence, not by selecting atoms or AO indices.
+Independent three-center overlap integrals, anisotropic s/p/d
+controls and common translations validate the integral routine.
+The explicit projector energy defines a sharp spectral cutoff.
+Unresolved levels, invalid widths and periodic inputs are rejected.
+Reversing the plane and its widths preserves the physical window
+and reverses the marker convention. In a broad-window H$_2$ control,
+the occupied window weight approaches one within $1.06\times10^{-10}$.
+
+An isolated H$_2$ GPW calculation with UZH MOLOPT basis functions
+gives $\operatorname{Tr}(C_{\mathrm{occ}}^\dagger W C_{\mathrm{occ}})
+=0.6846737847$ for widths $(1.3,1.8)$ bohr and one occupied scalar
+state. A GAPW Ne control with post-SCF GTH spin--orbit coupling gives
+$6.403670612$ for widths $(1.2,1.7)$ bohr and eight occupied spinors.
+The Gaussian centers are deliberately off the atomic centers.
+Both charge markers vanish within $10^{-10}$, as expected from time
+reversal. These are operator/interface controls, not nontrivial
+material classifications. Scalar results are per spin channel
+without a degeneracy factor, whereas SOC includes both spinor
+components.
+
+The combined Kubo/window and unchanged native topology regressions
+pass 27/27 checks in the serial build and on two MPI ranks, with
+two OpenMP threads and one BLAS thread. An additional external
+Z2Pack 2.2.1 overlap-system check uses this CP2K executable for
+8- and 16-point directed line grids in periodic He, including the
+repeated endpoint (7 and 15 distinct k-points). For the atom at
+reduced position $(0.3,0.5,0.5)$, its Wilson center is
+$0.6999999991$, agreeing modulo one with CP2K's native phase for
+the same loops. This is a one-band reciprocal-boundary compatibility
+control, not a linked native-Z2Pack or SOC-material validation.
+No periodic real-space marker, automatic material bulk-window choice
+or second $\mathbb Z_2$ classifier is introduced. Frozen sources and
+outputs are retained in
+\nolinkurl{validation/development/real-space-chern/} and its
+\texttt{qs-window} subdirectory.
 
 \clearpage
 \section{Source-Frozen Reproduction Checks}

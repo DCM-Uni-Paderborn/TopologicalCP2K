@@ -1,0 +1,29 @@
+Finite-window Chern matrix control, 2 October 2026
+CP2K local commit: 465be0ea97
+Branch: feature/kubo-chern-response (not published)
+
+Scope: matrix-level open-boundary Chern marker, native Wilson comparison,
+nonorthogonal AO covariance and physical-area normalization.
+No general QS window input or periodic marker is claimed.
+
+Build and mathematical replay in the matching CP2K checkout:
+cmake --build build-serial --target kubo_unittest -j6
+cmake --build build-mpi --target kubo_unittest -j6
+env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 build-serial/bin/kubo_unittest.ssmp
+env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 mpiexec -n 2 --bind-to none build-mpi/bin/kubo_unittest.psmp
+
+Existing topology compatibility controls and the consolidated Kubo suite:
+env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 tests/do_regtest.py --restrictdir '^(UNIT/(kubo_unittest|topology_(wilson|symmetry|curvature|snapshot)_unittest)|QS/regtest-topology)$' --mpiranks 1 --ompthreads 2 --maxtasks 1 --workbasedir build-serial/kubo-chern-crosscheck build-serial/bin ssmp
+env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 tests/do_regtest.py --restrictdir '^(UNIT/(kubo_unittest|topology_(wilson|symmetry|curvature|snapshot)_unittest)|QS/regtest-topology)$' --mpiranks 2 --ompthreads 2 --maxtasks 1 --workbasedir build-mpi/kubo-chern-crosscheck build-mpi/bin psmp
+Both runs pass 15/15 regression-driver checks.
+
+The checked build compiles the new matrix kernel and consolidated driver
+with -O0 -g -fcheck=all -ffpe-trap=invalid,zero,overflow -fbacktrace,
+linking the already-built CP2K library. The unchanged shared library is
+not an entirely instrumented CP2K build. checked.out records this replay.
+serial.out and mpi-two.out are the official driver's mathematical outputs.
+sources/ freezes the evaluator, test model and mathematical dependencies.
+
+Existing Wannier90 topology keywords, Wilson/curvature code and overlap
+exports are unchanged. The separate external Z2Pack adapter integration
+has not been exercised end-to-end by this run.

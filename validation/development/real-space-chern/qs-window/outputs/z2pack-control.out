@@ -1,0 +1,38 @@
+
++----------------------------------------------------------------------+
+|    ================                                                  |
+|    LINE CALCULATION                                                  |
+|    ================                                                  |
+|    starting at 2026-10-02 21:26:36,586                               |
+|    running Z2Pack version 2.2.1                                      |
+|                                                                      |
+|    init_result: None                                                 |
+|    iterator:    [8, 16]                                              |
+|    line:        <function main.<locals>.<lambda> at 0x102d53b60>     |
+|    load:        False                                                |
+|    load_quiet:  True                                                 |
+|    pos_tol:     1e-06                                                |
+|    save_file:   None                                                 |
+|    serializer:  auto                                                 |
+|    system:      <cp2k_z2pack.CP2KSystem object at 0x1185846e0>       |
++----------------------------------------------------------------------+
+
+INFO: 0 of 1 line convergence criteria fulfilled.
+INFO:       Calculating line for N = 8
+INFO: 0 of 1 line convergence criteria fulfilled.
+INFO:       Calculating line for N = 16
+INFO: 1 of 1 line convergence criteria fulfilled.
+
++----------------------------------------------------------------------+
+|                   Calculation finished in 0h 0m 1s                   |
++----------------------------------------------------------------------+
++----------------------------------------------------------------------+
+|                          ==================                          |
+|                          CONVERGENCE REPORT                          |
+|                          ==================                          |
+|                                                                      |
+|                          PosCheck: PASSED                            |
++----------------------------------------------------------------------+
+External Z2Pack WCC: [np.float64(0.6999999990616537)]
+Native CP2K Berry phases agree modulo 2*pi for both directed loops.
+Scope: one-band periodic compatibility control, not native linked Z2Pack or a SOC material sweep.

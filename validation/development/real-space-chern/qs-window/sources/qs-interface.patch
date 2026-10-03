@@ -1,0 +1,856 @@
+From 54b8903eefd8b5b031a7ee7e2855c195f41a71e1 Mon Sep 17 00:00:00 2001
+From: "Thomas D. Kuehne" <tkuehne@cp2k.org>
+Date: Fri, 2 Oct 2026 21:25:01 +0200
+Subject: [PATCH] Add physical Gaussian QS windows for finite Chern markers
+
+---
+ src/CMakeLists.txt                         |   2 +
+ src/aobasis/ai_gaussian_window.F           |  97 +++++++++
+ src/common/bibliography.F                  |   8 +-
+ src/input_cp2k_properties_dft.F            |  79 +++++++-
+ src/kubo_unittest.F                        |  59 +++++-
+ src/qs_finite_ao.F                         |  90 ++++++++-
+ src/qs_real_space_chern.F                  | 223 +++++++++++++++++++++
+ src/qs_scf_post_gpw.F                      |   2 +
+ tests/QS/regtest-kubo-hall/TEST_FILES.toml |   8 +-
+ tests/QS/regtest-kubo-hall/hall-common.inc |   9 +
+ tests/QS/regtest-kubo-hall/window-gpw.inp  |  64 ++++++
+ tests/matchers.py                          |   5 +
+ 12 files changed, 636 insertions(+), 10 deletions(-)
+ create mode 100644 src/aobasis/ai_gaussian_window.F
+ create mode 100644 src/qs_real_space_chern.F
+ create mode 100644 tests/QS/regtest-kubo-hall/window-gpw.inp
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 7c9e88dd94..46d7c46c20 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -678,6 +678,7 @@ list(
+   qs_ks_utils.F
+   qs_ks_reference.F
+   qs_kubo_transport.F
++  qs_real_space_chern.F
+   kubo_bloch.F
+   kubo_hall.F
+   kubo_projected.F
+@@ -993,6 +994,7 @@ list(
+   aobasis/ai_overlap_aabb.F
+   aobasis/ai_overlap_debug.F
+   aobasis/ai_overlap.F
++  aobasis/ai_gaussian_window.F
+   aobasis/ai_overlap_ppl.F
+   aobasis/ai_spin_orbit.F
+   aobasis/ai_verfc.F
+diff --git a/src/aobasis/ai_gaussian_window.F b/src/aobasis/ai_gaussian_window.F
+new file mode 100644
+index 0000000000..fd01586c60
+--- /dev/null
++++ b/src/aobasis/ai_gaussian_window.F
+@@ -0,0 +1,97 @@
++!--------------------------------------------------------------------------------------------------!
++!   CP2K: A general program to perform molecular dynamics simulations                              !
++!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
++!                                                                                                  !
++!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!--------------------------------------------------------------------------------------------------!
++
++! **************************************************************************************************
++!> \brief Analytic overlaps weighted by a Cartesian Gaussian spatial window.
++!> \author Thomas D. Kuehne, tkuehne@cp2k.org
++! **************************************************************************************************
++MODULE ai_gaussian_window
++   USE ai_os_rr,                        ONLY: os_rr_ovlp
++   USE kinds,                           ONLY: dp
++   USE mathconstants,                   ONLY: pi
++   USE orbital_pointers,                ONLY: coset,&
++                                              ncoset
++#include "../base/base_uses.f90"
++
++   IMPLICIT NONE
++   PRIVATE
++   CHARACTER(len=*), PARAMETER, PRIVATE :: moduleN = 'ai_gaussian_window'
++   PUBLIC :: gaussian_window_overlap
++CONTAINS
++! **************************************************************************************************
++!> \brief Integrate (a|exp(-sum(alpha*(r-center)**2))|b) using the existing overlap recurrence.
++!> \param la_max Maximum angular momentum on A
++!> \param la_min Minimum angular momentum on A
++!> \param zeta Primitive exponents on A
++!> \param lb_max Maximum angular momentum on B
++!> \param lb_min Minimum angular momentum on B
++!> \param zetb Primitive exponents on B
++!> \param ra Cartesian center of A
++!> \param rb Cartesian center of B
++!> \param center Window center in the same frame
++!> \param alpha Nonnegative Cartesian window exponents; zero means no restriction in that direction
++!> \param sab Compact primitive integrals, in the same ordering as overlap_ab and scon
++! **************************************************************************************************
++   SUBROUTINE gaussian_window_overlap(la_max, la_min, zeta, lb_max, lb_min, zetb, ra, rb, center, alpha, sab)
++      INTEGER, INTENT(IN)                                :: la_max, la_min
++      REAL(dp), INTENT(IN)                               :: zeta(:)
++      INTEGER, INTENT(IN)                                :: lb_max, lb_min
++      REAL(dp), INTENT(IN)                               :: zetb(:), ra(3), rb(3), center(3), &
++                                                            alpha(3)
++      REAL(dp), INTENT(OUT)                              :: sab(:, :)
++
++      INTEGER                                            :: ax, axis, ay, az, bx, by, bz, ia, ib, &
++                                                            ip, jp, la, lb, ld, na, nb, oa, ob
++      REAL(dp)                                           :: a, b, f0, p(3), pair_center(3), rap(3), &
++                                                            rbp(3)
++      REAL(dp), ALLOCATABLE                              :: rr(:, :, :), work(:, :, :)
++
++      CPASSERT(ALL(alpha >= 0.0_dp) .AND. ALL(zeta > 0.0_dp) .AND. ALL(zetb > 0.0_dp))
++      oa = ncoset(la_min - 1)
++      ob = ncoset(lb_min - 1)
++      na = ncoset(la_max) - oa
++      nb = ncoset(lb_max) - ob
++      CPASSERT(SIZE(sab, 1) >= na*SIZE(zeta) .AND. SIZE(sab, 2) >= nb*SIZE(zetb))
++      ld = MAX(la_max, lb_max) + 1
++      ALLOCATE (rr(0:ld - 1, 0:ld - 1, 3), work(0:ld - 1, 0:ld - 1, 3))
++      sab = 0.0_dp
++      DO jp = 1, SIZE(zetb)
++         b = zetb(jp)
++         DO ip = 1, SIZE(zeta)
++            a = zeta(ip)
++            ! Complete the square separately in each direction; the window is anisotropic.
++            pair_center = ra + b*(rb - ra)/(a + b)
++            p = a + b + alpha
++            rap = b*(rb - ra)/(a + b) + alpha*(center - pair_center)/p
++            rbp = rap + ra - rb
++            f0 = PRODUCT(SQRT(pi/p))*EXP(-a*b/(a + b)*SUM((ra - rb)**2) - &
++                                         SUM((a + b)*alpha/p*(pair_center - center)**2))
++            DO axis = 1, 3
++               CALL os_rr_ovlp(rap, la_max, rbp, lb_max, p(axis), ld, work)
++               rr(:, :, axis) = work(:, :, axis)
++            END DO
++            DO lb = lb_min, lb_max
++               DO bx = 0, lb
++                  DO by = 0, lb - bx
++                     bz = lb - bx - by
++                     ib = (jp - 1)*nb + coset(bx, by, bz) - ob
++                     DO la = la_min, la_max
++                        DO ax = 0, la
++                           DO ay = 0, la - ax
++                              az = la - ax - ay
++                              ia = (ip - 1)*na + coset(ax, ay, az) - oa
++                              sab(ia, ib) = f0*rr(ax, bx, 1)*rr(ay, by, 2)*rr(az, bz, 3)
++                           END DO
++                        END DO
++                     END DO
++                  END DO
++               END DO
++            END DO
++         END DO
++      END DO
++   END SUBROUTINE gaussian_window_overlap
++END MODULE ai_gaussian_window
+diff --git a/src/common/bibliography.F b/src/common/bibliography.F
+index c3d1a246ad..8376e34d2f 100644
+--- a/src/common/bibliography.F
++++ b/src/common/bibliography.F
+@@ -99,7 +99,7 @@ MODULE bibliography
+                             Shiga2022, Lindh1995, Chai2024a, Rullan2026, Sundararaman2017, Andreussi2019, &
+                             Chai2025a, Neugebauer2023, Chai2024b, Moynihan2017, Cococcioni2005, &
+                             Cances2000, Herbst2022, Zhang2025, Gresch2017, Soluyanov2011, Dixon2023, Doll2025, &
+-                            Wong2026, Loring2015, Cerjan2023, Bairnsfather2026, Davidson1975, EsteveParedes2023, &
++                            Wong2026, Loring2015, Cerjan2023, Bairnsfather2026, BiancoResta2011, Davidson1975, EsteveParedes2023, &
+                             Olsen1988, Stratmann1998, Vecharynski2017, Stathopoulos1998, Bai2012, Fukaya2014, Schreder2024_3
+ 
+ CONTAINS
+@@ -2348,6 +2348,12 @@ CONTAINS
+                          source="SciPost Phys. Core", volume="6", pages="002", &
+                          year=2023, doi="10.21468/SciPostPhysCore.6.1.002")
+ 
++      CALL add_reference(key=BiancoResta2011, &
++                         authors=s2a("R. Bianco", "R. Resta"), &
++                         title="Mapping topological order in coordinate space", &
++                         source="Phys. Rev. B", volume="84", pages="241106(R)", &
++                         year=2011, doi="10.1103/PhysRevB.84.241106")
++
+       CALL add_reference(key=Cerjan2023, &
+                          authors=s2a("A. Cerjan", "T. A. Loring", "F. Vides"), &
+                          title="Quadratic pseudospectrum for identifying localized states", &
+diff --git a/src/input_cp2k_properties_dft.F b/src/input_cp2k_properties_dft.F
+index c9d9eb946c..7b06fb94dd 100644
+--- a/src/input_cp2k_properties_dft.F
++++ b/src/input_cp2k_properties_dft.F
+@@ -12,7 +12,7 @@
+ !> \author MI
+ ! **************************************************************************************************
+ MODULE input_cp2k_properties_dft
+-   USE bibliography, ONLY: Dixon2023, Doll2025, Wong2026, Loring2015, Cerjan2023, Futera2017, &
++   USE bibliography, ONLY: Dixon2023, Doll2025, Wong2026, Loring2015, Cerjan2023, BiancoResta2011, Futera2017, &
+                            Hanasaki2025, &
+                            Hernandez2025, &
+                            Iannuzzi2005, &
+@@ -145,6 +145,10 @@ CONTAINS
+       CALL section_add_subsection(section, subsection)
+       CALL section_release(subsection)
+ 
++      CALL create_real_space_chern_section(subsection)
++      CALL section_add_subsection(section, subsection)
++      CALL section_release(subsection)
++
+       CALL create_spectral_localizer_section(subsection)
+       CALL section_add_subsection(section, subsection)
+       CALL section_release(subsection)
+@@ -166,6 +170,79 @@ CONTAINS
+ 
+    END SUBROUTINE create_properties_section
+ 
++! **************************************************************************************************
++!> \brief Create an opt-in finite-window Chern-marker analysis, independent of periodic Wilson paths.
++!> \param section New properties section
++! **************************************************************************************************
++   SUBROUTINE create_real_space_chern_section(section)
++      TYPE(section_type), POINTER :: section
++      TYPE(keyword_type), POINTER :: keyword
++
++      NULLIFY (keyword)
++      CALL section_create(section, __LOCATION__, name="REAL_SPACE_CHERN", &
++                          description="Finite-window real-space Chern marker from the complete GPW/GAPW AO "// &
++                          "Hamiltonian, overlap and analytic position operators. Requires isolated systems with "// &
++                          "CELL/POISSON PERIODIC NONE and no KPOINTS. Uses a sharp spectral projector below ENERGY, "// &
++                          "not smeared SCF occupations. A finite, basis-dependent marker, not a rounded bulk index "// &
++                          "or a Z2 invariant. Does not change WANNIER90 Wilson/Chern/Z2 or external Z2Pack interfaces.", &
++                          repeats=.FALSE., citations=[BiancoResta2011])
++      CALL keyword_create(keyword, __LOCATION__, name="_SECTION_PARAMETERS_", &
++                          description="Activate finite-window Chern analysis after converged SCF.", &
++                          default_l_val=.FALSE., lone_keyword_l_val=.TRUE.)
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="PLANE", type_of_var=enum_t, &
++                          description="Ordered Cartesian plane in the SUBSYS/COORD frame. Reversing its order "// &
++                          "reverses the marker sign. Positive convention uses Berry connection i<u|grad u>.", &
++                          enum_c_vals=s2a("XY", "YX", "XZ", "ZX", "YZ", "ZY"), &
++                          enum_i_vals=[1, 2, 3, 4, 5, 6], default_i_val=1)
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="WINDOW_CENTER", &
++                          description="Cartesian center of the physical Gaussian window in the input coordinate frame.", &
++                          type_of_var=real_t, n_var=3, unit_str="bohr", default_r_vals=[0.0_dp, 0.0_dp, 0.0_dp])
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="WINDOW_SIGMA", &
++                          description="Required positive widths in the two ordered PLANE directions. "// &
++                          "The window is exp(-sum((r_i-center_i)^2/(2*sigma_i^2))), independent of the normal "// &
++                          "coordinate. Its physical area is 2*pi*sigma_1*sigma_2. Integrates the AO window "// &
++                          "matrix analytically, not by selecting atoms or AOs. Check window and sample-size dependence.", &
++                          type_of_var=real_t, n_var=2, unit_str="bohr")
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="ENERGY", &
++                          description="Required absolute energy defining the occupied projector (eigenvalues < ENERGY). "// &
++                          "Choose a resolved gap; an energy crossing a level is rejected. No Fermi-level shift.", &
++                          type_of_var=real_t, n_var=1, unit_str="hartree")
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="EPS_GAP", &
++                          description="Minimum distance of ENERGY from the generalized Hamiltonian spectrum. "// &
++                          "An additional roundoff bound applies; no splitting of unresolved degeneracies.", &
++                          unit_str="hartree", default_r_val=1.e-8_dp)
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="SPIN_CHANNEL", &
++                          description="Scalar collinear channel. Scalar markers are per channel without a spin "// &
++                          "degeneracy factor. SOC requires restricted channel 1 and includes both spinor components.", &
++                          default_i_val=1)
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="SOC", &
++                          description="Add post-SCF GTH SOC in the complete AO spinor space. Requires a restricted "// &
++                          "SCF and SOC parameters in all GTH potentials, not a self-consistent noncollinear calculation. "// &
++                          "A time-reversal symmetric spinor charge marker can vanish even for a nontrivial Z2 insulator.", &
++                          default_l_val=.FALSE.)
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++      CALL keyword_create(keyword, __LOCATION__, name="MAX_AO", &
++                          description="Safety limit on scalar AO dimension. Dense reference, replicated matrices "// &
++                          "and source-rank factorization. SOC doubles the working dimension.", default_i_val=512)
++      CALL section_add_keyword(section, keyword)
++      CALL keyword_release(keyword)
++   END SUBROUTINE create_real_space_chern_section
++
+ ! **************************************************************************************************
+ !> \brief creates the input structure used to activate finite-volume Kubo transport
+ ! **************************************************************************************************
+diff --git a/src/kubo_unittest.F b/src/kubo_unittest.F
+index 882b8f0046..6c9a90035e 100644
+--- a/src/kubo_unittest.F
++++ b/src/kubo_unittest.F
+@@ -7,9 +7,62 @@
+ MODULE kubo_test_cases
+    IMPLICIT NONE
+    PRIVATE
+-   PUBLIC :: check_projected_current, check_bloch_current, check_hall_response, check_real_space_chern
++   PUBLIC :: check_projected_current, check_bloch_current, check_hall_response, check_real_space_chern, check_gaussian_window
+ CONTAINS
+ 
++! **************************************************************************************************
++!> \brief Check analytic physical-window integrals for displaced, contracted and higher-L AOs.
++! **************************************************************************************************
++   SUBROUTINE check_gaussian_window()
++      USE ai_gaussian_window, ONLY: gaussian_window_overlap
++      USE ai_overlap, ONLY: overlap_ab
++      USE ai_overlap3, ONLY: overlap3
++      USE kinds, ONLY: dp
++      USE mathconstants, ONLY: pi
++      USE orbital_pointers, ONLY: coset, deallocate_orbital_pointers, init_orbital_pointers
++      INTEGER                                            :: dx, dy, px
++      REAL(dp)                                           :: alpha(3), center(3), f0, p(3), ra(3), &
++                                                            radii(2), rb(3), s(20, 20), t(20, 20), &
++                                                            triple(20, 20, 1), zeta(2), zetb(2)
++
++      CALL init_orbital_pointers(2)
++      ra = [0.1_dp, -0.3_dp, 0.2_dp]
++      rb = [-0.4_dp, 0.2_dp, -0.1_dp]
++      center = [0.2_dp, -0.1_dp, -0.3_dp]
++      zeta = [0.9_dp, 0.4_dp]
++      zetb = [0.7_dp, 0.3_dp]
++      radii = 100.0_dp
++      CALL gaussian_window_overlap(2, 1, zeta, 2, 0, zetb, ra, rb, center, [0.0_dp, 0.0_dp, 0.0_dp], s)
++      CALL overlap_ab(2, 1, 2, radii, zeta, 2, 0, 2, radii, zetb, rb - ra, sab=t)
++      IF (MAXVAL(ABS(s(:18, :) - t(:18, :))) > 1.e-13_dp) ERROR STOP 'Window identity/compact shell ordering'
++      alpha = 0.6_dp
++      CALL gaussian_window_overlap(2, 0, zeta, 2, 0, zetb, ra, rb, center, alpha, s)
++      CALL overlap3(2, 2, zeta, radii, 0, 2, 2, zetb, radii, 0, 0, 1, [alpha(1)], [100.0_dp], 0, &
++                    rb - ra, NORM2(rb - ra), center - ra, NORM2(center - ra), &
++                    center - rb, NORM2(center - rb), triple)
++      IF (MAXVAL(ABS(s - triple(:, :, 1))) > 1.e-13_dp) ERROR STOP 'Independent three-center window reference'
++      CALL gaussian_window_overlap(2, 0, zetb, 2, 0, zeta, rb, ra, center, alpha, t)
++      IF (MAXVAL(ABS(s - TRANSPOSE(t))) > 1.e-13_dp) ERROR STOP 'Window Hermiticity'
++      CALL gaussian_window_overlap(2, 0, zeta, 2, 0, zetb, ra + 4, rb + 4, center + 4, alpha, t)
++      IF (MAXVAL(ABS(s - t)) > 1.e-13_dp) ERROR STOP 'Window common translation'
++      alpha = [0.3_dp, 0.7_dp, 0.0_dp]
++      ra = 0.0_dp
++      rb = 0.0_dp
++      center = 0.0_dp
++      CALL gaussian_window_overlap(2, 0, zeta(:1), 2, 0, zetb(:1), ra, rb, center, alpha, s)
++      p = zeta(1) + zetb(1) + alpha
++      f0 = PRODUCT(SQRT(pi/p))
++      px = coset(1, 0, 0)
++      dx = coset(2, 0, 0)
++      dy = coset(0, 2, 0)
++      IF (ABS(s(1, 1) - f0) > 1.e-13_dp .OR. ABS(s(px, 1)) > 1.e-13_dp) ERROR STOP 'Window s/p parity'
++      IF (ABS(s(px, px) - f0/(2*p(1))) > 1.e-13_dp) ERROR STOP 'Anisotropic window p integral'
++      IF (ABS(s(dx, dx) - 3*f0/(4*p(1)**2)) > 1.e-13_dp) ERROR STOP 'Anisotropic window d integral'
++      IF (ABS(s(dx, dy) - f0/(4*p(1)*p(2))) > 1.e-13_dp) ERROR STOP 'Anisotropic window mixed d integral'
++      CALL deallocate_orbital_pointers()
++      PRINT *, 'Physical Gaussian window, s/p/d, compact shells, reference and translation tests passed.'
++   END SUBROUTINE check_gaussian_window
++
+ ! **************************************************************************************************
+ !> \brief Validate projected currents and their AO-metric covariance.
+ ! **************************************************************************************************
+@@ -629,10 +682,12 @@ CONTAINS
+ END MODULE kubo_test_cases
+ 
+ PROGRAM kubo_unittest
+-   USE kubo_test_cases, ONLY: check_projected_current, check_bloch_current, check_hall_response, check_real_space_chern
++   USE kubo_test_cases, ONLY: check_projected_current, check_bloch_current, check_hall_response, &
++                              check_real_space_chern, check_gaussian_window
+    IMPLICIT NONE
+    CALL check_projected_current()
+    CALL check_bloch_current()
+    CALL check_hall_response()
+    CALL check_real_space_chern()
++   CALL check_gaussian_window()
+ END PROGRAM kubo_unittest
+diff --git a/src/qs_finite_ao.F b/src/qs_finite_ao.F
+index 10e0840079..6f3f965c75 100644
+--- a/src/qs_finite_ao.F
++++ b/src/qs_finite_ao.F
+@@ -10,17 +10,27 @@
+ !> \author Thomas D. Kuehne, tkuehne@cp2k.org
+ ! **************************************************************************************************
+ MODULE qs_finite_ao
++   USE ai_contraction,                  ONLY: block_add,&
++                                              contraction
++   USE ai_gaussian_window,              ONLY: gaussian_window_overlap
++   USE basis_set_types,                 ONLY: gto_basis_set_p_type,&
++                                              gto_basis_set_type
+    USE cell_types,                      ONLY: cell_type
+    USE cp_control_types,                ONLY: dft_control_type
+-   USE cp_dbcsr_api,                    ONLY: dbcsr_create,&
+-                                              dbcsr_p_type,&
+-                                              dbcsr_set
++   USE cp_dbcsr_api,                    ONLY: &
++        dbcsr_create, dbcsr_distribution_get, dbcsr_distribution_type, dbcsr_finalize, &
++        dbcsr_get_info, dbcsr_p_type, dbcsr_put_block, dbcsr_set, dbcsr_type_no_symmetry
+    USE cp_dbcsr_cp2k_link,              ONLY: cp_dbcsr_alloc_block_from_nbl
+    USE input_constants,                 ONLY: do_method_gapw,&
+                                               do_method_gpw
+    USE kinds,                           ONLY: dp
++   USE message_passing,                 ONLY: mp_para_env_type
++   USE orbital_pointers,                ONLY: ncoset
++   USE particle_types,                  ONLY: particle_type
+    USE qs_environment_types,            ONLY: get_qs_env,&
+                                               qs_environment_type
++   USE qs_integral_utils,               ONLY: basis_set_list_setup,&
++                                              get_memory_usage
+    USE qs_kind_types,                   ONLY: qs_kind_type
+    USE qs_moments,                      ONLY: build_local_moment_matrix
+    USE qs_neighbor_list_types,          ONLY: neighbor_list_set_p_type
+@@ -30,7 +40,7 @@ MODULE qs_finite_ao
+    IMPLICIT NONE
+    PRIVATE
+    CHARACTER(len=*), PARAMETER, PRIVATE :: moduleN = 'qs_finite_ao'
+-   PUBLIC :: finite_ao_positions, finite_ao_soc
++   PUBLIC :: finite_ao_positions, finite_ao_soc, finite_ao_window
+ CONTAINS
+ 
+ ! **************************************************************************************************
+@@ -69,6 +79,78 @@ CONTAINS
+       CALL build_local_moment_matrix(qs_env, positions, 1, ref_point=[0.0_dp, 0.0_dp, 0.0_dp])
+    END SUBROUTINE finite_ao_positions
+ ! **************************************************************************************************
++!> \brief Covariant matrix of a physical Cartesian Gaussian window in finite AO space.
++!> \param qs_env Isolated Quickstep environment
++!> \param center Cartesian window center in internal bohr
++!> \param alpha Window exponents in inverse squared bohr
++!> \param window Newly allocated scalar matrix, released by caller
++!> \note Integrates the window over the AOs; no atom or AO-index weighting is used.
++! **************************************************************************************************
++   SUBROUTINE finite_ao_window(qs_env, center, alpha, window)
++      TYPE(qs_environment_type), POINTER                 :: qs_env
++      REAL(dp), INTENT(IN)                               :: center(3), alpha(3)
++      TYPE(dbcsr_p_type), INTENT(OUT)                    :: window
++
++      INTEGER                                            :: ia, ib, iset, jset, ka, kb, ld, na, nb, &
++                                                            sa, sb
++      INTEGER, POINTER                                   :: col_dist(:), pgrid(:, :), row_dist(:)
++      LOGICAL                                            :: do_kpoints
++      REAL(dp)                                           :: distance
++      REAL(dp), ALLOCATABLE                              :: block(:, :), integrals(:, :), work(:, :)
++      TYPE(cell_type), POINTER                           :: cell
++      TYPE(dbcsr_distribution_type)                      :: distribution
++      TYPE(dbcsr_p_type), POINTER                        :: matrix_s(:, :)
++      TYPE(gto_basis_set_p_type), ALLOCATABLE            :: bases(:)
++      TYPE(gto_basis_set_type), POINTER                  :: a, b
++      TYPE(mp_para_env_type), POINTER                    :: para_env
++      TYPE(particle_type), POINTER                       :: particles(:)
++      TYPE(qs_kind_type), POINTER                        :: kinds(:)
++
++      CALL get_qs_env(qs_env, cell=cell, do_kpoints=do_kpoints, matrix_s_kp=matrix_s, &
++                      para_env=para_env, particle_set=particles, qs_kind_set=kinds)
++      IF (ANY(cell%perd /= 0) .OR. do_kpoints) CPABORT('Finite AO windows require isolated Gamma systems.')
++      ALLOCATE (bases(SIZE(kinds)))
++      CALL basis_set_list_setup(bases, 'ORB', kinds)
++      ld = get_memory_usage(kinds, 'ORB')
++      ALLOCATE (integrals(ld, ld), work(ld, ld), window%matrix)
++      CALL dbcsr_create(window%matrix, template=matrix_s(1, 1)%matrix, &
++                        name='AO GAUSSIAN WINDOW', matrix_type=dbcsr_type_no_symmetry)
++      CALL dbcsr_get_info(matrix_s(1, 1)%matrix, distribution=distribution)
++      CALL dbcsr_distribution_get(distribution, pgrid=pgrid, row_dist=row_dist, col_dist=col_dist)
++      DO ia = 1, SIZE(particles)
++         ka = particles(ia)%atomic_kind%kind_number
++         a => bases(ka)%gto_basis_set
++         IF (.NOT. ASSOCIATED(a)) CYCLE
++         DO ib = 1, SIZE(particles)
++            IF (pgrid(row_dist(ia), col_dist(ib)) /= para_env%mepos) CYCLE
++            kb = particles(ib)%atomic_kind%kind_number
++            b => bases(kb)%gto_basis_set
++            IF (.NOT. ASSOCIATED(b)) CYCLE
++            distance = NORM2(particles(ia)%r - particles(ib)%r)
++            ALLOCATE (block(a%nsgf, b%nsgf))
++            block = 0.0_dp
++            DO iset = 1, a%nset
++               sa = a%first_sgf(1, iset)
++               na = a%npgf(iset)*(ncoset(a%lmax(iset)) - ncoset(a%lmin(iset) - 1))
++               DO jset = 1, b%nset
++                  IF (a%set_radius(iset) + b%set_radius(jset) < distance) CYCLE
++                  sb = b%first_sgf(1, jset)
++                  nb = b%npgf(jset)*(ncoset(b%lmax(jset)) - ncoset(b%lmin(jset) - 1))
++                  CALL gaussian_window_overlap(a%lmax(iset), a%lmin(iset), a%zet(:a%npgf(iset), iset), &
++                                               b%lmax(jset), b%lmin(jset), b%zet(:b%npgf(jset), jset), &
++                                               particles(ia)%r, particles(ib)%r, center, alpha, integrals)
++                  CALL contraction(integrals, work, ca=a%scon(:, sa:), na=na, ma=a%nsgf_set(iset), &
++                                   cb=b%scon(:, sb:), nb=nb, mb=b%nsgf_set(jset), fscale=1.0_dp, trans=.FALSE.)
++                  CALL block_add('IN', work, a%nsgf_set(iset), b%nsgf_set(jset), block, sa, sb, trans=.FALSE.)
++               END DO
++            END DO
++            IF (MAXVAL(ABS(block)) > 0.0_dp) CALL dbcsr_put_block(window%matrix, ia, ib, block)
++            DEALLOCATE (block)
++         END DO
++      END DO
++      CALL dbcsr_finalize(window%matrix)
++   END SUBROUTINE finite_ao_window
++! **************************************************************************************************
+ !> \brief Validate and construct post-SCF GTH SOC components shared by finite AO analyses.
+ !> \param qs_env Restricted SCF environment with GTH SOC potentials
+ !> \param soc_matrices Newly allocated SOC matrices, released by caller
+diff --git a/src/qs_real_space_chern.F b/src/qs_real_space_chern.F
+new file mode 100644
+index 0000000000..ac055bd504
+--- /dev/null
++++ b/src/qs_real_space_chern.F
+@@ -0,0 +1,223 @@
++!--------------------------------------------------------------------------------------------------!
++!   CP2K: A general program to perform molecular dynamics simulations                              !
++!   Copyright 2000-2026 CP2K developers group <https://cp2k.org>                                   !
++!                                                                                                  !
++!   SPDX-License-Identifier: GPL-2.0-or-later                                                      !
++!--------------------------------------------------------------------------------------------------!
++
++! **************************************************************************************************
++!> \brief Finite-window AO Chern marker after a converged Quickstep calculation.
++!> \author Thomas D. Kuehne, tkuehne@cp2k.org
++! **************************************************************************************************
++MODULE qs_real_space_chern
++   USE bibliography,                    ONLY: BiancoResta2011,&
++                                              cite_reference
++   USE cell_types,                      ONLY: cell_type,&
++                                              use_perd_none
++   USE cp_control_types,                ONLY: dft_control_type
++   USE cp_dbcsr_api,                    ONLY: dbcsr_get_info,&
++                                              dbcsr_p_type
++   USE cp_dbcsr_operations,             ONLY: dbcsr_deallocate_matrix_set
++   USE cp_log_handling,                 ONLY: cp_get_default_logger,&
++                                              cp_logger_get_default_io_unit,&
++                                              cp_logger_type
++   USE ieee_arithmetic,                 ONLY: ieee_is_finite
++   USE input_constants,                 ONLY: do_method_gapw,&
++                                              do_method_gpw
++   USE input_section_types,             ONLY: section_vals_get_subs_vals,&
++                                              section_vals_type,&
++                                              section_vals_val_get
++   USE kinds,                           ONLY: dp
++   USE kubo_projected,                  ONLY: projected_eigensystem
++   USE mathconstants,                   ONLY: twopi
++   USE message_passing,                 ONLY: mp_para_env_type
++   USE qs_environment_types,            ONLY: get_qs_env,&
++                                              qs_environment_type
++   USE qs_finite_ao,                    ONLY: finite_ao_positions,&
++                                              finite_ao_soc,&
++                                              finite_ao_window
++   USE spectral_localizer_dbcsr,        ONLY: localizer_ao_operators,&
++                                              localizer_dbcsr_dense,&
++                                              localizer_dbcsr_release,&
++                                              localizer_matrix_type
++   USE topology_real_space,             ONLY: finite_chern_marker
++#include "./base/base_uses.f90"
++
++   IMPLICIT NONE
++   PRIVATE
++   CHARACTER(len=*), PARAMETER, PRIVATE :: moduleN = 'qs_real_space_chern'
++   PUBLIC :: qs_scf_post_real_space_chern
++CONTAINS
++! **************************************************************************************************
++!> \brief Integrate a physical Gaussian window and evaluate its metric-correct finite Chern marker.
++!> \param qs_env Converged isolated GPW/GAPW environment
++! **************************************************************************************************
++   SUBROUTINE qs_scf_post_real_space_chern(qs_env)
++      TYPE(qs_environment_type), POINTER                 :: qs_env
++
++      CHARACTER(len=*), PARAMETER :: routineN = 'qs_scf_post_real_space_chern'
++      CHARACTER(len=2), PARAMETER :: planes(6) = ['XY', 'YX', 'XZ', 'ZX', 'YZ', 'ZY']
++      INTEGER, PARAMETER :: axes(2, 6) = RESHAPE([1, 2, 2, 1, 1, 3, 3, 1, 2, 3, 3, 2], [2, 6])
++
++      CHARACTER(len=256)                                 :: error
++      COMPLEX(dp), ALLOCATABLE                           :: c(:, :), gram(:, :), h(:, :), s(:, :), &
++                                                            temporary(:, :), w(:, :), x(:, :, :)
++      INTEGER                                            :: handle, i, max_ao, n, nao, nocc, &
++                                                            output_unit, periodic, plane, spin, &
++                                                            status
++      LOGICAL                                            :: active, do_kpoints, do_soc, &
++                                                            explicit_value
++      REAL(dp)                                           :: alpha(3), area, center(3), energy, &
++                                                            eps_gap, gap, marker, weight, width(2)
++      REAL(dp), ALLOCATABLE                              :: spectrum(:)
++      REAL(dp), POINTER                                  :: values(:)
++      TYPE(cell_type), POINTER                           :: cell
++      TYPE(cp_logger_type), POINTER                      :: logger
++      TYPE(dbcsr_p_type)                                 :: observables(3)
++      TYPE(dbcsr_p_type), POINTER                        :: images_h(:, :), images_s(:, :), &
++                                                            positions(:), soc(:, :), window(:)
++      TYPE(dft_control_type), POINTER                    :: dft_control
++      TYPE(localizer_matrix_type)                        :: metric, operators(4)
++      TYPE(mp_para_env_type), POINTER                    :: para_env
++      TYPE(section_vals_type), POINTER                   :: input, section
++
++      CALL get_qs_env(qs_env, input=input)
++      section => section_vals_get_subs_vals(input, 'PROPERTIES%REAL_SPACE_CHERN')
++      CALL section_vals_val_get(section, '_SECTION_PARAMETERS_', l_val=active)
++      IF (.NOT. active) RETURN
++      CALL timeset(routineN, handle)
++      IF (.NOT. qs_env%scf_convergence_available .OR. .NOT. qs_env%scf_converged) THEN
++         CPABORT('REAL_SPACE_CHERN requires converged SCF.')
++      END IF
++      CALL get_qs_env(qs_env, cell=cell, do_kpoints=do_kpoints, dft_control=dft_control, &
++                      matrix_s_kp=images_s, matrix_ks_kp=images_h, para_env=para_env)
++      CALL section_vals_val_get(input, 'DFT%POISSON%PERIODIC', i_val=periodic)
++      IF (periodic /= use_perd_none .OR. ANY(cell%perd /= 0) .OR. do_kpoints) THEN
++         CPABORT('REAL_SPACE_CHERN requires CELL/POISSON PERIODIC NONE without KPOINTS.')
++      END IF
++      SELECT CASE (dft_control%qs_control%method_id)
++      CASE (do_method_gpw, do_method_gapw)
++      CASE DEFAULT
++         CPABORT('REAL_SPACE_CHERN supports GPW/GAPW only.')
++      END SELECT
++      CALL section_vals_val_get(section, 'PLANE', i_val=plane)
++      CALL section_vals_val_get(section, 'WINDOW_CENTER', r_vals=values)
++      center = values
++      CALL section_vals_val_get(section, 'WINDOW_SIGMA', explicit=explicit_value)
++      IF (.NOT. explicit_value) THEN
++         CPABORT('REAL_SPACE_CHERN requires explicit WINDOW_SIGMA.')
++      END IF
++      CALL section_vals_val_get(section, 'WINDOW_SIGMA', r_vals=values)
++      width = values
++      IF (.NOT. ALL(ieee_is_finite(center)) .OR. .NOT. ALL(ieee_is_finite(width))) THEN
++         CPABORT('REAL_SPACE_CHERN window parameters must be finite.')
++      END IF
++      IF (ANY(width <= SQRT(TINY(1.0_dp))) .OR. ANY(width >= SQRT(HUGE(1.0_dp)/twopi))) THEN
++         CPABORT('REAL_SPACE_CHERN WINDOW_SIGMA must be positive and numerically representable.')
++      END IF
++      alpha = 0.0_dp
++      alpha(axes(:, plane)) = (0.5_dp/width)/width
++      area = twopi*width(1)*width(2)
++      CALL section_vals_val_get(section, 'ENERGY', explicit=explicit_value)
++      IF (.NOT. explicit_value) THEN
++         CPABORT('REAL_SPACE_CHERN requires explicit ENERGY in a resolved gap.')
++      END IF
++      CALL section_vals_val_get(section, 'ENERGY', r_val=energy)
++      CALL section_vals_val_get(section, 'EPS_GAP', r_val=eps_gap)
++      IF (.NOT. ieee_is_finite(energy) .OR. .NOT. ieee_is_finite(eps_gap)) THEN
++         CPABORT('REAL_SPACE_CHERN ENERGY/EPS_GAP must be finite.')
++      END IF
++      IF (eps_gap < 0.0_dp) CPABORT('REAL_SPACE_CHERN EPS_GAP must be nonnegative.')
++      CALL section_vals_val_get(section, 'SPIN_CHANNEL', i_val=spin)
++      CALL section_vals_val_get(section, 'SOC', l_val=do_soc)
++      IF (spin < 1 .OR. spin > SIZE(images_h, 1)) THEN
++         CPABORT('REAL_SPACE_CHERN SPIN_CHANNEL is unavailable.')
++      END IF
++      IF (do_soc .AND. spin /= 1) CPABORT('REAL_SPACE_CHERN SOC requires restricted channel 1.')
++      CALL section_vals_val_get(section, 'MAX_AO', i_val=max_ao)
++      CALL dbcsr_get_info(images_s(1, 1)%matrix, nfullrows_total=nao)
++      IF (max_ao < 1 .OR. nao > max_ao) CPABORT('REAL_SPACE_CHERN exceeds MAX_AO.')
++      n = nao
++      IF (do_soc) n = 2*nao
++      CALL finite_ao_positions(qs_env, positions)
++      ALLOCATE (window(1))
++      CALL finite_ao_window(qs_env, center, alpha, window(1))
++      observables(1:2) = positions(axes(:, plane))
++      observables(3) = window(1)
++      IF (do_soc) THEN
++         CALL finite_ao_soc(qs_env, soc)
++         CALL localizer_ao_operators(images_h(spin, 1)%matrix, images_s(1, 1)%matrix, &
++                                     observables, operators, metric, soc)
++         CALL dbcsr_deallocate_matrix_set(soc)
++      ELSE
++         CALL localizer_ao_operators(images_h(spin, 1)%matrix, images_s(1, 1)%matrix, &
++                                     observables, operators, metric)
++      END IF
++      CALL dbcsr_deallocate_matrix_set(positions)
++      CALL dbcsr_deallocate_matrix_set(window)
++      CALL localizer_dbcsr_dense(metric, para_env, s)
++      CALL localizer_dbcsr_dense(operators(1), para_env, h)
++      ALLOCATE (x(n, n, 2), c(n, n), spectrum(n))
++      DO i = 1, 2
++         CALL localizer_dbcsr_dense(operators(i + 1), para_env, temporary)
++         x(:, :, i) = temporary
++         DEALLOCATE (temporary)
++      END DO
++      CALL localizer_dbcsr_dense(operators(4), para_env, w)
++      status = 0
++      IF (para_env%is_source()) THEN
++         CALL projected_eigensystem(h, s, spectrum, c, status)
++         IF (status == 0) THEN
++            gap = MINVAL(ABS(spectrum - energy))
++            IF (gap <= MAX(eps_gap, 64*EPSILON(1.0_dp)*MAX(1.0_dp, ABS(energy), MAXVAL(ABS(spectrum))))) THEN
++               status = -5
++            ELSE
++               nocc = COUNT(spectrum < energy)
++               CALL finite_chern_marker(c(:, :nocc), s, x, w, area, marker, status)
++               IF (status == 0) THEN
++                  gram = MATMUL(CONJG(TRANSPOSE(c(:, :nocc))), MATMUL(w, c(:, :nocc)))
++                  weight = 0.0_dp
++                  DO i = 1, nocc
++                     weight = weight + REAL(gram(i, i), dp)
++                  END DO
++               END IF
++            END IF
++         END IF
++      END IF
++      CALL para_env%bcast(status)
++      IF (status /= 0) THEN
++         WRITE (error, '(A,I0,A)') 'REAL_SPACE_CHERN rejected its matrices/projector (status ', status, &
++            '). -5: ENERGY intersects a level; -4: window range; -3: normalization; -2: overlap.'
++         CPABORT(TRIM(error))
++      END IF
++      CALL para_env%bcast(nocc)
++      CALL para_env%bcast(gap)
++      CALL para_env%bcast(marker)
++      CALL para_env%bcast(weight)
++      logger => cp_get_default_logger()
++      output_unit = cp_logger_get_default_io_unit(logger)
++      IF (output_unit > 0) THEN
++         WRITE (output_unit, '(/,T2,A)') 'REAL_SPACE_CHERN| Finite Gaussian window, not a rounded bulk/Z2 index.'
++         WRITE (output_unit, '(T2,A,A)') 'REAL_SPACE_CHERN| Oriented Cartesian plane: ', planes(plane)
++         WRITE (output_unit, '(T2,A,3ES23.14)') 'REAL_SPACE_CHERN| Window center [bohr]: ', center
++         WRITE (output_unit, '(T2,A,2ES23.14)') 'REAL_SPACE_CHERN| Window sigma [bohr]: ', width
++         WRITE (output_unit, '(T2,A,ES23.14)') 'REAL_SPACE_CHERN| Window area [bohr^2]: ', area
++         WRITE (output_unit, '(T2,A,ES23.14)') 'REAL_SPACE_CHERN| Projector energy [hartree]: ', energy
++         WRITE (output_unit, '(T2,A,ES23.14)') 'REAL_SPACE_CHERN| Spectral distance [hartree]: ', gap
++         WRITE (output_unit, '(T2,A,I0,A,I0)') 'REAL_SPACE_CHERN| Occupied states: ', nocc, ' / ', n
++         IF (do_soc) THEN
++            WRITE (output_unit, '(T2,A)') 'REAL_SPACE_CHERN| Post-SCF GTH SOC, both spinor components.'
++         ELSE
++            WRITE (output_unit, '(T2,A,I0)') 'REAL_SPACE_CHERN| Scalar spin channel, no degeneracy factor: ', spin
++         END IF
++         WRITE (output_unit, '(T2,A,ES23.14)') 'REAL_SPACE_CHERN| Window occupied weight: ', weight
++         WRITE (output_unit, '(T2,A,ES23.14)') 'REAL_SPACE_CHERN| Marker: ', marker
++      END IF
++      CALL cite_reference(BiancoResta2011)
++      DO i = 1, 4
++         CALL localizer_dbcsr_release(operators(i))
++      END DO
++      CALL localizer_dbcsr_release(metric)
++      CALL timestop(handle)
++   END SUBROUTINE qs_scf_post_real_space_chern
++END MODULE qs_real_space_chern
+diff --git a/src/qs_scf_post_gpw.F b/src/qs_scf_post_gpw.F
+index ae53bd2ed7..a3afd36f86 100644
+--- a/src/qs_scf_post_gpw.F
++++ b/src/qs_scf_post_gpw.F
+@@ -202,6 +202,7 @@ MODULE qs_scf_post_gpw
+    USE qs_pdos,                         ONLY: calculate_projected_dos,&
+                                               calculate_projected_dos_kp
+    USE qs_quadratic_pseudospectrum,     ONLY: qs_scf_post_quadratic
++   USE qs_real_space_chern,             ONLY: qs_scf_post_real_space_chern
+    USE qs_resp,                         ONLY: resp_fit
+    USE qs_rho0_types,                   ONLY: get_rho0_mpole,&
+                                               mpole_rho_atom,&
+@@ -3363,6 +3364,7 @@ CONTAINS
+ 
+       ! post SCF finite-volume Kubo transport
+       CALL qs_scf_post_kubo_transport(qs_env)
++      CALL qs_scf_post_real_space_chern(qs_env)
+ 
+       CALL qs_scf_post_localizer(qs_env)
+       CALL qs_scf_post_quadratic(qs_env)
+diff --git a/tests/QS/regtest-kubo-hall/TEST_FILES.toml b/tests/QS/regtest-kubo-hall/TEST_FILES.toml
+index f6572d7ba3..48be5bbf8c 100644
+--- a/tests/QS/regtest-kubo-hall/TEST_FILES.toml
++++ b/tests/QS/regtest-kubo-hall/TEST_FILES.toml
+@@ -1,6 +1,10 @@
+ # Time-reversal cancellation, finite/SOC bulk response and sheet/chain units.
+-# Nonzero Hall response and gauge covariance are covered by kubo_hall_unittest.
+-"projected-gapw.inp" = [{matcher="Kubo_hall_max", tol=1e-9, ref=0.0}]
++# Nonzero Hall/marker values and gauge covariance are covered by kubo_unittest.
++"projected-gapw.inp" = [{matcher="Kubo_hall_max", tol=1e-9, ref=0.0},
++                        {matcher="Real_space_chern_marker", tol=1e-10, ref=0.0},
++                        {matcher="Real_space_chern_weight", tol=2e-6, ref=6.40367061171730}]
++"window-gpw.inp" = [{matcher="Real_space_chern_marker", tol=1e-10, ref=0.0},
++                    {matcher="Real_space_chern_weight", tol=2e-6, ref=0.684673784725126}]
+ "bloch-k290.inp" = [{matcher="Kubo_hall_max", tol=1e-9, ref=0.0},
+                     {matcher="Kubo_sigma_iso", tol=2e-6, ref=1.07057468e-1},
+                     {matcher="Kubo_symmetry_points", tol=0.0, ref=4}]
+diff --git a/tests/QS/regtest-kubo-hall/hall-common.inc b/tests/QS/regtest-kubo-hall/hall-common.inc
+index 229331c0ab..4f44b89c76 100644
+--- a/tests/QS/regtest-kubo-hall/hall-common.inc
++++ b/tests/QS/regtest-kubo-hall/hall-common.inc
+@@ -52,6 +52,15 @@
+     &END XC
+   &END DFT
+   &PROPERTIES
++    @IF ${HALL_BLOCH} == F
++      &REAL_SPACE_CHERN ON
++        SOC T
++        ENERGY [hartree] -0.1
++        PLANE YX
++        WINDOW_CENTER [angstrom] 3.1 2.8 3.0
++        WINDOW_SIGMA [bohr] 1.2 1.7
++      &END REAL_SPACE_CHERN
++    @ENDIF
+     &KUBO_TRANSPORT ON
+       CURRENT_OPERATOR ${HALL_CURRENT}
+       HALL_RESPONSE T
+diff --git a/tests/QS/regtest-kubo-hall/window-gpw.inp b/tests/QS/regtest-kubo-hall/window-gpw.inp
+new file mode 100644
+index 0000000000..a039365ba6
+--- /dev/null
++++ b/tests/QS/regtest-kubo-hall/window-gpw.inp
+@@ -0,0 +1,64 @@
++&GLOBAL
++  PRINT_LEVEL LOW
++  PROJECT finite-chern
++  RUN_TYPE ENERGY
++&END GLOBAL
++
++&FORCE_EVAL
++  METHOD QUICKSTEP
++  &DFT
++    BASIS_SET_FILE_NAME BASIS_MOLOPT_UZH
++    POTENTIAL_FILE_NAME POTENTIAL_UZH
++    &MGRID
++      CUTOFF 150
++      NGRIDS 1
++      REL_CUTOFF 40
++    &END MGRID
++    &POISSON
++      PERIODIC NONE
++      POISSON_SOLVER MT
++    &END POISSON
++    &QS
++      EPS_DEFAULT 1.0E-12
++      METHOD GPW
++    &END QS
++    &SCF
++      EPS_SCF 1.0E-9
++      MAX_SCF 60
++      &OT
++        MINIMIZER DIIS
++        PRECONDITIONER FULL_ALL
++      &END OT
++      &PRINT
++        &RESTART OFF
++        &END RESTART
++      &END PRINT
++    &END SCF
++    &XC
++      &XC_FUNCTIONAL PBE
++      &END XC_FUNCTIONAL
++    &END XC
++  &END DFT
++  &PROPERTIES
++    &REAL_SPACE_CHERN ON
++      ENERGY [hartree] -0.15
++      PLANE XZ
++      WINDOW_CENTER [angstrom] 2.8 3.0 3.1
++      WINDOW_SIGMA [bohr] 1.3 1.8
++    &END REAL_SPACE_CHERN
++  &END PROPERTIES
++  &SUBSYS
++    &CELL
++      ABC 6.0 6.0 6.0
++      PERIODIC NONE
++    &END CELL
++    &COORD
++      H 2.6 3.0 3.0
++      H 3.4 3.0 3.0
++    &END COORD
++    &KIND H
++      BASIS_SET DZVP-MOLOPT-GGA-GTH-q1
++      POTENTIAL GTH-PBE-q1
++    &END KIND
++  &END SUBSYS
++&END FORCE_EVAL
+diff --git a/tests/matchers.py b/tests/matchers.py
+index ee4b06e7b0..3e4bbbc77e 100644
+--- a/tests/matchers.py
++++ b/tests/matchers.py
+@@ -588,6 +588,11 @@ registry["Band_first_eigenvalue"] = GenericMatcher(
+ )
+ registry["Kubo_hall_max"] = GenericMatcher(r"KUBO_TRANSPORT| hall_max", col=3)
+ 
++registry["Real_space_chern_marker"] = GenericMatcher("REAL_SPACE_CHERN| Marker:", col=3)
++registry["Real_space_chern_weight"] = GenericMatcher(
++    "REAL_SPACE_CHERN| Window occupied weight:", col=5
++)
++
+ registry["Kubo_symmetry_current_error"] = GenericMatcher(
+     r"KUBO_TRANSPORT| Symmetry errors S/H/current:", col=7
+ )
+-- 
+2.54.0
+

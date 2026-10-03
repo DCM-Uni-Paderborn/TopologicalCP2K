@@ -1,0 +1,14 @@
+ Projected spinor current, metric and gauge tests passed.
+ Bloch metric/connection, band velocity, gauge, degeneracy and Drude tests passed.
+Hall Liouvillian residual:   7.743806E-15
+Hall Chern model mass, sigma, Chern, residual:  -1.0 -9.9999976562E-01  1.0000000000E+00  7.2164496601E-16
+Hall k-dependent nonorthogonal AO residual:   1.932315E-15
+Hall Chern model mass, sigma, Chern, residual:   1.0  9.9999976562E-01 -1.0000000000E+00  6.6613381478E-16
+Hall k-dependent nonorthogonal AO residual:   2.331468E-15
+Hall Chern model mass, sigma, Chern, residual:   3.0  9.6514918879E-09  5.2892531934E-15  3.3306690739E-16
+Hall k-dependent nonorthogonal AO residual:   4.996004E-16
+ Hall sign, Liouvillian, gauge, time reversal, degeneracy and Chern tests passed.
+Real-space Chern mass / marker / Wilson / full trace / AO residual: -1.0   9.985290089E-01   1.000000000E+00   7.458010171E-15   6.661338148E-16
+Real-space Chern mass / marker / Wilson / full trace / AO residual:  1.0  -9.985290089E-01  -1.000000000E+00  -9.400020903E-15   3.330669074E-16
+Real-space Chern mass / marker / Wilson / full trace / AO residual:  3.0  -3.515972112E-04   5.551115123E-17   1.619148252E-16   2.439454888E-18
+ Finite-window Chern, native Wilson, metric, gauge, orientation and boundary tests passed.

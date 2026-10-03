@@ -56,6 +56,59 @@ required locality and gap or localization assumptions
 connection, not a claim that the current implementation evaluates a
 general thermodynamic-limit noncommutative Chern formula.
 
+The metric also enters a finite real-space evaluation. Let
+$C_{\mathrm{occ}}$ contain occupied coefficients with
+$C_{\mathrm{occ}}^\dagger S C_{\mathrm{occ}}=I$. The mixed-index
+projector and position operators are
+\begin{equation}
+ \Pi=C_{\mathrm{occ}}C_{\mathrm{occ}}^\dagger S,\qquad
+ \mathsf X_a=S^{-1}X_a,\qquad \Pi^2=\Pi.
+ \label{eq:mixed-fermi-projector}
+\end{equation}
+Here $X_a$ denotes the covariant AO matrix of the position operator.
+For a physical bulk window $w(\mathbf r)$, define its covariant
+matrix $W_{\mu\nu}=\langle\phi_\mu|w|\phi_\nu\rangle$,
+$\mathsf W=S^{-1}W$, and the area
+$A_w=\int w(\mathbf r)\,\mathrm d^2r$. A finite-window version of
+Eq.~\eqref{eq:nc-chern} is
+\begin{equation}
+ C_w=-\frac{2\pi\ii}{A_w}\,
+ \Tr\!\left(\mathsf W\Pi
+   [[\mathsf X_1,\Pi],[\mathsf X_2,\Pi]]\right).
+ \label{eq:finite-window-chern}
+\end{equation}
+All mixed-index matrices transform by similarity under a nonsingular
+AO basis change. This preserves the trace without assigning a local
+contribution to an arbitrary subset of basis coefficients.
+The area is a spatial measure, not a count of occupied states or AOs.
+In an open finite model with commuting position matrices the trace
+over the entire sample cancels between bulk and boundary contributions.
+A bulk window instead permits comparison with the local Chern marker
+\cite{BiancoResta2011}. A finite value need not be exactly quantized.
+Projected AO positions need not commute, so the lattice cancellation
+identity must not be imposed on an incomplete continuum basis.
+
+The complex finite-window evaluator uses metric solves and checks
+occupied-state orthonormality and $0\leq W\leq S$. Its finite-system
+Quickstep interface integrates two-dimensional Gaussian windows
+analytically over the AOs, with widths $\sigma_1,\sigma_2$ and area
+$A_w=2\pi\sigma_1\sigma_2$. The projector is defined by an explicit
+energy in a resolved gap, not by smeared SCF occupations.
+Open-boundary model and GPW/GAPW controls are provided in the
+Supporting Information. This spatial diagnostic complements rather
+than duplicates Wilson-loop or $\mathbb Z_2$ analysis.
+
+Periodic boundaries require a separate treatment. Finite-torus
+approximations periodize the spatial derivations rather than applying
+an unbounded Cartesian position to a periodic cell
+\cite{Prodan2013,BauMarrazzo2024}. Such approximate derivations do not
+generally obey an exact Leibniz rule at finite size. Differentiating
+the finite Fermi matrix and replacing that derivative by a spectral
+Fermi divided difference times a Hamiltonian derivative are therefore
+distinct finite-size procedures. Hall and Chern crosschecks must
+retain this distinction, the order of tensor indices, and the relative
+orientation of the Berry and Clifford constructions.
+
 A spectral gap excludes eigenvalues in an interval. A mobility gap
 instead concerns localization and transport even when states are
 present. A localizer gap is the smallest singular value of a composite

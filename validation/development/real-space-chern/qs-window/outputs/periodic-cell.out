@@ -1,0 +1,222 @@
+ DBCSR| CPU Multiplication driver                                           BLAS (U)
+ DBCSR| Multrec recursion limit                                              512 (U)
+ DBCSR| Multiplication stack size                                           1000 (D)
+ DBCSR| Maximum elements for images                                    UNLIMITED (U)
+ DBCSR| Multiplicative factor virtual images                                   1 (U)
+ DBCSR| Use multiplication densification                                       T (D)
+ DBCSR| Multiplication size stacks                                             3 (U)
+ DBCSR| Use memory pool for CPU allocation                                     F (U)
+ DBCSR| OMP: Current number of threads                                         2
+ DBCSR| OMP: Max number of threads                                             2
+ DBCSR| Split modifier for TAS multiplication algorithm                  1.0E+00 (U)
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2026-10-02 21:08:49.037
+ ***** ** ***  *** **   PROGRAM STARTED ON                         Mac.fritz.box
+ **    ****   ******    PROGRAM STARTED BY                               tkuehne
+ ***** **    ** ** **   PROGRAM PROCESS ID                                 39309
+  **** **  *******  **  PROGRAM STARTED IN /Users/tkuehne/cp2k-spectral-localize
+                                           r/build-serial/window-interface-contr
+                                           ols/periodic-cell
+
+ CP2K| version string:                 CP2K version 2026.2 (Development Version)
+ CP2K| source code revision number:                                   b28dc936af
+ CP2K| cp2kflags: omp libint fftw3 no_statm_access spglib openblas              
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                                   2026-10-02 21:02:15
+ CP2K| Program compiled on                                                      
+ CP2K| Program compiled with                                  GCC version 16.1.0
+ CP2K| Program compiled for                                                arm64
+ CP2K| Data directory path           /Users/tkuehne/cp2k-spectral-localizer/data
+ CP2K| Input file name                                                 input.inp
+
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                    BASIS_MOLOPT_UZH
+ GLOBAL| Potential file name                                       POTENTIAL_UZH
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                      __STD_INPUT__
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                               finite-chern
+ GLOBAL| Run type                                                         ENERGY
+ GLOBAL| FFT library                                                       FFTW3
+ GLOBAL| Diagonalization library                                       ScaLAPACK
+ GLOBAL| Cholesky decomposition library                                ScaLAPACK
+ GLOBAL| DGEMM library                                                      BLAS
+ GLOBAL| Direct generalized diagonalization requested                          F
+ GLOBAL| Orthonormality check for eigenvectors                          DISABLED
+ GLOBAL| Matrix multiplication library                                 ScaLAPACK
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| Grid backend                                                       AUTO
+ GLOBAL| Global print level                                                  LOW
+ GLOBAL| MPI I/O enabled                                                       T
+ GLOBAL| Total number of message passing processes                             1
+ GLOBAL| Number of distributed systems (nodes)                                 1
+ GLOBAL| Number of threads for this process                                    2
+ GLOBAL| This output is from process                                           0
+ GLOBAL| OpenMP stack size per thread (OMP_STACKSIZE)                    default
+ GLOBAL| CPU model name                                                  UNKNOWN
+ GLOBAL| CPUID                                                              2000
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal                    0             0             0             0
+ MEMORY| MemFree                     0             0             0             0
+ MEMORY| Buffers                     0             0             0             0
+ MEMORY| Cached                      0             0             0             0
+ MEMORY| Slab                        0             0             0             0
+ MEMORY| SReclaimable                0             0             0             0
+ MEMORY| MemLikelyFree               0             0             0             0
+
+
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2026)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   1
+                             - Atoms:                                          2
+                             - Shell sets:                                     2
+                             - Shells:                                         6
+                             - Primitive Cartesian functions:                 10
+                             - Cartesian basis functions:                     10
+                             - Spherical basis functions:                     10
+
+  Maximum angular momentum of- Orbital basis functions:                        1
+                             - Local part of the GTH pseudopotential:          2
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              60
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-09
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       0.00E+00
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        No outer SCF
+
+ Extrapolation method: initial_guess
+
+ Number of electrons:                                                          2
+ Number of occupied orbitals:                                                  1
+ Number of molecular orbitals:                                                 1
+
+ Number of orbital functions:                                                 10
+ Number of independent orbital functions:                                     10
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Lattice FFT   : OFF
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    0.0     0.31472321        -1.0850682628 -1.09E+00
+     2 OT DIIS     0.15E+00    0.0     0.04025203        -1.1663313812 -8.13E-02
+     3 OT DIIS     0.15E+00    0.0     0.00605562        -1.1677868327 -1.46E-03
+     4 OT DIIS     0.15E+00    0.0     0.00124448        -1.1678235375 -3.67E-05
+     5 OT DIIS     0.15E+00    0.0     0.00009085        -1.1678255302 -1.99E-06
+     6 OT DIIS     0.15E+00    0.1     0.00001638        -1.1678255372 -6.98E-09
+     7 OT DIIS     0.15E+00    0.1     0.00001497        -1.1678255377 -5.07E-10
+     8 OT DIIS     0.15E+00    0.1     0.00000804        -1.1678255382 -4.88E-10
+     9 OT DIIS     0.15E+00    0.1     0.00000032        -1.1678255383 -5.09E-11
+    10 OT DIIS     0.15E+00    0.1     0.00000029        -1.1678255383 -1.33E-14
+    11 OT DIIS     0.15E+00    0.1     0.00000014        -1.1678255383 -4.71E-14
+    12 OT DIIS     0.15E+00    0.1     0.00000008        -1.1678255383 -1.07E-14
+    13 OT DIIS     0.15E+00    0.1     7.9103E-11        -1.1678255383 -4.00E-15
+
+  *** SCF run converged in    13 steps ***
+
+
+  Electronic density on regular grids:         -1.9999975271        0.0000024729
+  Core density on regular grids:                1.9999557631       -0.0000442369
+  Total charge density on r-space grids:       -0.0000417640
+  Total charge density g-space grids:          -0.0000417640
+
+  Overlap energy of the core charge distribution:               0.00000006527073
+  Self energy of the core charge distribution:                 -2.81260610747607
+  Core Hamiltonian energy:                                      0.94249901064003
+  Hartree energy:                                               1.37529300971449
+  Exchange-correlation energy:                                 -0.67301151640721
+
+  Total energy:                                                -1.16782553825803
+
+ *******************************************************************************
+ *   ___                                                                       *
+ *  /   \                                                                      *
+ * [ABORT]                                                                     *
+ *  \___/      REAL_SPACE_CHERN requires CELL/POISSON PERIODIC NONE without    *
+ *    |                                  KPOINTS.                              *
+ *  O/|                                                                        *
+ * /| |                                                                        *
+ * / \                                                qs_real_space_chern.F:96 *
+ *******************************************************************************
+
+
+ ===== Routine Calling Stack ===== 
+
+            6 qs_scf_post_real_space_chern
+            5 write_mo_free_results
+            4 write_available_results
+            3 scf_post_calculation_gpw
+            2 qs_energies
+            1 CP2K
+
+Program received signal SIGABRT: Process abort signal.
+
+Backtrace for this error:
+#0  0x10129b323
+#1  0x10129a063
+#2  0x19aa316a3
+#3  0x19a9f7847
+#4  0x19a9009e3
+#5  0x106b63f3b
+#6  0x106b64fab
+#7  0x106b65127
+#8  0x105ff2b3f
+#9  0x10633cefb
+#10  0x10634a0d3
+#11  0x10634fdcb
+#12  0x1062ea12b
+#13  0x105e6346f
+#14  0x1052af3a3
+#15  0x107316b47
+#16  0x1073179df
+#17  0x100619e23
+#18  0x10061b1df
