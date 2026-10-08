@@ -24,7 +24,7 @@ transferred from the k-point manuscript with separately validated
 transport, localizer, and quadratic-pseudospectrum developments.
 The original results are not recomputed or relabelled by moving
 the manuscript text.
-The development status is recorded as of 26 September 2026.
+The development status is recorded as of 8 October 2026.
 Section~\ref{sec:si-frozen-reproduction} adds source-specific reproduction
 checks completed on 1 October 2026. A final source freeze covering all
 manuscript methods and a complete public archive remain submission
@@ -1469,6 +1469,128 @@ This example tests the spectral pencil, not an estimate from LDL
 pivot magnitudes. All intervals are finite-precision numerical
 brackets, not interval-arithmetic certificates.
 
+\subsection{Dependency-free DBCSR factorizations}
+An additional native factorization separates the need for distributed
+matrix storage from the choice of an external sparse-direct solver.
+The Schur complement is stored in $16\times16$ DBCSR tiles with
+row-tile ownership. Complete pivot selection uses a scalar diagonal
+or a coupled $2\times2$ block, and all numerical fill is retained.
+Distributed lower-triangle coordinates are additive, including
+duplicates on different ranks. Only two pivot columns are replicated.
+Retained elimination panels support multiple right-hand sides without
+forming an overlap inverse.
+
+The independent controls include a zero-diagonal tridiagonal matrix
+of order 34, which requires coupled pivots and has 17 negative
+eigenvalues, repeated metric solutions, complex-Hermitian
+realification, nonorthogonal congruences, singular metrics, and
+gap closings. The open Qi--Wu--Zhang localizer of real order 200
+gives index $-1$ and gap $0.44847231$ in model energy units, matching
+the dense generalized spectrum. The solver controls pass serially
+and with two, three and four MPI ranks. Fresh full serial and MPI
+application builds disable both MUMPS and Tacho. The final solver
+controls also pass with four MPI ranks and two OpenMP threads per
+rank. A separately compiled MUMPS comparison gives the same
+inertia and repeated solutions.
+
+A fresh full serial CP2K build with both MUMPS and Tacho disabled
+also exercises the GPW operator construction. The isolated H$_2$
+control uses PBE, the UZH DZVP-MOLOPT-GGA-GTH-q1 basis and GTH-PBE-q1
+potential, a 150-Ry grid cutoff and a 30-Ry relative cutoff.
+At two positions, two energies and two localizer scales, all eight
+dense gaps lie within the native numerical brackets. Their maximum
+width is $9.90\times10^{-11}$ hartree.
+For two quadratic states at each of the four position--energy
+queries with $\kappa=0.1$ hartree/bohr, the largest gap difference
+between the dense and native-metric iterative calculations is
+$8.0\times10^{-15}$ hartree.
+
+These comparisons establish dependency-free inertia and metric
+solutions, not a performance advantage over MUMPS. Complete pivot
+searches require collective communication, and numerical fill can
+make the tile storage dense. The previously reported MUMPS timings
+remain measurements of that solver, not of this native implementation.
+The skew-Pfaffian calculation is separate and is not replaced by
+symmetric LDL inertia. A native extension instead factors the real
+skew representation with oriented $2\times2$ pivots and explicit
+permutation parity. Full coordinate input is additive across ranks.
+Its symmetric defect is checked after addition, and independent
+right-hand sides test the retained factors. The controls include odd
+permutations, disconnected components, exact Pfaffians of 3 and 60,
+rank deficiency without zero rows, additive duplicates, one-sided
+roundoff, and scales $10^{-120}$ and $10^{120}$.
+The numerical matrix/panel/work budget is checked before allocation.
+The reported numerical buffer budget succeeds, whereas a limit one byte smaller
+rejects the calculation without an index. Coordinate-routing buffers
+and matrix metadata are excluded from this numerical estimate.
+
+For the spin-mixed side-5 Qi--Wu--Zhang pair, the native AII
+transformation has complex order 200 and realified order 400.
+The nontrivial and mass-shifted trivial cases give indices 1 and 0,
+with generalized gaps $0.44974585$ and $1.2822228$ in model units.
+A complex nonorthogonal congruence retains the nontrivial gap and
+index. The independent solve residuals are at most
+$1.1\times10^{-15}$ in the serial controls. These cases also pass
+with two and four MPI ranks. Broken Hamiltonian or metric time-reversal
+structure is rejected, while roundoff-level defects are accepted
+only when small relative to the resolved gap. The atomic reference
+is trivial, and singular or unresolved localizers receive no index.
+The transformation and factorization require no source-rank matrix
+gathering.
+
+The full serial application also compares native and dense AII
+calculations using GTH-SOC operators. An isolated Bi$_2$ GPW control
+with the UZH DZVP basis gives a trivial index and gap
+$0.0681101300$ hartree. A two-dimensionally periodic Ne GAPW control
+gives a trivial index and gap $0.066528405$ hartree.
+Across these independent SCF runs, the gaps differ by at most
+$3.4\times10^{-10}$ hartree. The native Pfaffian solve residuals
+are $1.6\times10^{-15}$ and $3.7\times10^{-16}$, respectively.
+Both calculations use builds without MUMPS and Tacho.
+The Ne control also passes with two MPI ranks and two OpenMP threads
+per rank, with a gap difference below $7.5\times10^{-14}$ hartree
+relative to the native serial calculation.
+
+The complete-band stanene exports provide a separate material-matrix
+test of the native skew factors. Every scalar AO and both physical
+spin components are retained, with no occupied-band truncation or
+polar replacement of the periodic coordinate links. At a unit
+spectral-flattening scale, the $3\times3$ torus has real skew order
+936. Its three queries at $\eta=0.5,1.0,1.25$ give indices $1,0,0$,
+matching the independently evaluated dense Pfaffians with one, two
+and four MPI ranks. The largest solve-probe residual is
+$4.4\times10^{-15}$, and no alternative ordering is required.
+
+The $6\times6$ DZVP torus has skew order 3744. Its four queries at
+$\eta=0.5,0.75,1.0,1.25$ give indices $1,1,1,0$, matching the dense
+references with one and four MPI ranks. The maximum solve-probe
+residual is $7.9\times10^{-15}$. Across these four queries, the
+largest numerical matrix/panel/work allocation falls from 160.0 MiB
+on one rank to 41.1 MiB per rank with four ranks. Single-run factor
+and probe times are 64.3--68.8 s and 17.8--19.8 s, respectively.
+The measurements exclude coordinate-routing buffers, metadata and
+the independent reference construction. These matrices develop
+substantial fill and do not establish linear storage or multi-node
+scaling. The archived localizer gaps are unchanged input diagnostics,
+not new native inertia-bracket measurements in this skew-only test.
+A $6\times6$ TZVP control at $\eta=0.75$ has skew order 4896
+and reproduces the nontrivial dense index with four MPI ranks.
+Its solve-probe residual is $4.4\times10^{-15}$, with 69.2 MiB
+of numerical buffers per rank and a single-run time of 41.3 s.
+This control tests factorization on a larger basis representation,
+not further material-basis convergence.
+The compact results and the source-frozen replay are retained in
+\texttt{validation/development/native-dbcsr}, referencing the existing
+complete-band export archive without duplicating it.
+The larger side-5 model results above remain independent validation
+calculations. The compact regression fixture uses a side-3 patch
+while retaining its sign, metric, time-reversal and gap-closing checks.
+The integrated native tests require neither optional solver library.
+Both the serial and four-rank MPI builds pass all 61 retained checks
+with two OpenMP threads per rank, including finite and periodic
+GPW/GAPW, GTH-SOC, flattening and iterative metric solutions.
+The test runner reports no slow cases or directories in either build.
+
 \subsection{Sparse Pfaffian signs with a spin-mixed model}
 Time-reversed copies of the side-10 model are coupled by an onsite
 spin-mixing amplitude $0.1+0.05i$ with the antisymmetric orbital
@@ -1504,7 +1626,7 @@ permutations. Deliberately singular cases emit zero-pivot diagnostics
 and are checked as rejected outcomes, not counted as successful
 topological classifications. Broken time reversal and invalid
 metrics are likewise rejected. The factorization itself remains
-on one rank; these tests do not demonstrate MPI-distributed
+on one rank in this Tacho comparison. These tests do not demonstrate MPI-distributed
 Pfaffian factors or large SOC-material scaling.
 
 \subsection{Periodic AO localizer: mesh versus supercell}

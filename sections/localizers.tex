@@ -138,10 +138,19 @@ The dense algorithm accumulates signs rather than an overflowing
 Pfaffian product. This is a time-reversal local index,
 not an inversion-parity test.
 
-The optional sparse skew-LDL backend implements a separate numerical
-task from MUMPS inertia \cite{Wong2026}.
-Its present single-rank factorization must not be described as an
-MPI-distributed Pfaffian solver.
+The native sparse skew factorization implements a separate numerical
+task from symmetric inertia. It retains a distributed Schur complement
+and oriented $2\times2$ pivots, accumulating the pivot signs and the
+parity of their permutations. The transformation in
+Eq.~\eqref{eq:aii-skew} is assembled by distributed addition of
+coordinate entries rather than by gathering a dense matrix.
+Independent right-hand sides test the retained factors against the
+assembled matrix. The discarded symmetric and imaginary parts are
+bounded relative to the independently resolved metric gap before
+an index is accepted. This calculation requires neither MUMPS nor
+Tacho. The optional Tacho comparison implements the same separate
+skew-Pfaffian task \cite{Wong2026}, but its factorization resides on
+one rank and is not an MPI-distributed Pfaffian solver.
 The motivating photonic and aperiodic examples
 \cite{Dixon2023,Wong2026} provide methodological context, not
 first-principles material validation for the CP2K path.

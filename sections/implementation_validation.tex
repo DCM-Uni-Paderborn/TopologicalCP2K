@@ -9,31 +9,76 @@ operator sparsity patterns without additional dropping.
 DBCSR is not itself a general pivoted indefinite factorization or
 Pfaffian solver.
 
-The dense LAPACK path is the small-system reference. MUMPS supplies
-distributed symmetric-indefinite factorizations and reusable metric
-solutions \cite{MumpsGuide}. Complex Hermitian matrices are realified:
+The dense LAPACK calculation is the small-system reference.
+Complex Hermitian matrices are realified as
 \begin{equation}
  \mathcal R(A)=
  \begin{pmatrix}\Re A&-\Im A\\\Im A&\Re A\end{pmatrix}.
 \end{equation}
 Each eigenvalue is duplicated, so inertia-based formulas compensate
 for that duplication. A positive metric is checked separately from
-the indefinite localizer. Static pivot perturbations and low-rank
-compression are not silently accepted as exact sign counts.
-Symbolic analysis is reused across appropriate shift families.
+the indefinite localizer.
 
-The optional Tacho skew-LDL extension is accessed through a small
+A CP2K-native factorization uses DBCSR for the distributed Schur
+complement and retains distributed elimination panels when repeated
+metric solutions are required. Complete Bunch--Parlett pivot selection
+\cite{BunchParlett1971} gives
+\begin{equation}
+ \Pi A\Pi^T=LDL^T,
+ \qquad n_-(A)=\sum_\ell n_-(D_\ell),
+\end{equation}
+where $A$ is the real symmetric matrix being factored, $\Pi$ is its
+pivot permutation, $L$ is unit lower triangular, and $D_\ell$ denotes
+a $1\times1$ or $2\times2$ diagonal block of $D$.
+The negative inertia $n_-$ counts negative eigenvalues.
+Both eigenvalues of a $2\times2$ block are counted, rather than its
+individual diagonal entries. At most two matrix columns are replicated
+during elimination. No fill is dropped and no pivot is perturbed.
+The same implementation supplies inertia for shifted pencils and
+reusable overlap-metric solutions without MUMPS. Gap brackets are
+tightened only by resolved inertia counts on either side of zero.
+A numerically singular trial shift is not treated as a known spectral
+crossing. An unresolved factorization of the unshifted localizer
+produces no accepted index.
+
+MUMPS remains an optional distributed sparse-direct alternative
+\cite{MumpsGuide}, with symbolic analysis reused across appropriate
+shift families. Static pivot perturbations and low-rank compression
+are not silently accepted as exact sign counts.
+
+The native factorization also admits a distinct skew-symmetric
+elimination with oriented $2\times2$ pivots. This is not an inference
+of a Pfaffian sign from symmetric inertia.
+Both triangles of additive coordinate input are assembled to check
+the skew defect. The factorization then retains the antisymmetric
+projection, accumulates permutation parity, and verifies solutions
+for four independent right-hand sides. The AII localizer transformation
+and its structure checks use the same distributed storage. These
+operations provide a dependency-free sparse Pfaffian calculation.
+Complete-band stanene torus matrices supply an independent material
+comparison with the dense Pfaffian reference. The native distributed
+factors reproduce both trivial and nontrivial indices without a
+fallback to an external solver. Numerical fill is retained, and the
+measured reduction in per-rank factor buffers is distinguished from
+whole-process memory and general scaling claims.
+
+The optional Tacho skew-LDL extension remains accessible through a small
 C interface and Fortran interoperability \cite{TachoSkew}.
 No MATLAB dependency is introduced.
 Permutation parity, skew-pivot conventions, numerical residuals, and
 the trivial-reference orientation are explicit.
-Its sparse factorization currently resides on one rank, while
-DBCSR assembly and MUMPS metric/gap checks can be distributed.
+Its sparse factorization resides on one rank, in contrast to the
+distributed native skew factors. It is retained as an independent
+comparison, not a requirement for the native calculation.
 PARDISO and PEXSI are possible alternative backends, not prerequisites
 and not part of the tested backend set reported here.
 
 MUMPS factor storage and process-summed solver memory are not the
 whole application's memory consumption.
+The native LDL real-buffer estimate similarly excludes DBCSR
+metadata and coordinate-routing buffers. A per-rank numerical budget
+is checked before allocating new Schur tiles, retained panels, and
+probe workspaces. It does not bound the entire application's memory.
 Sparse fill-in, source-rank coordinates, dense reference arrays,
 trial vectors, and MPI buffers must be accounted for separately.
 Similarly, single-node timings cannot establish multi-node scaling.
@@ -74,7 +119,7 @@ from recorded sources. After two targeted corrections, the latter pass
 MPI/OpenMP configurations. The corrections retain numerical references
 and bounds checking. They address premature iterative-subspace restarts
 and a compiler-dependent GAPW array-section failure.
-A separately rebuilt native Pfaffian adapter reproduces 33 archived
+A separately rebuilt Tacho-based Pfaffian implementation reproduces 33 archived
 material-matrix queries without rerunning their SCF calculations.
 The Supporting Information records the source boundaries, initial
 failures, independent controls, and dependency fingerprints.
@@ -219,8 +264,9 @@ failure without changing reference values. The finite and periodic
 localizer directories pass 74 checks with four MPI ranks, and 45
 checks without the optional sparse libraries. Source snapshots,
 prototype and native results, and memory limitations are retained
-separately in the Supporting Information. Numerical Pfaffian factors
-are still stored on a single MPI rank.
+separately in the Supporting Information. In this MUMPS/Tacho comparison,
+numerical Pfaffian factors are stored on a single MPI rank, unlike the
+distributed native skew factors described above.
 Fresh one-parameter controls separate discretization effects at fixed
 $12\times12$ analysis size. With DZVP, cutoffs of 200, 400 and
 600 Ry change the $\eta/\Delta=1$ localizer gap by less than

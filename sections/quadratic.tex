@@ -48,7 +48,9 @@ The residual
 checks an eigenpair in atomic units; it does not independently prove
 that no lower state was missed.
 
-Reusable MUMPS factors avoid forming $S^{-1}$, but the present
+Reusable native LDL metric factors avoid forming $S^{-1}$ and remove
+the requirement for a separate sparse-direct library. MUMPS provides
+an optional alternative. The present
 trial vectors and multiple-right-hand-side communication are not
 fully distributed. Output includes separated residuals,
 expectations, and optional complex AO coefficients.
@@ -96,7 +98,7 @@ symmetry-reduced SCF calculation without claiming an irreducible
 property eigensolver. One, two or three periodic directions are
 supported; open directions are not localized by this formulation.
 Output reports chord residuals and mean cosines/sines rather than
-ambiguous Cartesian mean positions. Dense and DBCSR/MUMPS solvers
+ambiguous Cartesian mean positions. Dense and DBCSR-based iterative solvers
 and the restricted post-SCF GTH-SOC construction share this tuple
 of Hermitian operators. Translation-operator band unfolding is a
 different joint-eigenvector problem, discussed separately below.
